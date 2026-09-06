@@ -2,6 +2,55 @@
   "dataset": "data/benchmark/smoke.jsonl",
   "dataset_sha256": "3455df3d22b8ed106f0eee83ecd45221310c7450988073808b9a39993a5d55f8",
   "case_count": 28,
+  "dataset_versions": [
+    "unspecified"
+  ],
+  "split_counts": {
+    "all": 28
+  },
+  "lexitrace_by_split": {
+    "all": {
+      "cases": 28,
+      "exact_matches": 28,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "interventions": 12,
+      "useful_interventions": 12,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 1.0,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 33.795,
+        "p50": 3.15,
+        "p95": 117.047,
+        "p99": 125.097
+      }
+    }
+  },
+  "model_usage": {
+    "execution": "local",
+    "model": "BAAI/bge-small-en-v1.5",
+    "embedding_calls": 16,
+    "input_characters": 526,
+    "failed_calls": 0,
+    "hosted_requests": 0,
+    "estimated_api_cost_usd": 0.0
+  },
+  "database": {
+    "peak_allocated_bytes": 176128,
+    "peak_trace_payload_bytes": 4155,
+    "peak_rows": {
+      "memories": 2,
+      "memory_variants": 2,
+      "observations": 2,
+      "context_evidence": 7,
+      "context_embeddings": 1,
+      "decisions": 1,
+      "memory_versions": 2
+    }
+  },
   "systems": {
     "no_memory": {
       "cases": 28,
@@ -54,10 +103,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 4.897,
-        "p50": 4.884,
-        "p95": 5.982,
-        "p99": 12.659
+        "mean": 33.795,
+        "p50": 3.15,
+        "p95": 117.047,
+        "p99": 125.097
       }
     }
   }

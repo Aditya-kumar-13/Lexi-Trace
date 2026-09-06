@@ -1,11 +1,11 @@
-version = "2026-09-06-hybrid-v1"
+version = "2026-09-06-hybrid-v2-calibrated"
 
 [thresholds]
 apply = 0.93
 suggest = 0.72
 minimum_winner_margin = 0.12
 fuzzy_candidate = 0.76
-minimum_positive_context = 0.12
+minimum_positive_context = 0.15
 negative_context_block = 0.12
 
 [semantic]

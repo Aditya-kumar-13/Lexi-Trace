@@ -7,8 +7,31 @@ Journeys: **3**
 
 | System | Query exact match | Action accuracy | Wrong interventions | p95 latency |
 |---|---:|---:|---:|---:|
-| sparse_ablation | 83.3% | 66.7% | 0 | 9.950 ms |
-| hybrid | 100.0% | 100.0% | 0 | 174.528 ms |
+| sparse_ablation | 83.3% | 66.7% | 0 | 5.590 ms |
+| hybrid | 100.0% | 100.0% | 0 | 113.050 ms |
+
+## Operational accounting
+
+### sparse_ablation
+
+- Embedding execution: **disabled**
+- Embedding calls: **0**
+- Embedded input characters: **0**
+- Hosted requests: **0**
+- Estimated API cost: **$0.00**
+- Peak allocated SQLite bytes: **184320**
+- Peak vector payload bytes: **0**
+
+### hybrid
+
+- Embedding execution: **local**
+- Embedding calls: **7**
+- Embedded input characters: **261**
+- Hosted requests: **0**
+- Estimated API cost: **$0.00**
+- Peak allocated SQLite bytes: **200704**
+- Peak vector payload bytes: **16082**
+
 
 ## Ablation differences
 
@@ -16,6 +39,10 @@ Journeys: **3**
 |---|---|---|
 | semantic-generalization | apply | suggest |
 | negative-prototype-recovery | abstain | suggest |
+
+## Hybrid failures
+
+No hybrid failures in this compact development suite.
 
 ## Interpretation
 

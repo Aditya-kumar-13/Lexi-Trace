@@ -25,7 +25,7 @@ from .models import (
 from .policy import load_policy
 from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.5.0"
+ENGINE_VERSION = "0.6.0"
 POLICY = load_policy()
 APPLY_THRESHOLD = POLICY.apply_threshold
 SUGGEST_THRESHOLD = POLICY.suggest_threshold
@@ -464,7 +464,14 @@ def generate_candidate_spans(text: str, variant: MemoryVariant) -> list[tuple[in
         previous = best_by_span.get(key)
         if previous is None or method_priority[result[3]] > method_priority[previous[3]]:
             best_by_span[key] = result
-    return list(best_by_span.values())
+    selected = list(best_by_span.values())
+    exact_spans = [(start, end) for start, end, _, method in selected if method == "exact"]
+    return [
+        result
+        for result in selected
+        if result[3] == "exact"
+        or not any(left < result[1] and result[0] < right for left, right in exact_spans)
+    ]
 
 
 def generate_asr_alternative_spans(
@@ -950,18 +957,21 @@ def _score_candidate(
         start=start,
         end=end,
     )
+    semantic_required = memory.scope_mode == "contextual" or bool(memory.semantic_evidence)
     semantic_model = (
         semantic_encoder.model_name
-        if semantic_encoder is not None and semantic_encoder.enabled
+        if semantic_required and semantic_encoder is not None and semantic_encoder.enabled
+        else "not_required"
+        if not semantic_required
         else "disabled"
     )
-    if masked_context not in semantic_vector_cache:
+    if semantic_required and masked_context not in semantic_vector_cache:
         semantic_vector_cache[masked_context] = (
             semantic_encoder.encode(masked_context)
             if semantic_encoder is not None and semantic_encoder.enabled
             else None
         )
-    current_vector = semantic_vector_cache[masked_context]
+    current_vector = semantic_vector_cache.get(masked_context)
     semantic_positive, semantic_positive_count = semantic_context_similarity(
         memory,
         current_vector,

@@ -10,7 +10,16 @@ Cases: **28**
 |---|---:|---:|---:|---:|---:|---:|
 | no_memory | 57.1% | 25.0% | n/a | 0.0% | 0.0% | 0.000 ms |
 | naive_dictionary | 67.9% | 53.6% | 60.0% | 75.0% | 21.4% | 0.000 ms |
-| lexitrace | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 5.982 ms |
+| lexitrace | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 117.047 ms |
+
+## Operational accounting
+
+- Embedding execution: **local**
+- Embedding calls: **16**
+- Hosted model requests: **0**
+- Estimated API cost: **$0.00**
+- Peak allocated SQLite bytes: **176128**
+- Peak persisted trace payload bytes: **4155**
 
 ## LexiTrace failures
 
@@ -18,4 +27,4 @@ No failures in this smoke benchmark.
 
 ## Interpretation
 
-This is the initial north-star smoke suite, not the final claimed benchmark. Contextual cases are initialized from observed correction sentences rather than hand-written keyword gates. The suite keeps learned context, candidate memories, conflicts, boundaries, and lifecycle behavior executable while the larger curated journey benchmark is built.
+This is the north-star smoke suite, not a production-accuracy claim. Contextual cases are initialized from observed correction sentences rather than source-code keyword gates.

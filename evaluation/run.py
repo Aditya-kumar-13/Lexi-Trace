@@ -15,9 +15,18 @@ from sqlalchemy import delete
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
+from evidence import (  # noqa: E402
+    CountingSemanticEncoder,
+    database_snapshot,
+    memory_state_snapshot,
+)
 from lexitrace.database import Base, build_engine, build_session_factory  # noqa: E402
 from lexitrace.engine import infer, teach_explicit  # noqa: E402
 from lexitrace.models import Decision, Memory, Observation  # noqa: E402
+from lexitrace.semantic import (  # noqa: E402
+    DisabledSemanticEncoder,
+    FastEmbedSemanticEncoder,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,6 +40,13 @@ def parse_args() -> argparse.Namespace:
         "--output",
         type=Path,
         default=ROOT / "results" / "latest",
+    )
+    parser.add_argument("--model", default="BAAI/bge-small-en-v1.5")
+    parser.add_argument("--cache-dir", default=str(ROOT / "data" / "models"))
+    parser.add_argument(
+        "--disable-semantic",
+        action="store_true",
+        help="Run the deterministic sparse ablation instead of the default hybrid product.",
     )
     return parser.parse_args()
 
@@ -72,7 +88,7 @@ def reset_session(session) -> None:
     session.commit()
 
 
-def seed_case(session, case: dict[str, Any]) -> None:
+def seed_case(session, case: dict[str, Any], semantic_encoder) -> None:
     for item in case["memories"]:
         memory = teach_explicit(
             session,
@@ -84,6 +100,7 @@ def seed_case(session, case: dict[str, Any]) -> None:
             negative_context=item.get("negative_context", []),
             formatted_text=item.get("source_formatted", ""),
             accepted_text=item.get("source_accepted", ""),
+            semantic_encoder=semantic_encoder,
         )
         memory.state = item.get("state", "confirmed")
         memory.evidence_confidence = item.get("evidence_confidence", 1.0)
@@ -122,12 +139,14 @@ def naive_dictionary(case: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def full_system(session, case: dict[str, Any]) -> dict[str, Any]:
+def full_system(session, case: dict[str, Any], semantic_encoder) -> dict[str, Any]:
     _, response = infer(
         session,
         user_id=case.get("user_id", "benchmark-user"),
         raw_asr_text=case.get("raw_asr_text", ""),
         formatted_text=case["formatted_text"],
+        alternatives=case.get("alternatives", []),
+        semantic_encoder=semantic_encoder,
     )
     return {
         "output": response["memory_aware_text"],
@@ -135,6 +154,8 @@ def full_system(session, case: dict[str, Any]) -> dict[str, Any]:
         "latency_ms": response["total_latency_ms"],
         "trace_id": response["trace_id"],
         "candidates": response["candidates"],
+        "policy_version": response["policy_version"],
+        "semantic": response["semantic"],
     }
 
 
@@ -231,6 +252,39 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
             )
         )
 
+    usage = summary["model_usage"]
+    database = summary["database"]
+    lines.extend(
+        [
+            "",
+            "## Operational accounting",
+            "",
+            f"- Embedding execution: **{usage['execution']}**",
+            f"- Embedding calls: **{usage['embedding_calls']}**",
+            f"- Hosted model requests: **{usage['hosted_requests']}**",
+            f"- Estimated API cost: **${usage['estimated_api_cost_usd']:.2f}**",
+            f"- Peak allocated SQLite bytes: **{database['peak_allocated_bytes']}**",
+            f"- Peak persisted trace payload bytes: **{database['peak_trace_payload_bytes']}**",
+        ]
+    )
+    if set(summary["split_counts"]) != {"all"}:
+        lines.extend(
+            [
+                "",
+                "## Predeclared split results",
+                "",
+                "| Split | Cases | Exact match | Action accuracy | Wrong interventions |",
+                "|---|---:|---:|---:|---:|",
+            ]
+        )
+        for split, count in summary["split_counts"].items():
+            split_metrics = summary["lexitrace_by_split"][split]
+            lines.append(
+                f"| {split} | {count} | {split_metrics['exact_match_rate']:.1%} | "
+                f"{split_metrics['action_accuracy']:.1%} | "
+                f"{split_metrics['wrong_interventions']} |"
+            )
+
     failures = [
         row
         for row in rows
@@ -253,16 +307,21 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
                 f"| {row['case_id']} | {row['category']} | {row['expected_output']} | "
                 f"{actual['output']} | {actual['action']} |"
             )
+    interpretation = (
+        "This is a fixed synthetic robustness suite with a predeclared calibration/held-out split. "
+        "It exercises the complete hybrid product and keeps all failures visible; it is not an "
+        "external or production-accuracy claim."
+        if set(summary["split_counts"]) != {"all"}
+        else "This is the north-star smoke suite, not a production-accuracy claim. Contextual "
+        "cases are initialized from observed correction sentences rather than source-code keyword "
+        "gates."
+    )
     lines.extend(
         [
             "",
             "## Interpretation",
             "",
-            "This is the initial north-star smoke suite, not the final claimed benchmark. "
-            "Contextual cases are initialized from observed correction sentences rather than "
-            "hand-written keyword gates. The suite keeps learned context, candidate memories, "
-            "conflicts, boundaries, and lifecycle behavior executable while the larger curated "
-            "journey benchmark is built.",
+            interpretation,
             "",
         ]
     )
@@ -276,6 +335,12 @@ def main() -> None:
     cases = load_jsonl(dataset_path)
     dataset_hash = hashlib.sha256(dataset_path.read_bytes()).hexdigest()
     rows: list[dict[str, Any]] = []
+    base_encoder = (
+        DisabledSemanticEncoder()
+        if args.disable_semantic
+        else FastEmbedSemanticEncoder(args.model, args.cache_dir)
+    )
+    semantic_encoder = CountingSemanticEncoder(base_encoder)
 
     with tempfile.TemporaryDirectory(prefix="lexitrace-eval-") as temp_dir:
         database_url = f"sqlite:///{(Path(temp_dir) / 'evaluation.db').as_posix()}"
@@ -285,34 +350,66 @@ def main() -> None:
         with session_factory() as session:
             for case in cases:
                 reset_session(session)
-                seed_case(session, case)
+                seed_case(session, case, semantic_encoder)
                 systems: dict[str, dict[str, Any]] = {
                     "no_memory": no_memory(case),
                     "naive_dictionary": naive_dictionary(case),
-                    "lexitrace": full_system(session, case),
+                    "lexitrace": full_system(session, case, semantic_encoder),
                 }
                 for result in systems.values():
                     result["exact"] = result["output"] == case["expected_output"]
                     result["action_matches"] = result["action"] == case["expected_action"]
+                memory_state = memory_state_snapshot(session)
+                storage = database_snapshot(session)
                 rows.append(
                     {
                         "case_id": case["case_id"],
                         "category": case["category"],
+                        "split": case.get("split", "all"),
+                        "inputs": {
+                            "raw_asr_text": case.get("raw_asr_text", ""),
+                            "formatted_text": case["formatted_text"],
+                            "alternatives": case.get("alternatives", []),
+                        },
                         "formatted_text": case["formatted_text"],
+                        "expected": {
+                            "output": case["expected_output"],
+                            "action": case["expected_action"],
+                        },
                         "expected_output": case["expected_output"],
                         "expected_action": case["expected_action"],
+                        "memory_state": memory_state,
+                        "database": storage,
                         "systems": systems,
                     }
                 )
         engine.dispose()
 
     system_names = ("no_memory", "naive_dictionary", "lexitrace")
+    split_names = sorted({row["split"] for row in rows})
     summary = {
         "dataset": dataset_path.relative_to(ROOT).as_posix()
         if dataset_path.is_relative_to(ROOT)
         else str(dataset_path),
         "dataset_sha256": dataset_hash,
         "case_count": len(cases),
+        "dataset_versions": sorted({case.get("dataset_version", "unspecified") for case in cases}),
+        "split_counts": {
+            split: sum(row["split"] == split for row in rows) for split in split_names
+        },
+        "lexitrace_by_split": {
+            split: calculate_metrics([row for row in rows if row["split"] == split], "lexitrace")
+            for split in split_names
+        },
+        "model_usage": semantic_encoder.usage(),
+        "database": {
+            "peak_allocated_bytes": max(row["database"]["allocated_bytes"] for row in rows),
+            "peak_trace_payload_bytes": max(row["database"]["trace_payload_bytes"] for row in rows),
+            "peak_rows": {
+                table: max(row["database"]["rows"][table] for row in rows)
+                for table in rows[0]["database"]["rows"]
+            },
+        },
         "systems": {name: calculate_metrics(rows, name) for name in system_names},
     }
     output_path.mkdir(parents=True, exist_ok=True)

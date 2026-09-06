@@ -1,10 +1,11 @@
 # LexiTrace
 
-LexiTrace is a local-first, inspectable personal word-memory prototype for Kivi. It learns
+LexiTrace is a local-first, inspectable personal word-memory prototype for Kivi. It answers the
+backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track. It learns
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 0.5.0
+## Current milestone: 0.6.0
 
 The first vertical slice is implemented:
 
@@ -22,8 +23,11 @@ The first vertical slice is implemented:
 - Alembic migrations, seed script, Docker Compose, and integration tests;
 - exact, fuzzy, and phonetic candidate generation with short-token safety gates;
 - immutable memory version history and decision feedback that can demote unsafe memories;
-- reproducible 28-case smoke benchmark with no-memory and naive-dictionary baselines.
-- chronological journey evaluation with a sparse-context ablation.
+- reproducible 28-case smoke benchmark with no-memory and naive-dictionary baselines;
+- fixed 252-case robustness corpus with predeclared calibration and held-out splits;
+- per-case input, expected/actual output, memory provenance, model use, cost, storage, and trace;
+- chronological journey evaluation with a sparse-context ablation;
+- fully documented native reviewer path, optional Docker path, and executable submission preflight.
 
 ## Product rule
 
@@ -39,7 +43,8 @@ profile remains active for explanation and graceful degradation.
 See [RUN.md](RUN.md) for the exact local and Docker workflows and
 [docs/architecture.md](docs/architecture.md) for the decision flow, safety policy, and current
 limitations. [docs/model.md](docs/model.md) documents the local model, data flow, licenses, and
-operational fallback.
+operational fallback. [docs/evaluation.md](docs/evaluation.md) defines the benchmark method, and
+[docs/brief-alignment.md](docs/brief-alignment.md) records the assignment boundary and guardrails.
 
 ## AI use
 

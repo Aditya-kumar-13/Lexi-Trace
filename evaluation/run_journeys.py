@@ -12,6 +12,11 @@ from sqlalchemy import delete
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
+from evidence import (  # noqa: E402
+    CountingSemanticEncoder,
+    database_snapshot,
+    memory_state_snapshot,
+)
 from lexitrace.database import Base, build_engine, build_session_factory  # noqa: E402
 from lexitrace.engine import (  # noqa: E402
     apply_decision_feedback,
@@ -106,7 +111,19 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
             "exact": response["memory_aware_text"] == event["expected_output"],
             "action_matches": response["action"] == event["expected_action"],
             "latency_ms": response["total_latency_ms"],
+            "trace_id": response["trace_id"],
             "candidates": response["candidates"],
+            "inputs": {
+                "raw_asr_text": event.get("raw_asr_text", ""),
+                "formatted_text": event["formatted_text"],
+                "alternatives": event.get("alternatives", []),
+            },
+            "expected": {
+                "output": event["expected_output"],
+                "action": event["expected_action"],
+            },
+            "memory_state": memory_state_snapshot(session),
+            "database": database_snapshot(session),
         }
         rows.append(row)
         if event.get("feedback"):
@@ -155,6 +172,24 @@ def render_report(summary: dict[str, Any], rows: dict[str, list[dict[str, Any]]]
             f"{result['action_accuracy']:.1%} | {result['wrong_interventions']} | "
             f"{result['p95_latency_ms']:.3f} ms |"
         )
+    lines.extend(["", "## Operational accounting", ""])
+    for name, result in summary["systems"].items():
+        usage = result["model_usage"]
+        database = result["database"]
+        lines.extend(
+            [
+                f"### {name}",
+                "",
+                f"- Embedding execution: **{usage['execution']}**",
+                f"- Embedding calls: **{usage['embedding_calls']}**",
+                f"- Embedded input characters: **{usage['input_characters']}**",
+                f"- Hosted requests: **{usage['hosted_requests']}**",
+                f"- Estimated API cost: **${usage['estimated_api_cost_usd']:.2f}**",
+                f"- Peak allocated SQLite bytes: **{database['peak_allocated_bytes']}**",
+                f"- Peak vector payload bytes: **{database['peak_vector_payload_bytes']}**",
+                "",
+            ]
+        )
     sparse_failures = [
         row for row in rows["sparse_ablation"] if not row["exact"] or not row["action_matches"]
     ]
@@ -169,6 +204,24 @@ def render_report(summary: dict[str, Any], rows: dict[str, list[dict[str, Any]]]
     )
     for row in sparse_failures:
         lines.append(f"| {row['journey_id']} | {row['expected_action']} | {row['actual_action']} |")
+    hybrid_failures = [
+        row for row in rows["hybrid"] if not row["exact"] or not row["action_matches"]
+    ]
+    lines.extend(["", "## Hybrid failures", ""])
+    if not hybrid_failures:
+        lines.append("No hybrid failures in this compact development suite.")
+    else:
+        lines.extend(
+            [
+                "| Journey | Expected output | Actual output | Expected action | Actual action |",
+                "|---|---|---|---|---|",
+            ]
+        )
+        for row in hybrid_failures:
+            lines.append(
+                f"| {row['journey_id']} | {row['expected_output']} | {row['actual_output']} | "
+                f"{row['expected_action']} | {row['actual_action']} |"
+            )
     lines.extend(
         [
             "",
@@ -189,8 +242,8 @@ def main() -> None:
     dataset = args.dataset.resolve()
     journeys = load_jsonl(dataset)
     systems = {
-        "sparse_ablation": DisabledSemanticEncoder(),
-        "hybrid": FastEmbedSemanticEncoder(args.model, args.cache_dir),
+        "sparse_ablation": CountingSemanticEncoder(DisabledSemanticEncoder()),
+        "hybrid": CountingSemanticEncoder(FastEmbedSemanticEncoder(args.model, args.cache_dir)),
     }
     all_rows: dict[str, list[dict[str, Any]]] = {}
     engine = build_engine("sqlite:///:memory:")
@@ -210,7 +263,23 @@ def main() -> None:
         "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "journeys": len(journeys),
         "model": args.model,
-        "systems": {name: metrics(rows) for name, rows in all_rows.items()},
+        "systems": {
+            name: {
+                **metrics(rows),
+                "model_usage": systems[name].usage(),
+                "database": {
+                    "peak_allocated_bytes": max(row["database"]["allocated_bytes"] for row in rows),
+                    "peak_vector_payload_bytes": max(
+                        row["database"]["vector_payload_bytes"] for row in rows
+                    ),
+                    "peak_rows": {
+                        table: max(row["database"]["rows"][table] for row in rows)
+                        for table in rows[0]["database"]["rows"]
+                    },
+                },
+            }
+            for name, rows in all_rows.items()
+        },
     }
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)

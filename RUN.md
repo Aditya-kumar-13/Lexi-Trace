@@ -1,109 +1,166 @@
 # Running LexiTrace
 
-**Primary review method: Local Docker Compose application with an embedded SQLite database. No
-external model key is required. The local embedding model downloads once on first semantic use.**
+**Primary review method: native local Windows application using Python 3.12, Node.js 20 or newer,
+and embedded SQLite. No API key or hosted service is required.**
 
-## Docker
+The commands below are PowerShell commands run from the repository root unless a step says
+otherwise. The local embedding model downloads once on first semantic use and is cached under
+`data/models`.
 
-Requirements: Docker Desktop with Docker Compose.
+## Required runtimes
+
+- Python 3.12
+- Node.js 20 or newer with npm
+
+## Environment variables
+
+No environment variable is required for the primary path. Defaults are built in and documented in
+`.env.example`.
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `LEXITRACE_DATABASE_URL` | SQLite connection | `sqlite:///./data/lexitrace.db` |
+| `LEXITRACE_CORS_ORIGINS` | Browser origins | local Vite origins |
+| `LEXITRACE_SEMANTIC_ENABLED` | Enable local context embeddings | `true` |
+| `LEXITRACE_SEMANTIC_MODEL` | FastEmbed model | `BAAI/bge-small-en-v1.5` |
+| `LEXITRACE_SEMANTIC_CACHE_DIR` | Local model cache | `./data/models` |
+| `LEXITRACE_POLICY_PATH` | Optional versioned policy override | unset |
+| `VITE_API_BASE_URL` | Browser API base URL | `http://localhost:8000` |
+
+## Install dependencies
 
 ```powershell
-docker compose up --build
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,semantic]"
+Push-Location apps/web
+npm ci
+Pop-Location
 ```
 
-Open http://localhost:5173. API documentation is at http://localhost:8000/docs.
+## Create, migrate, and seed the database
 
-Reset the demo user from the interface, or run:
+```powershell
+New-Item -ItemType Directory -Force data | Out-Null
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe scripts/seed.py
+```
+
+## Start the application
+
+Start the API in the first terminal:
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn lexitrace.main:app --app-dir apps/api --host 127.0.0.1 --port 8000
+```
+
+Start the interface in a second terminal:
+
+```powershell
+Set-Location apps/web
+npm run dev -- --host 127.0.0.1
+```
+
+Open http://localhost:5173. API documentation and direct inspection endpoints are available at
+http://localhost:8000/docs.
+
+## Primary interactions
+
+1. Teach `Kiwi -> Kivi` with learned-context scope and the observation
+   `Review the Kiwi service dashboard.`
+2. Run `Inspect the Kiwi platform deployment.` The output should use `Kivi` even though it shares
+   no literal learned context words. Inspect the semantic and sparse evidence in the result.
+3. Run `Buy kiwi fruit from the shop.` The output should remain unchanged and expose its blocker.
+4. Teach `Aditya -> Aaditya` with global scope and try it without special context.
+5. Open the memory detail, evidence, and history views; reject or confirm an intervention.
+6. Reset the demo and confirm that memories, observations, and traces disappear.
+
+## Run the evaluations
+
+Run the 28-case smoke suite against the complete hybrid product:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run.py
+```
+
+Run the fixed 252-case robustness suite with predeclared calibration and held-out splits:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run.py --dataset data/benchmark/robustness.jsonl --output results/robustness
+```
+
+Run chronological journeys against the hybrid product and semantic-disabled ablation:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run_journeys.py
+```
+
+The first semantic run may download the declared local model. No transcript is sent to a hosted
+inference API. Regenerate the fixed robustness corpus only when intentionally creating a new
+dataset version:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/build_robustness_dataset.py
+```
+
+## Inspect results and state
+
+- `results/latest`: smoke summary, report, and per-case JSONL
+- `results/robustness`: robustness summary, visible failures, and per-case JSONL
+- `results/journeys`: hybrid/ablation summary, report, and chronological cases
+- `data/lexitrace.db`: persistent SQLite memory state
+- `GET /api/v1/memories`: current memory state
+- `GET /api/v1/decisions/{trace_id}`: persisted decision explanation
+
+Every evaluated case retains the input, expected and actual behavior, relevant memory and
+observation provenance, reason codes, blockers, database allocation, model calls, API cost, and
+latency.
+
+## Reset
+
+Reset all product state while the API is running:
 
 ```powershell
 Invoke-RestMethod -Method Post http://localhost:8000/api/v1/reset
 ```
 
-Stop the application:
+Or reset through the repository script while the API is stopped:
 
 ```powershell
-docker compose down
+.\.venv\Scripts\python.exe scripts/reset.py
 ```
 
-Remove the local Docker database and return to a completely empty installation:
+To recreate the database from an empty file, stop the API and run:
+
+```powershell
+Remove-Item -LiteralPath data\lexitrace.db -ErrorAction SilentlyContinue
+.\.venv\Scripts\python.exe -m alembic upgrade head
+.\.venv\Scripts\python.exe scripts/seed.py
+```
+
+## Submission preflight
+
+Run this before handing over a commit. It verifies required artifacts, result hashes, the migration
+head, version agreement, corpus size, the documented review path, and common credential patterns.
+
+```powershell
+.\.venv\Scripts\python.exe scripts/verify_submission.py
+```
+
+## Optional Docker path
+
+Docker Desktop with Docker Compose provides an alternative local path:
+
+```powershell
+docker compose up --build
+docker compose exec api python scripts/seed.py
+docker compose exec api python evaluation/run.py
+```
+
+Open http://localhost:5173. Generated results are bind-mounted into the repository `results`
+directory. Reset user state through the interface or API. Remove the containerized database and
+model cache with:
 
 ```powershell
 docker compose down --volumes
 ```
-
-## Native development
-
-Requirements: Python 3.12 and Node.js 20 or newer.
-
-Backend:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev,semantic]"
-alembic upgrade head
-uvicorn lexitrace.main:app --app-dir apps/api --reload
-```
-
-Frontend, in a second terminal:
-
-```powershell
-cd apps/web
-npm install
-npm run dev
-```
-
-Run backend tests:
-
-```powershell
-python -m pytest
-```
-
-Run the reproducible north-star benchmark:
-
-```powershell
-python evaluation/run.py
-```
-
-Run chronological semantic and ASR journeys, including the sparse ablation:
-
-```powershell
-python evaluation/run_journeys.py
-```
-
-Backfill semantic vectors for usable observations created before migration `0004`:
-
-```powershell
-python scripts/backfill_semantic.py
-```
-
-Inspect `results/latest/report.md`, `results/latest/summary.json`, and
-`results/latest/cases.jsonl`. Every LexiTrace result includes its persisted trace ID and candidate
-details.
-
-Seed demonstration memories:
-
-```powershell
-python scripts/seed.py
-```
-
-Reset all native local data:
-
-```powershell
-python scripts/reset.py
-```
-
-## Primary interactions
-
-1. Teach `Kiwi -> Kivi` with learned-context scope and the example
-   `Review the Kiwi service dashboard.`
-2. Run `Inspect the Kiwi platform deployment.` and inspect the semantic evidence. This sentence
-   deliberately shares no learned context keywords.
-3. Run `Buy kiwi fruit from the shop.` and inspect the explicit context blocker.
-4. Teach `Aditya -> Aaditya` with global scope and try it without special context.
-5. Reset the demo and confirm that all user memories and traces disappear.
-
-The 28-case smoke suite covers deterministic safety and lifecycle behavior. The chronological
-journey suite separately measures semantic generalization, negative-prototype recovery, ASR N-best
-recovery, and the sparse-context ablation. Both are development benchmarks rather than external
-claims of production accuracy.

@@ -188,7 +188,7 @@ class Decision(Base):
     action: Mapped[str] = mapped_column(String(20))
     trace_json: Mapped[str] = mapped_column(Text)
     total_latency_ms: Mapped[float] = mapped_column(Float)
-    engine_version: Mapped[str] = mapped_column(String(30), default="0.5.0")
+    engine_version: Mapped[str] = mapped_column(String(30), default="0.6.0")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
 

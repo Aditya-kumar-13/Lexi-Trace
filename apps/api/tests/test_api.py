@@ -27,6 +27,26 @@ class DomainSemanticEncoder:
         }
 
 
+class SpySemanticEncoder:
+    enabled = True
+    model_name = "test/spy-encoder"
+
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def encode(self, text: str) -> list[float]:
+        self.calls += 1
+        return [1.0, 0.0]
+
+    def status(self) -> dict:
+        return {
+            "enabled": True,
+            "model": self.model_name,
+            "state": "ready",
+            "error": None,
+        }
+
+
 def make_client(tmp_path: Path, semantic_encoder=None) -> TestClient:
     database_url = f"sqlite:///{(tmp_path / 'test.db').as_posix()}"
     engine = build_engine(database_url)
@@ -237,6 +257,32 @@ def test_global_name_memory_applies_without_context(tmp_path: Path) -> None:
         )
         assert response.status_code == 200
         assert response.json()["memory_aware_text"] == "Ask Aaditya to review this."
+
+
+def test_global_exact_memory_skips_semantics_and_prunes_overlapping_fuzzy_spans(
+    tmp_path: Path,
+) -> None:
+    encoder = SpySemanticEncoder()
+    with make_client(tmp_path, encoder) as client:
+        teach(
+            client,
+            canonical_form="Kubernetes",
+            variants=["Kuber net ease"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        response = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Open the Kuber net ease dashboard."},
+        ).json()
+
+        assert response["memory_aware_text"] == "Open the Kubernetes dashboard."
+        assert response["action"] == "apply"
+        assert len(response["candidates"]) == 1
+        assert response["candidates"][0]["features"]["match_method"] == "exact"
+        assert response["candidates"][0]["features"]["semantic_model"] == "not_required"
+        assert encoder.calls == 0
 
 
 def test_manual_context_override_remains_auditable_and_replaceable(tmp_path: Path) -> None:

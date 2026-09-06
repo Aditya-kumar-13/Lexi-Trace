@@ -47,8 +47,10 @@ Retrieval is not permission to edit. The following blockers prevent automatic ap
 - `INSUFFICIENT_WINNER_MARGIN`
 - `OVERLAPPING_WINNER`
 
-The numeric decision score is diagnostic, not a calibrated probability. Probability calibration is
-planned for milestone 0.6, after a held-out journey dataset exists.
+The numeric decision score is diagnostic, not a calibrated probability. Policy v2 raises the
+minimum contextual support from 0.12 to 0.15 based only on the fixed robustness calibration split;
+the held-out split is reported unchanged. This removes calibration false interventions without
+claiming probability calibration.
 
 Thresholds and component weights live in the versioned `lexitrace/policy.toml` file. Every decision
 trace records the policy version, so benchmark results can be reproduced and policy changes cannot
@@ -63,5 +65,6 @@ silently alter historical interpretation.
 
 ## Next architectural increment
 
-The next increment separates retrieval-recall evaluation from intervention precision, adds learned
-ASR confusion statistics, and calibrates action thresholds on held-out chronological journeys.
+The next increment adds provider-specific ASR confusion statistics learned from accepted and
+rejected interventions. It must remain word-level evidence and must not broaden into semantic,
+episodic, or factual memory.

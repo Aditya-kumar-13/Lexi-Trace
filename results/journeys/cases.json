@@ -10,10 +10,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 9.95,
+      "latency_ms": 5.59,
+      "trace_id": "84bc3de0-7d52-40f2-8604-9fcd4f9b6e05",
       "candidates": [
         {
-          "memory_id": "f2f08510-14c3-4530-a8a5-d0fa55cfcb6f",
+          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -54,7 +55,69 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Inspect the Kiwi platform deployment.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Inspect the Kivi platform deployment.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "5fa4356b-aed3-4a98-b05d-233dbe63e97c",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 167936,
+        "page_count": 41,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1351,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "semantic-generalization",
@@ -66,10 +129,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 8.672,
+      "latency_ms": 1.82,
+      "trace_id": "4cbb3c60-addf-4983-b677-e4029297b7d9",
       "candidates": [
         {
-          "memory_id": "f2f08510-14c3-4530-a8a5-d0fa55cfcb6f",
+          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -110,7 +174,69 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice the kiwi after breakfast.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Slice the kiwi after breakfast.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "5fa4356b-aed3-4a98-b05d-233dbe63e97c",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 167936,
+        "page_count": 41,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 2702,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -122,10 +248,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.919,
+      "latency_ms": 1.987,
+      "trace_id": "aa714b67-4327-4314-b002-88e5b992db4c",
       "candidates": [
         {
-          "memory_id": "556bed77-18b6-4184-b6ea-2f6addbbaa82",
+          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -154,7 +281,7 @@
             "semantic_margin": 0.0,
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
-            "semantic_model": "disabled",
+            "semantic_model": "not_required",
             "positive_evidence_matches": "",
             "negative_evidence_matches": "",
             "context_evidence_count": 0,
@@ -163,7 +290,73 @@
             "match_method": "asr_alternative"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Open the company dashboard.",
+        "alternatives": [
+          {
+            "text": "Open the Kiwi dashboard.",
+            "confidence": 0.95,
+            "provider": "journey-asr"
+          }
+        ]
+      },
+      "expected": {
+        "output": "Open the Kivi dashboard.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "f0271cf1-90c1-4f59-9c15-63c4448a1a51",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 167936,
+        "page_count": 41,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 2325,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -175,10 +368,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.346,
+      "latency_ms": 2.751,
+      "trace_id": "f98a847b-a5e3-46b7-935c-f4052ea22336",
       "candidates": [
         {
-          "memory_id": "556bed77-18b6-4184-b6ea-2f6addbbaa82",
+          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -207,7 +401,7 @@
             "semantic_margin": 0.0,
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
-            "semantic_model": "disabled",
+            "semantic_model": "not_required",
             "positive_evidence_matches": "",
             "negative_evidence_matches": "",
             "context_evidence_count": 0,
@@ -216,7 +410,73 @@
             "match_method": "asr_alternative"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Open the company dashboard.",
+        "alternatives": [
+          {
+            "text": "Open the Kiwi dashboard.",
+            "confidence": 0.35,
+            "provider": "journey-asr"
+          }
+        ]
+      },
+      "expected": {
+        "output": "Open the company dashboard.",
+        "action": "abstain"
+      },
+      "memory_state": [
+        {
+          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "f0271cf1-90c1-4f59-9c15-63c4448a1a51",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 167936,
+        "page_count": 41,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3660,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -228,10 +488,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.962,
+      "latency_ms": 2.281,
+      "trace_id": "a6c876cc-b608-469d-b5e0-082e7716d807",
       "candidates": [
         {
-          "memory_id": "30803f61-97b8-4042-8a78-2059993ebb7c",
+          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -270,7 +531,69 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Add Kiwi fruit to the breakfast bowl.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Add Kivi fruit to the breakfast bowl.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "f5c436b3-6e70-4cb0-8995-b96761658a8b",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 167936,
+        "page_count": 41,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 2441,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -282,10 +605,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": false,
-      "latency_ms": 6.709,
+      "latency_ms": 2.503,
+      "trace_id": "6df31106-8397-4a77-a1c9-1364cf93209b",
       "candidates": [
         {
-          "memory_id": "30803f61-97b8-4042-8a78-2059993ebb7c",
+          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -326,7 +650,79 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice the Kiwi for a morning meal.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Slice the Kiwi for a morning meal.",
+        "action": "abstain"
+      },
+      "memory_state": [
+        {
+          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 1,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "f5c436b3-6e70-4cb0-8995-b96761658a8b",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "b9cdd6c6-dd7e-485e-ab90-6d1aa71e5920",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": -1.0,
+              "accepted": false,
+              "reason_code": "USER_REJECTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 6,
+            "sources": [
+              "explicit_example",
+              "rejected_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3793,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 12,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2
+        }
+      }
     }
   ],
   "hybrid": [
@@ -340,10 +736,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 165.639,
+      "latency_ms": 98.645,
+      "trace_id": "5a4a8648-102d-4848-9138-4d1607f6079f",
       "candidates": [
         {
-          "memory_id": "ecf1a4cd-f9e3-4a7c-b139-9eef7cc2844f",
+          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -383,7 +780,71 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Inspect the Kiwi platform deployment.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Inspect the Kivi platform deployment.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "fe63d2a8-84d4-4050-a66f-b9924bab1586",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 1,
+            "negative": 0,
+            "models": [
+              "BAAI/bge-small-en-v1.5"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 8070,
+        "trace_payload_bytes": 2397,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 4,
+          "context_embeddings": 1,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "semantic-generalization",
@@ -395,10 +856,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 174.528,
+      "latency_ms": 96.207,
+      "trace_id": "47626ad9-8b74-4206-b215-5e5302e3f02f",
       "candidates": [
         {
-          "memory_id": "ecf1a4cd-f9e3-4a7c-b139-9eef7cc2844f",
+          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -440,7 +902,71 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice the kiwi after breakfast.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Slice the kiwi after breakfast.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "fe63d2a8-84d4-4050-a66f-b9924bab1586",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 1,
+            "negative": 0,
+            "models": [
+              "BAAI/bge-small-en-v1.5"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 8070,
+        "trace_payload_bytes": 3806,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 4,
+          "context_embeddings": 1,
+          "decisions": 2,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -452,10 +978,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 157.743,
+      "latency_ms": 3.381,
+      "trace_id": "e06f8acc-25c9-4d54-9295-4dbc16d63d42",
       "candidates": [
         {
-          "memory_id": "90b87b04-3a6c-46b8-9c05-087293702515",
+          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -484,7 +1011,7 @@
             "semantic_margin": 0.0,
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
-            "semantic_model": "BAAI/bge-small-en-v1.5",
+            "semantic_model": "not_required",
             "positive_evidence_matches": "",
             "negative_evidence_matches": "",
             "context_evidence_count": 0,
@@ -493,7 +1020,73 @@
             "match_method": "asr_alternative"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Open the company dashboard.",
+        "alternatives": [
+          {
+            "text": "Open the Kiwi dashboard.",
+            "confidence": 0.95,
+            "provider": "journey-asr"
+          }
+        ]
+      },
+      "expected": {
+        "output": "Open the Kivi dashboard.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "e15003fc-9560-4e37-974b-a70d40ee1f9a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 2335,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -505,10 +1098,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 155.43,
+      "latency_ms": 2.961,
+      "trace_id": "637428ad-cba7-46fe-828f-12fa5a2a8ced",
       "candidates": [
         {
-          "memory_id": "90b87b04-3a6c-46b8-9c05-087293702515",
+          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -537,7 +1131,7 @@
             "semantic_margin": 0.0,
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
-            "semantic_model": "BAAI/bge-small-en-v1.5",
+            "semantic_model": "not_required",
             "positive_evidence_matches": "",
             "negative_evidence_matches": "",
             "context_evidence_count": 0,
@@ -546,7 +1140,73 @@
             "match_method": "asr_alternative"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Open the company dashboard.",
+        "alternatives": [
+          {
+            "text": "Open the Kiwi dashboard.",
+            "confidence": 0.35,
+            "provider": "journey-asr"
+          }
+        ]
+      },
+      "expected": {
+        "output": "Open the company dashboard.",
+        "action": "abstain"
+      },
+      "memory_state": [
+        {
+          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "e15003fc-9560-4e37-974b-a70d40ee1f9a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3680,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -558,10 +1218,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 156.126,
+      "latency_ms": 113.05,
+      "trace_id": "b313fb45-a499-43df-8fdc-39c6bfa4afa9",
       "candidates": [
         {
-          "memory_id": "b0231e5d-efc6-49a7-a12c-50d3fcecb336",
+          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -601,7 +1262,71 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Add Kiwi fruit to the breakfast bowl.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Add Kivi fruit to the breakfast bowl.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "b6ea8fe4-13ec-4ebe-9b5a-e2a4e15d51d5",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "explicit_example"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 1,
+            "negative": 0,
+            "models": [
+              "BAAI/bge-small-en-v1.5"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 184320,
+        "page_count": 45,
+        "page_size": 4096,
+        "vector_payload_bytes": 8041,
+        "trace_payload_bytes": 2535,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 6,
+          "context_embeddings": 1,
+          "decisions": 1,
+          "memory_versions": 1
+        }
+      }
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -613,10 +1338,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 165.545,
+      "latency_ms": 103.588,
+      "trace_id": "3dd2830b-11b0-4723-9f61-12bb200fd4e2",
       "candidates": [
         {
-          "memory_id": "b0231e5d-efc6-49a7-a12c-50d3fcecb336",
+          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -659,7 +1385,81 @@
             "match_method": "exact"
           }
         }
-      ]
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice the Kiwi for a morning meal.",
+        "alternatives": []
+      },
+      "expected": {
+        "output": "Slice the Kiwi for a morning meal.",
+        "action": "abstain"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "canonical_form": "Kivi",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 1,
+          "variants": [
+            "Kiwi"
+          ],
+          "observations": [
+            {
+              "observation_id": "b6ea8fe4-13ec-4ebe-9b5a-e2a4e15d51d5",
+              "evidence_type": "explicit_teach",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "7dc67dbf-18e2-4a03-b433-ef8b52308e9b",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Kiwi",
+              "target_span": "Kivi",
+              "reliability": -1.0,
+              "accepted": false,
+              "reason_code": "USER_REJECTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 6,
+            "sources": [
+              "explicit_example",
+              "rejected_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 1,
+            "negative": 1,
+            "models": [
+              "BAAI/bge-small-en-v1.5"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 200704,
+        "page_count": 49,
+        "page_size": 4096,
+        "vector_payload_bytes": 16082,
+        "trace_payload_bytes": 3974,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 12,
+          "context_embeddings": 2,
+          "decisions": 2,
+          "memory_versions": 2
+        }
+      }
     }
   ]
 }

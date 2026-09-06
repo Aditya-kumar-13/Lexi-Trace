@@ -340,7 +340,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.5.0</span><span>Hybrid context · Local semantic model</span></footer>
+      <footer><span>LexiTrace 0.6.0</span><span>Hybrid context · Local semantic model</span></footer>
     </div>
   );
 }

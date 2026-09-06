@@ -4,6 +4,9 @@ WORKDIR /app
 COPY pyproject.toml ./
 COPY apps/api ./apps/api
 COPY migrations ./migrations
+COPY evaluation ./evaluation
+COPY data/benchmark ./data/benchmark
+COPY scripts ./scripts
 COPY alembic.ini ./
 RUN pip install --no-cache-dir ".[semantic]"
 ENV PYTHONPATH=/app/apps/api
