@@ -4,14 +4,16 @@ LexiTrace is a local-first, inspectable personal word-memory prototype for Kivi.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone
+## Current milestone: 0.3.0
 
 The first vertical slice is implemented:
 
-- explicit teaching with global or contextual scope;
+- explicit teaching with global or learned-context scope;
 - correction observation that creates unconfirmed candidates;
 - persisted SQLite memories, variants, observations, and decision traces;
-- high-confidence intervention, visible suggestion, and contextual abstention;
+- observation-backed positive and negative context evidence with source provenance;
+- explicit safety blockers instead of hidden score caps;
+- decision-score traces that separate evidence strength from permission to edit;
 - memory inspection, editing, deletion, and per-user reset APIs;
 - React interface for teaching, inference, memory state, and score traces;
 - Alembic migrations, seed script, Docker Compose, and integration tests;
@@ -22,11 +24,15 @@ The first vertical slice is implemented:
 ## Product rule
 
 Retrieval is not permission to edit. A memory must be confirmed, score above the apply threshold,
-survive negative-context checks, and beat overlapping alternatives by a safe margin.
+have sufficient learned context when scoped contextually, survive contradictory evidence, and beat
+overlapping alternatives by a safe margin. Manual context lists remain API-level advanced overrides;
+the default product path learns context from correction examples and feedback.
 
 ## Development
 
-See [RUN.md](RUN.md) for the exact local and Docker workflows.
+See [RUN.md](RUN.md) for the exact local and Docker workflows and
+[docs/architecture.md](docs/architecture.md) for the decision flow, safety policy, and current
+limitations.
 
 ## AI use
 

@@ -11,7 +11,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from .config import Settings
-from .database import Base, build_engine, build_session_factory, get_session
+from .database import build_engine, build_session_factory, get_session
 from .engine import (
     apply_decision_feedback,
     infer,
@@ -19,9 +19,10 @@ from .engine import (
     normalize,
     observe_correction,
     record_memory_version,
+    replace_manual_context_evidence,
     teach_explicit,
 )
-from .models import Decision, Memory, MemoryVersion, Observation
+from .models import ContextEvidence, Decision, Memory, MemoryVersion, Observation
 from .schemas import (
     CorrectionObservationRequest,
     CorrectionObservationResponse,
@@ -47,13 +48,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-        Base.metadata.create_all(engine)
         yield
         engine.dispose()
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.2.0",
+        version="0.3.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
@@ -68,7 +68,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/api/v1/health")
     def health() -> dict[str, str]:
-        return {"status": "ok", "version": "0.2.0"}
+        return {"status": "ok", "version": "0.3.0"}
 
     @app.post(
         "/api/v1/observations/explicit",
@@ -131,6 +131,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             memory.canonical_form = changes["canonical_form"]
             memory.canonical_normalized = normalize(changes["canonical_form"])
         if "state" in changes:
+            if changes["state"] == "confirmed" and memory.state != "confirmed":
+                memory.evidence_confidence = 1.0
+                memory.support_count += 1
             memory.state = changes["state"]
         if "scope_mode" in changes:
             memory.scope_mode = changes["scope_mode"]
@@ -138,6 +141,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             memory.positive_context_json = json.dumps(changes["positive_context"])
         if "negative_context" in changes:
             memory.negative_context_json = json.dumps(changes["negative_context"])
+        replace_manual_context_evidence(
+            session,
+            memory=memory,
+            positive_context=changes.get("positive_context"),
+            negative_context=changes.get("negative_context"),
+        )
+        session.flush()
+        session.expire(memory, ["context_evidence"])
         record_memory_version(
             session,
             memory,
@@ -174,6 +185,31 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 "created_at": version.created_at,
             }
             for version in versions
+        ]
+
+    @app.get("/api/v1/memories/{memory_id}/context-evidence")
+    def memory_context_evidence(memory_id: str, session: DatabaseSession) -> list[dict]:
+        memory = session.get(Memory, memory_id)
+        if memory is None:
+            raise HTTPException(status_code=404, detail="Memory not found")
+        evidence = session.scalars(
+            select(ContextEvidence)
+            .where(ContextEvidence.memory_id == memory_id)
+            .order_by(ContextEvidence.created_at, ContextEvidence.feature)
+        ).all()
+        return [
+            {
+                "id": item.id,
+                "observation_id": item.observation_id,
+                "polarity": item.polarity,
+                "feature": item.feature,
+                "feature_kind": item.feature_kind,
+                "weight": item.weight,
+                "source_type": item.source_type,
+                "context_text": item.context_text,
+                "created_at": item.created_at,
+            }
+            for item in evidence
         ]
 
     @app.delete("/api/v1/memories/{memory_id}", status_code=status.HTTP_204_NO_CONTENT)

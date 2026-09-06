@@ -10,6 +10,11 @@ type Memory = {
   evidence_confidence: number;
   positive_context: string[];
   negative_context: string[];
+  context_evidence_count: number;
+  context_profile: {
+    positive: { feature: string; weight: number }[];
+    negative: { feature: string; weight: number }[];
+  };
   variants: { surface_form: string; metaphone_key: string }[];
 };
 
@@ -21,6 +26,7 @@ type Candidate = {
   score: number;
   action: string;
   reason_codes: string[];
+  blockers: string[];
   features: Record<string, string | number | boolean>;
 };
 
@@ -61,9 +67,8 @@ function App() {
   const [canonical, setCanonical] = useState("Kivi");
   const [variant, setVariant] = useState("Kiwi");
   const [scope, setScope] = useState<"global" | "contextual">("contextual");
-  const [positive, setPositive] = useState("Sarvam, service");
-  const [negative, setNegative] = useState("fruit, food, shopping");
-  const [formatted, setFormatted] = useState("Review the Sarvam Kiwi service.");
+  const [example, setExample] = useState("Review the Kiwi service dashboard.");
+  const [formatted, setFormatted] = useState("Check the Kiwi service deployment.");
   const [result, setResult] = useState<Inference | null>(null);
   const [history, setHistory] = useState<MemoryVersion[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
@@ -97,8 +102,11 @@ function App() {
           canonical_form: canonical,
           variants: [variant],
           scope_mode: scope,
-          positive_context: positive.split(",").map((item) => item.trim()).filter(Boolean),
-          negative_context: negative.split(",").map((item) => item.trim()).filter(Boolean),
+          positive_context: [],
+          negative_context: [],
+          formatted_text: scope === "contextual" ? example : "",
+          accepted_text:
+            scope === "contextual" ? example.split(variant).join(canonical) : "",
         }),
       });
       await refreshMemories();
@@ -222,12 +230,15 @@ function App() {
               <div><p className="eyebrow">TEACH</p><h2>Create a trusted memory</h2></div>
             </div>
             <label>What Kivi should write<input value={canonical} onChange={(e) => setCanonical(e.target.value)} /></label>
-            <label>What it may hear<input value={variant} onChange={(e) => setVariant(e.target.value)} /></label>
             <div className="two-column">
-              <label>Scope<select value={scope} onChange={(e) => setScope(e.target.value as "global" | "contextual")}><option value="global">Global</option><option value="contextual">Contextual</option></select></label>
-              <label>Positive context<input value={positive} onChange={(e) => setPositive(e.target.value)} disabled={scope === "global"} /></label>
+              <label>Scope<select value={scope} onChange={(e) => setScope(e.target.value as "global" | "contextual")}><option value="global">Global</option><option value="contextual">Learn from context</option></select></label>
+              <label>Observed form<input value={variant} onChange={(e) => setVariant(e.target.value)} /></label>
             </div>
-            <label>Never apply around<input value={negative} onChange={(e) => setNegative(e.target.value)} placeholder="fruit, shopping" /></label>
+            <label>
+              Example where this correction is right
+              <input value={example} onChange={(e) => setExample(e.target.value)} disabled={scope === "global"} />
+            </label>
+            <small>LexiTrace extracts evidence from this example. It does not turn words into hand-written rules.</small>
             <button type="submit" disabled={busy}>Teach this word <span>→</span></button>
           </form>
 
@@ -238,7 +249,7 @@ function App() {
             </div>
             <label>Formatted transcript<textarea value={formatted} onChange={(e) => setFormatted(e.target.value)} rows={5} /></label>
             <div className="sample-row">
-              <button type="button" className="chip" onClick={() => setFormatted("Review the Sarvam Kiwi service.")}>Work context</button>
+              <button type="button" className="chip" onClick={() => setFormatted("Check the Kiwi service deployment.")}>Related work context</button>
               <button type="button" className="chip" onClick={() => setFormatted("Buy kiwi fruit from the shop.")}>Fruit context</button>
             </div>
             <button type="submit" disabled={busy}>Run decision <span>→</span></button>
@@ -267,6 +278,14 @@ function App() {
               <article className="memory-card" key={memory.id}>
                 <div><strong>{memory.canonical_form}</strong><span>{memory.variants.map((item) => item.surface_form).join(", ")} → {memory.canonical_form}</span></div>
                 <div className="memory-meta"><span>{memory.state}</span><span>{memory.scope_mode}</span><span>{Math.round(memory.evidence_confidence * 100)}% evidence</span></div>
+                <small>{memory.context_evidence_count} learned context signals</small>
+                {memory.context_profile.positive.length > 0 && (
+                  <div className="reason-list">
+                    {memory.context_profile.positive.slice(0, 4).map((item) => (
+                      <span key={item.feature}>{item.feature.replace(/^(token|bigram):/, "")}</span>
+                    ))}
+                  </div>
+                )}
                 <button type="button" className="history-button" onClick={() => loadHistory(memory.id)}>View history</button>
               </article>
             ))}
@@ -288,8 +307,11 @@ function App() {
             <div className="panel-heading compact"><span className="step">04</span><div><p className="eyebrow">DECISION TRACE</p><h2>Why it acted</h2></div></div>
             {!strongestCandidate ? <p className="empty">Run a decision to inspect candidates, reasons, and scores.</p> : (
               <div className="trace-content">
-                <div className="score-line"><span>Confidence</span><strong>{(strongestCandidate.score * 100).toFixed(1)}%</strong></div>
+                <div className="score-line"><span>Decision score</span><strong>{(strongestCandidate.score * 100).toFixed(1)}%</strong></div>
                 <div className="score-track"><span style={{ width: `${strongestCandidate.score * 100}%` }} /></div>
+                {strongestCandidate.blockers.length > 0 && (
+                  <div className="reason-list">{strongestCandidate.blockers.map((blocker) => <span key={blocker}>{blocker.replaceAll("_", " ")}</span>)}</div>
+                )}
                 <div className="reason-list">{strongestCandidate.reason_codes.map((reason: string) => <span key={reason}>{reason.replaceAll("_", " ")}</span>)}</div>
                 <dl>{Object.entries(strongestCandidate.features).map(([key, value]) => <div key={key}><dt>{key.replaceAll("_", " ")}</dt><dd>{String(value)}</dd></div>)}</dl>
                 <small>Trace {result?.trace_id}</small>
@@ -299,7 +321,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.2.0</span><span>Local-first · No model key required</span></footer>
+      <footer><span>LexiTrace 0.3.0</span><span>Observation-backed · No model key required</span></footer>
     </div>
   );
 }

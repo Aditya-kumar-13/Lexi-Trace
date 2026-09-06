@@ -2,11 +2,15 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 from lexitrace.config import Settings
+from lexitrace.database import Base, build_engine
 from lexitrace.main import create_app
 
 
 def make_client(tmp_path: Path) -> TestClient:
     database_url = f"sqlite:///{(tmp_path / 'test.db').as_posix()}"
+    engine = build_engine(database_url)
+    Base.metadata.create_all(engine)
+    engine.dispose()
     app = create_app(Settings(database_url=database_url, cors_origins=()))
     return TestClient(app)
 
@@ -46,7 +50,85 @@ def test_contextual_memory_applies_in_positive_context_and_abstains_in_negative_
         assert negative.status_code == 200
         assert negative.json()["memory_aware_text"] == "Buy kiwi fruit from the shop."
         assert negative.json()["action"] == "abstain"
-        assert "NEGATIVE_CONTEXT_MATCH" in negative.json()["candidates"][0]["reason_codes"]
+        assert "NEGATIVE_CONTEXT_EVIDENCE" in negative.json()["candidates"][0]["blockers"]
+
+
+def test_correction_observation_builds_context_profile_and_generalizes(
+    tmp_path: Path,
+) -> None:
+    with make_client(tmp_path) as client:
+        observation = client.post(
+            "/api/v1/observations/correction",
+            json={
+                "formatted_text": "Review the Kiwi service dashboard.",
+                "accepted_text": "Review the Kivi service dashboard.",
+                "confirm_candidates": True,
+            },
+        )
+        assert observation.status_code == 201
+        memory_id = observation.json()["created_memory_ids"][0]
+        memory = client.get(f"/api/v1/memories/{memory_id}").json()
+        learned_features = {item["feature"] for item in memory["context_profile"]["positive"]}
+        assert "token:service" in learned_features
+        assert "token:dashboard" in learned_features
+        assert memory["context_profile"]["positive_sources"] == ["accepted_correction"]
+        evidence = client.get(f"/api/v1/memories/{memory_id}/context-evidence").json()
+        assert evidence
+        assert {item["observation_id"] for item in evidence} == set(
+            observation.json()["observation_ids"]
+        )
+        assert {item["source_type"] for item in evidence} == {"accepted_correction"}
+
+        related = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Check the Kiwi service deployment."},
+        ).json()
+        assert related["memory_aware_text"] == "Check the Kivi service deployment."
+        assert related["action"] == "apply"
+        assert related["candidates"][0]["blockers"] == []
+
+        unrelated = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Slice the kiwi after breakfast."},
+        ).json()
+        assert unrelated["memory_aware_text"] == "Slice the kiwi after breakfast."
+        assert "CONTEXT_EVIDENCE_INSUFFICIENT" in unrelated["candidates"][0]["blockers"]
+        assert unrelated["candidates"][0]["score"] != 0.89
+
+
+def test_rejected_intervention_adds_negative_context_evidence(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        memory = teach(
+            client,
+            positive_context=[],
+            negative_context=[],
+            formatted_text="Buy Kiwi fruit at the market.",
+            accepted_text="Buy Kivi fruit at the market.",
+        )
+        inference = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Buy Kiwi fruit at the market."},
+        ).json()
+        assert inference["action"] == "apply"
+        feedback = client.post(
+            f"/api/v1/decisions/{inference['trace_id']}/feedback",
+            json={
+                "verdict": "incorrect",
+                "corrected_text": "Buy Kiwi fruit at the market.",
+            },
+        )
+        assert feedback.status_code == 200
+        client.patch(f"/api/v1/memories/{memory['id']}", json={"state": "confirmed"})
+
+        repeated = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Buy Kiwi fruit at the market."},
+        ).json()
+        assert repeated["action"] == "abstain"
+        assert "NEGATIVE_CONTEXT_EVIDENCE" in repeated["candidates"][0]["blockers"]
+        updated = client.get(f"/api/v1/memories/{memory['id']}").json()
+        assert updated["context_profile"]["negative_observations"] == 1
+        assert updated["context_profile"]["negative_sources"] == ["rejected_intervention"]
 
 
 def test_global_name_memory_applies_without_context(tmp_path: Path) -> None:
@@ -65,6 +147,27 @@ def test_global_name_memory_applies_without_context(tmp_path: Path) -> None:
         )
         assert response.status_code == 200
         assert response.json()["memory_aware_text"] == "Ask Aaditya to review this."
+
+
+def test_manual_context_override_remains_auditable_and_replaceable(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        memory = teach(
+            client,
+            positive_context=["service"],
+            negative_context=[],
+        )
+        updated = client.patch(
+            f"/api/v1/memories/{memory['id']}",
+            json={"positive_context": ["deployment"]},
+        )
+        assert updated.status_code == 200
+        profile_features = {
+            item["feature"] for item in updated.json()["context_profile"]["positive"]
+        }
+        assert "token:deployment" in profile_features
+        assert "token:service" not in profile_features
+        evidence = client.get(f"/api/v1/memories/{memory['id']}/context-evidence").json()
+        assert {item["source_type"] for item in evidence} == {"manual_override"}
 
 
 def test_passive_correction_stays_candidate_until_confirmed(tmp_path: Path) -> None:

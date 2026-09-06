@@ -76,6 +76,8 @@ class MemoryResponse(BaseModel):
     contradiction_count: int
     positive_context: list[str]
     negative_context: list[str]
+    context_evidence_count: int
+    context_profile: dict
     variants: list[VariantResponse]
     created_at: datetime
     updated_at: datetime
@@ -115,6 +117,7 @@ class CandidateTrace(BaseModel):
     score: float
     action: Literal["apply", "suggest", "abstain"]
     reason_codes: list[str]
+    blockers: list[str]
     features: dict[str, float | str | bool]
 
 

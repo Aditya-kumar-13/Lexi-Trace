@@ -168,6 +168,10 @@ def calculate_metrics(rows: list[dict[str, Any]], system: str) -> dict[str, Any]
         is_changed and not is_exact for is_changed, is_exact in zip(changed, exact, strict=True)
     ]
     latencies = [float(result["latency_ms"]) for result in results]
+    action_matches = [
+        result["action"] == row["expected_action"]
+        for row, result in zip(rows, results, strict=True)
+    ]
 
     interventions = sum(changed)
     required_count = sum(required)
@@ -176,6 +180,7 @@ def calculate_metrics(rows: list[dict[str, Any]], system: str) -> dict[str, Any]
         "cases": len(rows),
         "exact_matches": sum(exact),
         "exact_match_rate": round(sum(exact) / len(rows), 4),
+        "action_accuracy": round(sum(action_matches) / len(rows), 4),
         "interventions": interventions,
         "useful_interventions": sum(useful),
         "wrong_interventions": sum(wrong_interventions),
@@ -200,23 +205,25 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
     lines = [
         "# LexiTrace benchmark report",
         "",
-        f"Dataset: `{summary['dataset']}`  ",
-        f"SHA-256: `{summary['dataset_sha256']}`  ",
+        f"Dataset: `{summary['dataset']}`",
+        f"SHA-256: `{summary['dataset_sha256']}`",
         f"Cases: **{summary['case_count']}**",
         "",
         "## System comparison",
         "",
-        "| System | Exact match | Precision | Recall | Incorrect interventions | p95 latency |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| System | Exact match | Action accuracy | Precision | Recall | "
+        "Incorrect interventions | p95 latency |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for system, metrics in summary["systems"].items():
         precision = metrics["intervention_precision"]
         recall = metrics["intervention_recall"]
         lines.append(
-            "| {system} | {exact:.1%} | {precision} | {recall} | {incorrect:.1%} | "
+            "| {system} | {exact:.1%} | {action:.1%} | {precision} | {recall} | {incorrect:.1%} | "
             "{latency:.3f} ms |".format(
                 system=system,
                 exact=metrics["exact_match_rate"],
+                action=metrics["action_accuracy"],
                 precision="n/a" if precision is None else f"{precision:.1%}",
                 recall="n/a" if recall is None else f"{recall:.1%}",
                 incorrect=metrics["incorrect_intervention_rate"],
@@ -224,7 +231,12 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
             )
         )
 
-    failures = [row for row in rows if not row["systems"]["lexitrace"]["exact"]]
+    failures = [
+        row
+        for row in rows
+        if not row["systems"]["lexitrace"]["exact"]
+        or not row["systems"]["lexitrace"]["action_matches"]
+    ]
     lines.extend(["", "## LexiTrace failures", ""])
     if not failures:
         lines.append("No failures in this smoke benchmark.")
@@ -247,9 +259,10 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
             "## Interpretation",
             "",
             "This is the initial north-star smoke suite, not the final claimed benchmark. "
-            "Its purpose is to keep positive corrections, contextual negatives, candidate "
-            "memories, conflicts, boundaries, and lifecycle behavior executable while the "
-            "larger curated benchmark is built.",
+            "Contextual cases are initialized from observed correction sentences rather than "
+            "hand-written keyword gates. The suite keeps learned context, candidate memories, "
+            "conflicts, boundaries, and lifecycle behavior executable while the larger curated "
+            "journey benchmark is built.",
             "",
         ]
     )

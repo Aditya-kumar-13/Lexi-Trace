@@ -1,12 +1,13 @@
 {
   "dataset": "data/benchmark/smoke.jsonl",
-  "dataset_sha256": "592a8b46327b6e06f8294cb741f862e4f775bc846172331ed7d421c43e911b59",
+  "dataset_sha256": "3455df3d22b8ed106f0eee83ecd45221310c7450988073808b9a39993a5d55f8",
   "case_count": 28,
   "systems": {
     "no_memory": {
       "cases": 28,
       "exact_matches": 16,
       "exact_match_rate": 0.5714,
+      "action_accuracy": 0.25,
       "interventions": 0,
       "useful_interventions": 0,
       "wrong_interventions": 0,
@@ -25,6 +26,7 @@
       "cases": 28,
       "exact_matches": 19,
       "exact_match_rate": 0.6786,
+      "action_accuracy": 0.5357,
       "interventions": 15,
       "useful_interventions": 9,
       "wrong_interventions": 6,
@@ -43,6 +45,7 @@
       "cases": 28,
       "exact_matches": 28,
       "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
       "interventions": 12,
       "useful_interventions": 12,
       "wrong_interventions": 0,
@@ -51,10 +54,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 2.519,
-        "p50": 2.27,
-        "p95": 4.49,
-        "p99": 5.08
+        "mean": 1.382,
+        "p50": 1.259,
+        "p95": 2.36,
+        "p99": 3.687
       }
     }
   }

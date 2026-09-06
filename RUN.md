@@ -83,10 +83,10 @@ python scripts/reset.py
 
 ## Primary interactions
 
-1. Teach `Kiwi -> Kivi` with contextual scope, positive context `Sarvam, service`, and negative
-   context `fruit, food, shopping`.
-2. Run `Review the Sarvam Kiwi service.` and inspect the applied decision.
-3. Run `Buy kiwi fruit from the shop.` and inspect the abstention.
+1. Teach `Kiwi -> Kivi` with learned-context scope and the example
+   `Review the Kiwi service dashboard.`
+2. Run `Check the Kiwi service deployment.` and inspect the applied decision.
+3. Run `Buy kiwi fruit from the shop.` and inspect the explicit context blocker.
 4. Teach `Aditya -> Aaditya` with global scope and try it without special context.
 5. Reset the demo and confirm that all user memories and traces disappear.
 

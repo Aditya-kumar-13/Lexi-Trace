@@ -49,6 +49,11 @@ class Memory(Base):
         cascade="all, delete-orphan",
         order_by="MemoryVersion.version_number",
     )
+    context_evidence: Mapped[list[ContextEvidence]] = relationship(
+        back_populates="memory",
+        cascade="all, delete-orphan",
+        lazy="selectin",
+    )
 
 
 class MemoryVariant(Base):
@@ -92,6 +97,42 @@ class Observation(Base):
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
     memory: Mapped[Memory | None] = relationship(back_populates="observations")
+    context_evidence: Mapped[list[ContextEvidence]] = relationship(
+        back_populates="observation",
+        cascade="all, delete-orphan",
+    )
+
+
+class ContextEvidence(Base):
+    __tablename__ = "context_evidence"
+    __table_args__ = (
+        UniqueConstraint(
+            "observation_id",
+            "polarity",
+            "feature",
+            name="uq_context_evidence_observation_feature",
+        ),
+        Index("ix_context_evidence_memory_polarity", "memory_id", "polarity"),
+        Index("ix_context_evidence_feature", "feature"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    memory_id: Mapped[str] = mapped_column(
+        ForeignKey("memories.id", ondelete="CASCADE"), index=True
+    )
+    observation_id: Mapped[str] = mapped_column(
+        ForeignKey("observations.id", ondelete="CASCADE"), index=True
+    )
+    polarity: Mapped[str] = mapped_column(String(10))
+    feature: Mapped[str] = mapped_column(String(250))
+    feature_kind: Mapped[str] = mapped_column(String(20), default="token")
+    weight: Mapped[float] = mapped_column(Float, default=1.0)
+    source_type: Mapped[str] = mapped_column(String(40))
+    context_text: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(default=utc_now)
+
+    memory: Mapped[Memory] = relationship(back_populates="context_evidence")
+    observation: Mapped[Observation] = relationship(back_populates="context_evidence")
 
 
 class Decision(Base):
@@ -106,7 +147,7 @@ class Decision(Base):
     action: Mapped[str] = mapped_column(String(20))
     trace_json: Mapped[str] = mapped_column(Text)
     total_latency_ms: Mapped[float] = mapped_column(Float)
-    engine_version: Mapped[str] = mapped_column(String(30), default="0.2.0")
+    engine_version: Mapped[str] = mapped_column(String(30), default="0.3.0")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
 

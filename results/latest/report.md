@@ -1,16 +1,16 @@
 # LexiTrace benchmark report
 
-Dataset: `data/benchmark/smoke.jsonl`  
-SHA-256: `592a8b46327b6e06f8294cb741f862e4f775bc846172331ed7d421c43e911b59`  
+Dataset: `data/benchmark/smoke.jsonl`
+SHA-256: `3455df3d22b8ed106f0eee83ecd45221310c7450988073808b9a39993a5d55f8`
 Cases: **28**
 
 ## System comparison
 
-| System | Exact match | Precision | Recall | Incorrect interventions | p95 latency |
-|---|---:|---:|---:|---:|---:|
-| no_memory | 57.1% | n/a | 0.0% | 0.0% | 0.000 ms |
-| naive_dictionary | 67.9% | 60.0% | 75.0% | 21.4% | 0.000 ms |
-| lexitrace | 100.0% | 100.0% | 100.0% | 0.0% | 4.490 ms |
+| System | Exact match | Action accuracy | Precision | Recall | Incorrect interventions | p95 latency |
+|---|---:|---:|---:|---:|---:|---:|
+| no_memory | 57.1% | 25.0% | n/a | 0.0% | 0.0% | 0.000 ms |
+| naive_dictionary | 67.9% | 53.6% | 60.0% | 75.0% | 21.4% | 0.000 ms |
+| lexitrace | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 2.360 ms |
 
 ## LexiTrace failures
 
@@ -18,4 +18,4 @@ No failures in this smoke benchmark.
 
 ## Interpretation
 
-This is the initial north-star smoke suite, not the final claimed benchmark. Its purpose is to keep positive corrections, contextual negatives, candidate memories, conflicts, boundaries, and lifecycle behavior executable while the larger curated benchmark is built.
+This is the initial north-star smoke suite, not the final claimed benchmark. Contextual cases are initialized from observed correction sentences rather than hand-written keyword gates. The suite keeps learned context, candidate memories, conflicts, boundaries, and lifecycle behavior executable while the larger curated journey benchmark is built.
