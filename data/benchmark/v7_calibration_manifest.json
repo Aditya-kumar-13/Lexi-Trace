@@ -1,10 +1,10 @@
 {
-  "dataset_version": "v7-calibration-corpus-v2",
+  "dataset_version": "v7-calibration-corpus-v3",
   "status": "frozen_before_score_search",
   "roles": {
     "calibration": {
       "path": "data/benchmark/v7_calibration.jsonl",
-      "sha256": "cc6e4934f94c9c0d7c71ae4b6831b7f905070be9214f1e126c24e243136c4a36",
+      "sha256": "bd3ce16a3f591a277b99bb193564f403427209e34d37c5dd8c47d249f5e0adc9",
       "cases": 62,
       "categories": {
         "asr-alternative-confidence": 6,
@@ -15,9 +15,19 @@
         "unconfirmed-memory": 4
       }
     },
+    "calibration_journeys": {
+      "path": "data/benchmark/v7_calibration_journeys.jsonl",
+      "sha256": "69980c46e8bcf6aa061311d0c28a0b5e352bb68cafb3936c01a1308b5b4e9fc5",
+      "cases": 3,
+      "journey_ids": [
+        "cal-learn-exact-asr-route",
+        "cal-asr-route-does-not-cross-model",
+        "cal-negative-context-outweighs-rank"
+      ]
+    },
     "safety": {
       "path": "data/benchmark/v7_calibration_safety.jsonl",
-      "sha256": "114bf5d72b1a1089b5e826cdee75adf8a8ecf81c09b35a7a1f78406a600b1fb6",
+      "sha256": "8ec6a847853d197ba29f4f328cb73516147c51181c567574d0e3be8bd86c726a",
       "cases": 16,
       "categories": {
         "safety-context-homograph": 4,

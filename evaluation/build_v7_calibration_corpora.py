@@ -455,12 +455,16 @@ def write_jsonl(path: Path, rows: list[dict]) -> dict:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows)
     path.write_text(payload, encoding="utf-8")
-    return {
+    record = {
         "path": path.relative_to(ROOT).as_posix(),
         "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "cases": len(rows),
-        "categories": dict(sorted(Counter(row["category"] for row in rows).items())),
     }
+    if all("category" in row for row in rows):
+        record["categories"] = dict(sorted(Counter(row["category"] for row in rows).items()))
+    else:
+        record["journey_ids"] = [row["journey_id"] for row in rows]
+    return record
 
 
 def main() -> None:
