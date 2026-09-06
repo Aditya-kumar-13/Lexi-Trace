@@ -1,0 +1,265 @@
+{
+  "artifact_version": "v7-score-calibration-v3",
+  "status": "safety_pass",
+  "policy_candidate": "2026-09-v7-calibration-candidate-3",
+  "selection_rule": [
+    "minimize_wrong_automatic_interventions",
+    "maximize_exact_outputs",
+    "maximize_action_matches",
+    "maximize_useful_interventions",
+    "minimize_upper_clamping",
+    "prefer_more_conservative_apply_threshold",
+    "prefer_lower_positive_weight_sum",
+    "prefer_values_nearest_v6_baseline_when_outcomes_tie",
+    "stable_lexical_tie_break"
+  ],
+  "search_space": {
+    "context_transform": [
+      "linear",
+      "sqrt",
+      "legacy_power_035"
+    ],
+    "lexical_weight": [
+      0.6,
+      0.65,
+      0.7
+    ],
+    "authorization_weight": [
+      0.05,
+      0.1,
+      0.14
+    ],
+    "context_weight": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "phonetic_weight": [
+      0.05,
+      0.1
+    ],
+    "asr_alternative_weight": [
+      0.05,
+      0.1
+    ],
+    "learned_asr_weight": [
+      0.09,
+      0.15,
+      0.21
+    ],
+    "negative_context_weight": [
+      0.65,
+      1.0
+    ],
+    "apply_threshold": [
+      0.85,
+      0.89,
+      0.93,
+      0.95
+    ],
+    "suggest_threshold": [
+      0.65,
+      0.72
+    ]
+  },
+  "searched_candidates": 15552,
+  "inputs": {
+    "corpus_manifest": {
+      "path": "data/benchmark/v7_calibration_manifest.json",
+      "sha256": "85d78b1437ac1a9310cf896173c0fe85daa1dff29927b2a138180260055d3fc3"
+    },
+    "static_traces": {
+      "path": "results/v7/calibration/input-traces/cases.jsonl",
+      "sha256": "8e41b15b78f96c222d079d9df01e160d70d9937e40ec06d4d09a46f3b91ccda4"
+    },
+    "journey_traces": {
+      "path": "results/v7/calibration/journey-traces/cases.json",
+      "sha256": "65378a64a5f933bf84738dab1aa1053e8aef6cb0cb2726533fb7ae2da0e355fe"
+    },
+    "safety_traces": {
+      "path": "results/v7/safety/precalibration-traces/cases.jsonl",
+      "sha256": "2643335029f865b71b3fcc17e4dc0e64005a4ba082e8db0a221ecb5a02a027f0"
+    }
+  },
+  "corpus_hash_checks": {
+    "calibration": true,
+    "calibration_journeys": true,
+    "safety": true
+  },
+  "calibration_cases": 72,
+  "safety_cases": 16,
+  "baseline": {
+    "config": {
+      "context_transform": "legacy_power_035",
+      "lexical_weight": 0.72,
+      "authorization_weight": 0.14,
+      "context_weight": 0.1,
+      "phonetic_weight": 0.1,
+      "asr_alternative_weight": 0.1,
+      "learned_asr_weight": 0.09,
+      "negative_context_weight": 0.65,
+      "apply_threshold": 0.93,
+      "suggest_threshold": 0.72
+    },
+    "metrics": {
+      "cases": 72,
+      "exact_matches": 65,
+      "action_matches": 64,
+      "wrong_interventions": 5,
+      "useful_interventions": 41,
+      "upper_clamped": 44,
+      "lower_clamped": 0,
+      "candidate_scores": 74,
+      "failures": [
+        {
+          "case_id": "cal-context-positive-02-02",
+          "category": "contextual-positive",
+          "expected_output": "Review Aiven service alerts before the migration.",
+          "actual_output": "Review Ivan service alerts before the migration.",
+          "expected_action": "apply",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        },
+        {
+          "case_id": "cal-asr-alternative-02",
+          "category": "asr-alternative-confidence",
+          "expected_output": "Open the monitoring overview.",
+          "actual_output": "Open the Grafana overview.",
+          "expected_action": "abstain",
+          "actual_action": "apply",
+          "wrong_intervention": true
+        },
+        {
+          "case_id": "cal-asr-alternative-03",
+          "category": "asr-alternative-confidence",
+          "expected_output": "Open the monitoring overview.",
+          "actual_output": "Open the monitoring overview.",
+          "expected_action": "abstain",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        },
+        {
+          "case_id": "cal-learn-exact-asr-route:5",
+          "category": "journey:cal-learn-exact-asr-route",
+          "expected_output": "Ask Nivetha to inspect the release.",
+          "actual_output": "Ask Nivitha to inspect the release.",
+          "expected_action": "apply",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        },
+        {
+          "case_id": "cal-asr-route-does-not-cross-model:2",
+          "category": "journey:cal-asr-route-does-not-cross-model",
+          "expected_output": "Message Dhruvie about the review.",
+          "actual_output": "Message Dhruvi about the review.",
+          "expected_action": "suggest",
+          "actual_action": "apply",
+          "wrong_intervention": true
+        },
+        {
+          "case_id": "cal-asr-route-does-not-cross-model:3",
+          "category": "journey:cal-asr-route-does-not-cross-model",
+          "expected_output": "Message Dhruvie about the review.",
+          "actual_output": "Message Dhruvi about the review.",
+          "expected_action": "suggest",
+          "actual_action": "apply",
+          "wrong_intervention": true
+        },
+        {
+          "case_id": "cal-asr-route-does-not-cross-model:4",
+          "category": "journey:cal-asr-route-does-not-cross-model",
+          "expected_output": "Message Dhruvie about the review.",
+          "actual_output": "Message Dhruvi about the review.",
+          "expected_action": "suggest",
+          "actual_action": "apply",
+          "wrong_intervention": true
+        },
+        {
+          "case_id": "cal-asr-route-does-not-cross-model:5",
+          "category": "journey:cal-asr-route-does-not-cross-model",
+          "expected_output": "Message Dhruvie about the review.",
+          "actual_output": "Message Dhruvi about the review.",
+          "expected_action": "suggest",
+          "actual_action": "apply",
+          "wrong_intervention": true
+        }
+      ]
+    }
+  },
+  "observed_engine_baseline": {
+    "exact_matches": 65,
+    "action_matches": 64,
+    "wrong_interventions": 5
+  },
+  "replay_matches_engine_baseline": true,
+  "selected": {
+    "config": {
+      "context_transform": "legacy_power_035",
+      "lexical_weight": 0.7,
+      "authorization_weight": 0.14,
+      "context_weight": 0.1,
+      "phonetic_weight": 0.05,
+      "asr_alternative_weight": 0.05,
+      "learned_asr_weight": 0.21,
+      "negative_context_weight": 0.65,
+      "apply_threshold": 0.89,
+      "suggest_threshold": 0.72
+    },
+    "metrics": {
+      "cases": 72,
+      "exact_matches": 71,
+      "action_matches": 69,
+      "wrong_interventions": 0,
+      "useful_interventions": 42,
+      "upper_clamped": 0,
+      "lower_clamped": 0,
+      "candidate_scores": 74,
+      "failures": [
+        {
+          "case_id": "cal-context-positive-02-02",
+          "category": "contextual-positive",
+          "expected_output": "Review Aiven service alerts before the migration.",
+          "actual_output": "Review Ivan service alerts before the migration.",
+          "expected_action": "apply",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        },
+        {
+          "case_id": "cal-asr-alternative-02",
+          "category": "asr-alternative-confidence",
+          "expected_output": "Open the monitoring overview.",
+          "actual_output": "Open the monitoring overview.",
+          "expected_action": "abstain",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        },
+        {
+          "case_id": "cal-asr-alternative-03",
+          "category": "asr-alternative-confidence",
+          "expected_output": "Open the monitoring overview.",
+          "actual_output": "Open the monitoring overview.",
+          "expected_action": "abstain",
+          "actual_action": "suggest",
+          "wrong_intervention": false
+        }
+      ]
+    }
+  },
+  "selected_safety": {
+    "cases": 16,
+    "exact_matches": 16,
+    "action_matches": 16,
+    "wrong_interventions": 0,
+    "useful_interventions": 4,
+    "upper_clamped": 0,
+    "lower_clamped": 0,
+    "candidate_scores": 16,
+    "failures": []
+  },
+  "safety_was_not_used_for_selection": true,
+  "final_holdout_accessed": false,
+  "search_results": {
+    "path": "search-results.jsonl",
+    "sha256": "dac4d39e0a7f13fde61eb385633baed08cf631f8b81cab6dec3f7d62b7e6a695"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "dataset": "data/benchmark/v7_calibration_safety.jsonl",
+  "dataset_sha256": "8ec6a847853d197ba29f4f328cb73516147c51181c567574d0e3be8bd86c726a",
+  "case_count": 16,
+  "minimum_conflict_positive_context": 0.2,
+  "authorization_score_mode": "boolean",
+  "dataset_versions": [
+    "v7-calibration-corpus-v3"
+  ],
+  "split_counts": {
+    "calibration": 16
+  },
+  "lexitrace_by_split": {
+    "calibration": {
+      "cases": 16,
+      "exact_matches": 16,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "interventions": 4,
+      "useful_interventions": 4,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 1.0,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 71.551,
+        "p50": 88.883,
+        "p95": 106.933,
+        "p99": 115.767
+      }
+    }
+  },
+  "model_usage": {
+    "execution": "local",
+    "model": "BAAI/bge-small-en-v1.5",
+    "embedding_calls": 24,
+    "input_characters": 1155,
+    "failed_calls": 0,
+    "hosted_requests": 0,
+    "estimated_api_cost_usd": 0.0
+  },
+  "database": {
+    "peak_allocated_bytes": 221184,
+    "peak_trace_payload_bytes": 6243,
+    "peak_rows": {
+      "memories": 1,
+      "memory_variants": 1,
+      "observations": 1,
+      "context_evidence": 8,
+      "context_embeddings": 1,
+      "decisions": 1,
+      "memory_versions": 1,
+      "asr_outcomes": 0
+    }
+  },
+  "systems": {
+    "no_memory": {
+      "cases": 16,
+      "exact_matches": 12,
+      "exact_match_rate": 0.75,
+      "action_accuracy": 0.0,
+      "interventions": 0,
+      "useful_interventions": 0,
+      "wrong_interventions": 0,
+      "intervention_precision": null,
+      "intervention_recall": 0.0,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      }
+    },
+    "naive_dictionary": {
+      "cases": 16,
+      "exact_matches": 8,
+      "exact_match_rate": 0.5,
+      "action_accuracy": 0.25,
+      "interventions": 12,
+      "useful_interventions": 4,
+      "wrong_interventions": 8,
+      "intervention_precision": 0.3333,
+      "intervention_recall": 1.0,
+      "incorrect_intervention_rate": 0.5,
+      "abstention_accuracy": 0.3333,
+      "latency_ms": {
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      }
+    },
+    "lexitrace": {
+      "cases": 16,
+      "exact_matches": 16,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "interventions": 4,
+      "useful_interventions": 4,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 1.0,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 71.551,
+        "p50": 88.883,
+        "p95": 106.933,
+        "p99": 115.767
+      }
+    }
+  }
+}
