@@ -52,7 +52,9 @@ REQUIRED_PATHS = [
     "docs/v7-definition-of-done.md",
     "docs/v7-experimental-protocol.md",
     "docs/v7-phase1-findings.md",
+    "docs/v7-phase2-phonetic-experiment.md",
     "evaluation/v7_holdout_seal.json",
+    "data/benchmark/v7_indic_phonetic_development.jsonl",
     "results/baselines/v6/manifest.json",
     "results/v7/development/baseline-v6-instrumented/summary.json",
     "results/v7/development/baseline-v6-instrumented/failures.json",
@@ -60,6 +62,9 @@ REQUIRED_PATHS = [
     "scripts/holdout_guard.py",
     "scripts/run_quality_gate.py",
     "evaluation/run_v7_instrumentation.py",
+    "evaluation/run_phonetic_ground_truth.py",
+    "results/v7/development/indic-transliteration-experiment-v1/summary.json",
+    "results/v7/development/indic-transliteration-experiment-v1/cases.json",
 ]
 RUN_TOKENS = [
     "Primary review method",

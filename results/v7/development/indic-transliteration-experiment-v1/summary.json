@@ -1,0 +1,325 @@
+{
+  "artifact_version": "indic-phonetic-development-v1",
+  "evidence_role": "structural_development",
+  "algorithm": "jellyfish.metaphone equality",
+  "dataset": "data/benchmark/v7_indic_phonetic_development.jsonl",
+  "dataset_sha256": "d30ef36cbc730af7ca8aa9717010bb4adf54694eb688471bc684ba85dbf24d45",
+  "pairs": 48,
+  "labels": {
+    "same": 24,
+    "different": 24
+  },
+  "metaphone": {
+    "true_positive": 10,
+    "false_positive": 4,
+    "false_negative": 14,
+    "true_negative": 20,
+    "accuracy": 0.625,
+    "precision": 0.7143,
+    "recall": 0.4167,
+    "failures": 18
+  },
+  "indic_similarity_curve": [
+    {
+      "threshold": 0.7,
+      "true_positive": 24,
+      "false_positive": 14,
+      "false_negative": 0,
+      "true_negative": 10,
+      "accuracy": 0.7083,
+      "precision": 0.6316,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.71,
+      "true_positive": 24,
+      "false_positive": 14,
+      "false_negative": 0,
+      "true_negative": 10,
+      "accuracy": 0.7083,
+      "precision": 0.6316,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.72,
+      "true_positive": 24,
+      "false_positive": 14,
+      "false_negative": 0,
+      "true_negative": 10,
+      "accuracy": 0.7083,
+      "precision": 0.6316,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.73,
+      "true_positive": 24,
+      "false_positive": 9,
+      "false_negative": 0,
+      "true_negative": 15,
+      "accuracy": 0.8125,
+      "precision": 0.7273,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.74,
+      "true_positive": 24,
+      "false_positive": 9,
+      "false_negative": 0,
+      "true_negative": 15,
+      "accuracy": 0.8125,
+      "precision": 0.7273,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.75,
+      "true_positive": 24,
+      "false_positive": 9,
+      "false_negative": 0,
+      "true_negative": 15,
+      "accuracy": 0.8125,
+      "precision": 0.7273,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.76,
+      "true_positive": 24,
+      "false_positive": 9,
+      "false_negative": 0,
+      "true_negative": 15,
+      "accuracy": 0.8125,
+      "precision": 0.7273,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.77,
+      "true_positive": 24,
+      "false_positive": 8,
+      "false_negative": 0,
+      "true_negative": 16,
+      "accuracy": 0.8333,
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.78,
+      "true_positive": 24,
+      "false_positive": 8,
+      "false_negative": 0,
+      "true_negative": 16,
+      "accuracy": 0.8333,
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.79,
+      "true_positive": 24,
+      "false_positive": 8,
+      "false_negative": 0,
+      "true_negative": 16,
+      "accuracy": 0.8333,
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.8,
+      "true_positive": 24,
+      "false_positive": 8,
+      "false_negative": 0,
+      "true_negative": 16,
+      "accuracy": 0.8333,
+      "precision": 0.75,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.81,
+      "true_positive": 24,
+      "false_positive": 3,
+      "false_negative": 0,
+      "true_negative": 21,
+      "accuracy": 0.9375,
+      "precision": 0.8889,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.82,
+      "true_positive": 24,
+      "false_positive": 3,
+      "false_negative": 0,
+      "true_negative": 21,
+      "accuracy": 0.9375,
+      "precision": 0.8889,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.83,
+      "true_positive": 24,
+      "false_positive": 3,
+      "false_negative": 0,
+      "true_negative": 21,
+      "accuracy": 0.9375,
+      "precision": 0.8889,
+      "recall": 1.0
+    },
+    {
+      "threshold": 0.84,
+      "true_positive": 23,
+      "false_positive": 2,
+      "false_negative": 1,
+      "true_negative": 22,
+      "accuracy": 0.9375,
+      "precision": 0.92,
+      "recall": 0.9583
+    },
+    {
+      "threshold": 0.85,
+      "true_positive": 23,
+      "false_positive": 2,
+      "false_negative": 1,
+      "true_negative": 22,
+      "accuracy": 0.9375,
+      "precision": 0.92,
+      "recall": 0.9583
+    },
+    {
+      "threshold": 0.86,
+      "true_positive": 22,
+      "false_positive": 2,
+      "false_negative": 2,
+      "true_negative": 22,
+      "accuracy": 0.9167,
+      "precision": 0.9167,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.87,
+      "true_positive": 22,
+      "false_positive": 2,
+      "false_negative": 2,
+      "true_negative": 22,
+      "accuracy": 0.9167,
+      "precision": 0.9167,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.88,
+      "true_positive": 22,
+      "false_positive": 2,
+      "false_negative": 2,
+      "true_negative": 22,
+      "accuracy": 0.9167,
+      "precision": 0.9167,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.89,
+      "true_positive": 22,
+      "false_positive": 1,
+      "false_negative": 2,
+      "true_negative": 23,
+      "accuracy": 0.9375,
+      "precision": 0.9565,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.9,
+      "true_positive": 22,
+      "false_positive": 1,
+      "false_negative": 2,
+      "true_negative": 23,
+      "accuracy": 0.9375,
+      "precision": 0.9565,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.91,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.92,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.93,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.94,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.95,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.96,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.97,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.98,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    },
+    {
+      "threshold": 0.99,
+      "true_positive": 22,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 24,
+      "accuracy": 0.9583,
+      "precision": 1.0,
+      "recall": 0.9167
+    }
+  ],
+  "selection": "none; structural development curve only"
+}

@@ -1,0 +1,482 @@
+[
+  {
+    "pair_id": "same-001",
+    "left": "Aditya",
+    "right": "Aaditya",
+    "same_name": true,
+    "phenomenon": "vowel_length",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-002",
+    "left": "Aditya",
+    "right": "Adithya",
+    "same_name": true,
+    "phenomenon": "aspiration",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-003",
+    "left": "Aditya",
+    "right": "Adhitya",
+    "same_name": true,
+    "phenomenon": "aspiration_position",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-004",
+    "left": "Aaditya",
+    "right": "Aadithya",
+    "same_name": true,
+    "phenomenon": "vowel_length_and_aspiration",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-005",
+    "left": "Kartik",
+    "right": "Karthik",
+    "same_name": true,
+    "phenomenon": "aspiration",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-006",
+    "left": "Kartik",
+    "right": "Karthick",
+    "same_name": true,
+    "phenomenon": "aspiration_and_terminal_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-007",
+    "left": "Lakshmi",
+    "right": "Laxmi",
+    "same_name": true,
+    "phenomenon": "cluster_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-008",
+    "left": "Lakshman",
+    "right": "Laxman",
+    "same_name": true,
+    "phenomenon": "cluster_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-009",
+    "left": "Shreya",
+    "right": "Sreya",
+    "same_name": true,
+    "phenomenon": "sh_s_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-010",
+    "left": "Srishti",
+    "right": "Shrishti",
+    "same_name": true,
+    "phenomenon": "sh_s_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-011",
+    "left": "Shivani",
+    "right": "Sivani",
+    "same_name": true,
+    "phenomenon": "sh_s_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-012",
+    "left": "Aishwarya",
+    "right": "Aiswarya",
+    "same_name": true,
+    "phenomenon": "sh_s_romanization",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-013",
+    "left": "Vaishnavi",
+    "right": "Vyshnavi",
+    "same_name": true,
+    "phenomenon": "vowel_romanization",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-014",
+    "left": "Krishna",
+    "right": "Krishan",
+    "same_name": true,
+    "phenomenon": "schwa_position",
+    "metaphone_same": true,
+    "indic_similarity": 0.8333,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-015",
+    "left": "Siddharth",
+    "right": "Sidharth",
+    "same_name": true,
+    "phenomenon": "consonant_doubling",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-016",
+    "left": "Siddhartha",
+    "right": "Sidhartha",
+    "same_name": true,
+    "phenomenon": "consonant_doubling",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-017",
+    "left": "Madhav",
+    "right": "Maadhav",
+    "same_name": true,
+    "phenomenon": "vowel_length",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-018",
+    "left": "Deepak",
+    "right": "Dipak",
+    "same_name": true,
+    "phenomenon": "long_vowel_romanization",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-019",
+    "left": "Neeraj",
+    "right": "Niraj",
+    "same_name": true,
+    "phenomenon": "long_vowel_romanization",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-020",
+    "left": "Pooja",
+    "right": "Puja",
+    "same_name": true,
+    "phenomenon": "long_vowel_romanization",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-021",
+    "left": "Rohit",
+    "right": "Rohith",
+    "same_name": true,
+    "phenomenon": "terminal_aspiration",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-022",
+    "left": "Bhaskar",
+    "right": "Baskar",
+    "same_name": true,
+    "phenomenon": "aspiration",
+    "metaphone_same": false,
+    "indic_similarity": 1.0,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "same-023",
+    "left": "Mohammad",
+    "right": "Mohammed",
+    "same_name": true,
+    "phenomenon": "vowel_and_doubling",
+    "metaphone_same": true,
+    "indic_similarity": 0.8571,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "same-024",
+    "left": "Yusuf",
+    "right": "Yousuf",
+    "same_name": true,
+    "phenomenon": "vowel_romanization",
+    "metaphone_same": true,
+    "indic_similarity": 1.0,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-001",
+    "left": "Aditya",
+    "right": "Advait",
+    "same_name": false,
+    "phenomenon": "shared_prefix",
+    "metaphone_same": false,
+    "indic_similarity": 0.5455,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-002",
+    "left": "Aditya",
+    "right": "Amit",
+    "same_name": false,
+    "phenomenon": "shared_vowels",
+    "metaphone_same": false,
+    "indic_similarity": 0.6,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-003",
+    "left": "Kartik",
+    "right": "Kirtan",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 0.5,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-004",
+    "left": "Kartik",
+    "right": "Karan",
+    "same_name": false,
+    "phenomenon": "shared_prefix",
+    "metaphone_same": false,
+    "indic_similarity": 0.5455,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-005",
+    "left": "Lakshmi",
+    "right": "Lakshman",
+    "same_name": false,
+    "phenomenon": "shared_stem",
+    "metaphone_same": false,
+    "indic_similarity": 0.7273,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-006",
+    "left": "Shreya",
+    "right": "Shreyas",
+    "same_name": false,
+    "phenomenon": "terminal_extension",
+    "metaphone_same": false,
+    "indic_similarity": 0.9091,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-007",
+    "left": "Shivani",
+    "right": "Shivam",
+    "same_name": false,
+    "phenomenon": "shared_stem",
+    "metaphone_same": false,
+    "indic_similarity": 0.7273,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-008",
+    "left": "Aishwarya",
+    "right": "Ayesha",
+    "same_name": false,
+    "phenomenon": "shared_prefix",
+    "metaphone_same": false,
+    "indic_similarity": 0.5,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-009",
+    "left": "Vaishnavi",
+    "right": "Vaibhavi",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 0.7692,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-010",
+    "left": "Krishna",
+    "right": "Krish",
+    "same_name": false,
+    "phenomenon": "shortened_distinct_name",
+    "metaphone_same": false,
+    "indic_similarity": 0.8,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-011",
+    "left": "Siddharth",
+    "right": "Siddhant",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 0.8333,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-012",
+    "left": "Madhav",
+    "right": "Manav",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 0.8,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-013",
+    "left": "Deepak",
+    "right": "Deepika",
+    "same_name": false,
+    "phenomenon": "shared_stem",
+    "metaphone_same": true,
+    "indic_similarity": 0.7273,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "different-014",
+    "left": "Neeraj",
+    "right": "Dheeraj",
+    "same_name": false,
+    "phenomenon": "rhyme",
+    "metaphone_same": false,
+    "indic_similarity": 0.8,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-015",
+    "left": "Pooja",
+    "right": "Priya",
+    "same_name": false,
+    "phenomenon": "shared_boundary",
+    "metaphone_same": false,
+    "indic_similarity": 0.4444,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-016",
+    "left": "Rohit",
+    "right": "Mohit",
+    "same_name": false,
+    "phenomenon": "rhyme",
+    "metaphone_same": false,
+    "indic_similarity": 0.8,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-017",
+    "left": "Bhaskar",
+    "right": "Bhargav",
+    "same_name": false,
+    "phenomenon": "shared_prefix",
+    "metaphone_same": false,
+    "indic_similarity": 0.5,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-018",
+    "left": "Mohammed",
+    "right": "Mahmood",
+    "same_name": false,
+    "phenomenon": "shared_consonants",
+    "metaphone_same": false,
+    "indic_similarity": 0.6154,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-019",
+    "left": "Yusuf",
+    "right": "Yuvraj",
+    "same_name": false,
+    "phenomenon": "shared_prefix",
+    "metaphone_same": false,
+    "indic_similarity": 0.3636,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-020",
+    "left": "Kiran",
+    "right": "Karan",
+    "same_name": false,
+    "phenomenon": "single_vowel_change",
+    "metaphone_same": true,
+    "indic_similarity": 0.8,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "different-021",
+    "left": "Nitin",
+    "right": "Nikhil",
+    "same_name": false,
+    "phenomenon": "shared_prefix_and_length",
+    "metaphone_same": false,
+    "indic_similarity": 0.5455,
+    "metaphone_correct": true
+  },
+  {
+    "pair_id": "different-022",
+    "left": "Rohan",
+    "right": "Rohini",
+    "same_name": false,
+    "phenomenon": "shared_stem",
+    "metaphone_same": true,
+    "indic_similarity": 0.7273,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "different-023",
+    "left": "Ankit",
+    "right": "Aniket",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": true,
+    "indic_similarity": 0.7273,
+    "metaphone_correct": false
+  },
+  {
+    "pair_id": "different-024",
+    "left": "Aarav",
+    "right": "Arnav",
+    "same_name": false,
+    "phenomenon": "near_spelling",
+    "metaphone_same": false,
+    "indic_similarity": 0.8889,
+    "metaphone_correct": true
+  }
+]

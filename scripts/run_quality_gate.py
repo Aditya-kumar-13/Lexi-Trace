@@ -111,6 +111,15 @@ def main() -> None:
             ],
         )
         run(
+            "Indic phonetic development",
+            [
+                PYTHON,
+                "evaluation/run_phonetic_ground_truth.py",
+                "--output",
+                str(development / "phonetics"),
+            ],
+        )
+        run(
             "soak",
             [
                 PYTHON,
