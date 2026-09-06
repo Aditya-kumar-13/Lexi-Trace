@@ -20,15 +20,19 @@ REQUIRED_PATHS = [
     "apps/api/lexitrace/main.py",
     "apps/web/src/App.tsx",
     "migrations/versions/0004_semantic_context.py",
+    "migrations/versions/0005_asr_outcomes.py",
     "data/benchmark/smoke.jsonl",
     "data/benchmark/robustness.jsonl",
     "data/benchmark/journeys.jsonl",
+    "data/benchmark/asr_journeys.jsonl",
     "results/latest/summary.json",
     "results/latest/cases.jsonl",
     "results/robustness/summary.json",
     "results/robustness/cases.jsonl",
     "results/journeys/summary.json",
     "results/journeys/cases.json",
+    "results/asr-learning/summary.json",
+    "results/asr-learning/cases.json",
     "docs/brief-alignment.md",
     "docs/evaluation.md",
 ]
@@ -40,6 +44,7 @@ RUN_TOKENS = [
     "scripts/seed.py",
     "http://localhost:5173",
     "evaluation/run.py",
+    "evaluation/run_asr_learning.py",
     "data/benchmark/robustness.jsonl",
     "results/robustness",
     "api/v1/reset",
@@ -163,7 +168,12 @@ def main() -> None:
         f"cases={robustness_count}",
     )
 
-    for result_dir in ("results/latest", "results/robustness", "results/journeys"):
+    for result_dir in (
+        "results/latest",
+        "results/robustness",
+        "results/journeys",
+        "results/asr-learning",
+    ):
         check_results(checks, result_dir)
 
     secret_findings = scan_for_secrets()

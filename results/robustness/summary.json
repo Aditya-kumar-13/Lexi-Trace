@@ -23,10 +23,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 48.255,
-        "p50": 2.579,
-        "p95": 139.492,
-        "p99": 144.07
+        "mean": 65.685,
+        "p50": 5.173,
+        "p95": 179.478,
+        "p99": 182.418
       }
     },
     "heldout": {
@@ -42,10 +42,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 51.972,
-        "p50": 2.774,
-        "p95": 134.783,
-        "p99": 151.573
+        "mean": 69.134,
+        "p50": 5.472,
+        "p95": 179.605,
+        "p99": 190.304
       }
     }
   },
@@ -59,8 +59,8 @@
     "estimated_api_cost_usd": 0.0
   },
   "database": {
-    "peak_allocated_bytes": 176128,
-    "peak_trace_payload_bytes": 4210,
+    "peak_allocated_bytes": 212992,
+    "peak_trace_payload_bytes": 5403,
     "peak_rows": {
       "memories": 2,
       "memory_variants": 2,
@@ -68,7 +68,8 @@
       "context_evidence": 5,
       "context_embeddings": 1,
       "decisions": 1,
-      "memory_versions": 2
+      "memory_versions": 2,
+      "asr_outcomes": 0
     }
   },
   "systems": {
@@ -123,10 +124,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 50.364,
-        "p50": 2.774,
-        "p95": 136.774,
-        "p99": 145.154
+        "mean": 67.642,
+        "p50": 5.437,
+        "p95": 179.48,
+        "p99": 183.877
       }
     }
   }

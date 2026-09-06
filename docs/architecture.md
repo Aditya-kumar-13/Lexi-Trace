@@ -16,6 +16,8 @@ does not implement ASR and does not depend on Kivi infrastructure.
 6. Evaluate explicit blockers. A high score cannot bypass a blocker.
 7. Resolve competing and overlapping candidates before rewriting any characters.
 8. Persist the decision trace so feedback can be attributed to the memories that acted.
+9. Attribute feedback to an exact ASR confusion route. Reliability is derived from immutable
+   outcome events, not an opaque mutable counter.
 
 ## Observation-backed context
 
@@ -35,6 +37,18 @@ model version. Semantic failure never removes the deterministic fallback.
 ASR alternatives are treated as retrieval evidence, not editable output. Candidate spans found in
 an alternative are token-aligned back to the formatted transcript, and acoustic confidence becomes
 one visible feature in the same decision policy.
+
+## Learned ASR reliability
+
+ASR confidence and learned reliability are intentionally separate. The former is supplied by the
+provider for one hypothesis. The latter is a Beta posterior derived from user outcomes for the tuple
+`(user, memory, provider, model, rank, observed form, canonical form)`. The prior is Beta(1, 3), so
+one confirmation cannot imply certainty, and the learned contribution remains disabled until three
+distinct decision outcomes exist. Provider or model changes therefore return to cold start.
+
+Feedback can target a visible suggestion by memory and span. Each accepted or rejected target creates
+an ordinary observation plus an immutable ASR outcome linked to the original decision. The trace
+exposes outcome count, accepts, rejects, posterior mean, activation state, and exact contribution.
 
 ## Safety policy
 
@@ -63,8 +77,8 @@ silently alter historical interpretation.
 - An LLM-only decision engine would be difficult to reproduce, inspect, and run locally.
 - A hosted LLM or embedding API is unnecessary; the default semantic encoder runs locally.
 
-## Next architectural increment
+## Remaining limitation
 
-The next increment adds provider-specific ASR confusion statistics learned from accepted and
-rejected interventions. It must remain word-level evidence and must not broaden into semantic,
-episodic, or factual memory.
+The posterior is deliberately local and uncalibrated across providers. Real deployment data would
+be required to select priors by locale or provider and test decay under provider model drift. The
+prototype does not claim to recognize speech or estimate acoustic confidence itself.

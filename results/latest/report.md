@@ -10,7 +10,7 @@ Cases: **28**
 |---|---:|---:|---:|---:|---:|---:|
 | no_memory | 57.1% | 25.0% | n/a | 0.0% | 0.0% | 0.000 ms |
 | naive_dictionary | 67.9% | 53.6% | 60.0% | 75.0% | 21.4% | 0.000 ms |
-| lexitrace | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 117.047 ms |
+| lexitrace | 100.0% | 100.0% | 100.0% | 100.0% | 0.0% | 169.603 ms |
 
 ## Operational accounting
 
@@ -18,8 +18,8 @@ Cases: **28**
 - Embedding calls: **16**
 - Hosted model requests: **0**
 - Estimated API cost: **$0.00**
-- Peak allocated SQLite bytes: **176128**
-- Peak persisted trace payload bytes: **4155**
+- Peak allocated SQLite bytes: **212992**
+- Peak persisted trace payload bytes: **5348**
 
 ## LexiTrace failures
 

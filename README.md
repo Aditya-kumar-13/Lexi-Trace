@@ -5,7 +5,7 @@ backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 0.6.0
+## Current milestone: 0.7.0
 
 The first vertical slice is implemented:
 
@@ -28,6 +28,10 @@ The first vertical slice is implemented:
 - per-case input, expected/actual output, memory provenance, model use, cost, storage, and trace;
 - chronological journey evaluation with a sparse-context ablation;
 - fully documented native reviewer path, optional Docker path, and executable submission preflight.
+- provider/model/rank-specific ASR confusion outcomes linked to decisions and observations;
+- conservative Beta-posterior reliability that activates only after three independent outcomes;
+- feedback on safe suggestions, not only edits that were already auto-applied;
+- a frozen chronological ASR-learning suite, no-learning ablation, and precision/coverage curve.
 
 ## Product rule
 
@@ -37,6 +41,11 @@ overlapping alternatives by a safe margin. Manual context lists remain API-level
 the default product path learns context from correction examples and feedback. Semantic similarity
 can provide evidence when later language shares meaning but no literal context words. The sparse
 profile remains active for explanation and graceful degradation.
+
+Provider confidence is preserved as an input feature, not presented as calibrated truth. Repeated
+accepted and rejected outcomes build a separate reliability estimate for one exact provider, model,
+rank, observed form, and canonical form. It cannot override memory-state, context, negative-evidence,
+or collision blockers.
 
 ## Development
 

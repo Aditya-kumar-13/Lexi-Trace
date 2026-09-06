@@ -10,11 +10,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 5.59,
-      "trace_id": "84bc3de0-7d52-40f2-8604-9fcd4f9b6e05",
+      "latency_ms": 12.564,
+      "trace_id": "134e5e41-5ea8-47b1-bce4-2c8d03866cf8",
       "candidates": [
         {
-          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -36,6 +36,15 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -59,7 +68,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Inspect the Kiwi platform deployment.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Inspect the Kivi platform deployment.",
@@ -67,7 +77,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -79,7 +89,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5fa4356b-aed3-4a98-b05d-233dbe63e97c",
+              "observation_id": "1a085251-d1de-49ad-8c61-0fb108b8df45",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -99,15 +109,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 167936,
-        "page_count": 41,
+        "allocated_bytes": 204800,
+        "page_count": 50,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1351,
+        "trace_payload_bytes": 1692,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -115,9 +131,12 @@
           "context_evidence": 4,
           "context_embeddings": 0,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "semantic-generalization",
@@ -129,11 +148,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 1.82,
-      "trace_id": "4cbb3c60-addf-4983-b677-e4029297b7d9",
+      "latency_ms": 5.123,
+      "trace_id": "af3ec056-d3b8-44cf-ad1d-a27f8f00c5c0",
       "candidates": [
         {
-          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -155,6 +174,15 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -178,7 +206,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Slice the kiwi after breakfast.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Slice the kiwi after breakfast.",
@@ -186,7 +215,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "1d096c8c-fdd1-4710-99aa-197a04a472f6",
+          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -198,7 +227,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5fa4356b-aed3-4a98-b05d-233dbe63e97c",
+              "observation_id": "1a085251-d1de-49ad-8c61-0fb108b8df45",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -218,15 +247,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 167936,
-        "page_count": 41,
+        "allocated_bytes": 204800,
+        "page_count": 50,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2702,
+        "trace_payload_bytes": 3384,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -234,9 +269,12 @@
           "context_evidence": 4,
           "context_embeddings": 0,
           "decisions": 2,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -248,11 +286,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 1.987,
-      "trace_id": "aa714b67-4327-4314-b002-88e5b992db4c",
+      "latency_ms": 5.24,
+      "trace_id": "a4ee55a9-1d86-4e4a-9e36-393106b23986",
       "candidates": [
         {
-          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -262,7 +300,8 @@
           "action": "apply",
           "reason_codes": [
             "ASR_ALTERNATIVE_CANDIDATE",
-            "ASR_ALTERNATIVE_SUPPORT"
+            "ASR_ALTERNATIVE_SUPPORT",
+            "ASR_RELIABILITY_COLD_START"
           ],
           "blockers": [],
           "features": {
@@ -271,6 +310,15 @@
             "phonetic_match": false,
             "asr_alternative_confidence": 0.95,
             "asr_provider": "journey-asr",
+            "asr_model": "unknown",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.95,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -300,7 +348,8 @@
             "confidence": 0.95,
             "provider": "journey-asr"
           }
-        ]
+        ],
+        "asr": null
       },
       "expected": {
         "output": "Open the Kivi dashboard.",
@@ -308,7 +357,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
@@ -320,7 +369,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f0271cf1-90c1-4f59-9c15-63c4448a1a51",
+              "observation_id": "dd86d91e-cd4a-4468-acd8-15adcfea7dd7",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -338,15 +387,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 167936,
-        "page_count": 41,
+        "allocated_bytes": 204800,
+        "page_count": 50,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2325,
+        "trace_payload_bytes": 3002,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -354,9 +409,12 @@
           "context_evidence": 0,
           "context_embeddings": 0,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -368,11 +426,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 2.751,
-      "trace_id": "f98a847b-a5e3-46b7-935c-f4052ea22336",
+      "latency_ms": 5.391,
+      "trace_id": "ffe4614e-3dae-414c-9882-621f74fdde7c",
       "candidates": [
         {
-          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -382,7 +440,8 @@
           "action": "abstain",
           "reason_codes": [
             "ASR_ALTERNATIVE_CANDIDATE",
-            "ASR_ALTERNATIVE_SUPPORT"
+            "ASR_ALTERNATIVE_SUPPORT",
+            "ASR_RELIABILITY_COLD_START"
           ],
           "blockers": [],
           "features": {
@@ -391,6 +450,15 @@
             "phonetic_match": false,
             "asr_alternative_confidence": 0.35,
             "asr_provider": "journey-asr",
+            "asr_model": "unknown",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.35,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -420,7 +488,8 @@
             "confidence": 0.35,
             "provider": "journey-asr"
           }
-        ]
+        ],
+        "asr": null
       },
       "expected": {
         "output": "Open the company dashboard.",
@@ -428,7 +497,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "fac4c403-8407-407d-b5a6-95f103fb0562",
+          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
@@ -440,7 +509,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f0271cf1-90c1-4f59-9c15-63c4448a1a51",
+              "observation_id": "dd86d91e-cd4a-4468-acd8-15adcfea7dd7",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -458,15 +527,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 167936,
-        "page_count": 41,
+        "allocated_bytes": 212992,
+        "page_count": 52,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3660,
+        "trace_payload_bytes": 4704,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -474,9 +549,12 @@
           "context_evidence": 0,
           "context_embeddings": 0,
           "decisions": 2,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -488,11 +566,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 2.281,
-      "trace_id": "a6c876cc-b608-469d-b5e0-082e7716d807",
+      "latency_ms": 5.576,
+      "trace_id": "958d727f-b167-4ba0-ab06-827d6f7375bf",
       "candidates": [
         {
-          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -512,6 +590,15 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
@@ -535,7 +622,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Add Kiwi fruit to the breakfast bowl.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Add Kivi fruit to the breakfast bowl.",
@@ -543,7 +631,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -555,7 +643,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f5c436b3-6e70-4cb0-8995-b96761658a8b",
+              "observation_id": "5ce80e98-002b-466c-ac7d-63905f355d7e",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -575,15 +663,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 167936,
-        "page_count": 41,
+        "allocated_bytes": 212992,
+        "page_count": 52,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2441,
+        "trace_payload_bytes": 3066,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -591,9 +685,12 @@
           "context_evidence": 6,
           "context_embeddings": 0,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": "incorrect",
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -605,11 +702,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": false,
-      "latency_ms": 2.503,
-      "trace_id": "6df31106-8397-4a77-a1c9-1364cf93209b",
+      "latency_ms": 4.721,
+      "trace_id": "7b214f36-a7ef-4758-9bef-1530b876b573",
       "candidates": [
         {
-          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -631,6 +728,15 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -654,7 +760,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Slice the Kiwi for a morning meal.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Slice the Kiwi for a morning meal.",
@@ -662,7 +769,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "3d2feff6-c413-4ffd-91b5-1c3794f93b58",
+          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -674,7 +781,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f5c436b3-6e70-4cb0-8995-b96761658a8b",
+              "observation_id": "5ce80e98-002b-466c-ac7d-63905f355d7e",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -683,7 +790,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "b9cdd6c6-dd7e-485e-ab90-6d1aa71e5920",
+              "observation_id": "986e8a58-0bba-47fe-9d1d-241c0fe1898c",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -704,15 +811,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3793,
+        "trace_payload_bytes": 4759,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -720,9 +833,12 @@
           "context_evidence": 12,
           "context_embeddings": 0,
           "decisions": 2,
-          "memory_versions": 2
+          "memory_versions": 2,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     }
   ],
   "hybrid": [
@@ -736,11 +852,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 98.645,
-      "trace_id": "5a4a8648-102d-4848-9138-4d1607f6079f",
+      "latency_ms": 138.804,
+      "trace_id": "bd4810d0-5902-4741-99ac-ac08bb7f4eba",
       "candidates": [
         {
-          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -761,8 +877,17 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
-            "positive_context_similarity": 0.2937,
+            "positive_context_similarity": 0.2938,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
             "sparse_negative_similarity": 0.0,
@@ -784,7 +909,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Inspect the Kiwi platform deployment.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Inspect the Kivi platform deployment.",
@@ -792,7 +918,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -804,7 +930,7 @@
           ],
           "observations": [
             {
-              "observation_id": "fe63d2a8-84d4-4050-a66f-b9924bab1586",
+              "observation_id": "6d33aae3-8f85-4985-b33c-a49d9e1158c3",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -826,15 +952,21 @@
             "models": [
               "BAAI/bge-small-en-v1.5"
             ]
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
-        "vector_payload_bytes": 8070,
-        "trace_payload_bytes": 2397,
+        "vector_payload_bytes": 8076,
+        "trace_payload_bytes": 3022,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -842,9 +974,12 @@
           "context_evidence": 4,
           "context_embeddings": 1,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "semantic-generalization",
@@ -856,11 +991,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 96.207,
-      "trace_id": "47626ad9-8b74-4206-b215-5e5302e3f02f",
+      "latency_ms": 153.2,
+      "trace_id": "5059516b-a46d-457e-a8ec-10835eb73a80",
       "candidates": [
         {
-          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -883,14 +1018,23 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
             "sparse_negative_similarity": 0.0,
-            "semantic_positive_similarity": 0.5283,
+            "semantic_positive_similarity": 0.5284,
             "semantic_negative_similarity": 0.0,
-            "semantic_margin": 0.5283,
+            "semantic_margin": 0.5284,
             "semantic_positive_observations": 1,
             "semantic_negative_observations": 0,
             "semantic_model": "BAAI/bge-small-en-v1.5",
@@ -906,7 +1050,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Slice the kiwi after breakfast.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Slice the kiwi after breakfast.",
@@ -914,7 +1059,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "73f6e45b-209d-4053-9a32-9c882fe7bc35",
+          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -926,7 +1071,7 @@
           ],
           "observations": [
             {
-              "observation_id": "fe63d2a8-84d4-4050-a66f-b9924bab1586",
+              "observation_id": "6d33aae3-8f85-4985-b33c-a49d9e1158c3",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -948,15 +1093,21 @@
             "models": [
               "BAAI/bge-small-en-v1.5"
             ]
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
-        "vector_payload_bytes": 8070,
-        "trace_payload_bytes": 3806,
+        "vector_payload_bytes": 8076,
+        "trace_payload_bytes": 4772,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -964,9 +1115,12 @@
           "context_evidence": 4,
           "context_embeddings": 1,
           "decisions": 2,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -978,11 +1132,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.381,
-      "trace_id": "e06f8acc-25c9-4d54-9295-4dbc16d63d42",
+      "latency_ms": 4.085,
+      "trace_id": "45bd8c30-0ff3-435e-8051-88957aa17528",
       "candidates": [
         {
-          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -992,7 +1146,8 @@
           "action": "apply",
           "reason_codes": [
             "ASR_ALTERNATIVE_CANDIDATE",
-            "ASR_ALTERNATIVE_SUPPORT"
+            "ASR_ALTERNATIVE_SUPPORT",
+            "ASR_RELIABILITY_COLD_START"
           ],
           "blockers": [],
           "features": {
@@ -1001,6 +1156,15 @@
             "phonetic_match": false,
             "asr_alternative_confidence": 0.95,
             "asr_provider": "journey-asr",
+            "asr_model": "unknown",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.95,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -1030,7 +1194,8 @@
             "confidence": 0.95,
             "provider": "journey-asr"
           }
-        ]
+        ],
+        "asr": null
       },
       "expected": {
         "output": "Open the Kivi dashboard.",
@@ -1038,7 +1203,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
@@ -1050,7 +1215,7 @@
           ],
           "observations": [
             {
-              "observation_id": "e15003fc-9560-4e37-974b-a70d40ee1f9a",
+              "observation_id": "5b055700-c550-4835-8c28-cdfef5ce3e5f",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1068,15 +1233,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2335,
+        "trace_payload_bytes": 3012,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1084,9 +1255,12 @@
           "context_evidence": 0,
           "context_embeddings": 0,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "asr-nbest-recovery",
@@ -1098,11 +1272,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 2.961,
-      "trace_id": "637428ad-cba7-46fe-828f-12fa5a2a8ced",
+      "latency_ms": 4.048,
+      "trace_id": "c72d9376-55a3-4b3f-bb45-20be8acb01ae",
       "candidates": [
         {
-          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -1112,7 +1286,8 @@
           "action": "abstain",
           "reason_codes": [
             "ASR_ALTERNATIVE_CANDIDATE",
-            "ASR_ALTERNATIVE_SUPPORT"
+            "ASR_ALTERNATIVE_SUPPORT",
+            "ASR_RELIABILITY_COLD_START"
           ],
           "blockers": [],
           "features": {
@@ -1121,6 +1296,15 @@
             "phonetic_match": false,
             "asr_alternative_confidence": 0.35,
             "asr_provider": "journey-asr",
+            "asr_model": "unknown",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.35,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
@@ -1150,7 +1334,8 @@
             "confidence": 0.35,
             "provider": "journey-asr"
           }
-        ]
+        ],
+        "asr": null
       },
       "expected": {
         "output": "Open the company dashboard.",
@@ -1158,7 +1343,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "fbb44e6e-c093-4b92-90de-4a7daff77835",
+          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
@@ -1170,7 +1355,7 @@
           ],
           "observations": [
             {
-              "observation_id": "e15003fc-9560-4e37-974b-a70d40ee1f9a",
+              "observation_id": "5b055700-c550-4835-8c28-cdfef5ce3e5f",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1188,15 +1373,21 @@
             "positive": 0,
             "negative": 0,
             "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3680,
+        "trace_payload_bytes": 4724,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1204,9 +1395,12 @@
           "context_evidence": 0,
           "context_embeddings": 0,
           "decisions": 2,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -1218,11 +1412,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 113.05,
-      "trace_id": "b313fb45-a499-43df-8fdc-39c6bfa4afa9",
+      "latency_ms": 186.823,
+      "trace_id": "d460ad26-acf7-40ac-b8ae-bff68f5cfc1b",
       "candidates": [
         {
-          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1243,6 +1437,15 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
@@ -1266,7 +1469,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Add Kiwi fruit to the breakfast bowl.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Add Kivi fruit to the breakfast bowl.",
@@ -1274,7 +1478,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -1286,7 +1490,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b6ea8fe4-13ec-4ebe-9b5a-e2a4e15d51d5",
+              "observation_id": "f610bc8b-0e8f-44c9-8681-531ccb514db4",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1308,15 +1512,21 @@
             "models": [
               "BAAI/bge-small-en-v1.5"
             ]
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 184320,
-        "page_count": 45,
+        "allocated_bytes": 221184,
+        "page_count": 54,
         "page_size": 4096,
-        "vector_payload_bytes": 8041,
-        "trace_payload_bytes": 2535,
+        "vector_payload_bytes": 8071,
+        "trace_payload_bytes": 3160,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1324,9 +1534,12 @@
           "context_evidence": 6,
           "context_embeddings": 1,
           "decisions": 1,
-          "memory_versions": 1
+          "memory_versions": 1,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": "incorrect",
+      "candidate_expected_useful": true
     },
     {
       "journey_id": "negative-prototype-recovery",
@@ -1338,17 +1551,17 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 103.588,
-      "trace_id": "3dd2830b-11b0-4723-9f61-12bb200fd4e2",
+      "latency_ms": 164.815,
+      "trace_id": "54f89e05-05ac-4d6c-9881-8611a27320a5",
       "candidates": [
         {
-          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
           "start": 10,
           "end": 14,
-          "score": 0.7041,
+          "score": 0.704,
           "action": "abstain",
           "reason_codes": [
             "EXACT_CANDIDATE",
@@ -1366,9 +1579,18 @@
             "phonetic_match": true,
             "asr_alternative_confidence": 0.0,
             "asr_provider": "",
+            "asr_model": "",
+            "asr_rank": 1,
+            "asr_provider_confidence": "not_supplied",
+            "asr_reliability_state": "not_supplied",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.0,
+            "asr_reliability_contribution": 0.0,
             "evidence_confidence": 1.0,
-            "positive_context_similarity": 0.5427,
-            "negative_context_similarity": 0.5427,
+            "positive_context_similarity": 0.5429,
+            "negative_context_similarity": 0.5429,
             "sparse_positive_similarity": 0.0,
             "sparse_negative_similarity": 0.0,
             "semantic_positive_similarity": 0.8171,
@@ -1389,7 +1611,8 @@
       "inputs": {
         "raw_asr_text": "",
         "formatted_text": "Slice the Kiwi for a morning meal.",
-        "alternatives": []
+        "alternatives": [],
+        "asr": null
       },
       "expected": {
         "output": "Slice the Kiwi for a morning meal.",
@@ -1397,7 +1620,7 @@
       },
       "memory_state": [
         {
-          "memory_id": "5849d349-6e11-4f1b-a114-e7e27a2d94da",
+          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
@@ -1409,7 +1632,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b6ea8fe4-13ec-4ebe-9b5a-e2a4e15d51d5",
+              "observation_id": "f610bc8b-0e8f-44c9-8681-531ccb514db4",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1418,7 +1641,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "7dc67dbf-18e2-4a03-b433-ef8b52308e9b",
+              "observation_id": "3f11dfed-2fd3-4537-ac67-04c9b92db4c1",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1441,15 +1664,21 @@
             "models": [
               "BAAI/bge-small-en-v1.5"
             ]
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
           }
         }
       ],
       "database": {
-        "allocated_bytes": 200704,
-        "page_count": 49,
+        "allocated_bytes": 237568,
+        "page_count": 58,
         "page_size": 4096,
-        "vector_payload_bytes": 16082,
-        "trace_payload_bytes": 3974,
+        "vector_payload_bytes": 16142,
+        "trace_payload_bytes": 4939,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1457,9 +1686,12 @@
           "context_evidence": 12,
           "context_embeddings": 2,
           "decisions": 2,
-          "memory_versions": 2
+          "memory_versions": 2,
+          "asr_outcomes": 0
         }
-      }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
     }
   ]
 }

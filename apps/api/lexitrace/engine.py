@@ -14,6 +14,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from .models import (
+    AsrOutcome,
     ContextEmbedding,
     ContextEvidence,
     Decision,
@@ -25,7 +26,7 @@ from .models import (
 from .policy import load_policy
 from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.6.0"
+ENGINE_VERSION = "0.7.0"
 POLICY = load_policy()
 APPLY_THRESHOLD = POLICY.apply_threshold
 SUGGEST_THRESHOLD = POLICY.suggest_threshold
@@ -35,6 +36,9 @@ MIN_POSITIVE_CONTEXT_SIMILARITY = POLICY.minimum_positive_context_similarity
 NEGATIVE_CONTEXT_BLOCK_THRESHOLD = POLICY.negative_context_block_threshold
 CONTEXT_WINDOW_TOKENS = 6
 SEMANTIC_SIMILARITY_FLOOR = POLICY.semantic_similarity_floor
+ASR_PRIOR_ALPHA = POLICY.asr_prior_alpha
+ASR_PRIOR_BETA = POLICY.asr_prior_beta
+ASR_MINIMUM_OUTCOMES = POLICY.asr_minimum_outcomes
 TOKEN_PATTERN = re.compile(r"\w+(?:['’-]\w+)*", re.UNICODE)
 STOPWORDS = {
     "a",
@@ -534,6 +538,79 @@ class TraceCandidate:
     features: dict[str, float | str | bool]
 
 
+def _asr_reliability(
+    memory: Memory,
+    *,
+    provider: str,
+    model_name: str,
+    rank: int,
+    source_form: str,
+) -> dict[str, float | int | str | bool]:
+    """Estimate one exact confusion route from immutable outcomes and a skeptical prior."""
+    provider_key = normalize(provider)
+    model_key = normalize(model_name)
+    source_key = normalize(source_form)
+    matches = [
+        outcome
+        for outcome in memory.asr_outcomes
+        if normalize(outcome.provider) == provider_key
+        and normalize(outcome.model_name) == model_key
+        and outcome.rank == rank
+        and outcome.source_normalized == source_key
+        and outcome.target_normalized == memory.canonical_normalized
+    ]
+    accepted = sum(outcome.accepted for outcome in matches)
+    rejected = len(matches) - accepted
+    posterior = (ASR_PRIOR_ALPHA + accepted) / (ASR_PRIOR_ALPHA + ASR_PRIOR_BETA + len(matches))
+    active = len(matches) >= ASR_MINIMUM_OUTCOMES
+    return {
+        "state": "active" if active else "cold_start",
+        "active": active,
+        "observations": len(matches),
+        "accepted": accepted,
+        "rejected": rejected,
+        "posterior_mean": round(posterior, 4),
+    }
+
+
+def aggregate_asr_profile(memory: Memory) -> dict:
+    groups: dict[tuple[str, str, int, str, str], list[AsrOutcome]] = defaultdict(list)
+    for outcome in memory.asr_outcomes:
+        key = (
+            outcome.provider,
+            outcome.model_name,
+            outcome.rank,
+            outcome.source_normalized,
+            outcome.target_normalized,
+        )
+        groups[key].append(outcome)
+    summaries = []
+    for (provider, model_name, rank, source, target), outcomes in sorted(groups.items()):
+        accepted = sum(outcome.accepted for outcome in outcomes)
+        posterior = (ASR_PRIOR_ALPHA + accepted) / (
+            ASR_PRIOR_ALPHA + ASR_PRIOR_BETA + len(outcomes)
+        )
+        summaries.append(
+            {
+                "provider": provider,
+                "model": model_name,
+                "rank": rank,
+                "source": source,
+                "target": target,
+                "observations": len(outcomes),
+                "accepted": accepted,
+                "rejected": len(outcomes) - accepted,
+                "posterior_mean": round(posterior, 4),
+                "state": "active" if len(outcomes) >= ASR_MINIMUM_OUTCOMES else "cold_start",
+            }
+        )
+    return {
+        "prior": {"alpha": ASR_PRIOR_ALPHA, "beta": ASR_PRIOR_BETA},
+        "minimum_outcomes": ASR_MINIMUM_OUTCOMES,
+        "groups": summaries,
+    }
+
+
 def memory_snapshot(memory: Memory) -> dict:
     return {
         "canonical_form": memory.canonical_form,
@@ -546,6 +623,7 @@ def memory_snapshot(memory: Memory) -> dict:
         "negative_context": json.loads(memory.negative_context_json),
         "context_profile": aggregate_context_profile(memory),
         "semantic_profile": aggregate_semantic_profile(memory),
+        "asr_profile": aggregate_asr_profile(memory),
         "variants": sorted(variant.surface_form for variant in memory.variants),
     }
 
@@ -591,6 +669,8 @@ def memory_to_dict(memory: Memory) -> dict:
         "context_profile": aggregate_context_profile(memory),
         "semantic_evidence_count": len(memory.semantic_evidence),
         "semantic_profile": aggregate_semantic_profile(memory),
+        "asr_evidence_count": len(memory.asr_outcomes),
+        "asr_profile": aggregate_asr_profile(memory),
         "variants": [
             {
                 "id": variant.id,
@@ -938,6 +1018,10 @@ def _score_candidate(
     semantic_vector_cache: dict[str, list[float] | None],
     asr_confidence: float = 0.0,
     asr_provider: str = "",
+    asr_model: str = "",
+    asr_rank: int = 1,
+    provider_confidence: float | None = None,
+    enable_learned_asr: bool = True,
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
     current = extract_context_features(
         input_text,
@@ -1000,6 +1084,24 @@ def _score_candidate(
     phonetic_match = metaphone(input_span) == variant.metaphone_key
     reasons: list[str] = [f"{match_method.upper()}_CANDIDATE"]
     blockers: list[str] = []
+    asr_reliability = (
+        _asr_reliability(
+            memory,
+            provider=asr_provider,
+            model_name=asr_model,
+            rank=asr_rank,
+            source_form=input_span,
+        )
+        if asr_provider
+        else {
+            "state": "not_supplied",
+            "active": False,
+            "observations": 0,
+            "accepted": 0,
+            "rejected": 0,
+            "posterior_mean": 0.0,
+        }
+    )
 
     if memory.state != "confirmed":
         blockers.append("MEMORY_NOT_CONFIRMED")
@@ -1019,6 +1121,12 @@ def _score_candidate(
         reasons.append("PHONETIC_MATCH")
     if asr_confidence > 0:
         reasons.append("ASR_ALTERNATIVE_SUPPORT")
+    if asr_provider and asr_reliability["active"] and enable_learned_asr:
+        reasons.append("LEARNED_ASR_RELIABILITY")
+    elif asr_provider and asr_reliability["active"]:
+        reasons.append("LEARNED_ASR_DISABLED")
+    elif asr_provider:
+        reasons.append("ASR_RELIABILITY_COLD_START")
     if memory.semantic_evidence and current_vector is None:
         reasons.append("SEMANTIC_ENCODER_UNAVAILABLE")
     if semantic_positive_count:
@@ -1033,6 +1141,10 @@ def _score_candidate(
         + POLICY.context_weight * context_signal
         + (POLICY.phonetic_weight if phonetic_match else 0.0)
         + POLICY.asr_alternative_weight * asr_confidence
+        + POLICY.learned_asr_weight
+        * float(asr_reliability["posterior_mean"])
+        * bool(asr_reliability["active"])
+        * enable_learned_asr
         - POLICY.negative_context_weight * negative_similarity
     )
     score = max(0.0, min(1.0, score))
@@ -1043,6 +1155,23 @@ def _score_candidate(
         "phonetic_match": phonetic_match,
         "asr_alternative_confidence": round(asr_confidence, 4),
         "asr_provider": asr_provider,
+        "asr_model": asr_model,
+        "asr_rank": asr_rank,
+        "asr_provider_confidence": (
+            round(provider_confidence, 4) if provider_confidence is not None else "not_supplied"
+        ),
+        "asr_reliability_state": str(asr_reliability["state"]),
+        "asr_reliability_observations": int(asr_reliability["observations"]),
+        "asr_reliability_accepted": int(asr_reliability["accepted"]),
+        "asr_reliability_rejected": int(asr_reliability["rejected"]),
+        "asr_reliability_posterior": float(asr_reliability["posterior_mean"]),
+        "asr_reliability_contribution": round(
+            POLICY.learned_asr_weight
+            * float(asr_reliability["posterior_mean"])
+            * bool(asr_reliability["active"])
+            * enable_learned_asr,
+            4,
+        ),
         "evidence_confidence": round(memory.evidence_confidence, 4),
         "positive_context_similarity": round(positive_similarity, 4),
         "negative_context_similarity": round(negative_similarity, 4),
@@ -1071,6 +1200,8 @@ def infer(
     raw_asr_text: str,
     formatted_text: str,
     alternatives: list[dict] | None = None,
+    asr: dict | None = None,
+    enable_learned_asr: bool = True,
     semantic_encoder: SemanticEncoder | None = None,
 ) -> tuple[Decision, dict]:
     started = time.perf_counter()
@@ -1097,6 +1228,15 @@ def infer(
                     end=end,
                     semantic_encoder=semantic_encoder,
                     semantic_vector_cache=semantic_vector_cache,
+                    asr_provider=str(asr["provider"]) if asr else "",
+                    asr_model=str(asr.get("model", "unknown")) if asr else "",
+                    asr_rank=1,
+                    provider_confidence=(
+                        float(asr["confidence"])
+                        if asr and asr.get("confidence") is not None
+                        else None
+                    ),
+                    enable_learned_asr=enable_learned_asr,
                 )
                 action = (
                     "apply"
@@ -1125,9 +1265,11 @@ def infer(
                 if previous is None or candidate.score > previous.score:
                     candidates_by_key[key] = candidate
 
-        for alternative in alternatives or []:
+        for alternative_index, alternative in enumerate(alternatives or [], 1):
             confidence = float(alternative["confidence"])
             provider = str(alternative.get("provider", "unknown"))
+            model_name = str(alternative.get("model", "unknown"))
+            rank = int(alternative.get("rank") or alternative_index)
             alternative_text = str(alternative["text"])
             for variant in memory.variants:
                 for start, end, matched in generate_asr_alternative_spans(
@@ -1149,6 +1291,10 @@ def infer(
                         semantic_vector_cache=semantic_vector_cache,
                         asr_confidence=confidence,
                         asr_provider=provider,
+                        asr_model=model_name,
+                        asr_rank=rank,
+                        provider_confidence=confidence,
+                        enable_learned_asr=enable_learned_asr,
                     )
                     action = (
                         "apply"
@@ -1218,12 +1364,14 @@ def infer(
     latency_ms = (time.perf_counter() - started) * 1000
     trace = {
         "policy_version": POLICY.version,
+        "learned_asr_enabled": enable_learned_asr,
         "thresholds": {
             "apply": APPLY_THRESHOLD,
             "suggest": SUGGEST_THRESHOLD,
             "minimum_winner_margin": MINIMUM_WINNER_MARGIN,
             "minimum_positive_context_similarity": MIN_POSITIVE_CONTEXT_SIMILARITY,
             "negative_context_block_threshold": NEGATIVE_CONTEXT_BLOCK_THRESHOLD,
+            "asr_minimum_outcomes": ASR_MINIMUM_OUTCOMES,
         },
         "candidates": [asdict(candidate) for candidate in candidates],
         "changes": [asdict(candidate) for candidate in winners],
@@ -1268,19 +1416,49 @@ def apply_decision_feedback(
     verdict: str,
     corrected_text: str | None,
     suppress_memories: bool,
+    candidate_memory_id: str | None = None,
+    candidate_start: int | None = None,
     semantic_encoder: SemanticEncoder | None = None,
 ) -> dict | None:
     decision = session.get(Decision, trace_id)
     if decision is None:
         return None
     trace = json.loads(decision.trace_json)
-    memory_ids = list(dict.fromkeys(change["memory_id"] for change in trace["changes"]))
+    if candidate_memory_id:
+        selected = [
+            candidate
+            for candidate in trace["candidates"]
+            if candidate["memory_id"] == candidate_memory_id
+            and (candidate_start is None or candidate["start"] == candidate_start)
+        ]
+        selected = sorted(selected, key=lambda candidate: candidate["score"], reverse=True)[:1]
+    else:
+        selected = trace["changes"]
+    if not selected:
+        raise ValueError("Feedback must identify an applied change or a visible candidate")
+    memory_ids = list(dict.fromkeys(change["memory_id"] for change in selected))
     resulting_states: dict[str, str] = {}
+    asr_outcome_ids: list[str] = []
     for memory_id in memory_ids:
         memory = session.get(Memory, memory_id)
         if memory is None:
             continue
-        change = next(change for change in trace["changes"] if change["memory_id"] == memory_id)
+        change = next(change for change in selected if change["memory_id"] == memory_id)
+        features = change["features"]
+        if features.get("asr_provider"):
+            existing_outcome = session.scalar(
+                select(AsrOutcome).where(
+                    AsrOutcome.decision_id == decision.id,
+                    AsrOutcome.memory_id == memory_id,
+                    AsrOutcome.source_normalized == normalize(change["input_span"]),
+                )
+            )
+            if existing_outcome is not None:
+                if existing_outcome.accepted != (verdict == "correct"):
+                    raise ValueError("Conflicting feedback already exists for this candidate")
+                asr_outcome_ids.append(existing_outcome.id)
+                resulting_states[memory.id] = memory.state
+                continue
         if verdict == "correct":
             memory.support_count += 1
             memory.evidence_confidence = min(1.0, memory.evidence_confidence + 0.02)
@@ -1312,6 +1490,34 @@ def apply_decision_feedback(
         )
         session.add(observation)
         session.flush()
+        if features.get("asr_provider"):
+            outcome = AsrOutcome(
+                user_id=decision.user_id,
+                memory=memory,
+                decision_id=decision.id,
+                observation_id=observation.id,
+                provider=str(features["asr_provider"]),
+                model_name=str(features.get("asr_model", "unknown")),
+                rank=int(features.get("asr_rank", 1)),
+                source_form=change["input_span"],
+                source_normalized=normalize(change["input_span"]),
+                target_form=change["output_span"],
+                target_normalized=normalize(change["output_span"]),
+                provider_confidence=(
+                    float(features["asr_provider_confidence"])
+                    if isinstance(features.get("asr_provider_confidence"), (float, int))
+                    else None
+                ),
+                accepted=verdict == "correct",
+                reason_code=(
+                    "USER_CONFIRMED_ASR_CONFUSION"
+                    if verdict == "correct"
+                    else "USER_REJECTED_ASR_CONFUSION"
+                ),
+            )
+            session.add(outcome)
+            session.flush()
+            asr_outcome_ids.append(outcome.id)
         store_context_evidence(
             session,
             memory=memory,
@@ -1358,4 +1564,5 @@ def apply_decision_feedback(
         "verdict": verdict,
         "affected_memory_ids": memory_ids,
         "resulting_states": resulting_states,
+        "asr_outcome_ids": asr_outcome_ids,
     }

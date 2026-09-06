@@ -403,3 +403,135 @@ def test_memory_history_and_rejected_feedback_demote_an_intervention(tmp_path: P
         memory_after = client.get(f"/api/v1/memories/{memory['id']}").json()
         assert memory_after["contradiction_count"] == 1
         assert memory_after["evidence_confidence"] == 0.75
+
+
+def test_confirmed_suggestions_learn_provider_specific_asr_reliability(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        memory = teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        request = {
+            "formatted_text": "Ask Adithya to review this.",
+            "asr": {
+                "provider": "acme-asr",
+                "model": "voice-2",
+                "confidence": 0.97,
+            },
+        }
+
+        for expected_observations in range(3):
+            inference = client.post("/api/v1/infer", json=request).json()
+            candidate = inference["candidates"][0]
+            assert inference["action"] == "suggest"
+            assert candidate["features"]["asr_reliability_observations"] == expected_observations
+            feedback = client.post(
+                f"/api/v1/decisions/{inference['trace_id']}/feedback",
+                json={
+                    "verdict": "correct",
+                    "candidate_memory_id": memory["id"],
+                    "candidate_start": candidate["start"],
+                },
+            )
+            assert feedback.status_code == 200
+            assert len(feedback.json()["asr_outcome_ids"]) == 1
+
+        learned = client.post("/api/v1/infer", json=request).json()
+        candidate = learned["candidates"][0]
+        assert learned["action"] == "apply"
+        assert learned["memory_aware_text"] == "Ask Aaditya to review this."
+        assert candidate["features"]["asr_reliability_state"] == "active"
+        assert candidate["features"]["asr_reliability_observations"] == 3
+        assert candidate["features"]["asr_reliability_posterior"] == 0.5714
+        assert "LEARNED_ASR_RELIABILITY" in candidate["reason_codes"]
+
+        other_model = client.post(
+            "/api/v1/infer",
+            json={**request, "asr": {**request["asr"], "model": "voice-3"}},
+        ).json()
+        assert other_model["action"] == "suggest"
+        assert other_model["candidates"][0]["features"]["asr_reliability_state"] == "cold_start"
+
+        evidence = client.get(f"/api/v1/memories/{memory['id']}/asr-evidence")
+        assert evidence.status_code == 200
+        assert len(evidence.json()) == 3
+        assert {item["provider"] for item in evidence.json()} == {"acme-asr"}
+        assert {item["model"] for item in evidence.json()} == {"voice-2"}
+
+        repeated_feedback = client.post(
+            f"/api/v1/decisions/{inference['trace_id']}/feedback",
+            json={
+                "verdict": "correct",
+                "candidate_memory_id": memory["id"],
+                "candidate_start": candidate["start"],
+            },
+        )
+        assert repeated_feedback.status_code == 200
+        assert client.get(f"/api/v1/memories/{memory['id']}/asr-evidence").json() == evidence.json()
+
+
+def test_learned_asr_signal_cannot_bypass_context_safety(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        memory = teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya"],
+            scope_mode="contextual",
+            positive_context=[],
+            negative_context=[],
+            formatted_text="Ask Adithya about the service deployment.",
+            accepted_text="Ask Aaditya about the service deployment.",
+        )
+        asr = {"provider": "acme-asr", "model": "voice-2", "confidence": 0.99}
+        for _ in range(3):
+            inference = client.post(
+                "/api/v1/infer",
+                json={
+                    "formatted_text": "Ask Adithya about the service deployment.",
+                    "asr": asr,
+                },
+            ).json()
+            candidate = inference["candidates"][0]
+            client.post(
+                f"/api/v1/decisions/{inference['trace_id']}/feedback",
+                json={
+                    "verdict": "correct",
+                    "candidate_memory_id": memory["id"],
+                    "candidate_start": candidate["start"],
+                },
+            )
+
+        unrelated = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Slice Adithya with the fruit.", "asr": asr},
+        ).json()
+        candidate = unrelated["candidates"][0]
+        assert candidate["features"]["asr_reliability_state"] == "active"
+        assert "CONTEXT_EVIDENCE_INSUFFICIENT" in candidate["blockers"]
+        assert unrelated["action"] != "apply"
+        assert unrelated["memory_aware_text"] == "Slice Adithya with the fruit."
+
+
+def test_feedback_requires_a_visible_target_when_nothing_was_applied(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        inference = client.post(
+            "/api/v1/infer", json={"formatted_text": "Ask Adithya to join."}
+        ).json()
+        assert inference["action"] == "suggest"
+        feedback = client.post(
+            f"/api/v1/decisions/{inference['trace_id']}/feedback",
+            json={"verdict": "correct"},
+        )
+        assert feedback.status_code == 422

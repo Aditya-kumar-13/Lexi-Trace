@@ -1,6 +1,6 @@
 # Evaluation design
 
-LexiTrace uses three complementary suites. None is presented as external or production accuracy.
+LexiTrace uses four complementary suites. None is presented as external or production accuracy.
 
 ## Smoke suite
 
@@ -29,6 +29,15 @@ every failure instead of filtering to successful examples.
 `data/benchmark/journeys.jsonl` tests learning over time. Identical events are replayed against the
 hybrid product and a semantic-disabled ablation. This isolates the value and cost of the local
 context model for semantic generalization, negative feedback, and ASR N-best evidence.
+
+## Learned-ASR journeys
+
+`data/benchmark/asr_journeys.jsonl` freezes repeated confirmations, provider drift, model drift, and
+context-blocker cases. `evaluation/run_asr_learning.py` replays each journey twice: once with the
+complete policy and once with only the learned-ASR contribution disabled. Both systems still record
+identical outcomes. The report includes output and action accuracy, wrong interventions, latency,
+storage growth, and a threshold precision/coverage curve. A training suggestion counts as useful
+only when its committed event contains explicit positive feedback.
 
 ## Recorded evidence
 

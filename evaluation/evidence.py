@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from lexitrace.models import (
+    AsrOutcome,
     ContextEmbedding,
     ContextEvidence,
     Decision,
@@ -21,6 +22,7 @@ TABLE_MODELS = {
     "context_embeddings": ContextEmbedding,
     "decisions": Decision,
     "memory_versions": MemoryVersion,
+    "asr_outcomes": AsrOutcome,
 }
 
 
@@ -88,6 +90,12 @@ def memory_state_snapshot(session) -> list[dict[str, Any]]:
                 "positive": sum(item.polarity == "positive" for item in memory.semantic_evidence),
                 "negative": sum(item.polarity == "negative" for item in memory.semantic_evidence),
                 "models": sorted({item.model_name for item in memory.semantic_evidence}),
+            },
+            "asr_evidence": {
+                "outcomes": len(memory.asr_outcomes),
+                "accepted": sum(item.accepted for item in memory.asr_outcomes),
+                "providers": sorted({item.provider for item in memory.asr_outcomes}),
+                "models": sorted({item.model_name for item in memory.asr_outcomes}),
             },
         }
         for memory in memories

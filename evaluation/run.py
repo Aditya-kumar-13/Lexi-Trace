@@ -146,6 +146,7 @@ def full_system(session, case: dict[str, Any], semantic_encoder) -> dict[str, An
         raw_asr_text=case.get("raw_asr_text", ""),
         formatted_text=case["formatted_text"],
         alternatives=case.get("alternatives", []),
+        asr=case.get("asr"),
         semantic_encoder=semantic_encoder,
     )
     return {

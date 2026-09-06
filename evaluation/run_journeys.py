@@ -63,7 +63,13 @@ def reset_session(session) -> None:
     session.commit()
 
 
-def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any]]:
+def run_journey(
+    session,
+    journey: dict[str, Any],
+    encoder,
+    *,
+    enable_learned_asr: bool = True,
+) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
     for event_index, event in enumerate(journey["events"], 1):
@@ -75,8 +81,8 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
                 canonical_form=event["canonical_form"],
                 variants=event["variants"],
                 scope_mode=event.get("scope_mode", "global"),
-                positive_context=[],
-                negative_context=[],
+                positive_context=event.get("positive_context", []),
+                negative_context=event.get("negative_context", []),
                 formatted_text=event.get("formatted_text", ""),
                 accepted_text=event.get("accepted_text", ""),
                 semantic_encoder=encoder,
@@ -98,6 +104,8 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
             raw_asr_text="",
             formatted_text=event["formatted_text"],
             alternatives=event.get("alternatives", []),
+            asr=event.get("asr"),
+            enable_learned_asr=enable_learned_asr,
             semantic_encoder=encoder,
         )
         row = {
@@ -117,6 +125,7 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
                 "raw_asr_text": event.get("raw_asr_text", ""),
                 "formatted_text": event["formatted_text"],
                 "alternatives": event.get("alternatives", []),
+                "asr": event.get("asr"),
             },
             "expected": {
                 "output": event["expected_output"],
@@ -124,6 +133,11 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
             },
             "memory_state": memory_state_snapshot(session),
             "database": database_snapshot(session),
+            "feedback": event.get("feedback"),
+            "candidate_expected_useful": (
+                event.get("feedback") == "correct"
+                or event["expected_output"] != event["formatted_text"]
+            ),
         }
         rows.append(row)
         if event.get("feedback"):
@@ -133,6 +147,9 @@ def run_journey(session, journey: dict[str, Any], encoder) -> list[dict[str, Any
                 verdict=event["feedback"],
                 corrected_text=event["formatted_text"],
                 suppress_memories=False,
+                candidate_memory_id=(
+                    memories[event["feedback_target"]] if event.get("feedback_target") else None
+                ),
                 semantic_encoder=encoder,
             )
     return rows

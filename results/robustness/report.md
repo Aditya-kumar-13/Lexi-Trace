@@ -10,7 +10,7 @@ Cases: **252**
 |---|---:|---:|---:|---:|---:|---:|
 | no_memory | 53.2% | 23.0% | n/a | 0.0% | 0.0% | 0.000 ms |
 | naive_dictionary | 53.2% | 53.2% | 50.0% | 74.6% | 34.9% | 0.000 ms |
-| lexitrace | 98.4% | 98.4% | 100.0% | 96.6% | 0.0% | 136.774 ms |
+| lexitrace | 98.4% | 98.4% | 100.0% | 96.6% | 0.0% | 179.480 ms |
 
 ## Operational accounting
 
@@ -18,8 +18,8 @@ Cases: **252**
 - Embedding calls: **192**
 - Hosted model requests: **0**
 - Estimated API cost: **$0.00**
-- Peak allocated SQLite bytes: **176128**
-- Peak persisted trace payload bytes: **4210**
+- Peak allocated SQLite bytes: **212992**
+- Peak persisted trace payload bytes: **5403**
 
 ## Predeclared split results
 

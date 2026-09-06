@@ -36,3 +36,22 @@ def test_robustness_dataset_is_fixed_varied_and_predeclared() -> None:
             assert case["expected_output"] != case["formatted_text"]
         else:
             assert case["expected_output"] == case["formatted_text"]
+
+
+def test_asr_learning_journeys_cover_activation_and_drift() -> None:
+    path = ROOT / "data" / "benchmark" / "asr_journeys.jsonl"
+    journeys = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    assert len(journeys) >= 4
+    assert len({journey["journey_id"] for journey in journeys}) == len(journeys)
+    identifiers = {journey["journey_id"] for journey in journeys}
+    assert {
+        "learn-repeated-primary-confusion",
+        "provider-drift-does-not-transfer",
+        "model-drift-does-not-transfer",
+        "context-blocker-outranks-learned-asr",
+    } <= identifiers
+    assert all(
+        sum(event.get("feedback") == "correct" for event in journey["events"]) >= 3
+        for journey in journeys
+    )

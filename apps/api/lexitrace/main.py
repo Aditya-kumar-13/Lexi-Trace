@@ -23,6 +23,7 @@ from .engine import (
     teach_explicit,
 )
 from .models import (
+    AsrOutcome,
     ContextEmbedding,
     ContextEvidence,
     Decision,
@@ -65,7 +66,7 @@ def create_app(
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.6.0",
+        version="0.7.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
@@ -83,7 +84,7 @@ def create_app(
     def health() -> dict:
         return {
             "status": "ok",
-            "version": "0.6.0",
+            "version": "0.7.0",
             "semantic": semantic_encoder.status(),
         }
 
@@ -266,6 +267,34 @@ def create_app(
             for item in evidence
         ]
 
+    @app.get("/api/v1/memories/{memory_id}/asr-evidence")
+    def memory_asr_evidence(memory_id: str, session: DatabaseSession) -> list[dict]:
+        memory = session.get(Memory, memory_id)
+        if memory is None:
+            raise HTTPException(status_code=404, detail="Memory not found")
+        outcomes = session.scalars(
+            select(AsrOutcome)
+            .where(AsrOutcome.memory_id == memory_id)
+            .order_by(AsrOutcome.created_at, AsrOutcome.id)
+        ).all()
+        return [
+            {
+                "id": item.id,
+                "decision_id": item.decision_id,
+                "observation_id": item.observation_id,
+                "provider": item.provider,
+                "model": item.model_name,
+                "rank": item.rank,
+                "source_form": item.source_form,
+                "target_form": item.target_form,
+                "provider_confidence": item.provider_confidence,
+                "accepted": item.accepted,
+                "reason_code": item.reason_code,
+                "created_at": item.created_at,
+            }
+            for item in outcomes
+        ]
+
     @app.delete("/api/v1/memories/{memory_id}", status_code=status.HTTP_204_NO_CONTENT)
     def delete_memory(memory_id: str, session: DatabaseSession) -> None:
         memory = session.get(Memory, memory_id)
@@ -301,12 +330,15 @@ def create_app(
         payload: DecisionFeedbackRequest,
         session: DatabaseSession,
     ) -> dict:
-        response = apply_decision_feedback(
-            session,
-            trace_id=trace_id,
-            **payload.model_dump(),
-            semantic_encoder=semantic_encoder,
-        )
+        try:
+            response = apply_decision_feedback(
+                session,
+                trace_id=trace_id,
+                **payload.model_dump(),
+                semantic_encoder=semantic_encoder,
+            )
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
         if response is None:
             raise HTTPException(status_code=404, detail="Decision not found")
         return response

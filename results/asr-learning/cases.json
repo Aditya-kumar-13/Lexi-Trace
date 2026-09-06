@@ -1,0 +1,5006 @@
+{
+  "no_learning_ablation": [
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 10.788,
+      "trace_id": "f8280a5c-3456-4387-83bb-72043977b580",
+      "candidates": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.97,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.97
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 204800,
+        "page_count": 50,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1662,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.623,
+      "trace_id": "ec429bb3-80e4-4e8d-80dc-e8c67d7cadc9",
+      "candidates": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 2,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 2,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 204800,
+        "page_count": 50,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3375,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 2,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 5.419,
+      "trace_id": "44260459-acff-440f-a404-d4a6c28783ba",
+      "candidates": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.91,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 4,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.91
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "96d9a3a9-17d1-454a-8aec-3da4573f6305",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 212992,
+        "page_count": 52,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5088,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 5,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Aaditya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "apply",
+      "actual_action": "suggest",
+      "exact": false,
+      "action_matches": false,
+      "latency_ms": 6.833,
+      "trace_id": "0eefa190-5ca6-4b43-8616-2ee15eec3533",
+      "candidates": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "LEARNED_ASR_DISABLED"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.88,
+            "asr_reliability_state": "active",
+            "asr_reliability_observations": 3,
+            "asr_reliability_accepted": 3,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5714,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.88
+        }
+      },
+      "expected": {
+        "output": "Ask Aaditya to review this.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "96d9a3a9-17d1-454a-8aec-3da4573f6305",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "139e7171-0543-46d0-ac23-08ca88c699eb",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6794,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 3.955,
+      "trace_id": "e16719a7-debb-4827-9310-cc22e45882b9",
+      "candidates": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1662,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.74,
+      "trace_id": "d09a9474-47c9-4701-9bea-67c1421f2125",
+      "candidates": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 2,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 2,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3373,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 2,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 5.232,
+      "trace_id": "2e21a191-fd81-4c82-b84c-dc4b0c623827",
+      "candidates": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 4,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "887fde5e-39ed-44d3-976d-2ebb7f644762",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5084,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 5,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.603,
+      "trace_id": "1de9ddde-4cfd-40c2-bfd8-f8336be8403b",
+      "candidates": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "other-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "other-asr",
+          "model": "voice-2",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "887fde5e-39ed-44d3-976d-2ebb7f644762",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "2bc5d147-45ab-435d-b6fb-527295f0614c",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6797,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 2,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.209,
+      "trace_id": "4a8dab04-be03-4d77-9046-fbc2e63faafd",
+      "candidates": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1662,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 3,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.225,
+      "trace_id": "d605277b-3ccb-435c-87a3-eb931755f4b5",
+      "candidates": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 3,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 3,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3400,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 3,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 4,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.721,
+      "trace_id": "83e2c4aa-e9d4-4b9b-9b19-25b510b4b228",
+      "candidates": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "a858265a-2681-455f-90d1-6c5dd775f7ba",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5138,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 5,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.81,
+      "trace_id": "b9c549e0-d4e7-40b1-aa66-c1fbb09dc642",
+      "candidates": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-3",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 9,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-3",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "a858265a-2681-455f-90d1-6c5dd775f7ba",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "25787974-c392-4066-868a-92bbd5419a4f",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 9,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6877,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 9,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 3.964,
+      "trace_id": "aa522941-1d88-4e80-9ead-bc67eb1ef334",
+      "candidates": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9028,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.5642,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.5642,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:deployment, token:service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 3,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 3,
+            "negative": 0,
+            "sources": [
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1755,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 3,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.507,
+      "trace_id": "e992791d-df15-439b-8238-e5235a1da509",
+      "candidates": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.9209,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.9209,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:service, token:deployment, bigram:ask about, bigram:about service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 10,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 10,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 221184,
+        "page_count": 54,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3550,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 10,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 6.972,
+      "trace_id": "21f097d2-2a4a-41a9-a16d-f7375c4c41c4",
+      "candidates": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.9707,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.9707,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:service, token:deployment, bigram:ask about, bigram:about service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 17,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "522c8f4e-f943-4468-b9a1-d9f4add0eddc",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 17,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 229376,
+        "page_count": 56,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5345,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 17,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 5,
+      "formatted_text": "Slice Adithya with the fruit.",
+      "expected_output": "Slice Adithya with the fruit.",
+      "actual_output": "Slice Adithya with the fruit.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.643,
+      "trace_id": "23d1dfb2-38eb-4e34-933c-06dfba24f4ea",
+      "candidates": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 6,
+          "end": 13,
+          "score": 0.8046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "LEARNED_ASR_DISABLED",
+            "CONTEXT_EVIDENCE_INSUFFICIENT"
+          ],
+          "blockers": [
+            "CONTEXT_EVIDENCE_INSUFFICIENT"
+          ],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "active",
+            "asr_reliability_observations": 3,
+            "asr_reliability_accepted": 3,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5714,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 24,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice Adithya with the fruit.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Slice Adithya with the fruit.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "522c8f4e-f943-4468-b9a1-d9f4add0eddc",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "711ecfea-e808-4507-abc5-abf6197a367d",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 24,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 7064,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 24,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    }
+  ],
+  "learned_asr": [
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 3.733,
+      "trace_id": "37b6a0f5-bdfb-45bf-9cff-4f5eaf9ef9a0",
+      "candidates": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.97,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.97
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1661,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 7.0,
+      "trace_id": "b6ca42db-1b98-436e-9dcb-be42d30122a2",
+      "candidates": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 2,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 2,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3373,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 2,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Adithya to review this.",
+      "actual_output": "Ask Adithya to review this.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.338,
+      "trace_id": "1aba689e-5c77-46c3-85ab-8e439ea8da68",
+      "candidates": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.91,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 4,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.91
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to review this.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "17d30b9f-9fac-4289-938a-a31fe97f0be8",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5085,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "learn-repeated-primary-confusion",
+      "event_index": 5,
+      "formatted_text": "Ask Adithya to review this.",
+      "expected_output": "Ask Aaditya to review this.",
+      "actual_output": "Ask Aaditya to review this.",
+      "expected_action": "apply",
+      "actual_action": "apply",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.386,
+      "trace_id": "5e7343de-f99c-4907-ba3e-eee506a2ac5d",
+      "candidates": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9389,
+          "action": "apply",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "LEARNED_ASR_RELIABILITY"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.88,
+            "asr_reliability_state": "active",
+            "asr_reliability_observations": 3,
+            "asr_reliability_accepted": 3,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5714,
+            "asr_reliability_contribution": 0.0343,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:review",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to review this.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.88
+        }
+      },
+      "expected": {
+        "output": "Ask Aaditya to review this.",
+        "action": "apply"
+      },
+      "memory_state": [
+        {
+          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "17d30b9f-9fac-4289-938a-a31fe97f0be8",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "d1b9dd98-bde8-476f-bba9-08438e8c157b",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 8105,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.409,
+      "trace_id": "38e50147-2300-4637-a793-923746c8ef49",
+      "candidates": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1661,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.237,
+      "trace_id": "ee0994c5-9eb3-4f02-b23b-f56f1ab3b2d6",
+      "candidates": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 2,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 2,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3371,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 2,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.388,
+      "trace_id": "626b8a4f-4552-4ab2-bcc5-5dcf5515afa8",
+      "candidates": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 4,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "624273a8-8ae7-496f-ab9c-fabc2580f549",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 4,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5081,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 4,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "provider-drift-does-not-transfer",
+      "event_index": 5,
+      "formatted_text": "Ask Adithya to join.",
+      "expected_output": "Ask Adithya to join.",
+      "actual_output": "Ask Adithya to join.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.74,
+      "trace_id": "d4ba4c2c-c81d-4d52-ae40-02ff7d1f8035",
+      "candidates": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "other-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "token:ask, token:join",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya to join.",
+        "alternatives": [],
+        "asr": {
+          "provider": "other-asr",
+          "model": "voice-2",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya to join.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "624273a8-8ae7-496f-ab9c-fabc2580f549",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "16c1e735-73da-4d1e-b344-b18e07f99cd4",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6793,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 2,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 3.724,
+      "trace_id": "7f1b718f-ab34-40ec-a6eb-d30e384b4fec",
+      "candidates": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 0,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "sources": []
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1661,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 3,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 6.438,
+      "trace_id": "8b2cd71d-d507-4d4e-a99a-5d8c5c9e4c6d",
+      "candidates": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 3,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 3,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3398,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 3,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 4,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.298,
+      "trace_id": "ade3bb57-5519-41d3-982d-b16a1a905451",
+      "candidates": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 6,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "0ca470e5-2f8a-41e7-b158-452a49eac3c6",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 6,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5135,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 6,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "model-drift-does-not-transfer",
+      "event_index": 5,
+      "formatted_text": "Message Adithya today.",
+      "expected_output": "Message Adithya today.",
+      "actual_output": "Message Adithya today.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 6.802,
+      "trace_id": "683817aa-74d3-427a-bd39-5f1a9ac2a9a7",
+      "candidates": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 8,
+          "end": 15,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-3",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 1.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 1.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "not_required",
+            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 9,
+            "memory_state": "confirmed",
+            "scope_mode": "global",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Message Adithya today.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-3",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Message Adithya today.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "global",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "0ca470e5-2f8a-41e7-b158-452a49eac3c6",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "877dd7b6-1804-41da-95c7-6b7c47598179",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 9,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6873,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 9,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 2,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 6.679,
+      "trace_id": "11e4d813-80a9-460e-9dbd-3b5cab492e29",
+      "candidates": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9028,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.96,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 0,
+            "asr_reliability_accepted": 0,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.25,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.5642,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.5642,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:deployment, token:service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 3,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.96
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 1,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 3,
+            "negative": 0,
+            "sources": [
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 0,
+            "accepted": 0,
+            "providers": [],
+            "models": []
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 1754,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 1,
+          "context_evidence": 3,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 1,
+          "asr_outcomes": 0
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 3,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 4.466,
+      "trace_id": "6e823061-84ae-4cf8-9fb8-027b16e4b3e6",
+      "candidates": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.94,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 1,
+            "asr_reliability_accepted": 1,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.4,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.9209,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.9209,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:service, token:deployment, bigram:ask about, bigram:about service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 10,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.94
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 2,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 10,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 1,
+            "accepted": 1,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 3548,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 2,
+          "context_evidence": 10,
+          "context_embeddings": 0,
+          "decisions": 2,
+          "memory_versions": 2,
+          "asr_outcomes": 1
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 4,
+      "formatted_text": "Ask Adithya about the service deployment.",
+      "expected_output": "Ask Adithya about the service deployment.",
+      "actual_output": "Ask Adithya about the service deployment.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 5.172,
+      "trace_id": "fbbb60a8-8747-49ce-bc43-a151db2a2ee6",
+      "candidates": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 4,
+          "end": 11,
+          "score": 0.9046,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "POSITIVE_CONTEXT_EVIDENCE",
+            "ASR_RELIABILITY_COLD_START"
+          ],
+          "blockers": [],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.92,
+            "asr_reliability_state": "cold_start",
+            "asr_reliability_observations": 2,
+            "asr_reliability_accepted": 2,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5,
+            "asr_reliability_contribution": 0.0,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.9707,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.9707,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "bigram:service deployment, token:service, token:deployment, bigram:ask about, bigram:about service",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 17,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Ask Adithya about the service deployment.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.92
+        }
+      },
+      "expected": {
+        "output": "Ask Adithya about the service deployment.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 3,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "c6ba1512-9e80-4bdf-942c-291529e88e32",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 17,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 2,
+            "accepted": 2,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 5342,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 17,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 2
+        }
+      },
+      "feedback": "correct",
+      "candidate_expected_useful": true
+    },
+    {
+      "journey_id": "context-blocker-outranks-learned-asr",
+      "event_index": 5,
+      "formatted_text": "Slice Adithya with the fruit.",
+      "expected_output": "Slice Adithya with the fruit.",
+      "actual_output": "Slice Adithya with the fruit.",
+      "expected_action": "suggest",
+      "actual_action": "suggest",
+      "exact": true,
+      "action_matches": true,
+      "latency_ms": 6.831,
+      "trace_id": "65d0be85-4e5e-4c84-ad89-1baa5e4c881f",
+      "candidates": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "input_span": "Adithya",
+          "output_span": "Aaditya",
+          "start": 6,
+          "end": 13,
+          "score": 0.8389,
+          "action": "suggest",
+          "reason_codes": [
+            "FUZZY_CANDIDATE",
+            "LEARNED_ASR_RELIABILITY",
+            "CONTEXT_EVIDENCE_INSUFFICIENT"
+          ],
+          "blockers": [
+            "CONTEXT_EVIDENCE_INSUFFICIENT"
+          ],
+          "features": {
+            "string_similarity": 0.9231,
+            "lexical_signal": 0.9231,
+            "phonetic_match": false,
+            "asr_alternative_confidence": 0.0,
+            "asr_provider": "acme-asr",
+            "asr_model": "voice-2",
+            "asr_rank": 1,
+            "asr_provider_confidence": 0.99,
+            "asr_reliability_state": "active",
+            "asr_reliability_observations": 3,
+            "asr_reliability_accepted": 3,
+            "asr_reliability_rejected": 0,
+            "asr_reliability_posterior": 0.5714,
+            "asr_reliability_contribution": 0.0343,
+            "evidence_confidence": 1.0,
+            "positive_context_similarity": 0.0,
+            "negative_context_similarity": 0.0,
+            "sparse_positive_similarity": 0.0,
+            "sparse_negative_similarity": 0.0,
+            "semantic_positive_similarity": 0.0,
+            "semantic_negative_similarity": 0.0,
+            "semantic_margin": 0.0,
+            "semantic_positive_observations": 0,
+            "semantic_negative_observations": 0,
+            "semantic_model": "disabled",
+            "positive_evidence_matches": "",
+            "negative_evidence_matches": "",
+            "context_evidence_count": 24,
+            "memory_state": "confirmed",
+            "scope_mode": "contextual",
+            "match_method": "fuzzy"
+          }
+        }
+      ],
+      "inputs": {
+        "raw_asr_text": "",
+        "formatted_text": "Slice Adithya with the fruit.",
+        "alternatives": [],
+        "asr": {
+          "provider": "acme-asr",
+          "model": "voice-2",
+          "confidence": 0.99
+        }
+      },
+      "expected": {
+        "output": "Slice Adithya with the fruit.",
+        "action": "suggest"
+      },
+      "memory_state": [
+        {
+          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "canonical_form": "Aaditya",
+          "state": "confirmed",
+          "scope_mode": "contextual",
+          "evidence_confidence": 1.0,
+          "support_count": 4,
+          "contradiction_count": 0,
+          "variants": [
+            "Aditya"
+          ],
+          "observations": [
+            {
+              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "evidence_type": "explicit_teach",
+              "source_span": "Aditya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "ACCEPTED"
+            },
+            {
+              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "c6ba1512-9e80-4bdf-942c-291529e88e32",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            },
+            {
+              "observation_id": "45e84498-00a9-44ed-bd9e-1e647e77e51f",
+              "evidence_type": "intervention_feedback",
+              "source_span": "Adithya",
+              "target_span": "Aaditya",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_CONFIRMED"
+            }
+          ],
+          "context_evidence": {
+            "positive": 24,
+            "negative": 0,
+            "sources": [
+              "confirmed_intervention",
+              "manual_override"
+            ]
+          },
+          "semantic_evidence": {
+            "positive": 0,
+            "negative": 0,
+            "models": []
+          },
+          "asr_evidence": {
+            "outcomes": 3,
+            "accepted": 3,
+            "providers": [
+              "acme-asr"
+            ],
+            "models": [
+              "voice-2"
+            ]
+          }
+        }
+      ],
+      "database": {
+        "allocated_bytes": 233472,
+        "page_count": 57,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 7066,
+        "rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 24,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      },
+      "feedback": null,
+      "candidate_expected_useful": false
+    }
+  ]
+}

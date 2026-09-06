@@ -59,6 +59,11 @@ class Memory(Base):
         cascade="all, delete-orphan",
         lazy="selectin",
     )
+    asr_outcomes: Mapped[list[AsrOutcome]] = relationship(
+        back_populates="memory",
+        cascade="all, delete-orphan",
+        lazy="selectin",
+    )
 
 
 class MemoryVariant(Base):
@@ -188,8 +193,57 @@ class Decision(Base):
     action: Mapped[str] = mapped_column(String(20))
     trace_json: Mapped[str] = mapped_column(Text)
     total_latency_ms: Mapped[float] = mapped_column(Float)
-    engine_version: Mapped[str] = mapped_column(String(30), default="0.6.0")
+    engine_version: Mapped[str] = mapped_column(String(30), default="0.7.0")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
+
+
+class AsrOutcome(Base):
+    """Immutable user outcome for one provider/model confusion candidate."""
+
+    __tablename__ = "asr_outcomes"
+    __table_args__ = (
+        UniqueConstraint(
+            "decision_id",
+            "memory_id",
+            "source_normalized",
+            name="uq_asr_outcome_decision_memory_source",
+        ),
+        Index(
+            "ix_asr_outcomes_reliability_key",
+            "user_id",
+            "memory_id",
+            "provider",
+            "model_name",
+            "rank",
+            "source_normalized",
+            "target_normalized",
+        ),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    user_id: Mapped[str] = mapped_column(String(100), index=True)
+    memory_id: Mapped[str] = mapped_column(
+        ForeignKey("memories.id", ondelete="CASCADE"), index=True
+    )
+    decision_id: Mapped[str] = mapped_column(
+        ForeignKey("decisions.id", ondelete="CASCADE"), index=True
+    )
+    observation_id: Mapped[str] = mapped_column(
+        ForeignKey("observations.id", ondelete="CASCADE"), index=True
+    )
+    provider: Mapped[str] = mapped_column(String(100))
+    model_name: Mapped[str] = mapped_column(String(150))
+    rank: Mapped[int] = mapped_column(Integer, default=1)
+    source_form: Mapped[str] = mapped_column(String(250))
+    source_normalized: Mapped[str] = mapped_column(String(250))
+    target_form: Mapped[str] = mapped_column(String(250))
+    target_normalized: Mapped[str] = mapped_column(String(250))
+    provider_confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
+    accepted: Mapped[bool] = mapped_column(Boolean)
+    reason_code: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(default=utc_now)
+
+    memory: Mapped[Memory] = relationship(back_populates="asr_outcomes")
 
 
 class MemoryVersion(Base):

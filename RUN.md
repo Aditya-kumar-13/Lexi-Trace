@@ -95,6 +95,12 @@ Run chronological journeys against the hybrid product and semantic-disabled abla
 .\.venv\Scripts\python.exe evaluation/run_journeys.py
 ```
 
+Run provider-aware ASR learning against the no-learning ablation:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run_asr_learning.py
+```
+
 The first semantic run may download the declared local model. No transcript is sent to a hosted
 inference API. Regenerate the fixed robustness corpus only when intentionally creating a new
 dataset version:
@@ -108,8 +114,10 @@ dataset version:
 - `results/latest`: smoke summary, report, and per-case JSONL
 - `results/robustness`: robustness summary, visible failures, and per-case JSONL
 - `results/journeys`: hybrid/ablation summary, report, and chronological cases
+- `results/asr-learning`: learned-ASR/no-learning comparison and precision/coverage curve
 - `data/lexitrace.db`: persistent SQLite memory state
 - `GET /api/v1/memories`: current memory state
+- `GET /api/v1/memories/{memory_id}/asr-evidence`: immutable provider-linked outcomes
 - `GET /api/v1/decisions/{trace_id}`: persisted decision explanation
 
 Every evaluated case retains the input, expected and actual behavior, relevant memory and

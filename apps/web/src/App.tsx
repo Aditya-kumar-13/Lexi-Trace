@@ -17,6 +17,11 @@ type Memory = {
   };
   semantic_evidence_count: number;
   semantic_profile: { models: Record<string, Record<string, number>> };
+  asr_evidence_count: number;
+  asr_profile: {
+    minimum_outcomes: number;
+    groups: { provider: string; model: string; state: string; observations: number }[];
+  };
   variants: { surface_form: string; metaphone_key: string }[];
 };
 
@@ -25,6 +30,8 @@ type Candidate = {
   canonical_form: string;
   input_span: string;
   output_span: string;
+  start: number;
+  end: number;
   score: number;
   action: string;
   reason_codes: string[];
@@ -75,6 +82,8 @@ function App() {
   const [formatted, setFormatted] = useState("Inspect the Kiwi platform deployment.");
   const [asrAlternative, setAsrAlternative] = useState("");
   const [asrConfidence, setAsrConfidence] = useState("0.95");
+  const [asrProvider, setAsrProvider] = useState("demo-asr");
+  const [asrModel, setAsrModel] = useState("voice-2");
   const [result, setResult] = useState<Inference | null>(null);
   const [history, setHistory] = useState<MemoryVersion[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
@@ -134,8 +143,19 @@ function App() {
           method: "POST",
           body: JSON.stringify({
             formatted_text: formatted,
+            asr: {
+              provider: asrProvider,
+              model: asrModel,
+              confidence: Number(asrConfidence),
+            },
             alternatives: asrAlternative.trim()
-              ? [{ text: asrAlternative, confidence: Number(asrConfidence), provider: "demo-asr" }]
+              ? [{
+                  text: asrAlternative,
+                  confidence: Number(asrConfidence),
+                  provider: asrProvider,
+                  model: asrModel,
+                  rank: 1,
+                }]
               : [],
           }),
         }),
@@ -149,6 +169,8 @@ function App() {
 
   async function sendFeedback(verdict: "correct" | "incorrect") {
     if (!result) return;
+    const target = result.action === "apply" ? result.changes[0] : strongestCandidate;
+    if (!target) return;
     setBusy(true);
     setError("");
     try {
@@ -157,11 +179,13 @@ function App() {
         body: JSON.stringify({
           verdict,
           corrected_text: verdict === "incorrect" ? result.formatted_text : null,
+          candidate_memory_id: target.memory_id,
+          candidate_start: target.start,
         }),
       });
       setFeedbackMessage(
         verdict === "correct"
-          ? "Recorded as supporting evidence."
+          ? "Recorded as linked evidence; repeated ASR outcomes may activate a learned route."
           : "Intervention rejected; affected memory was demoted for review.",
       );
       await refreshMemories();
@@ -260,7 +284,11 @@ function App() {
             </div>
             <label>Formatted transcript<textarea value={formatted} onChange={(e) => setFormatted(e.target.value)} rows={5} /></label>
             <details>
-              <summary>Optional ASR alternative</summary>
+              <summary>ASR source and optional N-best evidence</summary>
+              <div className="two-column">
+                <label>Provider<input value={asrProvider} onChange={(e) => setAsrProvider(e.target.value)} /></label>
+                <label>Model<input value={asrModel} onChange={(e) => setAsrModel(e.target.value)} /></label>
+              </div>
               <label>Alternative transcript<input value={asrAlternative} onChange={(e) => setAsrAlternative(e.target.value)} placeholder="Open the Kiwi dashboard." /></label>
               <label>ASR confidence<input type="number" min="0" max="1" step="0.01" value={asrConfidence} onChange={(e) => setAsrConfidence(e.target.value)} /></label>
             </details>
@@ -277,10 +305,10 @@ function App() {
                 {result && <span>policy {result.policy_version}</span>}
               </div>
               <p>{result?.memory_aware_text ?? "The memory-aware result will appear here."}</p>
-              {result?.action === "apply" && (
+              {(result?.action === "apply" || result?.action === "suggest") && strongestCandidate && (
                 <div className="feedback-row">
-                  <span>Was this intervention right?</span>
-                  <button type="button" onClick={() => sendFeedback("correct")} disabled={busy}>Correct</button>
+                  <span>{result.action === "suggest" ? "Is this suggestion right?" : "Was this intervention right?"}</span>
+                  <button type="button" onClick={() => sendFeedback("correct")} disabled={busy}>{result.action === "suggest" ? "Accept" : "Correct"}</button>
                   <button type="button" onClick={() => sendFeedback("incorrect")} disabled={busy}>Wrong</button>
                 </div>
               )}
@@ -298,6 +326,12 @@ function App() {
                 <div className="memory-meta"><span>{memory.state}</span><span>{memory.scope_mode}</span><span>{Math.round(memory.evidence_confidence * 100)}% evidence</span></div>
                 <small>{memory.context_evidence_count} learned context signals</small>
                 <small>{memory.semantic_evidence_count} semantic observations</small>
+                <small>{memory.asr_evidence_count} provider-linked ASR outcomes</small>
+                {memory.asr_profile.groups.slice(0, 1).map((group) => (
+                  <small key={`${group.provider}-${group.model}`}>
+                    {group.provider}/{group.model}: {group.observations}/{memory.asr_profile.minimum_outcomes} · {group.state}
+                  </small>
+                ))}
                 {memory.context_profile.positive.length > 0 && (
                   <div className="reason-list">
                     {memory.context_profile.positive.slice(0, 4).map((item) => (
@@ -340,7 +374,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.6.0</span><span>Hybrid context · Local semantic model</span></footer>
+      <footer><span>LexiTrace 0.7.0</span><span>Hybrid context · Learned ASR reliability</span></footer>
     </div>
   );
 }

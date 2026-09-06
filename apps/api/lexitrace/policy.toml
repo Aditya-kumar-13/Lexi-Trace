@@ -1,4 +1,4 @@
-version = "2026-09-06-hybrid-v2-calibrated"
+version = "2026-09-06-hybrid-v3-learned-asr"
 
 [thresholds]
 apply = 0.93
@@ -11,6 +11,11 @@ negative_context_block = 0.12
 [semantic]
 similarity_floor = 0.60
 
+[asr_learning]
+prior_alpha = 1.0
+prior_beta = 3.0
+minimum_outcomes = 3
+
 [weights]
 lexical = 0.72
 memory_evidence = 0.14
@@ -18,3 +23,4 @@ context = 0.10
 phonetic = 0.10
 asr_alternative = 0.10
 negative_context = 0.65
+learned_asr = 0.06

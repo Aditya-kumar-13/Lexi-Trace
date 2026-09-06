@@ -23,6 +23,10 @@ class DecisionPolicy:
     phonetic_weight: float
     asr_alternative_weight: float
     negative_context_weight: float
+    learned_asr_weight: float
+    asr_prior_alpha: float
+    asr_prior_beta: float
+    asr_minimum_outcomes: int
 
 
 def load_policy() -> DecisionPolicy:
@@ -35,6 +39,7 @@ def load_policy() -> DecisionPolicy:
     thresholds = data["thresholds"]
     semantic = data["semantic"]
     weights = data["weights"]
+    asr_learning = data["asr_learning"]
     return DecisionPolicy(
         version=data["version"],
         apply_threshold=thresholds["apply"],
@@ -50,4 +55,8 @@ def load_policy() -> DecisionPolicy:
         phonetic_weight=weights["phonetic"],
         asr_alternative_weight=weights["asr_alternative"],
         negative_context_weight=weights["negative_context"],
+        learned_asr_weight=weights["learned_asr"],
+        asr_prior_alpha=asr_learning["prior_alpha"],
+        asr_prior_beta=asr_learning["prior_beta"],
+        asr_minimum_outcomes=asr_learning["minimum_outcomes"],
     )

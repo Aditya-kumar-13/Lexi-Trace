@@ -46,6 +46,14 @@ class AsrAlternative(BaseModel):
     text: str = Field(min_length=1, max_length=20_000)
     confidence: float = Field(ge=0.0, le=1.0)
     provider: str = Field(default="unknown", min_length=1, max_length=100)
+    model: str = Field(default="unknown", min_length=1, max_length=150)
+    rank: int | None = Field(default=None, ge=1, le=10)
+
+
+class AsrMetadata(BaseModel):
+    provider: str = Field(min_length=1, max_length=100)
+    model: str = Field(default="unknown", min_length=1, max_length=150)
+    confidence: float | None = Field(default=None, ge=0.0, le=1.0)
 
 
 class InferenceRequest(BaseModel):
@@ -53,6 +61,7 @@ class InferenceRequest(BaseModel):
     raw_asr_text: str = Field(default="", max_length=20_000)
     formatted_text: str = Field(min_length=1, max_length=20_000)
     alternatives: list[AsrAlternative] = Field(default_factory=list, max_length=10)
+    asr: AsrMetadata | None = None
 
 
 class MemoryUpdateRequest(BaseModel):
@@ -87,6 +96,8 @@ class MemoryResponse(BaseModel):
     context_profile: dict
     semantic_evidence_count: int
     semantic_profile: dict
+    asr_evidence_count: int
+    asr_profile: dict
     variants: list[VariantResponse]
     created_at: datetime
     updated_at: datetime
@@ -107,6 +118,8 @@ class DecisionFeedbackRequest(BaseModel):
     verdict: Literal["correct", "incorrect"]
     corrected_text: str | None = Field(default=None, max_length=20_000)
     suppress_memories: bool = False
+    candidate_memory_id: str | None = Field(default=None, max_length=36)
+    candidate_start: int | None = Field(default=None, ge=0)
 
 
 class DecisionFeedbackResponse(BaseModel):
@@ -114,6 +127,7 @@ class DecisionFeedbackResponse(BaseModel):
     verdict: str
     affected_memory_ids: list[str]
     resulting_states: dict[str, str]
+    asr_outcome_ids: list[str]
 
 
 class CandidateTrace(BaseModel):
