@@ -1,6 +1,7 @@
 # Evaluation design
 
-LexiTrace uses five complementary suites. None is presented as external or production accuracy.
+LexiTrace uses five complementary suites plus a cross-suite policy-release gate. None is presented
+as external or production accuracy.
 
 ## Smoke suite
 
@@ -46,6 +47,19 @@ context diversity, contradiction-driven demotion, and explicit suppression. The 
 same immutable observations with automatic lifecycle transitions enabled and disabled. Every event
 retains its expected state, actual state, posterior components, gate results, and assertion outcome.
 
+## Policy calibration and release gate
+
+`evaluation/calibrate_policy.py` searches apply thresholds using only the 109 predeclared
+calibration cases. It then evaluates the nominated threshold against the fixed 28-case smoke suite
+as a safety constraint. Held-out robustness rows are never read during selection. Input hashes, all
+searched thresholds, baseline results, the nominated candidate, safety violations, the retained
+policy, and rollback boundaries are committed in `results/calibration`.
+
+The calibration split nominated `0.90` because it improved from 106/109 to 108/109 with no wrong
+intervention inside that split. The safety corpus exposed two wrong edits at that boundary, so the
+release gate rejected it and retained `0.93`. This visible negative result is intentional: a policy
+cannot buy recall by weakening the product's zero-wrong-intervention invariant.
+
 ## Recorded evidence
 
 Every evaluated case preserves:
@@ -53,7 +67,7 @@ Every evaluated case preserves:
 - raw ASR text, formatted text, and supplied alternatives;
 - expected output and action;
 - actual output and action for each system;
-- candidate score, features, blockers, reason codes, and trace ID;
+- candidate score, features, blockers, counterfactual, reason codes, and trace ID;
 - memory state and observation provenance at decision time;
 - allocated SQLite bytes, row counts, vector payload, and trace payload;
 - measured latency, local embedding calls, failures, hosted requests, and API cost.

@@ -67,7 +67,7 @@ def create_app(
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.8.0",
+        version="0.9.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
@@ -85,7 +85,7 @@ def create_app(
     def health() -> dict:
         return {
             "status": "ok",
-            "version": "0.8.0",
+            "version": "0.9.0",
             "semantic": semantic_encoder.status(),
         }
 

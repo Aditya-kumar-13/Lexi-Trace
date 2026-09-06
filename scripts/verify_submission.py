@@ -37,6 +37,8 @@ REQUIRED_PATHS = [
     "results/asr-learning/cases.json",
     "results/lifecycle/summary.json",
     "results/lifecycle/cases.json",
+    "results/calibration/policy.json",
+    "results/calibration/report.md",
     "docs/brief-alignment.md",
     "docs/evaluation.md",
 ]
@@ -50,6 +52,7 @@ RUN_TOKENS = [
     "evaluation/run.py",
     "evaluation/run_asr_learning.py",
     "evaluation/run_lifecycle.py",
+    "evaluation/calibrate_policy.py",
     "data/benchmark/robustness.jsonl",
     "results/robustness",
     "api/v1/reset",
@@ -124,6 +127,36 @@ def scan_for_secrets() -> list[str]:
     return findings
 
 
+def check_calibration_artifact(checks: list[dict]) -> None:
+    artifact_path = ROOT / "results" / "calibration" / "policy.json"
+    if not artifact_path.exists():
+        add(checks, "calibration_release_gate", False, "policy.json is missing")
+        return
+    artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
+    source = ROOT / artifact["source_cases"]
+    safety = ROOT / artifact["safety_cases"]
+    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+    safety_hash = hashlib.sha256(safety.read_bytes()).hexdigest()
+    policy = tomllib.loads((ROOT / "apps/api/lexitrace/policy.toml").read_text(encoding="utf-8"))
+    checks_pass = (
+        source_hash == artifact["source_cases_sha256"]
+        and safety_hash == artifact["safety_cases_sha256"]
+        and artifact["heldout_rows_accessed"] == 0
+        and artifact["selected"]["apply_threshold"] == policy["thresholds"]["apply"]
+    )
+    add(
+        checks,
+        "calibration_release_gate",
+        checks_pass,
+        "source_hash_match={}, safety_hash_match={}, heldout_rows={}, selected={}".format(
+            source_hash == artifact["source_cases_sha256"],
+            safety_hash == artifact["safety_cases_sha256"],
+            artifact["heldout_rows_accessed"],
+            artifact["selected"]["apply_threshold"],
+        ),
+    )
+
+
 def main() -> None:
     checks: list[dict] = []
     missing = [path for path in REQUIRED_PATHS if not (ROOT / path).exists()]
@@ -181,6 +214,8 @@ def main() -> None:
         "results/lifecycle",
     ):
         check_results(checks, result_dir)
+
+    check_calibration_artifact(checks)
 
     secret_findings = scan_for_secrets()
     add(checks, "credential_scan", not secret_findings, "findings=" + repr(secret_findings))

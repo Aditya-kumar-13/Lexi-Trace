@@ -426,6 +426,66 @@ def test_unseen_phonetic_variant_can_apply_when_similarity_is_strong(tmp_path: P
         assert result["candidates"][0]["features"]["match_method"] == "phonetic_fuzzy"
 
 
+def test_shadow_policy_compares_decisions_without_changing_active_output(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        response = client.post(
+            "/api/v1/infer",
+            json={
+                "formatted_text": "Message Adithya before lunch.",
+                "shadow_policy": {
+                    "policy_id": "calibration-candidate-090",
+                    "apply_threshold": 0.90,
+                },
+            },
+        )
+        assert response.status_code == 200
+        result = response.json()
+        assert result["action"] == "suggest"
+        assert result["memory_aware_text"] == "Message Adithya before lunch."
+        assert result["shadow"]["action"] == "apply"
+        assert result["shadow"]["memory_aware_text"] == "Message Aaditya before lunch."
+        assert result["shadow"]["action_changed"] is True
+        assert result["counterfactual"]["reason_code"] == "BELOW_APPLY_THRESHOLD"
+
+
+def test_counterfactual_names_safety_blocker_for_non_intervention(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        teach(client)
+        response = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Discuss the Kiwi calendar tomorrow."},
+        )
+        assert response.status_code == 200
+        result = response.json()
+        assert result["memory_aware_text"] == "Discuss the Kiwi calendar tomorrow."
+        assert result["counterfactual"]["reason_code"] == "CONTEXT_EVIDENCE_INSUFFICIENT"
+        assert result["counterfactual"]["score_gap_to_apply"] >= 0
+        assert "clear blocker" in result["counterfactual"]["minimum_change"]
+
+
+def test_shadow_policy_validation_rejects_inverted_thresholds(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        response = client.post(
+            "/api/v1/infer",
+            json={
+                "formatted_text": "Message Aditya.",
+                "shadow_policy": {
+                    "apply_threshold": 0.60,
+                    "suggest_threshold": 0.70,
+                },
+            },
+        )
+        assert response.status_code == 422
+
+
 def test_short_fuzzy_word_is_not_treated_as_a_safe_candidate(tmp_path: Path) -> None:
     with make_client(tmp_path) as client:
         teach(

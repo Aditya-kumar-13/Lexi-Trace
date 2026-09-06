@@ -67,6 +67,24 @@ The API and trace expose alpha, beta, posterior mean, positive and negative even
 diversity, failed gates, source weights, and the policy version. Legacy confidence counters remain
 mapped only so older databases can migrate; no product decision reads or mutates them.
 
+## Calibrated policy and shadow execution
+
+Threshold search uses only the predeclared robustness calibration split. A second, independently
+frozen smoke corpus acts as a safety constraint rather than another optimization target. A policy
+candidate is promotable only when it does not increase wrong interventions or reduce exact matches
+on that safety corpus. The generated artifact records input hashes, the complete search space,
+baseline and candidate metrics, violations, and explicit rollback boundaries.
+
+An inference request may include a shadow threshold profile. LexiTrace scores candidates once, then
+resolves active and shadow winners independently. Only the active policy can modify the returned
+transcript. The shadow action, hypothetical output, thresholds, and delta are stored inside the
+same immutable decision trace. This makes policy comparison reproducible without changing memory
+state or exposing users to an unapproved policy.
+
+Every candidate also receives a counterfactual explanation: the active threshold, its score gap,
+blocking conditions, and the minimum condition that would have to change. These explanations are
+mechanical descriptions of the actual decision path, not generated prose.
+
 ## Safety policy
 
 Retrieval is not permission to edit. The following blockers prevent automatic application:
@@ -78,10 +96,10 @@ Retrieval is not permission to edit. The following blockers prevent automatic ap
 - `INSUFFICIENT_WINNER_MARGIN`
 - `OVERLAPPING_WINNER`
 
-The numeric decision score is diagnostic, not a calibrated probability. Policy v2 raises the
-minimum contextual support from 0.12 to 0.15 based only on the fixed robustness calibration split;
-the held-out split is reported unchanged. This removes calibration false interventions without
-claiming probability calibration.
+The numeric decision score is diagnostic, not a probability. Policy v5 retains the conservative
+`0.93` apply threshold because the calibration-only `0.90` candidate introduced two wrong edits on
+the separate safety corpus. The gate records that rejection instead of hiding it behind a better
+single-suite headline.
 
 Thresholds and component weights live in the versioned `lexitrace/policy.toml` file. Every decision
 trace records the policy version, so benchmark results can be reproduced and policy changes cannot

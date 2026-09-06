@@ -7,7 +7,7 @@ import time
 import unicodedata
 import uuid
 from collections import defaultdict
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from difflib import SequenceMatcher
 
 import jellyfish
@@ -28,7 +28,7 @@ from .models import (
 from .policy import load_policy
 from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.8.0"
+ENGINE_VERSION = "0.9.0"
 POLICY = load_policy()
 APPLY_THRESHOLD = POLICY.apply_threshold
 SUGGEST_THRESHOLD = POLICY.suggest_threshold
@@ -551,6 +551,36 @@ class TraceCandidate:
     reason_codes: list[str]
     blockers: list[str]
     features: dict[str, float | str | bool]
+    counterfactual: dict[str, object]
+
+
+@dataclass(frozen=True, slots=True)
+class DecisionThresholds:
+    policy_id: str
+    apply: float
+    suggest: float
+    minimum_winner_margin: float
+
+
+def active_decision_thresholds() -> DecisionThresholds:
+    return DecisionThresholds(
+        policy_id=POLICY.version,
+        apply=APPLY_THRESHOLD,
+        suggest=SUGGEST_THRESHOLD,
+        minimum_winner_margin=MINIMUM_WINNER_MARGIN,
+    )
+
+
+def resolve_shadow_thresholds(payload: dict) -> DecisionThresholds:
+    active = active_decision_thresholds()
+    suggest = payload.get("suggest_threshold")
+    margin = payload.get("minimum_winner_margin")
+    return DecisionThresholds(
+        policy_id=str(payload.get("policy_id") or "shadow-candidate"),
+        apply=float(payload["apply_threshold"]),
+        suggest=float(active.suggest if suggest is None else suggest),
+        minimum_winner_margin=float(active.minimum_winner_margin if margin is None else margin),
+    )
 
 
 def _asr_reliability(
@@ -1381,6 +1411,110 @@ def _score_candidate(
     return score, reasons, blockers, features
 
 
+def _initial_candidate_action(
+    candidate: TraceCandidate,
+    thresholds: DecisionThresholds,
+) -> str:
+    if candidate.score >= thresholds.apply and not candidate.blockers:
+        return "apply"
+    if "NEGATIVE_CONTEXT_EVIDENCE" in candidate.blockers:
+        return "abstain"
+    if candidate.score >= thresholds.suggest:
+        return "suggest"
+    return "abstain"
+
+
+def _counterfactual(
+    candidate: TraceCandidate,
+    thresholds: DecisionThresholds,
+) -> dict[str, object]:
+    score_gap = max(0.0, thresholds.apply - candidate.score)
+    if candidate.action == "apply":
+        reason = "ELIGIBLE_AND_SELECTED"
+        minimum_change = "none"
+    elif candidate.blockers:
+        reason = candidate.blockers[0]
+        minimum_change = f"clear blocker {candidate.blockers[0]}"
+    elif score_gap > 0:
+        reason = "BELOW_APPLY_THRESHOLD"
+        minimum_change = f"increase evidence score by {score_gap:.4f}"
+    else:
+        reason = "NOT_SELECTED"
+        minimum_change = "win the competing-candidate margin"
+    return {
+        "reason_code": reason,
+        "apply_threshold": round(thresholds.apply, 4),
+        "score_gap_to_apply": round(score_gap, 4),
+        "blocking_conditions": list(candidate.blockers),
+        "minimum_change": minimum_change,
+    }
+
+
+def _select_winners(
+    source: list[TraceCandidate],
+    thresholds: DecisionThresholds,
+) -> tuple[list[TraceCandidate], list[TraceCandidate]]:
+    candidates = [
+        replace(
+            candidate,
+            action="abstain",
+            reason_codes=list(candidate.reason_codes),
+            blockers=list(candidate.blockers),
+            features=dict(candidate.features),
+            counterfactual={},
+        )
+        for candidate in source
+    ]
+    for candidate in candidates:
+        candidate.action = _initial_candidate_action(candidate, thresholds)
+
+    candidates.sort(key=lambda item: (-item.score, item.start, -(item.end - item.start)))
+    winners: list[TraceCandidate] = []
+    occupied: list[tuple[int, int]] = []
+    for candidate in candidates:
+        if candidate.action != "apply":
+            continue
+        overlapping = [
+            other
+            for other in candidates
+            if other is not candidate
+            and other.start < candidate.end
+            and candidate.start < other.end
+        ]
+        runner_up = max((other.score for other in overlapping), default=0.0)
+        if overlapping and candidate.score - runner_up < thresholds.minimum_winner_margin:
+            candidate.action = "suggest"
+            candidate.reason_codes.append("INSUFFICIENT_WINNER_MARGIN")
+            candidate.blockers.append("INSUFFICIENT_WINNER_MARGIN")
+            continue
+        if any(left < candidate.end and candidate.start < right for left, right in occupied):
+            candidate.action = "abstain"
+            candidate.reason_codes.append("OVERLAPPING_WINNER")
+            candidate.blockers.append("OVERLAPPING_WINNER")
+            continue
+        winners.append(candidate)
+        occupied.append((candidate.start, candidate.end))
+
+    for candidate in candidates:
+        candidate.counterfactual = _counterfactual(candidate, thresholds)
+    return candidates, winners
+
+
+def _render_winners(formatted_text: str, winners: list[TraceCandidate]) -> str:
+    output = formatted_text
+    for winner in sorted(winners, key=lambda item: item.start, reverse=True):
+        output = output[: winner.start] + winner.output_span + output[winner.end :]
+    return output
+
+
+def _decision_action(candidates: list[TraceCandidate], winners: list[TraceCandidate]) -> str:
+    if winners:
+        return "apply"
+    if any(candidate.action == "suggest" for candidate in candidates):
+        return "suggest"
+    return "abstain"
+
+
 def infer(
     session: Session,
     *,
@@ -1391,6 +1525,7 @@ def infer(
     asr: dict | None = None,
     enable_learned_asr: bool = True,
     semantic_encoder: SemanticEncoder | None = None,
+    shadow_policy: dict | None = None,
 ) -> tuple[Decision, dict]:
     started = time.perf_counter()
     memories = session.scalars(
@@ -1428,15 +1563,6 @@ def infer(
                     ),
                     enable_learned_asr=enable_learned_asr,
                 )
-                action = (
-                    "apply"
-                    if score >= APPLY_THRESHOLD and not blockers
-                    else "abstain"
-                    if "NEGATIVE_CONTEXT_EVIDENCE" in blockers
-                    else "suggest"
-                    if score >= SUGGEST_THRESHOLD
-                    else "abstain"
-                )
                 candidate = TraceCandidate(
                     memory_id=memory.id,
                     canonical_form=memory.canonical_form,
@@ -1445,10 +1571,11 @@ def infer(
                     start=start,
                     end=end,
                     score=round(score, 4),
-                    action=action,
+                    action="abstain",
                     reason_codes=reasons,
                     blockers=blockers,
                     features=features,
+                    counterfactual={},
                 )
                 key = (memory.id, start, end)
                 previous = candidates_by_key.get(key)
@@ -1487,15 +1614,6 @@ def infer(
                         provider_confidence=confidence,
                         enable_learned_asr=enable_learned_asr,
                     )
-                    action = (
-                        "apply"
-                        if score >= APPLY_THRESHOLD and not blockers
-                        else "abstain"
-                        if "NEGATIVE_CONTEXT_EVIDENCE" in blockers
-                        else "suggest"
-                        if score >= SUGGEST_THRESHOLD
-                        else "abstain"
-                    )
                     candidate = TraceCandidate(
                         memory_id=memory.id,
                         canonical_form=memory.canonical_form,
@@ -1504,54 +1622,40 @@ def infer(
                         start=start,
                         end=end,
                         score=round(score, 4),
-                        action=action,
+                        action="abstain",
                         reason_codes=reasons,
                         blockers=blockers,
                         features=features,
+                        counterfactual={},
                     )
                     key = (memory.id, start, end)
                     previous = candidates_by_key.get(key)
                     if previous is None or candidate.score > previous.score:
                         candidates_by_key[key] = candidate
 
-    candidates = list(candidates_by_key.values())
-    candidates.sort(key=lambda item: (-item.score, item.start, -(item.end - item.start)))
-    winners: list[TraceCandidate] = []
-    occupied: list[tuple[int, int]] = []
-    for candidate in candidates:
-        if candidate.action != "apply":
-            continue
-        overlapping = [
-            other
-            for other in candidates
-            if other is not candidate
-            and other.start < candidate.end
-            and candidate.start < other.end
-        ]
-        runner_up = max((other.score for other in overlapping), default=0.0)
-        if overlapping and candidate.score - runner_up < MINIMUM_WINNER_MARGIN:
-            candidate.action = "suggest"
-            candidate.reason_codes.append("INSUFFICIENT_WINNER_MARGIN")
-            candidate.blockers.append("INSUFFICIENT_WINNER_MARGIN")
-            continue
-        if any(left < candidate.end and candidate.start < right for left, right in occupied):
-            candidate.action = "abstain"
-            candidate.reason_codes.append("OVERLAPPING_WINNER")
-            candidate.blockers.append("OVERLAPPING_WINNER")
-            continue
-        winners.append(candidate)
-        occupied.append((candidate.start, candidate.end))
+    base_candidates = list(candidates_by_key.values())
+    active_thresholds = active_decision_thresholds()
+    candidates, winners = _select_winners(base_candidates, active_thresholds)
+    output = _render_winners(formatted_text, winners)
+    action = _decision_action(candidates, winners)
 
-    output = formatted_text
-    for winner in sorted(winners, key=lambda item: item.start, reverse=True):
-        output = output[: winner.start] + winner.output_span + output[winner.end :]
-
-    if winners:
-        action = "apply"
-    elif any(candidate.action == "suggest" for candidate in candidates):
-        action = "suggest"
-    else:
-        action = "abstain"
+    shadow: dict | None = None
+    if shadow_policy is not None:
+        shadow_thresholds = resolve_shadow_thresholds(shadow_policy)
+        shadow_candidates, shadow_winners = _select_winners(base_candidates, shadow_thresholds)
+        shadow_output = _render_winners(formatted_text, shadow_winners)
+        shadow_action = _decision_action(shadow_candidates, shadow_winners)
+        shadow = {
+            "policy_id": shadow_thresholds.policy_id,
+            "thresholds": asdict(shadow_thresholds),
+            "action": shadow_action,
+            "memory_aware_text": shadow_output,
+            "changes": [asdict(candidate) for candidate in shadow_winners],
+            "action_changed": shadow_action != action,
+            "output_changed": shadow_output != output,
+            "would_apply": len(shadow_winners),
+            "active_applied": len(winners),
+        }
     latency_ms = (time.perf_counter() - started) * 1000
     trace = {
         "policy_version": POLICY.version,
@@ -1566,6 +1670,15 @@ def infer(
         },
         "candidates": [asdict(candidate) for candidate in candidates],
         "changes": [asdict(candidate) for candidate in winners],
+        "counterfactual": (
+            candidates[0].counterfactual
+            if candidates
+            else {
+                "reason_code": "NO_CANDIDATE",
+                "minimum_change": "teach or observe a matching memory",
+            }
+        ),
+        "shadow": shadow,
         "semantic": (
             semantic_encoder.status()
             if semantic_encoder is not None
@@ -1592,6 +1705,8 @@ def infer(
         "action": action,
         "changes": trace["changes"],
         "candidates": trace["candidates"],
+        "counterfactual": trace["counterfactual"],
+        "shadow": trace["shadow"],
         "total_latency_ms": round(latency_ms, 3),
         "engine_version": ENGINE_VERSION,
         "policy_version": POLICY.version,

@@ -10,11 +10,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 8.707,
-      "trace_id": "b822270f-86e0-4e1a-8842-5281abc72b0a",
+      "latency_ms": 8.173,
+      "trace_id": "b620098f-ad37-4e4a-8829-1d17e02ccfc7",
       "candidates": [
         {
-          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
+          "memory_id": "d089d9f4-3bba-4ab4-bfd9-90351aa85d87",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -66,6 +66,15 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "CONTEXT_EVIDENCE_INSUFFICIENT",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [
+              "CONTEXT_EVIDENCE_INSUFFICIENT"
+            ],
+            "minimum_change": "clear blocker CONTEXT_EVIDENCE_INSUFFICIENT"
           }
         }
       ],
@@ -81,13 +90,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
+          "memory_id": "d089d9f4-3bba-4ab4-bfd9-90351aa85d87",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -116,7 +125,7 @@
           ],
           "observations": [
             {
-              "observation_id": "91b12ad6-0de8-4d90-9027-158578e554e8",
+              "observation_id": "d3528a1e-e96f-494c-b293-7469b7d7b297",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -150,7 +159,7 @@
         "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1832,
+        "trace_payload_bytes": 2336,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -175,11 +184,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.648,
-      "trace_id": "6750ccdb-74db-4aef-84f7-5940c4751688",
+      "latency_ms": 3.63,
+      "trace_id": "e55bc8fa-ec41-43f2-9658-d084869bfeb8",
       "candidates": [
         {
-          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
+          "memory_id": "d089d9f4-3bba-4ab4-bfd9-90351aa85d87",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -231,6 +240,15 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "CONTEXT_EVIDENCE_INSUFFICIENT",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [
+              "CONTEXT_EVIDENCE_INSUFFICIENT"
+            ],
+            "minimum_change": "clear blocker CONTEXT_EVIDENCE_INSUFFICIENT"
           }
         }
       ],
@@ -246,13 +264,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
+          "memory_id": "d089d9f4-3bba-4ab4-bfd9-90351aa85d87",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -281,7 +299,7 @@
           ],
           "observations": [
             {
-              "observation_id": "91b12ad6-0de8-4d90-9027-158578e554e8",
+              "observation_id": "d3528a1e-e96f-494c-b293-7469b7d7b297",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -311,11 +329,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 208896,
-        "page_count": 51,
+        "allocated_bytes": 217088,
+        "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3664,
+        "trace_payload_bytes": 4672,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -340,11 +358,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.172,
-      "trace_id": "aec54ff0-ee48-451c-b8a7-070f95fd84c3",
+      "latency_ms": 3.338,
+      "trace_id": "41d74c1b-f722-4799-a7cd-4b4cb067d07a",
       "candidates": [
         {
-          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
+          "memory_id": "57b4750c-59ce-4bb4-aa0f-4b9f78b0fe2f",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -394,6 +412,13 @@
             "memory_state": "confirmed",
             "scope_mode": "global",
             "match_method": "asr_alternative"
+          },
+          "counterfactual": {
+            "reason_code": "ELIGIBLE_AND_SELECTED",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [],
+            "minimum_change": "none"
           }
         }
       ],
@@ -415,13 +440,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
+          "memory_id": "57b4750c-59ce-4bb4-aa0f-4b9f78b0fe2f",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -450,7 +475,7 @@
           ],
           "observations": [
             {
-              "observation_id": "870ddd76-c6fa-4a28-adbc-bcea72825374",
+              "observation_id": "09bed8e6-9548-4b2d-8312-52a752920dc5",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -478,11 +503,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 208896,
-        "page_count": 51,
+        "allocated_bytes": 217088,
+        "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3278,
+        "trace_payload_bytes": 3791,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -507,11 +532,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.06,
-      "trace_id": "a938f6f0-4f24-4bb6-9490-6b199ebb23af",
+      "latency_ms": 3.691,
+      "trace_id": "a86728bf-9b17-4d6d-8e77-bd2a66d08cc4",
       "candidates": [
         {
-          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
+          "memory_id": "57b4750c-59ce-4bb4-aa0f-4b9f78b0fe2f",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -561,6 +586,13 @@
             "memory_state": "confirmed",
             "scope_mode": "global",
             "match_method": "asr_alternative"
+          },
+          "counterfactual": {
+            "reason_code": "BELOW_APPLY_THRESHOLD",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.4131,
+            "blocking_conditions": [],
+            "minimum_change": "increase evidence score by 0.4131"
           }
         }
       ],
@@ -582,13 +614,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
+          "memory_id": "57b4750c-59ce-4bb4-aa0f-4b9f78b0fe2f",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -617,7 +649,7 @@
           ],
           "observations": [
             {
-              "observation_id": "870ddd76-c6fa-4a28-adbc-bcea72825374",
+              "observation_id": "09bed8e6-9548-4b2d-8312-52a752920dc5",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -649,7 +681,7 @@
         "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5120,
+        "trace_payload_bytes": 6045,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -674,11 +706,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.739,
-      "trace_id": "975a994f-4971-46c2-877b-b4a48fbae06c",
+      "latency_ms": 4.772,
+      "trace_id": "c81657cb-fefe-4f52-8a35-ff0448b1181c",
       "candidates": [
         {
-          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
+          "memory_id": "1e142c56-e8e3-4a9d-aacf-747e19a7e29e",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -728,6 +760,13 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "ELIGIBLE_AND_SELECTED",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [],
+            "minimum_change": "none"
           }
         }
       ],
@@ -743,13 +782,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
+          "memory_id": "1e142c56-e8e3-4a9d-aacf-747e19a7e29e",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -778,7 +817,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f4dca3d1-ca58-49d2-8f96-48effadcc75b",
+              "observation_id": "8b3799ef-d0da-4f36-a00b-1b1560daaafe",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -812,7 +851,7 @@
         "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3342,
+        "trace_payload_bytes": 3855,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -837,11 +876,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": false,
-      "latency_ms": 4.101,
-      "trace_id": "046df5b5-c16e-43df-8e7f-fc3883c7eac2",
+      "latency_ms": 3.774,
+      "trace_id": "bf8b3034-0aa8-48f6-a3f7-e70247b31847",
       "candidates": [
         {
-          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
+          "memory_id": "1e142c56-e8e3-4a9d-aacf-747e19a7e29e",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -893,6 +932,15 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "CONTEXT_EVIDENCE_INSUFFICIENT",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [
+              "CONTEXT_EVIDENCE_INSUFFICIENT"
+            ],
+            "minimum_change": "clear blocker CONTEXT_EVIDENCE_INSUFFICIENT"
           }
         }
       ],
@@ -908,13 +956,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
+          "memory_id": "1e142c56-e8e3-4a9d-aacf-747e19a7e29e",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.6923,
             "alpha": 9.0,
             "beta": 4.0,
@@ -953,7 +1001,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f4dca3d1-ca58-49d2-8f96-48effadcc75b",
+              "observation_id": "8b3799ef-d0da-4f36-a00b-1b1560daaafe",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -962,7 +1010,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e28ea8a9-423a-4562-8542-8c95ed5ad8f3",
+              "observation_id": "280ce100-4ba2-41d9-af0a-dea10f3e80ee",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -971,7 +1019,7 @@
               "reason_code": "USER_REJECTED"
             },
             {
-              "observation_id": "5bcee9f7-e173-465e-b55e-676f3f5b4235",
+              "observation_id": "9ae2db15-a952-40b1-9024-df3c97c6398f",
               "evidence_type": "state_override_confirmed",
               "source_span": "",
               "target_span": "Kivi",
@@ -1006,7 +1054,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5175,
+        "trace_payload_bytes": 6192,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1033,11 +1081,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 152.674,
-      "trace_id": "ceb2e9c2-8789-4cba-9679-6004a54ba541",
+      "latency_ms": 89.229,
+      "trace_id": "a93f128c-d5e5-4ca2-97c8-2d27e9408a8c",
       "candidates": [
         {
-          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
+          "memory_id": "3d304041-7cac-4fae-8947-ea80ad87f62d",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1088,6 +1136,13 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "ELIGIBLE_AND_SELECTED",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [],
+            "minimum_change": "none"
           }
         }
       ],
@@ -1103,13 +1158,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
+          "memory_id": "3d304041-7cac-4fae-8947-ea80ad87f62d",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1138,7 +1193,7 @@
           ],
           "observations": [
             {
-              "observation_id": "981396c9-5897-4354-921c-114e7a0a70ef",
+              "observation_id": "8a142cc5-df1d-46df-8aa6-40e5854eb742",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1174,7 +1229,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8076,
-        "trace_payload_bytes": 3312,
+        "trace_payload_bytes": 3825,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1199,11 +1254,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 154.304,
-      "trace_id": "0f092cf7-14c0-466c-8db5-d2ed136e893c",
+      "latency_ms": 92.493,
+      "trace_id": "1b80de71-e2c2-4271-bb8e-3adf5037a981",
       "candidates": [
         {
-          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
+          "memory_id": "3d304041-7cac-4fae-8947-ea80ad87f62d",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -1256,6 +1311,15 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "CONTEXT_EVIDENCE_INSUFFICIENT",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [
+              "CONTEXT_EVIDENCE_INSUFFICIENT"
+            ],
+            "minimum_change": "clear blocker CONTEXT_EVIDENCE_INSUFFICIENT"
           }
         }
       ],
@@ -1271,13 +1335,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
+          "memory_id": "3d304041-7cac-4fae-8947-ea80ad87f62d",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1306,7 +1370,7 @@
           ],
           "observations": [
             {
-              "observation_id": "981396c9-5897-4354-921c-114e7a0a70ef",
+              "observation_id": "8a142cc5-df1d-46df-8aa6-40e5854eb742",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1342,7 +1406,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8076,
-        "trace_payload_bytes": 5216,
+        "trace_payload_bytes": 6233,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1367,11 +1431,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.358,
-      "trace_id": "55908531-7717-4623-b75d-5b0024bf6614",
+      "latency_ms": 3.143,
+      "trace_id": "17f7d279-e39e-4fab-9a4a-1d6be3a7d5bd",
       "candidates": [
         {
-          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
+          "memory_id": "90efe8d3-377f-41ee-b8cd-991b993f1c15",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -1421,6 +1485,13 @@
             "memory_state": "confirmed",
             "scope_mode": "global",
             "match_method": "asr_alternative"
+          },
+          "counterfactual": {
+            "reason_code": "ELIGIBLE_AND_SELECTED",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [],
+            "minimum_change": "none"
           }
         }
       ],
@@ -1442,13 +1513,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
+          "memory_id": "90efe8d3-377f-41ee-b8cd-991b993f1c15",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1477,7 +1548,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b263074b-274d-4cd1-95da-358e544a3be1",
+              "observation_id": "3e4eaa10-85d2-49e6-9817-4bef47ee10c3",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1509,7 +1580,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3302,
+        "trace_payload_bytes": 3815,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1534,11 +1605,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.413,
-      "trace_id": "f918a922-e49d-49ec-af90-c7d3b1a8acf3",
+      "latency_ms": 2.716,
+      "trace_id": "8551fb95-a80a-4703-abc4-10a60e62894a",
       "candidates": [
         {
-          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
+          "memory_id": "90efe8d3-377f-41ee-b8cd-991b993f1c15",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -1588,6 +1659,13 @@
             "memory_state": "confirmed",
             "scope_mode": "global",
             "match_method": "asr_alternative"
+          },
+          "counterfactual": {
+            "reason_code": "BELOW_APPLY_THRESHOLD",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.4131,
+            "blocking_conditions": [],
+            "minimum_change": "increase evidence score by 0.4131"
           }
         }
       ],
@@ -1609,13 +1687,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
+          "memory_id": "90efe8d3-377f-41ee-b8cd-991b993f1c15",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1644,7 +1722,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b263074b-274d-4cd1-95da-358e544a3be1",
+              "observation_id": "3e4eaa10-85d2-49e6-9817-4bef47ee10c3",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1676,7 +1754,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5168,
+        "trace_payload_bytes": 6093,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1701,11 +1779,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 159.425,
-      "trace_id": "5b8e0dc9-ec68-40dd-95e0-70a4d7b2c305",
+      "latency_ms": 101.005,
+      "trace_id": "d32ea3cc-e65d-4972-9096-ccf9133f881f",
       "candidates": [
         {
-          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
+          "memory_id": "f5697a49-7a82-4735-b479-58fb2603d63f",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1756,6 +1834,13 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "ELIGIBLE_AND_SELECTED",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.0,
+            "blocking_conditions": [],
+            "minimum_change": "none"
           }
         }
       ],
@@ -1771,13 +1856,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
+          "memory_id": "f5697a49-7a82-4735-b479-58fb2603d63f",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1806,7 +1891,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b4749fef-cd2b-4aa1-87e9-3a902c7a3bb9",
+              "observation_id": "f97c4410-66b0-4682-85bb-b976b82ce02c",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1842,7 +1927,7 @@
         "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8071,
-        "trace_payload_bytes": 3450,
+        "trace_payload_bytes": 3963,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1867,11 +1952,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 159.239,
-      "trace_id": "662bca1c-a34f-46b0-b4f1-ee1a99ea9349",
+      "latency_ms": 99.187,
+      "trace_id": "474abbf6-b7f0-4adf-8342-6ae2cdae5786",
       "candidates": [
         {
-          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
+          "memory_id": "f5697a49-7a82-4735-b479-58fb2603d63f",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1925,6 +2010,15 @@
             "memory_state": "confirmed",
             "scope_mode": "contextual",
             "match_method": "exact"
+          },
+          "counterfactual": {
+            "reason_code": "NEGATIVE_CONTEXT_EVIDENCE",
+            "apply_threshold": 0.93,
+            "score_gap_to_apply": 0.226,
+            "blocking_conditions": [
+              "NEGATIVE_CONTEXT_EVIDENCE"
+            ],
+            "minimum_change": "clear blocker NEGATIVE_CONTEXT_EVIDENCE"
           }
         }
       ],
@@ -1940,13 +2034,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
+          "memory_id": "f5697a49-7a82-4735-b479-58fb2603d63f",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
             "posterior_mean": 0.6923,
             "alpha": 9.0,
             "beta": 4.0,
@@ -1985,7 +2079,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b4749fef-cd2b-4aa1-87e9-3a902c7a3bb9",
+              "observation_id": "f97c4410-66b0-4682-85bb-b976b82ce02c",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1994,7 +2088,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "161809fe-49d3-4fc0-992b-1600e14d72d6",
+              "observation_id": "d198c0d2-1911-4d65-bb44-cec0580b2a1b",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -2003,7 +2097,7 @@
               "reason_code": "USER_REJECTED"
             },
             {
-              "observation_id": "02fff310-05e2-48a9-a6a8-aae92760a9ef",
+              "observation_id": "1e0e5e58-3356-4b2d-8657-598dc1fe9605",
               "evidence_type": "state_override_confirmed",
               "source_span": "",
               "target_span": "Kivi",
@@ -2036,11 +2130,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 241664,
-        "page_count": 59,
+        "allocated_bytes": 237568,
+        "page_count": 58,
         "page_size": 4096,
         "vector_payload_bytes": 16142,
-        "trace_payload_bytes": 5383,
+        "trace_payload_bytes": 6380,
         "rows": {
           "memories": 1,
           "memory_variants": 1,

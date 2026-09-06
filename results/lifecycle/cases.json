@@ -15,7 +15,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -63,7 +63,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -111,7 +111,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -159,7 +159,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -207,7 +207,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -255,7 +255,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -303,7 +303,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -351,7 +351,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -399,7 +399,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -449,7 +449,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -498,7 +498,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.5556,
         "alpha": 5.0,
         "beta": 4.0,
@@ -528,14 +528,14 @@
         }
       },
       "inference": {
-        "trace_id": "dccde114-0bb0-4591-a1ea-0c192cadbc22",
+        "trace_id": "bf35402a-9083-4067-9b59-67d4cf2f0986",
         "raw_asr_text": "",
         "formatted_text": "Buy Kiwi at the market.",
         "memory_aware_text": "Buy Kivi at the market.",
         "action": "apply",
         "changes": [
           {
-            "memory_id": "a08bc011-e625-4990-8692-3a6aaa117274",
+            "memory_id": "80114b5d-b3f1-4313-baa4-306acf74c88a",
             "canonical_form": "Kivi",
             "input_span": "Kiwi",
             "output_span": "Kivi",
@@ -584,12 +584,19 @@
               "memory_state": "confirmed",
               "scope_mode": "global",
               "match_method": "exact"
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
             }
           }
         ],
         "candidates": [
           {
-            "memory_id": "a08bc011-e625-4990-8692-3a6aaa117274",
+            "memory_id": "80114b5d-b3f1-4313-baa4-306acf74c88a",
             "canonical_form": "Kivi",
             "input_span": "Kiwi",
             "output_span": "Kivi",
@@ -638,12 +645,27 @@
               "memory_state": "confirmed",
               "scope_mode": "global",
               "match_method": "exact"
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
             }
           }
         ],
-        "total_latency_ms": 3.974,
-        "engine_version": "0.8.0",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "counterfactual": {
+          "reason_code": "ELIGIBLE_AND_SELECTED",
+          "apply_threshold": 0.93,
+          "score_gap_to_apply": 0.0,
+          "blocking_conditions": [],
+          "minimum_change": "none"
+        },
+        "shadow": null,
+        "total_latency_ms": 3.392,
+        "engine_version": "0.9.0",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "semantic": {
           "enabled": false,
           "model": "disabled",
@@ -678,7 +700,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -723,7 +745,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -770,7 +792,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -822,7 +844,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.9,
         "alpha": 9.0,
         "beta": 1.0,
@@ -874,7 +896,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.9167,
         "alpha": 11.0,
         "beta": 1.0,
@@ -929,7 +951,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -977,7 +999,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -1025,7 +1047,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -1073,7 +1095,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -1121,7 +1143,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -1169,7 +1191,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -1217,7 +1239,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.75,
         "alpha": 3.0,
         "beta": 1.0,
@@ -1265,7 +1287,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -1313,7 +1335,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -1363,7 +1385,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -1412,7 +1434,7 @@
       "actual_state": "candidate",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.5556,
         "alpha": 5.0,
         "beta": 4.0,
@@ -1442,14 +1464,14 @@
         }
       },
       "inference": {
-        "trace_id": "6851e44c-4113-4fa0-a047-876c2b713a12",
+        "trace_id": "b72d50e3-f009-426f-84fb-5469096dddd6",
         "raw_asr_text": "",
         "formatted_text": "Buy Kiwi at the market.",
         "memory_aware_text": "Buy Kivi at the market.",
         "action": "apply",
         "changes": [
           {
-            "memory_id": "5cd41aa3-6282-456c-a98e-cd1f165f4483",
+            "memory_id": "0870c5f3-3920-4aeb-8d14-1ed2be6feb28",
             "canonical_form": "Kivi",
             "input_span": "Kiwi",
             "output_span": "Kivi",
@@ -1498,12 +1520,19 @@
               "memory_state": "confirmed",
               "scope_mode": "global",
               "match_method": "exact"
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
             }
           }
         ],
         "candidates": [
           {
-            "memory_id": "5cd41aa3-6282-456c-a98e-cd1f165f4483",
+            "memory_id": "0870c5f3-3920-4aeb-8d14-1ed2be6feb28",
             "canonical_form": "Kivi",
             "input_span": "Kiwi",
             "output_span": "Kivi",
@@ -1552,12 +1581,27 @@
               "memory_state": "confirmed",
               "scope_mode": "global",
               "match_method": "exact"
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
             }
           }
         ],
-        "total_latency_ms": 3.239,
-        "engine_version": "0.8.0",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "counterfactual": {
+          "reason_code": "ELIGIBLE_AND_SELECTED",
+          "apply_threshold": 0.93,
+          "score_gap_to_apply": 0.0,
+          "blocking_conditions": [],
+          "minimum_change": "none"
+        },
+        "shadow": null,
+        "total_latency_ms": 2.782,
+        "engine_version": "0.9.0",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "semantic": {
           "enabled": false,
           "model": "disabled",
@@ -1592,7 +1636,7 @@
       "actual_state": "confirmed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -1637,7 +1681,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.8333,
         "alpha": 5.0,
         "beta": 1.0,
@@ -1684,7 +1728,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.875,
         "alpha": 7.0,
         "beta": 1.0,
@@ -1736,7 +1780,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.9,
         "alpha": 9.0,
         "beta": 1.0,
@@ -1788,7 +1832,7 @@
       "actual_state": "suppressed",
       "trust_profile": {
         "method": "weighted_beta_posterior",
-        "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+        "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
         "posterior_mean": 0.9167,
         "alpha": 11.0,
         "beta": 1.0,

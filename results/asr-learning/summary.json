@@ -8,8 +8,8 @@
       "exact_match_rate": 0.9375,
       "action_accuracy": 0.9375,
       "wrong_interventions": 0,
-      "mean_latency_ms": 3.939,
-      "p95_latency_ms": 4.945,
+      "mean_latency_ms": 4.216,
+      "p95_latency_ms": 4.851,
       "database": {
         "peak_allocated_bytes": 249856,
         "peak_rows": {
@@ -29,8 +29,8 @@
       "exact_match_rate": 1.0,
       "action_accuracy": 1.0,
       "wrong_interventions": 0,
-      "mean_latency_ms": 3.5,
-      "p95_latency_ms": 3.845,
+      "mean_latency_ms": 4.042,
+      "p95_latency_ms": 5.368,
       "database": {
         "peak_allocated_bytes": 249856,
         "peak_rows": {

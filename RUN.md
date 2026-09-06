@@ -107,6 +107,16 @@ Run event-derived memory lifecycle journeys and the no-lifecycle ablation:
 .\.venv\Scripts\python.exe evaluation/run_lifecycle.py
 ```
 
+Freeze a threshold candidate from calibration data and run the safety release gate:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/calibrate_policy.py
+```
+
+The committed artifact rejects the `0.90` candidate and retains `0.93`; inspect its safety
+violations before changing `policy.toml`. The interface can execute `0.90` as a shadow policy. Its
+hypothetical output is persisted in the trace but never replaces the active result.
+
 The first semantic run may download the declared local model. No transcript is sent to a hosted
 inference API. Regenerate the fixed robustness corpus only when intentionally creating a new
 dataset version:
@@ -122,6 +132,7 @@ dataset version:
 - `results/journeys`: hybrid/ablation summary, report, and chronological cases
 - `results/asr-learning`: learned-ASR/no-learning comparison and precision/coverage curve
 - `results/lifecycle`: event-lifecycle/no-lifecycle comparison with per-event posterior evidence
+- `results/calibration`: frozen threshold search, safety gate, and rollback boundaries
 - `data/lexitrace.db`: persistent SQLite memory state
 - `GET /api/v1/memories`: current memory state
 - `GET /api/v1/memories/{memory_id}/asr-evidence`: immutable provider-linked outcomes

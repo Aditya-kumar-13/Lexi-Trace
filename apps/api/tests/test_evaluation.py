@@ -77,3 +77,30 @@ def test_memory_lifecycle_evaluation_is_reproducible(tmp_path: Path) -> None:
     assert lifecycle["event_accuracy"] == 1.0
     assert lifecycle["wrong_interventions"] == 0
     assert lifecycle["event_accuracy"] > ablation["event_accuracy"]
+
+
+def test_policy_calibration_is_split_safe_and_reproducible(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[3]
+    output = tmp_path / "calibration-results"
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(root / "evaluation" / "calibrate_policy.py"),
+            "--output",
+            str(output),
+        ],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert completed.returncode == 0, completed.stderr
+    policy = json.loads((output / "policy.json").read_text(encoding="utf-8"))
+    assert policy["split_used"] == "calibration"
+    assert policy["heldout_rows_accessed"] == 0
+    assert policy["calibration_candidate"]["apply_threshold"] == 0.9
+    assert policy["selected"]["apply_threshold"] == 0.93
+    assert policy["selected"]["wrong_interventions"] == 0
+    assert policy["calibration_candidate"]["exact_matches"] > policy["baseline"]["exact_matches"]
+    assert policy["calibration_candidate_safety"]["wrong_interventions"] == 2
+    assert policy["deployment_gate"]["status"] == "reject_candidate_keep_active"

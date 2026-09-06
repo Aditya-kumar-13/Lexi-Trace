@@ -1,4 +1,4 @@
-version = "2026-09-06-hybrid-v4-event-lifecycle"
+version = "2026-09-06-hybrid-v5-calibrated-shadow"
 
 [thresholds]
 apply = 0.93

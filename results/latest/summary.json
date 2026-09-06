@@ -22,10 +22,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 45.761,
-        "p50": 6.493,
-        "p95": 155.682,
-        "p99": 158.181
+        "mean": 30.072,
+        "p50": 3.987,
+        "p95": 105.748,
+        "p99": 106.022
       }
     }
   },
@@ -39,8 +39,8 @@
     "estimated_api_cost_usd": 0.0
   },
   "database": {
-    "peak_allocated_bytes": 217088,
-    "peak_trace_payload_bytes": 5896,
+    "peak_allocated_bytes": 221184,
+    "peak_trace_payload_bytes": 6753,
     "peak_rows": {
       "memories": 2,
       "memory_variants": 2,
@@ -104,10 +104,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 45.761,
-        "p50": 6.493,
-        "p95": 155.682,
-        "p99": 158.181
+        "mean": 30.072,
+        "p50": 3.987,
+        "p95": 105.748,
+        "p99": 106.022
       }
     }
   }

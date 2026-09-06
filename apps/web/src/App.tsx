@@ -43,6 +43,13 @@ type Candidate = {
   reason_codes: string[];
   blockers: string[];
   features: Record<string, string | number | boolean>;
+  counterfactual: {
+    reason_code: string;
+    apply_threshold: number;
+    score_gap_to_apply: number;
+    blocking_conditions: string[];
+    minimum_change: string;
+  };
 };
 
 type Inference = {
@@ -55,6 +62,19 @@ type Inference = {
   candidates: Candidate[];
   policy_version: string;
   semantic: { enabled: boolean; model: string; state: string; error?: string | null };
+  counterfactual: {
+    reason_code: string;
+    apply_threshold?: number;
+    score_gap_to_apply?: number;
+    minimum_change: string;
+  };
+  shadow: {
+    policy_id: string;
+    action: string;
+    memory_aware_text: string;
+    action_changed: boolean;
+    output_changed: boolean;
+  } | null;
 };
 
 type MemoryVersion = {
@@ -93,6 +113,8 @@ function App() {
   const [asrConfidence, setAsrConfidence] = useState("0.95");
   const [asrProvider, setAsrProvider] = useState("demo-asr");
   const [asrModel, setAsrModel] = useState("voice-2");
+  const [shadowEnabled, setShadowEnabled] = useState(true);
+  const [shadowThreshold, setShadowThreshold] = useState("0.90");
   const [result, setResult] = useState<Inference | null>(null);
   const [history, setHistory] = useState<MemoryVersion[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
@@ -166,6 +188,12 @@ function App() {
                   rank: 1,
                 }]
               : [],
+            shadow_policy: shadowEnabled
+              ? {
+                  policy_id: "calibration-candidate-090",
+                  apply_threshold: Number(shadowThreshold),
+                }
+              : null,
           }),
         }),
       );
@@ -334,6 +362,14 @@ function App() {
               <label>Alternative transcript<input value={asrAlternative} onChange={(e) => setAsrAlternative(e.target.value)} placeholder="Open the Kiwi dashboard." /></label>
               <label>ASR confidence<input type="number" min="0" max="1" step="0.01" value={asrConfidence} onChange={(e) => setAsrConfidence(e.target.value)} /></label>
             </details>
+            <details>
+              <summary>Shadow-policy safety check</summary>
+              <div className="two-column">
+                <label>Candidate apply threshold<input type="number" min="0.72" max="1" step="0.005" value={shadowThreshold} onChange={(e) => setShadowThreshold(e.target.value)} /></label>
+                <label className="checkbox-label"><input type="checkbox" checked={shadowEnabled} onChange={(e) => setShadowEnabled(e.target.checked)} /> Compare without affecting output</label>
+              </div>
+              <small>The active decision remains authoritative. Shadow output is recorded only for comparison.</small>
+            </details>
             <div className="sample-row">
               <button type="button" className="chip" onClick={() => setFormatted("Inspect the Kiwi platform deployment.")}>Semantic work context</button>
               <button type="button" className="chip" onClick={() => setFormatted("Buy kiwi fruit from the shop.")}>Fruit context</button>
@@ -347,6 +383,13 @@ function App() {
                 {result && <span>policy {result.policy_version}</span>}
               </div>
               <p>{result?.memory_aware_text ?? "The memory-aware result will appear here."}</p>
+              {result?.shadow && (
+                <div className="shadow-result">
+                  <strong>Shadow: {result.shadow.action}</strong>
+                  <span>{result.shadow.memory_aware_text}</span>
+                  <small>{result.shadow.output_changed ? "Different output—review before promotion" : "Same output as active policy"}</small>
+                </div>
+              )}
               {(result?.action === "apply" || result?.action === "suggest") && strongestCandidate && (
                 <div className="feedback-row">
                   <span>{result.action === "suggest" ? "Is this suggestion right?" : "Was this intervention right?"}</span>
@@ -424,6 +467,12 @@ function App() {
                   <div className="reason-list">{strongestCandidate.blockers.map((blocker) => <span key={blocker}>{blocker.replaceAll("_", " ")}</span>)}</div>
                 )}
                 <div className="reason-list">{strongestCandidate.reason_codes.map((reason: string) => <span key={reason}>{reason.replaceAll("_", " ")}</span>)}</div>
+                {result && (
+                  <div className="counterfactual-box">
+                    <strong>{result.counterfactual.reason_code.replaceAll("_", " ")}</strong>
+                    <span>{result.counterfactual.minimum_change}</span>
+                  </div>
+                )}
                 <dl>{Object.entries(strongestCandidate.features).map(([key, value]) => <div key={key}><dt>{key.replaceAll("_", " ")}</dt><dd>{String(value)}</dd></div>)}</dl>
                 <small>Trace {result?.trace_id}</small>
               </div>
@@ -432,7 +481,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.8.0</span><span>Event-derived trust · Learned ASR reliability</span></footer>
+      <footer><span>LexiTrace 0.9.0</span><span>Calibrated decisions · Shadow-policy safety</span></footer>
     </div>
   );
 }

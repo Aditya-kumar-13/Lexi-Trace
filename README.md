@@ -5,7 +5,7 @@ backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 0.8.0
+## Current milestone: 0.9.0
 
 The first vertical slice is implemented:
 
@@ -35,6 +35,10 @@ The first vertical slice is implemented:
 - event-derived memory trust with no mutable confidence percentage;
 - idempotent observation ingestion and automatic evidence-gated promotion or demotion;
 - a frozen lifecycle suite covering replay, context diversity, contradiction, and suppression.
+- counterfactual traces that state the blocker or exact score gap behind every non-intervention;
+- request-scoped shadow policies that are evaluated and persisted without changing user output;
+- split-safe threshold search constrained by a separate frozen safety corpus;
+- an automatic release gate that rejects candidates which improve recall by adding wrong edits.
 
 ## Product rule
 
@@ -54,6 +58,12 @@ Memory trust is a versioned weighted Beta posterior computed from immutable obse
 corrections require three positive events across at least two distinct contexts before automatic
 confirmation. Duplicate event IDs contribute nothing, contradictory evidence can demote a memory,
 and only the user can suppress one.
+
+Decision thresholds are selected under a two-stage policy gate. The robustness calibration split
+may nominate a candidate, but promotion also requires no regression on the frozen smoke safety
+corpus. The current calibration-only candidate (`0.90`) recovered two cases but caused two wrong
+interventions elsewhere, so the gate rejected it and retained `0.93`. It remains available in
+shadow mode to make that trade-off visible without affecting the user-facing transcript.
 
 ## Development
 

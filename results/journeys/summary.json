@@ -9,8 +9,8 @@
       "exact_match_rate": 0.8333,
       "action_accuracy": 0.6667,
       "wrong_interventions": 0,
-      "mean_latency_ms": 4.738,
-      "p95_latency_ms": 8.707,
+      "mean_latency_ms": 4.563,
+      "p95_latency_ms": 8.173,
       "model_usage": {
         "execution": "disabled",
         "model": "disabled",
@@ -40,8 +40,8 @@
       "exact_match_rate": 1.0,
       "action_accuracy": 1.0,
       "wrong_interventions": 0,
-      "mean_latency_ms": 106.069,
-      "p95_latency_ms": 159.425,
+      "mean_latency_ms": 64.629,
+      "p95_latency_ms": 101.005,
       "model_usage": {
         "execution": "local",
         "model": "BAAI/bge-small-en-v1.5",
@@ -52,7 +52,7 @@
         "estimated_api_cost_usd": 0.0
       },
       "database": {
-        "peak_allocated_bytes": 241664,
+        "peak_allocated_bytes": 237568,
         "peak_vector_payload_bytes": 16142,
         "peak_rows": {
           "memories": 1,

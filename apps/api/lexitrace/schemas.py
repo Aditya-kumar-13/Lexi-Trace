@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class ExplicitTeachRequest(BaseModel):
@@ -58,12 +58,26 @@ class AsrMetadata(BaseModel):
     confidence: float | None = Field(default=None, ge=0.0, le=1.0)
 
 
+class ShadowPolicyRequest(BaseModel):
+    policy_id: str = Field(default="shadow-candidate", min_length=1, max_length=100)
+    apply_threshold: float = Field(ge=0.0, le=1.0)
+    suggest_threshold: float | None = Field(default=None, ge=0.0, le=1.0)
+    minimum_winner_margin: float | None = Field(default=None, ge=0.0, le=1.0)
+
+    @model_validator(mode="after")
+    def apply_must_not_be_below_suggest(self) -> ShadowPolicyRequest:
+        if self.suggest_threshold is not None and self.apply_threshold < self.suggest_threshold:
+            raise ValueError("apply_threshold must be greater than or equal to suggest_threshold")
+        return self
+
+
 class InferenceRequest(BaseModel):
     user_id: str = Field(default="demo-user", min_length=1, max_length=100)
     raw_asr_text: str = Field(default="", max_length=20_000)
     formatted_text: str = Field(min_length=1, max_length=20_000)
     alternatives: list[AsrAlternative] = Field(default_factory=list, max_length=10)
     asr: AsrMetadata | None = None
+    shadow_policy: ShadowPolicyRequest | None = None
 
 
 class MemoryUpdateRequest(BaseModel):
@@ -142,6 +156,7 @@ class CandidateTrace(BaseModel):
     reason_codes: list[str]
     blockers: list[str]
     features: dict[str, float | str | bool]
+    counterfactual: dict
 
 
 class InferenceResponse(BaseModel):
@@ -152,6 +167,8 @@ class InferenceResponse(BaseModel):
     action: Literal["apply", "suggest", "abstain"]
     changes: list[CandidateTrace]
     candidates: list[CandidateTrace]
+    counterfactual: dict
+    shadow: dict | None
     total_latency_ms: float
     engine_version: str
     policy_version: str

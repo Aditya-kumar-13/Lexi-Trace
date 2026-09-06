@@ -6,8 +6,8 @@ Journeys: **4**
 
 | System | Exact output | Action accuracy | Wrong interventions | p95 latency |
 |---|---:|---:|---:|---:|
-| no_learning_ablation | 93.8% | 93.8% | 0 | 4.945 ms |
-| learned_asr | 100.0% | 100.0% | 0 | 3.845 ms |
+| no_learning_ablation | 93.8% | 93.8% | 0 | 4.851 ms |
+| learned_asr | 100.0% | 100.0% | 0 | 5.368 ms |
 
 ## Precision and coverage
 
