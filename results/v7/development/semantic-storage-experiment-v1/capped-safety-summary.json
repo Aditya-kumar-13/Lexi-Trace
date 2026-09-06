@@ -1,0 +1,77 @@
+{
+  "dataset": "data/benchmark/v7_semantic_safety_development.jsonl",
+  "dataset_sha256": "c4a02d40e27a47cf7ce4518a702e78cae5bdfe04050690673f9ac5818dba8157",
+  "journeys": 2,
+  "model": "BAAI/bge-small-en-v1.5",
+  "semantic_retrieval_mode": "nearest_example",
+  "auto_lifecycle_enabled": true,
+  "minimum_conflict_positive_context": 0.2,
+  "feedback_scope_mode": "auto",
+  "asr_reliability_mode": "exact_route",
+  "authorization_score_mode": "boolean",
+  "semantic_evidence_cap": 12,
+  "systems": {
+    "sparse_ablation": {
+      "queries": 13,
+      "exact_match_rate": 0.5385,
+      "action_accuracy": 0.2308,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 3.859,
+      "p95_latency_ms": 4.825,
+      "model_usage": {
+        "execution": "disabled",
+        "model": "disabled",
+        "embedding_calls": 0,
+        "input_characters": 0,
+        "failed_calls": 0,
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      },
+      "database": {
+        "peak_allocated_bytes": 315392,
+        "peak_vector_payload_bytes": 0,
+        "peak_rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 6,
+          "context_evidence": 53,
+          "context_embeddings": 0,
+          "decisions": 10,
+          "memory_versions": 6,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "hybrid": {
+      "queries": 13,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 91.336,
+      "p95_latency_ms": 101.098,
+      "model_usage": {
+        "execution": "local",
+        "model": "BAAI/bge-small-en-v1.5",
+        "embedding_calls": 28,
+        "input_characters": 1674,
+        "failed_calls": 0,
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      },
+      "database": {
+        "peak_allocated_bytes": 376832,
+        "peak_vector_payload_bytes": 48435,
+        "peak_rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 6,
+          "context_evidence": 53,
+          "context_embeddings": 6,
+          "decisions": 10,
+          "memory_versions": 6,
+          "asr_outcomes": 0
+        }
+      }
+    }
+  }
+}

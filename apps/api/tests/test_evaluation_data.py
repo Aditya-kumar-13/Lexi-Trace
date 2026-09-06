@@ -127,3 +127,16 @@ def test_asr_route_development_data_covers_rank_help_and_contradiction() -> None
         1,
         2,
     }
+
+
+def test_semantic_storage_journey_exceeds_cap_and_contains_duplicates() -> None:
+    path = ROOT / "data" / "benchmark" / "v7_semantic_storage_development.jsonl"
+    journey = json.loads(path.read_text(encoding="utf-8").strip())
+    teaching = [event for event in journey["events"] if event["type"] == "teach"]
+    inferences = [event for event in journey["events"] if event["type"] == "infer"]
+    contexts = [event["formatted_text"] for event in teaching]
+
+    assert len(teaching) == 18
+    assert len(set(contexts)) == 16
+    assert len(inferences) == 8
+    assert all(event["expected_action"] == "apply" for event in inferences)

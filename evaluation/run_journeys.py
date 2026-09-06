@@ -80,6 +80,11 @@ def parse_args() -> argparse.Namespace:
         choices=("boolean", "posterior"),
         default="boolean",
     )
+    parser.add_argument(
+        "--semantic-evidence-cap",
+        type=int,
+        default=None,
+    )
     return parser.parse_args()
 
 
@@ -109,6 +114,7 @@ def run_journey(
     feedback_scope_mode: str = "legacy",
     asr_reliability_mode: str = "exact_route",
     authorization_score_mode: str = "boolean",
+    semantic_evidence_cap: int | None = None,
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -127,6 +133,7 @@ def run_journey(
                 accepted_text=event.get("accepted_text", ""),
                 event_id=event.get("event_id"),
                 semantic_encoder=encoder,
+                semantic_evidence_cap=semantic_evidence_cap,
             )
             memories[event["alias"]] = memory.id
             continue
@@ -145,6 +152,7 @@ def run_journey(
                 confirm_candidates=False,
                 event_id=event.get("event_id"),
                 semantic_encoder=encoder,
+                semantic_evidence_cap=semantic_evidence_cap,
             )
             continue
         if event_type != "infer":
@@ -210,6 +218,7 @@ def run_journey(
                 ),
                 semantic_encoder=encoder,
                 enable_auto_lifecycle=enable_auto_lifecycle,
+                semantic_evidence_cap=semantic_evidence_cap,
             )
     return rows
 
@@ -344,6 +353,7 @@ def main() -> None:
                         feedback_scope_mode=args.feedback_scope_mode,
                         asr_reliability_mode=args.asr_reliability_mode,
                         authorization_score_mode=args.authorization_score_mode,
+                        semantic_evidence_cap=args.semantic_evidence_cap,
                     )
                 )
             all_rows[system_name] = system_rows
@@ -360,6 +370,7 @@ def main() -> None:
         "feedback_scope_mode": args.feedback_scope_mode,
         "asr_reliability_mode": args.asr_reliability_mode,
         "authorization_score_mode": args.authorization_score_mode,
+        "semantic_evidence_cap": args.semantic_evidence_cap,
         "systems": {
             name: {
                 **metrics(rows),

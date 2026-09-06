@@ -278,6 +278,7 @@ def store_semantic_evidence(
     semantic_encoder: SemanticEncoder | None,
     start: int | None = None,
     end: int | None = None,
+    evidence_cap: int | None = None,
 ) -> bool:
     if semantic_encoder is None or not semantic_encoder.enabled or not context_text:
         return False
@@ -287,23 +288,101 @@ def store_semantic_evidence(
         start=start,
         end=end,
     )
+    all_existing: list[ContextEmbedding] = []
+    existing: list[ContextEmbedding] = []
+    context_key = normalize(masked_context)
+    if evidence_cap is not None:
+        if evidence_cap < 1:
+            raise ValueError("semantic evidence cap must be at least 1")
+        all_existing = list(
+            session.scalars(
+                select(ContextEmbedding).where(
+                    ContextEmbedding.memory_id == memory.id,
+                    ContextEmbedding.polarity == polarity,
+                )
+            )
+        )
+        existing = [item for item in all_existing if item.model_name == semantic_encoder.model_name]
+        if any(normalize(item.context_text) == context_key for item in existing):
+            return False
     vector = semantic_encoder.encode(masked_context)
     if vector is None:
         return False
-    session.add(
-        ContextEmbedding(
-            memory=memory,
-            observation=observation,
-            polarity=polarity,
-            model_name=semantic_encoder.model_name,
-            dimension=len(vector),
-            vector_json=json.dumps(vector, separators=(",", ":")),
-            weight=abs(reliability),
-            source_type=source_type,
-            context_text=masked_context,
-        )
+    new_evidence = ContextEmbedding(
+        memory_id=memory.id,
+        observation_id=observation.id,
+        polarity=polarity,
+        model_name=semantic_encoder.model_name,
+        dimension=len(vector),
+        vector_json=json.dumps(vector, separators=(",", ":")),
+        weight=abs(reliability),
+        source_type=source_type,
+        context_text=masked_context,
     )
-    return True
+    if evidence_cap is None:
+        session.add(new_evidence)
+        session.flush()
+        session.expire(memory, ["semantic_evidence"])
+        return True
+    if len(all_existing) < evidence_cap:
+        session.add(new_evidence)
+        session.flush()
+        session.expire(memory, ["semantic_evidence"])
+        return True
+
+    entries = [
+        {
+            "item": item,
+            "vector": json.loads(item.vector_json),
+            "weight": item.weight,
+            "key": hashlib.sha256(normalize(item.context_text).encode()).hexdigest(),
+        }
+        for item in existing
+    ]
+    entries.append(
+        {
+            "item": new_evidence,
+            "vector": vector,
+            "weight": abs(reliability),
+            "key": hashlib.sha256(context_key.encode()).hexdigest(),
+        }
+    )
+    entries.sort(key=lambda entry: (-float(entry["weight"]), str(entry["key"])))
+    selected = [entries.pop(0)]
+    current_slots = min(evidence_cap, len(existing) + 1)
+    while len(selected) < current_slots:
+        winner = max(
+            entries,
+            key=lambda entry: (
+                min(1.0 - _cosine(entry["vector"], chosen["vector"]) for chosen in selected),
+                float(entry["weight"]),
+                str(entry["key"]),
+            ),
+        )
+        selected.append(winner)
+        entries.remove(winner)
+    old_entries = sorted(
+        (
+            {
+                "item": item,
+                "key": hashlib.sha256(normalize(item.context_text).encode()).hexdigest(),
+            }
+            for item in all_existing
+            if item.model_name != semantic_encoder.model_name
+        ),
+        key=lambda entry: (str(entry["item"].model_name), str(entry["key"])),
+    )
+    selected.extend(old_entries[: evidence_cap - len(selected)])
+    retained = {id(entry["item"]) for entry in selected}
+    for item in all_existing:
+        if id(item) not in retained:
+            session.delete(item)
+    if id(new_evidence) in retained:
+        session.add(new_evidence)
+        session.flush()
+        session.expire(memory, ["semantic_evidence"])
+        return True
+    return False
 
 
 def _cosine(left: list[float], right: list[float]) -> float:
@@ -1157,6 +1236,7 @@ def teach_explicit(
     accepted_text: str = "",
     event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
+    semantic_evidence_cap: int | None = None,
 ) -> Memory:
     normalized_canonical = normalize(canonical_form)
     memory = session.scalar(
@@ -1272,6 +1352,7 @@ def teach_explicit(
             source_type="explicit_example",
             reliability=1.0,
             semantic_encoder=semantic_encoder,
+            evidence_cap=semantic_evidence_cap,
         )
     record_memory_version(
         session,
@@ -1296,6 +1377,7 @@ def observe_correction(
     event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
     enable_auto_lifecycle: bool = True,
+    semantic_evidence_cap: int | None = None,
 ) -> tuple[list[str], list[str], list[dict[str, str]]]:
     matcher = SequenceMatcher(None, formatted_text.split(), accepted_text.split(), autojunk=False)
     observation_ids: list[str] = []
@@ -1424,6 +1506,7 @@ def observe_correction(
             source_type="accepted_correction",
             reliability=observation.reliability,
             semantic_encoder=semantic_encoder,
+            evidence_cap=semantic_evidence_cap,
         )
         if enable_auto_lifecycle or confirm_candidates:
             transition = reconcile_memory_state(memory, force_confirm=confirm_candidates)
@@ -2117,6 +2200,7 @@ def apply_decision_feedback(
     candidate_start: int | None = None,
     semantic_encoder: SemanticEncoder | None = None,
     enable_auto_lifecycle: bool = True,
+    semantic_evidence_cap: int | None = None,
 ) -> dict | None:
     if feedback_scope not in {"legacy", "auto", "context", "identity"}:
         raise ValueError("feedback_scope must be legacy, auto, context, or identity")
@@ -2281,6 +2365,7 @@ def apply_decision_feedback(
             ),
             reliability=reliability,
             semantic_encoder=semantic_encoder,
+            evidence_cap=semantic_evidence_cap,
             start=change["start"],
             end=change["end"],
         )
