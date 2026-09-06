@@ -5,8 +5,7 @@ COPY pyproject.toml ./
 COPY apps/api ./apps/api
 COPY migrations ./migrations
 COPY alembic.ini ./
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir ".[semantic]"
 ENV PYTHONPATH=/app/apps/api
 EXPOSE 8000
 CMD ["sh", "-c", "alembic upgrade head && uvicorn lexitrace.main:app --host 0.0.0.0 --port 8000"]
-

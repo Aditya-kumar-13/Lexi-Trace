@@ -42,10 +42,17 @@ class CorrectionObservationRequest(BaseModel):
     confirm_candidates: bool = False
 
 
+class AsrAlternative(BaseModel):
+    text: str = Field(min_length=1, max_length=20_000)
+    confidence: float = Field(ge=0.0, le=1.0)
+    provider: str = Field(default="unknown", min_length=1, max_length=100)
+
+
 class InferenceRequest(BaseModel):
     user_id: str = Field(default="demo-user", min_length=1, max_length=100)
     raw_asr_text: str = Field(default="", max_length=20_000)
     formatted_text: str = Field(min_length=1, max_length=20_000)
+    alternatives: list[AsrAlternative] = Field(default_factory=list, max_length=10)
 
 
 class MemoryUpdateRequest(BaseModel):
@@ -78,6 +85,8 @@ class MemoryResponse(BaseModel):
     negative_context: list[str]
     context_evidence_count: int
     context_profile: dict
+    semantic_evidence_count: int
+    semantic_profile: dict
     variants: list[VariantResponse]
     created_at: datetime
     updated_at: datetime
@@ -131,6 +140,8 @@ class InferenceResponse(BaseModel):
     candidates: list[CandidateTrace]
     total_latency_ms: float
     engine_version: str
+    policy_version: str
+    semantic: dict
 
 
 class CorrectionObservationResponse(BaseModel):

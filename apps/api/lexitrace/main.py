@@ -22,7 +22,14 @@ from .engine import (
     replace_manual_context_evidence,
     teach_explicit,
 )
-from .models import ContextEvidence, Decision, Memory, MemoryVersion, Observation
+from .models import (
+    ContextEmbedding,
+    ContextEvidence,
+    Decision,
+    Memory,
+    MemoryVersion,
+    Observation,
+)
 from .schemas import (
     CorrectionObservationRequest,
     CorrectionObservationResponse,
@@ -36,15 +43,20 @@ from .schemas import (
     MemoryVersionResponse,
     ResetResponse,
 )
+from .semantic import SemanticEncoder, build_semantic_encoder
 
 DatabaseSession = Annotated[Session, Depends(get_session)]
 UserIdQuery = Annotated[str, Query(min_length=1)]
 
 
-def create_app(settings: Settings | None = None) -> FastAPI:
+def create_app(
+    settings: Settings | None = None,
+    semantic_encoder_override: SemanticEncoder | None = None,
+) -> FastAPI:
     resolved_settings = settings or Settings.from_env()
     engine = build_engine(resolved_settings.database_url)
     session_factory = build_session_factory(engine)
+    semantic_encoder = semantic_encoder_override or build_semantic_encoder(resolved_settings)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -53,11 +65,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.3.0",
+        version="0.5.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
     app.state.session_factory = session_factory
+    app.state.semantic_encoder = semantic_encoder
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(resolved_settings.cors_origins),
@@ -67,8 +80,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
 
     @app.get("/api/v1/health")
-    def health() -> dict[str, str]:
-        return {"status": "ok", "version": "0.3.0"}
+    def health() -> dict:
+        return {
+            "status": "ok",
+            "version": "0.5.0",
+            "semantic": semantic_encoder.status(),
+        }
 
     @app.post(
         "/api/v1/observations/explicit",
@@ -76,7 +93,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         status_code=status.HTTP_201_CREATED,
     )
     def explicit_teach(payload: ExplicitTeachRequest, session: DatabaseSession) -> dict:
-        memory = teach_explicit(session, **payload.model_dump())
+        memory = teach_explicit(
+            session,
+            **payload.model_dump(),
+            semantic_encoder=semantic_encoder,
+        )
         return memory_to_dict(memory)
 
     @app.post(
@@ -87,7 +108,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def correction_observation(
         payload: CorrectionObservationRequest, session: DatabaseSession
     ) -> dict:
-        observation_ids, memory_ids, rejected = observe_correction(session, **payload.model_dump())
+        observation_ids, memory_ids, rejected = observe_correction(
+            session,
+            **payload.model_dump(),
+            semantic_encoder=semantic_encoder,
+        )
         return {
             "observation_ids": observation_ids,
             "created_memory_ids": memory_ids,
@@ -96,7 +121,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.post("/api/v1/infer", response_model=InferenceResponse)
     def run_inference(payload: InferenceRequest, session: DatabaseSession) -> dict:
-        _, response = infer(session, **payload.model_dump())
+        _, response = infer(
+            session,
+            **payload.model_dump(),
+            semantic_encoder=semantic_encoder,
+        )
         return response
 
     @app.get("/api/v1/memories", response_model=list[MemoryResponse])
@@ -212,6 +241,31 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             for item in evidence
         ]
 
+    @app.get("/api/v1/memories/{memory_id}/semantic-evidence")
+    def memory_semantic_evidence(memory_id: str, session: DatabaseSession) -> list[dict]:
+        memory = session.get(Memory, memory_id)
+        if memory is None:
+            raise HTTPException(status_code=404, detail="Memory not found")
+        evidence = session.scalars(
+            select(ContextEmbedding)
+            .where(ContextEmbedding.memory_id == memory_id)
+            .order_by(ContextEmbedding.created_at)
+        ).all()
+        return [
+            {
+                "id": item.id,
+                "observation_id": item.observation_id,
+                "polarity": item.polarity,
+                "model_name": item.model_name,
+                "dimension": item.dimension,
+                "weight": item.weight,
+                "source_type": item.source_type,
+                "context_text": item.context_text,
+                "created_at": item.created_at,
+            }
+            for item in evidence
+        ]
+
     @app.delete("/api/v1/memories/{memory_id}", status_code=status.HTTP_204_NO_CONTENT)
     def delete_memory(memory_id: str, session: DatabaseSession) -> None:
         memory = session.get(Memory, memory_id)
@@ -251,6 +305,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             session,
             trace_id=trace_id,
             **payload.model_dump(),
+            semantic_encoder=semantic_encoder,
         )
         if response is None:
             raise HTTPException(status_code=404, detail="Decision not found")

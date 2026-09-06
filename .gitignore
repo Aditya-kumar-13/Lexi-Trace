@@ -11,6 +11,7 @@ dist/
 *.tsbuildinfo
 data/*.db
 data/*.db-*
+data/models/
 results/latest/*
 !results/latest/.gitkeep
 !results/latest/summary.json

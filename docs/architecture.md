@@ -10,11 +10,12 @@ does not implement ASR and does not depend on Kivi infrastructure.
 
 1. Generate exact, fuzzy, and phonetic candidates from the user's persisted variants.
 2. Extract a bounded context fingerprint around every candidate span.
-3. Compare that fingerprint with positive and negative evidence learned from earlier observations.
-4. Calculate a decision score from independent match, evidence, phonetic, and context signals.
-5. Evaluate explicit blockers. A high score cannot bypass a blocker.
-6. Resolve competing and overlapping candidates before rewriting any characters.
-7. Persist the decision trace so feedback can be attributed to the memories that acted.
+3. Retrieve additional evidence from aligned ASR N-best alternatives when supplied.
+4. Compare sparse fingerprints and semantic vectors with positive and negative prototypes.
+5. Calculate a decision score from independent match, evidence, phonetic, ASR, and context signals.
+6. Evaluate explicit blockers. A high score cannot bypass a blocker.
+7. Resolve competing and overlapping candidates before rewriting any characters.
+8. Persist the decision trace so feedback can be attributed to the memories that acted.
 
 ## Observation-backed context
 
@@ -22,9 +23,18 @@ Context evidence is attached to the event that produced it. Accepted corrections
 interventions create positive evidence. Rejected interventions create negative evidence. Each row
 stores its observation ID, polarity, feature type, weight, source type, and source context.
 
-The current 0.3.0 context fingerprint uses distance-weighted tokens and nearby bigrams. These are
+The sparse context fingerprint uses distance-weighted tokens and nearby bigrams. These are
 learned from correction sentences; they are not source-code conditions. Optional manual context is
 retained only as an explicit advanced override and is labeled as such in provenance.
+
+Version 0.5.0 also masks the remembered surface form and encodes the surrounding sentence with a
+local ONNX model. Weighted centroids form positive and negative prototypes per memory. The trace
+shows raw semantic similarity, prototype margin, observation counts, sparse similarity, and the
+model version. Semantic failure never removes the deterministic fallback.
+
+ASR alternatives are treated as retrieval evidence, not editable output. Candidate spans found in
+an alternative are token-aligned back to the formatted transcript, and acoustic confidence becomes
+one visible feature in the same decision policy.
 
 ## Safety policy
 
@@ -40,16 +50,18 @@ Retrieval is not permission to edit. The following blockers prevent automatic ap
 The numeric decision score is diagnostic, not a calibrated probability. Probability calibration is
 planned for milestone 0.6, after a held-out journey dataset exists.
 
+Thresholds and component weights live in the versioned `lexitrace/policy.toml` file. Every decision
+trace records the policy version, so benchmark results can be reproduced and policy changes cannot
+silently alter historical interpretation.
+
 ## Deliberate exclusions
 
 - A global replacement dictionary is unsafe for ambiguous words.
 - Hand-written keyword gates do not generalize and are not the default product path.
 - An LLM-only decision engine would be difficult to reproduce, inspect, and run locally.
-- Semantic embeddings are deferred until the observation and evaluation foundations can measure
-  whether they improve generalization without increasing incorrect interventions.
+- A hosted LLM or embedding API is unnecessary; the default semantic encoder runs locally.
 
 ## Next architectural increment
 
-Milestone 0.4 adds independent candidate-retrieval channels and evaluates retrieval recall apart
-from intervention precision. Milestone 0.5 adds a replaceable local semantic encoder while keeping
-the deterministic evidence and blocker path as a fallback.
+The next increment separates retrieval-recall evaluation from intervention precision, adds learned
+ASR confusion statistics, and calibrates action thresholds on held-out chronological journeys.

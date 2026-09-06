@@ -6,6 +6,9 @@ services:
     environment:
       LEXITRACE_DATABASE_URL: sqlite:////data/lexitrace.db
       LEXITRACE_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      LEXITRACE_SEMANTIC_ENABLED: "true"
+      LEXITRACE_SEMANTIC_MODEL: BAAI/bge-small-en-v1.5
+      LEXITRACE_SEMANTIC_CACHE_DIR: /data/models
     ports:
       - "8000:8000"
     volumes:

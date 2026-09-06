@@ -1,7 +1,7 @@
 # Running LexiTrace
 
 **Primary review method: Local Docker Compose application with an embedded SQLite database. No
-external model key is required.**
+external model key is required. The local embedding model downloads once on first semantic use.**
 
 ## Docker
 
@@ -40,7 +40,7 @@ Backend:
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,semantic]"
 alembic upgrade head
 uvicorn lexitrace.main:app --app-dir apps/api --reload
 ```
@@ -65,6 +65,18 @@ Run the reproducible north-star benchmark:
 python evaluation/run.py
 ```
 
+Run chronological semantic and ASR journeys, including the sparse ablation:
+
+```powershell
+python evaluation/run_journeys.py
+```
+
+Backfill semantic vectors for usable observations created before migration `0004`:
+
+```powershell
+python scripts/backfill_semantic.py
+```
+
 Inspect `results/latest/report.md`, `results/latest/summary.json`, and
 `results/latest/cases.jsonl`. Every LexiTrace result includes its persisted trace ID and candidate
 details.
@@ -85,12 +97,13 @@ python scripts/reset.py
 
 1. Teach `Kiwi -> Kivi` with learned-context scope and the example
    `Review the Kiwi service dashboard.`
-2. Run `Check the Kiwi service deployment.` and inspect the applied decision.
+2. Run `Inspect the Kiwi platform deployment.` and inspect the semantic evidence. This sentence
+   deliberately shares no learned context keywords.
 3. Run `Buy kiwi fruit from the shop.` and inspect the explicit context blocker.
 4. Teach `Aditya -> Aaditya` with global scope and try it without special context.
 5. Reset the demo and confirm that all user memories and traces disappear.
 
-The current benchmark is a 28-case north-star smoke suite. It intentionally includes contextual
-negatives, lifecycle cases, collisions, multiple spans, Unicode, word-boundary traps, and unseen
-fuzzy/phonetic variants. It is not the final claimed benchmark; the larger curated split and import
-workflow remain in development.
+The 28-case smoke suite covers deterministic safety and lifecycle behavior. The chronological
+journey suite separately measures semantic generalization, negative-prototype recovery, ASR N-best
+recovery, and the sparse-context ablation. Both are development benchmarks rather than external
+claims of production accuracy.

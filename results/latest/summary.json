@@ -54,10 +54,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 1.382,
-        "p50": 1.259,
-        "p95": 2.36,
-        "p99": 3.687
+        "mean": 4.897,
+        "p50": 4.884,
+        "p95": 5.982,
+        "p99": 12.659
       }
     }
   }

@@ -6,12 +6,36 @@ from lexitrace.database import Base, build_engine
 from lexitrace.main import create_app
 
 
-def make_client(tmp_path: Path) -> TestClient:
+class DomainSemanticEncoder:
+    enabled = True
+    model_name = "test/domain-encoder"
+
+    def encode(self, text: str) -> list[float]:
+        normalized = text.casefold()
+        if any(term in normalized for term in ("dashboard", "service", "platform", "deployment")):
+            return [1.0, 0.0, 0.0]
+        if any(term in normalized for term in ("fruit", "breakfast", "slice")):
+            return [0.0, 1.0, 0.0]
+        return [0.0, 0.0, 1.0]
+
+    def status(self) -> dict:
+        return {
+            "enabled": True,
+            "model": self.model_name,
+            "state": "ready",
+            "error": None,
+        }
+
+
+def make_client(tmp_path: Path, semantic_encoder=None) -> TestClient:
     database_url = f"sqlite:///{(tmp_path / 'test.db').as_posix()}"
     engine = build_engine(database_url)
     Base.metadata.create_all(engine)
     engine.dispose()
-    app = create_app(Settings(database_url=database_url, cors_origins=()))
+    app = create_app(
+        Settings(database_url=database_url, cors_origins=()),
+        semantic_encoder_override=semantic_encoder,
+    )
     return TestClient(app)
 
 
@@ -94,6 +118,72 @@ def test_correction_observation_builds_context_profile_and_generalizes(
         assert unrelated["memory_aware_text"] == "Slice the kiwi after breakfast."
         assert "CONTEXT_EVIDENCE_INSUFFICIENT" in unrelated["candidates"][0]["blockers"]
         assert unrelated["candidates"][0]["score"] != 0.89
+
+
+def test_semantic_profile_generalizes_without_shared_context_words(tmp_path: Path) -> None:
+    with make_client(tmp_path, DomainSemanticEncoder()) as client:
+        memory = teach(
+            client,
+            positive_context=[],
+            negative_context=[],
+            formatted_text="Review the Kiwi service dashboard.",
+            accepted_text="Review the Kivi service dashboard.",
+        )
+        assert memory["semantic_evidence_count"] == 1
+        semantic_evidence = client.get(f"/api/v1/memories/{memory['id']}/semantic-evidence").json()
+        assert semantic_evidence[0]["model_name"] == "test/domain-encoder"
+        assert semantic_evidence[0]["dimension"] == 3
+
+        related = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Inspect the Kiwi platform deployment."},
+        ).json()
+        candidate = related["candidates"][0]
+        assert related["memory_aware_text"] == "Inspect the Kivi platform deployment."
+        assert candidate["features"]["sparse_positive_similarity"] == 0.0
+        assert candidate["features"]["semantic_positive_similarity"] == 1.0
+        assert candidate["blockers"] == []
+
+        unrelated = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Slice the kiwi after breakfast."},
+        ).json()
+        assert unrelated["memory_aware_text"] == "Slice the kiwi after breakfast."
+        assert "CONTEXT_EVIDENCE_INSUFFICIENT" in unrelated["candidates"][0]["blockers"]
+
+
+def test_high_confidence_asr_alternative_can_retrieve_an_unseen_surface(
+    tmp_path: Path,
+) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            canonical_form="Kivi",
+            variants=["Kiwi"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        response = client.post(
+            "/api/v1/infer",
+            json={
+                "formatted_text": "Open the company dashboard.",
+                "alternatives": [
+                    {
+                        "text": "Open the Kiwi dashboard.",
+                        "confidence": 0.95,
+                        "provider": "test-asr",
+                    }
+                ],
+            },
+        )
+        assert response.status_code == 200
+        result = response.json()
+        assert result["memory_aware_text"] == "Open the Kivi dashboard."
+        candidate = result["candidates"][0]
+        assert candidate["features"]["match_method"] == "asr_alternative"
+        assert candidate["features"]["asr_provider"] == "test-asr"
+        assert "ASR_ALTERNATIVE_SUPPORT" in candidate["reason_codes"]
 
 
 def test_rejected_intervention_adds_negative_context_evidence(tmp_path: Path) -> None:

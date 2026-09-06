@@ -8,6 +8,9 @@ from dataclasses import dataclass
 class Settings:
     database_url: str
     cors_origins: tuple[str, ...]
+    semantic_enabled: bool = False
+    semantic_model: str = "BAAI/bge-small-en-v1.5"
+    semantic_cache_dir: str = "./data/models"
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -18,4 +21,8 @@ class Settings:
         return cls(
             database_url=os.getenv("LEXITRACE_DATABASE_URL", "sqlite:///./data/lexitrace.db"),
             cors_origins=tuple(item.strip() for item in origins.split(",") if item.strip()),
+            semantic_enabled=os.getenv("LEXITRACE_SEMANTIC_ENABLED", "true").lower()
+            in {"1", "true", "yes", "on"},
+            semantic_model=os.getenv("LEXITRACE_SEMANTIC_MODEL", "BAAI/bge-small-en-v1.5"),
+            semantic_cache_dir=os.getenv("LEXITRACE_SEMANTIC_CACHE_DIR", "./data/models"),
         )

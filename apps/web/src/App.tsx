@@ -15,6 +15,8 @@ type Memory = {
     positive: { feature: string; weight: number }[];
     negative: { feature: string; weight: number }[];
   };
+  semantic_evidence_count: number;
+  semantic_profile: { models: Record<string, Record<string, number>> };
   variants: { surface_form: string; metaphone_key: string }[];
 };
 
@@ -38,6 +40,8 @@ type Inference = {
   total_latency_ms: number;
   changes: Candidate[];
   candidates: Candidate[];
+  policy_version: string;
+  semantic: { enabled: boolean; model: string; state: string; error?: string | null };
 };
 
 type MemoryVersion = {
@@ -68,7 +72,9 @@ function App() {
   const [variant, setVariant] = useState("Kiwi");
   const [scope, setScope] = useState<"global" | "contextual">("contextual");
   const [example, setExample] = useState("Review the Kiwi service dashboard.");
-  const [formatted, setFormatted] = useState("Check the Kiwi service deployment.");
+  const [formatted, setFormatted] = useState("Inspect the Kiwi platform deployment.");
+  const [asrAlternative, setAsrAlternative] = useState("");
+  const [asrConfidence, setAsrConfidence] = useState("0.95");
   const [result, setResult] = useState<Inference | null>(null);
   const [history, setHistory] = useState<MemoryVersion[]>([]);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
@@ -126,7 +132,12 @@ function App() {
       setResult(
         await jsonRequest<Inference>("/api/v1/infer", {
           method: "POST",
-          body: JSON.stringify({ formatted_text: formatted }),
+          body: JSON.stringify({
+            formatted_text: formatted,
+            alternatives: asrAlternative.trim()
+              ? [{ text: asrAlternative, confidence: Number(asrConfidence), provider: "demo-asr" }]
+              : [],
+          }),
         }),
       );
     } catch (reason) {
@@ -248,8 +259,13 @@ function App() {
               <div><p className="eyebrow">TRY</p><h2>Run memory-aware text</h2></div>
             </div>
             <label>Formatted transcript<textarea value={formatted} onChange={(e) => setFormatted(e.target.value)} rows={5} /></label>
+            <details>
+              <summary>Optional ASR alternative</summary>
+              <label>Alternative transcript<input value={asrAlternative} onChange={(e) => setAsrAlternative(e.target.value)} placeholder="Open the Kiwi dashboard." /></label>
+              <label>ASR confidence<input type="number" min="0" max="1" step="0.01" value={asrConfidence} onChange={(e) => setAsrConfidence(e.target.value)} /></label>
+            </details>
             <div className="sample-row">
-              <button type="button" className="chip" onClick={() => setFormatted("Check the Kiwi service deployment.")}>Related work context</button>
+              <button type="button" className="chip" onClick={() => setFormatted("Inspect the Kiwi platform deployment.")}>Semantic work context</button>
               <button type="button" className="chip" onClick={() => setFormatted("Buy kiwi fruit from the shop.")}>Fruit context</button>
             </div>
             <button type="submit" disabled={busy}>Run decision <span>→</span></button>
@@ -257,6 +273,8 @@ function App() {
               <div className="result-meta">
                 <span className={`badge ${result?.action ?? "idle"}`}>{result?.action ?? "waiting"}</span>
                 {result && <span>{result.total_latency_ms.toFixed(2)} ms</span>}
+                {result?.semantic.enabled && <span>semantic {result.semantic.state}</span>}
+                {result && <span>policy {result.policy_version}</span>}
               </div>
               <p>{result?.memory_aware_text ?? "The memory-aware result will appear here."}</p>
               {result?.action === "apply" && (
@@ -279,6 +297,7 @@ function App() {
                 <div><strong>{memory.canonical_form}</strong><span>{memory.variants.map((item) => item.surface_form).join(", ")} → {memory.canonical_form}</span></div>
                 <div className="memory-meta"><span>{memory.state}</span><span>{memory.scope_mode}</span><span>{Math.round(memory.evidence_confidence * 100)}% evidence</span></div>
                 <small>{memory.context_evidence_count} learned context signals</small>
+                <small>{memory.semantic_evidence_count} semantic observations</small>
                 {memory.context_profile.positive.length > 0 && (
                   <div className="reason-list">
                     {memory.context_profile.positive.slice(0, 4).map((item) => (
@@ -321,7 +340,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.3.0</span><span>Observation-backed · No model key required</span></footer>
+      <footer><span>LexiTrace 0.5.0</span><span>Hybrid context · Local semantic model</span></footer>
     </div>
   );
 }

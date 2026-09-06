@@ -14,6 +14,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from .models import (
+    ContextEmbedding,
     ContextEvidence,
     Decision,
     Memory,
@@ -21,15 +22,19 @@ from .models import (
     MemoryVersion,
     Observation,
 )
+from .policy import load_policy
+from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.3.0"
-APPLY_THRESHOLD = 0.93
-SUGGEST_THRESHOLD = 0.72
-MINIMUM_WINNER_MARGIN = 0.12
-FUZZY_CANDIDATE_THRESHOLD = 0.76
-MIN_POSITIVE_CONTEXT_SIMILARITY = 0.12
-NEGATIVE_CONTEXT_BLOCK_THRESHOLD = 0.12
+ENGINE_VERSION = "0.5.0"
+POLICY = load_policy()
+APPLY_THRESHOLD = POLICY.apply_threshold
+SUGGEST_THRESHOLD = POLICY.suggest_threshold
+MINIMUM_WINNER_MARGIN = POLICY.minimum_winner_margin
+FUZZY_CANDIDATE_THRESHOLD = POLICY.fuzzy_candidate_threshold
+MIN_POSITIVE_CONTEXT_SIMILARITY = POLICY.minimum_positive_context_similarity
+NEGATIVE_CONTEXT_BLOCK_THRESHOLD = POLICY.negative_context_block_threshold
 CONTEXT_WINDOW_TOKENS = 6
+SEMANTIC_SIMILARITY_FLOOR = POLICY.semantic_similarity_floor
 TOKEN_PATTERN = re.compile(r"\w+(?:['’-]\w+)*", re.UNICODE)
 STOPWORDS = {
     "a",
@@ -222,6 +227,116 @@ def store_context_evidence(
         )
 
 
+def semantic_context_text(
+    text: str,
+    source_span: str,
+    *,
+    start: int | None = None,
+    end: int | None = None,
+) -> str:
+    """Mask the remembered surface form so semantics come from its surroundings."""
+    if start is None or end is None:
+        located = find_phrase_spans(text, source_span)
+        if located:
+            start, end, _ = located[0]
+    if start is not None and end is not None:
+        return " ".join((text[:start] + " [TERM] " + text[end:]).split())
+    return " ".join(text.split())
+
+
+def store_semantic_evidence(
+    session: Session,
+    *,
+    memory: Memory,
+    observation: Observation,
+    polarity: str,
+    context_text: str,
+    source_span: str,
+    source_type: str,
+    reliability: float,
+    semantic_encoder: SemanticEncoder | None,
+    start: int | None = None,
+    end: int | None = None,
+) -> bool:
+    if semantic_encoder is None or not semantic_encoder.enabled or not context_text:
+        return False
+    masked_context = semantic_context_text(
+        context_text,
+        source_span,
+        start=start,
+        end=end,
+    )
+    vector = semantic_encoder.encode(masked_context)
+    if vector is None:
+        return False
+    session.add(
+        ContextEmbedding(
+            memory=memory,
+            observation=observation,
+            polarity=polarity,
+            model_name=semantic_encoder.model_name,
+            dimension=len(vector),
+            vector_json=json.dumps(vector, separators=(",", ":")),
+            weight=abs(reliability),
+            source_type=source_type,
+            context_text=masked_context,
+        )
+    )
+    return True
+
+
+def _cosine(left: list[float], right: list[float]) -> float:
+    if len(left) != len(right) or not left:
+        return 0.0
+    left_norm = sum(value * value for value in left) ** 0.5
+    right_norm = sum(value * value for value in right) ** 0.5
+    if left_norm == 0 or right_norm == 0:
+        return 0.0
+    return sum(a * b for a, b in zip(left, right, strict=True)) / (left_norm * right_norm)
+
+
+def semantic_context_similarity(
+    memory: Memory,
+    current_vector: list[float] | None,
+    polarity: str,
+    model_name: str,
+) -> tuple[float, int]:
+    if current_vector is None:
+        return 0.0, 0
+    vectors: list[tuple[list[float], float]] = []
+    for evidence in memory.semantic_evidence:
+        if evidence.polarity != polarity or evidence.model_name != model_name:
+            continue
+        vector = json.loads(evidence.vector_json)
+        if len(vector) == len(current_vector):
+            vectors.append((vector, evidence.weight))
+    if not vectors:
+        return 0.0, 0
+    total_weight = sum(weight for _, weight in vectors)
+    centroid = [
+        sum(vector[index] * weight for vector, weight in vectors) / total_weight
+        for index in range(len(current_vector))
+    ]
+    return max(-1.0, min(1.0, _cosine(current_vector, centroid))), len(vectors)
+
+
+def aggregate_semantic_profile(memory: Memory) -> dict:
+    grouped: dict[tuple[str, str], list[list[float]]] = defaultdict(list)
+    for evidence in memory.semantic_evidence:
+        grouped[(evidence.model_name, evidence.polarity)].append(json.loads(evidence.vector_json))
+    models: dict[str, dict[str, float | int]] = {}
+    for (model_name, polarity), vectors in grouped.items():
+        dimension = len(vectors[0])
+        centroid = [
+            sum(vector[index] for vector in vectors) / len(vectors) for index in range(dimension)
+        ]
+        coherence = sum(_cosine(vector, centroid) for vector in vectors) / len(vectors)
+        model_profile = models.setdefault(model_name, {})
+        model_profile[f"{polarity}_observations"] = len(vectors)
+        model_profile[f"{polarity}_coherence"] = round(coherence, 4)
+    return {"models": models}
+
+
 def aggregate_context_profile(memory: Memory) -> dict:
     weights: dict[str, dict[str, float]] = {
         "positive": defaultdict(float),
@@ -352,6 +467,51 @@ def generate_candidate_spans(text: str, variant: MemoryVariant) -> list[tuple[in
     return list(best_by_span.values())
 
 
+def generate_asr_alternative_spans(
+    formatted_text: str,
+    alternative_text: str,
+    variant: MemoryVariant,
+) -> list[tuple[int, int, str]]:
+    """Align variant evidence in an ASR alternative back to an editable formatted span."""
+    formatted_tokens = list(TOKEN_PATTERN.finditer(formatted_text))
+    alternative_tokens = list(TOKEN_PATTERN.finditer(alternative_text))
+    if not formatted_tokens or not alternative_tokens:
+        return []
+    matcher = SequenceMatcher(
+        None,
+        [normalize(token.group(0)) for token in formatted_tokens],
+        [normalize(token.group(0)) for token in alternative_tokens],
+        autojunk=False,
+    )
+    opcodes = matcher.get_opcodes()
+    aligned: list[tuple[int, int, str]] = []
+    for alt_start, alt_end, _, _ in generate_candidate_spans(alternative_text, variant):
+        alternative_indexes = [
+            index
+            for index, token in enumerate(alternative_tokens)
+            if token.start() < alt_end and alt_start < token.end()
+        ]
+        formatted_indexes: set[int] = set()
+        for alternative_index in alternative_indexes:
+            for tag, left_start, left_end, right_start, right_end in opcodes:
+                if not (right_start <= alternative_index < right_end):
+                    continue
+                if tag == "equal":
+                    formatted_indexes.add(left_start + alternative_index - right_start)
+                elif tag == "replace":
+                    formatted_indexes.update(range(left_start, left_end))
+                break
+        if not formatted_indexes or len(formatted_indexes) > 4:
+            continue
+        ordered = sorted(formatted_indexes)
+        if ordered != list(range(ordered[0], ordered[-1] + 1)):
+            continue
+        start = formatted_tokens[ordered[0]].start()
+        end = formatted_tokens[ordered[-1]].end()
+        aligned.append((start, end, formatted_text[start:end]))
+    return list(dict.fromkeys(aligned))
+
+
 @dataclass(slots=True)
 class TraceCandidate:
     memory_id: str
@@ -378,6 +538,7 @@ def memory_snapshot(memory: Memory) -> dict:
         "positive_context": json.loads(memory.positive_context_json),
         "negative_context": json.loads(memory.negative_context_json),
         "context_profile": aggregate_context_profile(memory),
+        "semantic_profile": aggregate_semantic_profile(memory),
         "variants": sorted(variant.surface_form for variant in memory.variants),
     }
 
@@ -421,6 +582,8 @@ def memory_to_dict(memory: Memory) -> dict:
         "negative_context": json.loads(memory.negative_context_json),
         "context_evidence_count": len(memory.context_evidence),
         "context_profile": aggregate_context_profile(memory),
+        "semantic_evidence_count": len(memory.semantic_evidence),
+        "semantic_profile": aggregate_semantic_profile(memory),
         "variants": [
             {
                 "id": variant.id,
@@ -497,6 +660,7 @@ def teach_explicit(
     raw_asr_text: str = "",
     formatted_text: str = "",
     accepted_text: str = "",
+    semantic_encoder: SemanticEncoder | None = None,
 ) -> Memory:
     normalized_canonical = normalize(canonical_form)
     memory = session.scalar(
@@ -590,6 +754,18 @@ def teach_explicit(
         features=negative_features,
         reliability=1.0,
     )
+    if context_text:
+        store_semantic_evidence(
+            session,
+            memory=memory,
+            observation=observation,
+            polarity="positive",
+            context_text=context_text,
+            source_span=context_span,
+            source_type="explicit_example",
+            reliability=1.0,
+            semantic_encoder=semantic_encoder,
+        )
     record_memory_version(
         session,
         memory,
@@ -610,6 +786,7 @@ def observe_correction(
     formatted_text: str,
     accepted_text: str,
     confirm_candidates: bool,
+    semantic_encoder: SemanticEncoder | None = None,
 ) -> tuple[list[str], list[str], list[dict[str, str]]]:
     matcher = SequenceMatcher(None, formatted_text.split(), accepted_text.split(), autojunk=False)
     observation_ids: list[str] = []
@@ -716,6 +893,17 @@ def observe_correction(
             ),
             reliability=observation.reliability,
         )
+        store_semantic_evidence(
+            session,
+            memory=memory,
+            observation=observation,
+            polarity="positive",
+            context_text=formatted_text,
+            source_span=source_span,
+            source_type="accepted_correction",
+            reliability=observation.reliability,
+            semantic_encoder=semantic_encoder,
+        )
         record_memory_version(
             session,
             memory,
@@ -739,6 +927,10 @@ def _score_candidate(
     match_method: str,
     start: int,
     end: int,
+    semantic_encoder: SemanticEncoder | None,
+    semantic_vector_cache: dict[str, list[float] | None],
+    asr_confidence: float = 0.0,
+    asr_provider: str = "",
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
     current = extract_context_features(
         input_text,
@@ -747,12 +939,54 @@ def _score_candidate(
         start=start,
         end=end,
     )
-    positive_similarity, positive_matches = context_similarity(memory, current, "positive")
-    negative_similarity, negative_matches = context_similarity(memory, current, "negative")
-    has_positive_profile = any(
+    sparse_positive, positive_matches = context_similarity(memory, current, "positive")
+    sparse_negative, negative_matches = context_similarity(memory, current, "negative")
+    has_sparse_positive = any(
         evidence.polarity == "positive" for evidence in memory.context_evidence
     )
+    masked_context = semantic_context_text(
+        input_text,
+        input_span,
+        start=start,
+        end=end,
+    )
+    semantic_model = (
+        semantic_encoder.model_name
+        if semantic_encoder is not None and semantic_encoder.enabled
+        else "disabled"
+    )
+    if masked_context not in semantic_vector_cache:
+        semantic_vector_cache[masked_context] = (
+            semantic_encoder.encode(masked_context)
+            if semantic_encoder is not None and semantic_encoder.enabled
+            else None
+        )
+    current_vector = semantic_vector_cache[masked_context]
+    semantic_positive, semantic_positive_count = semantic_context_similarity(
+        memory,
+        current_vector,
+        "positive",
+        semantic_model,
+    )
+    semantic_negative, semantic_negative_count = semantic_context_similarity(
+        memory,
+        current_vector,
+        "negative",
+        semantic_model,
+    )
+    normalized_semantic_positive = max(
+        0.0,
+        (semantic_positive - SEMANTIC_SIMILARITY_FLOOR) / (1.0 - SEMANTIC_SIMILARITY_FLOOR),
+    )
+    normalized_semantic_negative = max(
+        0.0,
+        (semantic_negative - SEMANTIC_SIMILARITY_FLOOR) / (1.0 - SEMANTIC_SIMILARITY_FLOOR),
+    )
+    positive_similarity = max(sparse_positive, normalized_semantic_positive)
+    negative_similarity = max(sparse_negative, normalized_semantic_negative)
+    has_positive_profile = has_sparse_positive or semantic_positive_count > 0
     string_similarity = ratio(normalize(input_span), variant.normalized_form) / 100
+    lexical_signal = max(string_similarity, 0.96 * asr_confidence)
     phonetic_match = metaphone(input_span) == variant.metaphone_key
     reasons: list[str] = [f"{match_method.upper()}_CANDIDATE"]
     blockers: list[str] = []
@@ -773,25 +1007,43 @@ def _score_candidate(
         blockers.append("NEGATIVE_CONTEXT_EVIDENCE")
     if phonetic_match:
         reasons.append("PHONETIC_MATCH")
+    if asr_confidence > 0:
+        reasons.append("ASR_ALTERNATIVE_SUPPORT")
+    if memory.semantic_evidence and current_vector is None:
+        reasons.append("SEMANTIC_ENCODER_UNAVAILABLE")
+    if semantic_positive_count:
+        reasons.append("SEMANTIC_CONTEXT_PROFILE")
 
     context_signal = (
         1.0 if memory.scope_mode == "global" else min(1.0, (positive_similarity**0.35) * 1.2)
     )
     score = (
-        0.72 * string_similarity
-        + 0.14 * memory.evidence_confidence
-        + 0.10 * context_signal
-        + (0.10 if phonetic_match else 0.0)
-        - 0.65 * negative_similarity
+        POLICY.lexical_weight * lexical_signal
+        + POLICY.memory_evidence_weight * memory.evidence_confidence
+        + POLICY.context_weight * context_signal
+        + (POLICY.phonetic_weight if phonetic_match else 0.0)
+        + POLICY.asr_alternative_weight * asr_confidence
+        - POLICY.negative_context_weight * negative_similarity
     )
     score = max(0.0, min(1.0, score))
     reasons.extend(blockers)
     features: dict[str, float | str | bool] = {
         "string_similarity": round(string_similarity, 4),
+        "lexical_signal": round(lexical_signal, 4),
         "phonetic_match": phonetic_match,
+        "asr_alternative_confidence": round(asr_confidence, 4),
+        "asr_provider": asr_provider,
         "evidence_confidence": round(memory.evidence_confidence, 4),
         "positive_context_similarity": round(positive_similarity, 4),
         "negative_context_similarity": round(negative_similarity, 4),
+        "sparse_positive_similarity": round(sparse_positive, 4),
+        "sparse_negative_similarity": round(sparse_negative, 4),
+        "semantic_positive_similarity": round(semantic_positive, 4),
+        "semantic_negative_similarity": round(semantic_negative, 4),
+        "semantic_margin": round(semantic_positive - semantic_negative, 4),
+        "semantic_positive_observations": semantic_positive_count,
+        "semantic_negative_observations": semantic_negative_count,
+        "semantic_model": semantic_model,
         "positive_evidence_matches": ", ".join(positive_matches),
         "negative_evidence_matches": ", ".join(negative_matches),
         "context_evidence_count": len(memory.context_evidence),
@@ -803,13 +1055,20 @@ def _score_candidate(
 
 
 def infer(
-    session: Session, *, user_id: str, raw_asr_text: str, formatted_text: str
+    session: Session,
+    *,
+    user_id: str,
+    raw_asr_text: str,
+    formatted_text: str,
+    alternatives: list[dict] | None = None,
+    semantic_encoder: SemanticEncoder | None = None,
 ) -> tuple[Decision, dict]:
     started = time.perf_counter()
     memories = session.scalars(
         select(Memory).where(Memory.user_id == user_id, Memory.state != "suppressed")
     ).all()
     candidates_by_key: dict[tuple[str, int, int], TraceCandidate] = {}
+    semantic_vector_cache: dict[str, list[float] | None] = {}
 
     for memory in memories:
         for variant in memory.variants:
@@ -826,6 +1085,8 @@ def infer(
                     match_method=match_method,
                     start=start,
                     end=end,
+                    semantic_encoder=semantic_encoder,
+                    semantic_vector_cache=semantic_vector_cache,
                 )
                 action = (
                     "apply"
@@ -853,6 +1114,58 @@ def infer(
                 previous = candidates_by_key.get(key)
                 if previous is None or candidate.score > previous.score:
                     candidates_by_key[key] = candidate
+
+        for alternative in alternatives or []:
+            confidence = float(alternative["confidence"])
+            provider = str(alternative.get("provider", "unknown"))
+            alternative_text = str(alternative["text"])
+            for variant in memory.variants:
+                for start, end, matched in generate_asr_alternative_spans(
+                    formatted_text,
+                    alternative_text,
+                    variant,
+                ):
+                    if normalize(matched) == memory.canonical_normalized:
+                        continue
+                    score, reasons, blockers, features = _score_candidate(
+                        memory=memory,
+                        variant=variant,
+                        input_text=formatted_text,
+                        input_span=matched,
+                        match_method="asr_alternative",
+                        start=start,
+                        end=end,
+                        semantic_encoder=semantic_encoder,
+                        semantic_vector_cache=semantic_vector_cache,
+                        asr_confidence=confidence,
+                        asr_provider=provider,
+                    )
+                    action = (
+                        "apply"
+                        if score >= APPLY_THRESHOLD and not blockers
+                        else "abstain"
+                        if "NEGATIVE_CONTEXT_EVIDENCE" in blockers
+                        else "suggest"
+                        if score >= SUGGEST_THRESHOLD
+                        else "abstain"
+                    )
+                    candidate = TraceCandidate(
+                        memory_id=memory.id,
+                        canonical_form=memory.canonical_form,
+                        input_span=matched,
+                        output_span=memory.canonical_form,
+                        start=start,
+                        end=end,
+                        score=round(score, 4),
+                        action=action,
+                        reason_codes=reasons,
+                        blockers=blockers,
+                        features=features,
+                    )
+                    key = (memory.id, start, end)
+                    previous = candidates_by_key.get(key)
+                    if previous is None or candidate.score > previous.score:
+                        candidates_by_key[key] = candidate
 
     candidates = list(candidates_by_key.values())
     candidates.sort(key=lambda item: (-item.score, item.start, -(item.end - item.start)))
@@ -894,6 +1207,7 @@ def infer(
         action = "abstain"
     latency_ms = (time.perf_counter() - started) * 1000
     trace = {
+        "policy_version": POLICY.version,
         "thresholds": {
             "apply": APPLY_THRESHOLD,
             "suggest": SUGGEST_THRESHOLD,
@@ -903,6 +1217,11 @@ def infer(
         },
         "candidates": [asdict(candidate) for candidate in candidates],
         "changes": [asdict(candidate) for candidate in winners],
+        "semantic": (
+            semantic_encoder.status()
+            if semantic_encoder is not None
+            else {"enabled": False, "state": "not_configured"}
+        ),
     }
     decision = Decision(
         user_id=user_id,
@@ -926,6 +1245,8 @@ def infer(
         "candidates": trace["candidates"],
         "total_latency_ms": round(latency_ms, 3),
         "engine_version": ENGINE_VERSION,
+        "policy_version": POLICY.version,
+        "semantic": trace["semantic"],
     }
     return decision, response
 
@@ -937,6 +1258,7 @@ def apply_decision_feedback(
     verdict: str,
     corrected_text: str | None,
     suppress_memories: bool,
+    semantic_encoder: SemanticEncoder | None = None,
 ) -> dict | None:
     decision = session.get(Decision, trace_id)
     if decision is None:
@@ -996,6 +1318,21 @@ def apply_decision_feedback(
                 end=change["end"],
             ),
             reliability=reliability,
+        )
+        store_semantic_evidence(
+            session,
+            memory=memory,
+            observation=observation,
+            polarity="positive" if verdict == "correct" else "negative",
+            context_text=decision.formatted_text,
+            source_span=change["input_span"],
+            source_type=(
+                "confirmed_intervention" if verdict == "correct" else "rejected_intervention"
+            ),
+            reliability=reliability,
+            semantic_encoder=semantic_encoder,
+            start=change["start"],
+            end=change["end"],
         )
         record_memory_version(
             session,

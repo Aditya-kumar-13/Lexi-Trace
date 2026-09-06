@@ -54,6 +54,11 @@ class Memory(Base):
         cascade="all, delete-orphan",
         lazy="selectin",
     )
+    semantic_evidence: Mapped[list[ContextEmbedding]] = relationship(
+        back_populates="memory",
+        cascade="all, delete-orphan",
+        lazy="selectin",
+    )
 
 
 class MemoryVariant(Base):
@@ -101,6 +106,10 @@ class Observation(Base):
         back_populates="observation",
         cascade="all, delete-orphan",
     )
+    semantic_evidence: Mapped[list[ContextEmbedding]] = relationship(
+        back_populates="observation",
+        cascade="all, delete-orphan",
+    )
 
 
 class ContextEvidence(Base):
@@ -135,6 +144,38 @@ class ContextEvidence(Base):
     observation: Mapped[Observation] = relationship(back_populates="context_evidence")
 
 
+class ContextEmbedding(Base):
+    __tablename__ = "context_embeddings"
+    __table_args__ = (
+        UniqueConstraint(
+            "observation_id",
+            "polarity",
+            "model_name",
+            name="uq_context_embedding_observation_model",
+        ),
+        Index("ix_context_embeddings_memory_polarity", "memory_id", "polarity"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    memory_id: Mapped[str] = mapped_column(
+        ForeignKey("memories.id", ondelete="CASCADE"), index=True
+    )
+    observation_id: Mapped[str] = mapped_column(
+        ForeignKey("observations.id", ondelete="CASCADE"), index=True
+    )
+    polarity: Mapped[str] = mapped_column(String(10))
+    model_name: Mapped[str] = mapped_column(String(250))
+    dimension: Mapped[int] = mapped_column(Integer)
+    vector_json: Mapped[str] = mapped_column(Text)
+    weight: Mapped[float] = mapped_column(Float, default=1.0)
+    source_type: Mapped[str] = mapped_column(String(40))
+    context_text: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(default=utc_now)
+
+    memory: Mapped[Memory] = relationship(back_populates="semantic_evidence")
+    observation: Mapped[Observation] = relationship(back_populates="semantic_evidence")
+
+
 class Decision(Base):
     __tablename__ = "decisions"
     __table_args__ = (Index("ix_decisions_user_created", "user_id", "created_at"),)
@@ -147,7 +188,7 @@ class Decision(Base):
     action: Mapped[str] = mapped_column(String(20))
     trace_json: Mapped[str] = mapped_column(Text)
     total_latency_ms: Mapped[float] = mapped_column(Float)
-    engine_version: Mapped[str] = mapped_column(String(30), default="0.3.0")
+    engine_version: Mapped[str] = mapped_column(String(30), default="0.5.0")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
 

@@ -1,0 +1,24 @@
+{
+  "dataset": "data/benchmark/journeys.jsonl",
+  "dataset_sha256": "7a7b95fc6e74dd062156b4e9041e5117b6df14b5b527553b0a1f3ccbe9548819",
+  "journeys": 3,
+  "model": "BAAI/bge-small-en-v1.5",
+  "systems": {
+    "sparse_ablation": {
+      "queries": 6,
+      "exact_match_rate": 0.8333,
+      "action_accuracy": 0.6667,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 6.426,
+      "p95_latency_ms": 9.95
+    },
+    "hybrid": {
+      "queries": 6,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 162.502,
+      "p95_latency_ms": 174.528
+    }
+  }
+}
