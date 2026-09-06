@@ -1,0 +1,142 @@
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel, Field, field_validator
+
+
+class ExplicitTeachRequest(BaseModel):
+    user_id: str = Field(default="demo-user", min_length=1, max_length=100)
+    canonical_form: str = Field(min_length=1, max_length=250)
+    variants: list[str] = Field(min_length=1, max_length=20)
+    scope_mode: Literal["global", "contextual"] = "global"
+    positive_context: list[str] = Field(default_factory=list, max_length=30)
+    negative_context: list[str] = Field(default_factory=list, max_length=30)
+    raw_asr_text: str = Field(default="", max_length=20_000)
+    formatted_text: str = Field(default="", max_length=20_000)
+    accepted_text: str = Field(default="", max_length=20_000)
+
+    @field_validator("canonical_form")
+    @classmethod
+    def canonical_not_blank(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("canonical_form must contain visible characters")
+        return value
+
+    @field_validator("variants")
+    @classmethod
+    def variants_not_blank(cls, values: list[str]) -> list[str]:
+        cleaned = [value.strip() for value in values if value.strip()]
+        if not cleaned:
+            raise ValueError("at least one non-empty variant is required")
+        return list(dict.fromkeys(cleaned))
+
+
+class CorrectionObservationRequest(BaseModel):
+    user_id: str = Field(default="demo-user", min_length=1, max_length=100)
+    raw_asr_text: str = Field(default="", max_length=20_000)
+    formatted_text: str = Field(min_length=1, max_length=20_000)
+    accepted_text: str = Field(min_length=1, max_length=20_000)
+    confirm_candidates: bool = False
+
+
+class InferenceRequest(BaseModel):
+    user_id: str = Field(default="demo-user", min_length=1, max_length=100)
+    raw_asr_text: str = Field(default="", max_length=20_000)
+    formatted_text: str = Field(min_length=1, max_length=20_000)
+
+
+class MemoryUpdateRequest(BaseModel):
+    state: Literal["candidate", "confirmed", "suppressed"] | None = None
+    canonical_form: str | None = Field(default=None, min_length=1, max_length=250)
+    scope_mode: Literal["global", "contextual"] | None = None
+    positive_context: list[str] | None = Field(default=None, max_length=30)
+    negative_context: list[str] | None = Field(default=None, max_length=30)
+    reason: str = Field(default="User updated memory", min_length=1, max_length=250)
+
+
+class VariantResponse(BaseModel):
+    id: str
+    surface_form: str
+    normalized_form: str
+    metaphone_key: str
+    support_count: int
+
+
+class MemoryResponse(BaseModel):
+    id: str
+    user_id: str
+    canonical_form: str
+    state: str
+    scope_mode: str
+    evidence_confidence: float
+    support_count: int
+    contradiction_count: int
+    positive_context: list[str]
+    negative_context: list[str]
+    variants: list[VariantResponse]
+    created_at: datetime
+    updated_at: datetime
+
+
+class MemoryVersionResponse(BaseModel):
+    id: str
+    memory_id: str
+    version_number: int
+    action: str
+    reason: str
+    actor: str
+    snapshot: dict
+    created_at: datetime
+
+
+class DecisionFeedbackRequest(BaseModel):
+    verdict: Literal["correct", "incorrect"]
+    corrected_text: str | None = Field(default=None, max_length=20_000)
+    suppress_memories: bool = False
+
+
+class DecisionFeedbackResponse(BaseModel):
+    trace_id: str
+    verdict: str
+    affected_memory_ids: list[str]
+    resulting_states: dict[str, str]
+
+
+class CandidateTrace(BaseModel):
+    memory_id: str
+    canonical_form: str
+    input_span: str
+    output_span: str
+    start: int
+    end: int
+    score: float
+    action: Literal["apply", "suggest", "abstain"]
+    reason_codes: list[str]
+    features: dict[str, float | str | bool]
+
+
+class InferenceResponse(BaseModel):
+    trace_id: str
+    raw_asr_text: str
+    formatted_text: str
+    memory_aware_text: str
+    action: Literal["apply", "suggest", "abstain"]
+    changes: list[CandidateTrace]
+    candidates: list[CandidateTrace]
+    total_latency_ms: float
+    engine_version: str
+
+
+class CorrectionObservationResponse(BaseModel):
+    observation_ids: list[str]
+    created_memory_ids: list[str]
+    rejected: list[dict[str, str]]
+
+
+class ResetResponse(BaseModel):
+    deleted_memories: int
+    deleted_observations: int
+    deleted_decisions: int
