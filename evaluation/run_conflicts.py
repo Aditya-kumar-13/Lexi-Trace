@@ -34,15 +34,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--semantic-retrieval-mode",
         choices=("centroid", "nearest_example"),
-        default="centroid",
+        default="nearest_example",
     )
-    parser.add_argument("--minimum-conflict-positive-context", type=float, default=0.15)
+    parser.add_argument("--minimum-conflict-positive-context", type=float, default=0.20)
     parser.add_argument(
         "--feedback-scope-mode",
         choices=("legacy", "auto"),
-        default="legacy",
+        default="auto",
     )
-    parser.add_argument("--semantic-evidence-cap", type=int, default=None)
+    parser.add_argument("--semantic-evidence-cap", type=int, default=12)
     return parser.parse_args()
 
 

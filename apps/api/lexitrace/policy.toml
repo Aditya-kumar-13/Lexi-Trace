@@ -1,10 +1,20 @@
-version = "2026-09-06-hybrid-v6-conflict-safe"
+version = "2026-09-07-hybrid-v7-calibrated"
+
+[structure]
+semantic_retrieval_mode = "nearest_example"
+semantic_evidence_cap = 12
+feedback_scope = "auto"
+asr_confidence_mode = "legacy_double"
+asr_reliability_mode = "exact_route"
+authorization_score_mode = "boolean"
+context_transform = "legacy_power_035"
 
 [thresholds]
-apply = 0.93
+apply = 0.90
 suggest = 0.72
 minimum_winner_margin = 0.12
 minimum_conflict_context_advantage = 0.15
+minimum_conflict_positive_context = 0.20
 fuzzy_candidate = 0.76
 minimum_positive_context = 0.15
 negative_context_block = 0.12
@@ -30,10 +40,10 @@ minimum_positive_events = 3
 minimum_distinct_contexts = 2
 
 [weights]
-lexical = 0.72
+lexical = 0.65
 memory_authorization = 0.14
-context = 0.10
-phonetic = 0.10
-asr_alternative = 0.10
+context = 0.15
+phonetic = 0.05
+asr_alternative = 0.05
 negative_context = 0.65
-learned_asr = 0.09
+learned_asr = 0.21

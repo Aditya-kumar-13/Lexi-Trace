@@ -23,6 +23,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Rebuild the manifest from existing suite artifacts without rerunning them.",
     )
+    parser.add_argument(
+        "--role",
+        choices=("development", "regression"),
+        default="development",
+    )
     return parser.parse_args()
 
 
@@ -217,8 +222,12 @@ def main() -> None:
         [output / "smoke" / "cases.jsonl", output / "robustness" / "cases.jsonl"]
     )
     manifest = {
-        "status": "structural_candidate_frozen_for_calibration",
-        "dataset_role": "development_only",
+        "status": (
+            "regression_candidate_complete"
+            if args.role == "regression"
+            else "structural_candidate_frozen_for_calibration"
+        ),
+        "dataset_role": "regression" if args.role == "regression" else "development_only",
         "configuration": {
             "semantic_retrieval": "nearest_example",
             "semantic_evidence_cap_per_memory_polarity": 12,

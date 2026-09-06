@@ -29,10 +29,12 @@ The sparse context fingerprint uses distance-weighted tokens and nearby bigrams.
 learned from correction sentences; they are not source-code conditions. Optional manual context is
 retained only as an explicit advanced override and is labeled as such in provenance.
 
-Version 0.5.0 also masks the remembered surface form and encodes the surrounding sentence with a
-local ONNX model. Weighted centroids form positive and negative prototypes per memory. The trace
-shows raw semantic similarity, prototype margin, observation counts, sparse similarity, and the
-model version. Semantic failure never removes the deterministic fallback.
+The engine also masks the remembered surface form and encodes the surrounding sentence with a
+local ONNX model. V7 compares a query with bounded stored examples instead of averaging distinct
+contexts into one centroid. Each memory retains at most 12 vectors per polarity with exact-context
+deduplication and deterministic diversity-aware eviction. The trace shows raw semantic similarity,
+margin, observation counts, sparse similarity, and model version. Semantic failure never removes
+the deterministic fallback.
 
 ASR alternatives are treated as retrieval evidence, not editable output. Candidate spans found in
 an alternative are token-aligned back to the formatted transcript, and acoustic confidence becomes
@@ -120,10 +122,9 @@ Retrieval is not permission to edit. The following blockers prevent automatic ap
 - `INSUFFICIENT_WINNER_MARGIN`
 - `OVERLAPPING_WINNER`
 
-The numeric decision score is diagnostic, not a probability. Policy v5 retains the conservative
-`0.93` apply threshold because the calibration-only `0.90` candidate introduced two wrong edits on
-the separate safety corpus. The gate records that rejection instead of hiding it behind a better
-single-suite headline.
+The numeric decision score is diagnostic, not a probability. Calibrated policy v7 uses a `0.90`
+apply threshold. It was selected only after architecture freeze, exhaustive recorded search, exact
+engine replay, and a separate zero-wrong safety gate. Eligibility blockers remain authoritative.
 
 Thresholds and component weights live in the versioned `lexitrace/policy.toml` file. Every decision
 trace records the policy version, so benchmark results can be reproduced and policy changes cannot

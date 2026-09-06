@@ -400,7 +400,7 @@ def semantic_context_similarity(
     current_vector: list[float] | None,
     polarity: str,
     model_name: str,
-    retrieval_mode: str = "centroid",
+    retrieval_mode: str = POLICY.semantic_retrieval_mode,
 ) -> tuple[float, int]:
     if current_vector is None:
         return 0.0, 0
@@ -1236,7 +1236,7 @@ def teach_explicit(
     accepted_text: str = "",
     event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
-    semantic_evidence_cap: int | None = None,
+    semantic_evidence_cap: int | None = POLICY.semantic_evidence_cap,
 ) -> Memory:
     normalized_canonical = normalize(canonical_form)
     memory = session.scalar(
@@ -1377,7 +1377,7 @@ def observe_correction(
     event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
     enable_auto_lifecycle: bool = True,
-    semantic_evidence_cap: int | None = None,
+    semantic_evidence_cap: int | None = POLICY.semantic_evidence_cap,
 ) -> tuple[list[str], list[str], list[dict[str, str]]]:
     matcher = SequenceMatcher(None, formatted_text.split(), accepted_text.split(), autojunk=False)
     observation_ids: list[str] = []
@@ -1553,11 +1553,11 @@ def _score_candidate(
     asr_rank: int = 1,
     provider_confidence: float | None = None,
     enable_learned_asr: bool = True,
-    asr_confidence_mode: str = "legacy_double",
+    asr_confidence_mode: str = POLICY.asr_confidence_mode,
     asr_reliability_mode: str = "exact_route",
     authorization_score_mode: str = "boolean",
     asr_evidence_span: str | None = None,
-    semantic_retrieval_mode: str = "centroid",
+    semantic_retrieval_mode: str = POLICY.semantic_retrieval_mode,
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
     current = extract_context_features(
         input_text,
@@ -1682,9 +1682,16 @@ def _score_candidate(
     if semantic_positive_count:
         reasons.append("SEMANTIC_CONTEXT_PROFILE")
 
-    context_signal = (
-        1.0 if memory.scope_mode == "global" else min(1.0, (positive_similarity**0.35) * 1.2)
-    )
+    if memory.scope_mode == "global":
+        context_signal = 1.0
+    elif POLICY.context_transform == "legacy_power_035":
+        context_signal = min(1.0, (positive_similarity**0.35) * 1.2)
+    elif POLICY.context_transform == "sqrt":
+        context_signal = positive_similarity**0.5
+    elif POLICY.context_transform == "linear":
+        context_signal = positive_similarity
+    else:
+        raise ValueError(f"Unsupported context transform: {POLICY.context_transform}")
     lexical_contribution = POLICY.lexical_weight * lexical_signal
     authorization_signal = (
         float(memory_authorized)
@@ -1836,7 +1843,7 @@ def _select_winners(
     source: list[TraceCandidate],
     thresholds: DecisionThresholds,
     *,
-    minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
+    minimum_conflict_positive_context: float = POLICY.minimum_conflict_positive_context,
 ) -> tuple[list[TraceCandidate], list[TraceCandidate]]:
     candidates = [
         replace(
@@ -1935,11 +1942,11 @@ def infer(
     alternatives: list[dict] | None = None,
     asr: dict | None = None,
     enable_learned_asr: bool = True,
-    asr_confidence_mode: str = "legacy_double",
+    asr_confidence_mode: str = POLICY.asr_confidence_mode,
     asr_reliability_mode: str = "exact_route",
     authorization_score_mode: str = "boolean",
-    semantic_retrieval_mode: str = "centroid",
-    minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
+    semantic_retrieval_mode: str = POLICY.semantic_retrieval_mode,
+    minimum_conflict_positive_context: float = POLICY.minimum_conflict_positive_context,
     semantic_encoder: SemanticEncoder | None = None,
     shadow_policy: dict | None = None,
 ) -> tuple[Decision, dict]:
@@ -2193,14 +2200,14 @@ def apply_decision_feedback(
     *,
     trace_id: str,
     verdict: str,
-    feedback_scope: str = "legacy",
+    feedback_scope: str = POLICY.feedback_scope,
     corrected_text: str | None,
     suppress_memories: bool,
     candidate_memory_id: str | None = None,
     candidate_start: int | None = None,
     semantic_encoder: SemanticEncoder | None = None,
     enable_auto_lifecycle: bool = True,
-    semantic_evidence_cap: int | None = None,
+    semantic_evidence_cap: int | None = POLICY.semantic_evidence_cap,
 ) -> dict | None:
     if feedback_scope not in {"legacy", "auto", "context", "identity"}:
         raise ValueError("feedback_scope must be legacy, auto, context, or identity")

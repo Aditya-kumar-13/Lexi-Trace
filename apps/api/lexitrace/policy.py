@@ -10,10 +10,18 @@ from pathlib import Path
 @dataclass(frozen=True, slots=True)
 class DecisionPolicy:
     version: str
+    semantic_retrieval_mode: str
+    semantic_evidence_cap: int
+    feedback_scope: str
+    asr_confidence_mode: str
+    asr_reliability_mode: str
+    authorization_score_mode: str
+    context_transform: str
     apply_threshold: float
     suggest_threshold: float
     minimum_winner_margin: float
     minimum_conflict_context_advantage: float
+    minimum_conflict_positive_context: float
     fuzzy_candidate_threshold: float
     minimum_positive_context_similarity: float
     negative_context_block_threshold: float
@@ -47,6 +55,7 @@ def load_policy() -> DecisionPolicy:
     else:
         raw = files("lexitrace").joinpath("policy.toml").read_bytes()
     data = tomllib.loads(raw.decode("utf-8"))
+    structure = data["structure"]
     thresholds = data["thresholds"]
     semantic = data["semantic"]
     weights = data["weights"]
@@ -54,10 +63,18 @@ def load_policy() -> DecisionPolicy:
     lifecycle = data["memory_lifecycle"]
     return DecisionPolicy(
         version=data["version"],
+        semantic_retrieval_mode=structure["semantic_retrieval_mode"],
+        semantic_evidence_cap=structure["semantic_evidence_cap"],
+        feedback_scope=structure["feedback_scope"],
+        asr_confidence_mode=structure["asr_confidence_mode"],
+        asr_reliability_mode=structure["asr_reliability_mode"],
+        authorization_score_mode=structure["authorization_score_mode"],
+        context_transform=structure["context_transform"],
         apply_threshold=thresholds["apply"],
         suggest_threshold=thresholds["suggest"],
         minimum_winner_margin=thresholds["minimum_winner_margin"],
         minimum_conflict_context_advantage=thresholds["minimum_conflict_context_advantage"],
+        minimum_conflict_positive_context=thresholds["minimum_conflict_positive_context"],
         fuzzy_candidate_threshold=thresholds["fuzzy_candidate"],
         minimum_positive_context_similarity=thresholds["minimum_positive_context"],
         negative_context_block_threshold=thresholds["negative_context_block"],

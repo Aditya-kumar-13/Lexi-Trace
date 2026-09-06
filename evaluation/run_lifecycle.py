@@ -42,7 +42,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--feedback-scope-mode",
         choices=("legacy", "auto"),
-        default="legacy",
+        default="auto",
     )
     return parser.parse_args()
 
@@ -63,7 +63,7 @@ def run_journey(
     journey: dict[str, Any],
     *,
     enabled: bool,
-    feedback_scope_mode: str = "legacy",
+    feedback_scope_mode: str = "auto",
 ) -> list[dict[str, Any]]:
     encoder = DisabledSemanticEncoder()
     aliases: dict[str, str] = {}

@@ -149,7 +149,7 @@ class MemoryVersionResponse(BaseModel):
 
 class DecisionFeedbackRequest(BaseModel):
     verdict: Literal["correct", "incorrect"]
-    feedback_scope: Literal["legacy", "auto", "context", "identity"] = "legacy"
+    feedback_scope: Literal["legacy", "auto", "context", "identity"] = "auto"
     corrected_text: str | None = Field(default=None, max_length=20_000)
     suppress_memories: bool = False
     candidate_memory_id: str | None = Field(default=None, max_length=36)

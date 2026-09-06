@@ -567,8 +567,8 @@ def test_shadow_policy_compares_decisions_without_changing_active_output(tmp_pat
             json={
                 "formatted_text": "Message Adithya before lunch.",
                 "shadow_policy": {
-                    "policy_id": "calibration-candidate-090",
-                    "apply_threshold": 0.90,
+                    "policy_id": "calibration-candidate-085",
+                    "apply_threshold": 0.85,
                 },
             },
         )

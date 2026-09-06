@@ -145,15 +145,15 @@ Run the 500-decision local soak:
 .\.venv\Scripts\python.exe evaluation/run_soak.py
 ```
 
-Freeze a threshold candidate from calibration data and run the safety release gate:
+Reproduce the frozen v7 score search and its post-selection safety gate:
 
 ```powershell
-.\.venv\Scripts\python.exe evaluation/calibrate_policy.py
+.\.venv\Scripts\python.exe evaluation/calibrate_v7_policy.py
 ```
 
-The committed artifact rejects the `0.90` candidate and retains `0.93`; inspect its safety
-violations before changing `policy.toml`. The interface can execute `0.90` as a shadow policy. Its
-hypothetical output is persisted in the trace but never replaces the active result.
+The active v7 policy uses `0.90`. Inspect `results/v7/calibration/candidate-v4/policy.json` and
+`docs/v7-phase3-calibration-result.md` before changing `policy.toml`. Earlier rejected searches are
+kept alongside it so the selection history remains auditable.
 
 The first semantic run may download the declared local model. No transcript is sent to a hosted
 inference API. Regenerate the fixed robustness corpus only when intentionally creating a new

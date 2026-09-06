@@ -100,7 +100,7 @@ def create_app(
 
     app = FastAPI(
         title="LexiTrace API",
-        version="1.1.0",
+        version="1.2.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
@@ -189,7 +189,7 @@ def create_app(
     def health() -> dict:
         return {
             "status": "ok",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "semantic": semantic_encoder.status(),
             "policy_version": POLICY.version,
         }
@@ -208,6 +208,7 @@ def create_app(
             session,
             **payload.model_dump(),
             semantic_encoder=semantic_encoder,
+            semantic_evidence_cap=POLICY.semantic_evidence_cap,
         )
         return memory_to_dict(memory)
 
@@ -223,6 +224,7 @@ def create_app(
             session,
             **payload.model_dump(),
             semantic_encoder=semantic_encoder,
+            semantic_evidence_cap=POLICY.semantic_evidence_cap,
         )
         return {
             "observation_ids": observation_ids,
@@ -477,6 +479,7 @@ def create_app(
                 trace_id=trace_id,
                 **payload.model_dump(),
                 semantic_encoder=semantic_encoder,
+                semantic_evidence_cap=POLICY.semantic_evidence_cap,
             )
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error

@@ -56,12 +56,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--semantic-retrieval-mode",
         choices=("centroid", "nearest_example"),
-        default="centroid",
+        default="nearest_example",
     )
     parser.add_argument(
         "--minimum-conflict-positive-context",
         type=float,
-        default=0.15,
+        default=0.20,
     )
     parser.add_argument(
         "--authorization-score-mode",
@@ -163,8 +163,8 @@ def full_system(
     case: dict[str, Any],
     semantic_encoder,
     asr_confidence_mode: str = "legacy_double",
-    semantic_retrieval_mode: str = "centroid",
-    minimum_conflict_positive_context: float = 0.15,
+    semantic_retrieval_mode: str = "nearest_example",
+    minimum_conflict_positive_context: float = 0.20,
     authorization_score_mode: str = "boolean",
 ) -> dict[str, Any]:
     _, response = infer(

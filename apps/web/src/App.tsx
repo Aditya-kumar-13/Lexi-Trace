@@ -516,7 +516,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 1.1.0</span><span>Conflict-safe memory · Reviewer-ready release</span></footer>
+      <footer><span>LexiTrace 1.2.0</span><span>Calibrated personal memory · Reviewer-ready release</span></footer>
     </div>
   );
 }

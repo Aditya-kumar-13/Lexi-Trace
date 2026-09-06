@@ -5,7 +5,7 @@ backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 1.1.0
+## Current milestone: 1.2.0
 
 The reviewer-ready release includes:
 
@@ -68,11 +68,11 @@ corrections require three positive events across at least two distinct contexts 
 confirmation. Duplicate event IDs contribute nothing, contradictory evidence can demote a memory,
 and only the user can suppress one.
 
-Decision thresholds are selected under a two-stage policy gate. The robustness calibration split
-may nominate a candidate, but promotion also requires no regression on the frozen smoke safety
-corpus. The current calibration-only candidate (`0.90`) recovered two cases but caused two wrong
-interventions elsewhere, so the gate rejected it and retained `0.93`. It remains available in
-shadow mode to make that trade-off visible without affecting the user-facing transcript.
+Policy v7 was selected from 25,920 calibration configurations after the architecture was frozen.
+The active `0.90` apply threshold and weights reproduce 71/72 calibration outcomes with zero wrong
+automatic edits, pass the separate 16/16 safety gate, and avoid saturated scores. Complete searches,
+three rejected candidates, exact engine replays, and regression results are preserved under
+`results/v7`; the independent final holdout has not been accessed.
 
 When several memories share a surface or phonetic route, LexiTrace does not choose by insertion
 order. It either finds a sufficient learned-context advantage or returns a visible suggestion. A

@@ -18,11 +18,11 @@ SEARCH_SPACE = {
     "lexical_weight": [0.60, 0.65, 0.70],
     "authorization_weight": [0.05, 0.10, 0.14],
     "context_weight": [0.05, 0.10, 0.15],
-    "phonetic_weight": [0.00, 0.05, 0.10],
+    "phonetic_weight": [0.05, 0.10],
     "asr_alternative_weight": [0.05, 0.10],
-    "learned_asr_weight": [0.09, 0.15, 0.21],
+    "learned_asr_weight": [0.09, 0.15, 0.21, 0.24],
     "negative_context_weight": [0.65, 1.00],
-    "apply_threshold": [0.85, 0.89, 0.93, 0.95],
+    "apply_threshold": [0.85, 0.89, 0.90, 0.93, 0.95],
     "suggest_threshold": [0.65, 0.72],
 }
 
@@ -65,7 +65,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=ROOT / "results" / "v7" / "calibration" / "candidate-v1",
+        default=ROOT / "results" / "v7" / "calibration" / "candidate-v4",
     )
     return parser.parse_args()
 
@@ -88,6 +88,8 @@ def static_rows(path: Path) -> list[dict[str, Any]]:
                 "formatted_text": source["formatted_text"],
                 "expected_output": source["expected_output"],
                 "expected_action": source["expected_action"],
+                "engine_output": source["systems"]["lexitrace"]["output"],
+                "engine_action": source["systems"]["lexitrace"]["action"],
                 "candidates": source["systems"]["lexitrace"]["candidates"],
             }
         )
@@ -105,6 +107,8 @@ def journey_rows(path: Path) -> list[dict[str, Any]]:
                 "formatted_text": source["formatted_text"],
                 "expected_output": source["expected_output"],
                 "expected_action": source["expected_action"],
+                "engine_output": source["actual_output"],
+                "engine_action": source["actual_action"],
                 "candidates": source["candidates"],
             }
         )
@@ -240,6 +244,12 @@ def metrics(
         for row, result in results
     )
     raw_scores = [score for _, result in results for score in result["raw_scores"]]
+    apply_boundary_scores = sum(
+        abs(max(0.0, min(1.0, score)) - config["apply_threshold"]) < 0.0025
+        for row, result in results
+        for score, candidate in zip(result["raw_scores"], row["candidates"], strict=True)
+        if not candidate["blockers"]
+    )
     failures = [
         {
             "case_id": row["case_id"],
@@ -263,6 +273,7 @@ def metrics(
         "upper_clamped": sum(score > 1.0 for score in raw_scores),
         "lower_clamped": sum(score < 0.0 for score in raw_scores),
         "candidate_scores": len(raw_scores),
+        "apply_boundary_scores": apply_boundary_scores,
     }
     if include_failures:
         result["failures"] = failures
@@ -275,11 +286,20 @@ def configurations() -> Iterable[dict[str, Any]]:
         yield dict(zip(keys, values, strict=True))
 
 
+def baseline_distance(config: dict[str, Any]) -> float:
+    return sum(
+        abs(float(config[key]) - float(BASELINE[key]))
+        for key in config
+        if key.endswith("_weight") or key.endswith("_threshold")
+    ) + float(config["context_transform"] != BASELINE["context_transform"])
+
+
 def selection_key(result: dict[str, Any]) -> tuple:
     metrics_value = result["metrics"]
     config = result["config"]
     return (
         -metrics_value["wrong_interventions"],
+        -metrics_value["apply_boundary_scores"],
         metrics_value["exact_matches"],
         metrics_value["action_matches"],
         metrics_value["useful_interventions"],
@@ -290,6 +310,7 @@ def selection_key(result: dict[str, Any]) -> tuple:
             for key in config
             if key.endswith("_weight") and key != "negative_context_weight"
         ),
+        -baseline_distance(config),
         json.dumps(config, sort_keys=True),
     )
 
@@ -322,6 +343,23 @@ def main() -> None:
         "config": BASELINE,
         "metrics": metrics(calibration, BASELINE, include_failures=True),
     }
+    observed_baseline = {
+        "exact_matches": sum(row["engine_output"] == row["expected_output"] for row in calibration),
+        "action_matches": sum(row["engine_action"] == row["expected_action"] for row in calibration),
+        "wrong_interventions": sum(
+            row["engine_action"] == "apply" and row["engine_output"] != row["expected_output"]
+            for row in calibration
+        ),
+    }
+    replay_baseline = {
+        key: baseline["metrics"][key]
+        for key in ("exact_matches", "action_matches", "wrong_interventions")
+    }
+    if replay_baseline != observed_baseline:
+        raise RuntimeError(
+            f"Calibration replay does not reproduce engine baseline: "
+            f"replay={replay_baseline}, engine={observed_baseline}"
+        )
     search_path = output / "search-results.jsonl"
     selected: dict[str, Any] | None = None
     searched = 0
@@ -338,31 +376,35 @@ def main() -> None:
     selected_safety = metrics(safety, selected["config"], include_failures=True)
     safety_passed = selected_safety["wrong_interventions"] == 0
     artifact = {
-        "artifact_version": "v7-score-calibration-v1",
+        "artifact_version": "v7-score-calibration-v4",
         "status": "safety_pass" if safety_passed else "rejected_by_safety",
-        "policy_candidate": "2026-09-v7-calibration-candidate-1",
+        "policy_candidate": "2026-09-v7-calibration-candidate-4",
         "selection_rule": [
             "minimize_wrong_automatic_interventions",
+            "avoid_eligible_scores_within_0.0025_of_apply_boundary",
             "maximize_exact_outputs",
             "maximize_action_matches",
             "maximize_useful_interventions",
             "minimize_upper_clamping",
             "prefer_more_conservative_apply_threshold",
             "prefer_lower_positive_weight_sum",
+            "prefer_values_nearest_v6_baseline_when_outcomes_tie",
             "stable_lexical_tie_break",
         ],
         "search_space": SEARCH_SPACE,
         "searched_candidates": searched,
         "inputs": {
-            "corpus_manifest": {"path": str(manifest_path.relative_to(ROOT)), "sha256": sha256(manifest_path)},
-            "static_traces": {"path": str(static_path.relative_to(ROOT)), "sha256": sha256(static_path)},
-            "journey_traces": {"path": str(journey_path.relative_to(ROOT)), "sha256": sha256(journey_path)},
-            "safety_traces": {"path": str(safety_path.relative_to(ROOT)), "sha256": sha256(safety_path)},
+            "corpus_manifest": {"path": manifest_path.relative_to(ROOT).as_posix(), "sha256": sha256(manifest_path)},
+            "static_traces": {"path": static_path.relative_to(ROOT).as_posix(), "sha256": sha256(static_path)},
+            "journey_traces": {"path": journey_path.relative_to(ROOT).as_posix(), "sha256": sha256(journey_path)},
+            "safety_traces": {"path": safety_path.relative_to(ROOT).as_posix(), "sha256": sha256(safety_path)},
         },
         "corpus_hash_checks": source_checks,
         "calibration_cases": len(calibration),
         "safety_cases": len(safety),
         "baseline": baseline,
+        "observed_engine_baseline": observed_baseline,
+        "replay_matches_engine_baseline": True,
         "selected": selected,
         "selected_safety": selected_safety,
         "safety_was_not_used_for_selection": True,
@@ -371,7 +413,7 @@ def main() -> None:
     }
     (output / "policy.json").write_text(json.dumps(artifact, indent=2) + "\n", encoding="utf-8")
     report = [
-        "# V7 score calibration candidate 1",
+        "# V7 score calibration candidate 4",
         "",
         f"Search candidates: **{searched}**",
         f"Calibration cases: **{len(calibration)}**",

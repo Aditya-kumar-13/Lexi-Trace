@@ -62,6 +62,10 @@ REQUIRED_PATHS = [
     "docs/v7-phase2-authorization-experiment.md",
     "docs/v7-phase2-semantic-storage-experiment.md",
     "docs/v7-phase2-structural-selection.md",
+    "docs/v7-phase3-calibration-candidate1-review.md",
+    "docs/v7-phase3-calibration-candidate2-review.md",
+    "docs/v7-phase3-calibration-candidate3-review.md",
+    "docs/v7-phase3-calibration-result.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -77,6 +81,11 @@ REQUIRED_PATHS = [
     "scripts/run_quality_gate.py",
     "evaluation/run_v7_instrumentation.py",
     "evaluation/run_v7_structural_candidate.py",
+    "evaluation/calibrate_v7_policy.py",
+    "evaluation/build_v7_calibration_corpora.py",
+    "data/benchmark/v7_calibration_manifest.json",
+    "results/v7/calibration/candidate-v4/policy.json",
+    "results/v7/regression/candidate-v4/manifest.json",
     "evaluation/run_phonetic_ground_truth.py",
     "evaluation/compare_structural_runs.py",
     "results/v7/development/indic-transliteration-experiment-v1/summary.json",
@@ -120,7 +129,7 @@ RUN_TOKENS = [
     "evaluation/run.py",
     "evaluation/run_asr_learning.py",
     "evaluation/run_lifecycle.py",
-    "evaluation/calibrate_policy.py",
+    "evaluation/calibrate_v7_policy.py",
     "evaluation/run_conflicts.py",
     "evaluation/run_soak.py",
     "data/benchmark/robustness.jsonl",
@@ -199,31 +208,48 @@ def scan_for_secrets() -> list[str]:
 
 
 def check_calibration_artifact(checks: list[dict]) -> None:
-    artifact_path = ROOT / "results" / "calibration" / "policy.json"
+    artifact_path = ROOT / "results" / "v7" / "calibration" / "candidate-v4" / "policy.json"
     if not artifact_path.exists():
         add(checks, "calibration_release_gate", False, "policy.json is missing")
         return
     artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
-    source = ROOT / artifact["source_cases"]
-    safety = ROOT / artifact["safety_cases"]
-    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
-    safety_hash = hashlib.sha256(safety.read_bytes()).hexdigest()
+    input_hashes_match = all(
+        hashlib.sha256((ROOT / record["path"]).read_bytes()).hexdigest() == record["sha256"]
+        for record in artifact["inputs"].values()
+    )
+    search = artifact_path.parent / artifact["search_results"]["path"]
+    search_hash_match = hashlib.sha256(search.read_bytes()).hexdigest() == artifact["search_results"]["sha256"]
     policy = tomllib.loads((ROOT / "apps/api/lexitrace/policy.toml").read_text(encoding="utf-8"))
+    selected = artifact["selected"]["config"]
     checks_pass = (
-        source_hash == artifact["source_cases_sha256"]
-        and safety_hash == artifact["safety_cases_sha256"]
-        and artifact["heldout_rows_accessed"] == 0
-        and artifact["selected"]["apply_threshold"] == policy["thresholds"]["apply"]
+        input_hashes_match
+        and search_hash_match
+        and artifact["status"] == "safety_pass"
+        and artifact["replay_matches_engine_baseline"] is True
+        and artifact["final_holdout_accessed"] is False
+        and artifact["selected"]["metrics"]["wrong_interventions"] == 0
+        and artifact["selected_safety"]["wrong_interventions"] == 0
+        and selected["apply_threshold"] == policy["thresholds"]["apply"]
+        and selected["suggest_threshold"] == policy["thresholds"]["suggest"]
+        and selected["context_transform"] == policy["structure"]["context_transform"]
+        and selected["lexical_weight"] == policy["weights"]["lexical"]
+        and selected["authorization_weight"] == policy["weights"]["memory_authorization"]
+        and selected["context_weight"] == policy["weights"]["context"]
+        and selected["phonetic_weight"] == policy["weights"]["phonetic"]
+        and selected["asr_alternative_weight"] == policy["weights"]["asr_alternative"]
+        and selected["learned_asr_weight"] == policy["weights"]["learned_asr"]
+        and selected["negative_context_weight"] == policy["weights"]["negative_context"]
     )
     add(
         checks,
         "calibration_release_gate",
         checks_pass,
-        "source_hash_match={}, safety_hash_match={}, heldout_rows={}, selected={}".format(
-            source_hash == artifact["source_cases_sha256"],
-            safety_hash == artifact["safety_cases_sha256"],
-            artifact["heldout_rows_accessed"],
-            artifact["selected"]["apply_threshold"],
+        "input_hashes={}, search_hash={}, safety={}, final_holdout={}, selected={}".format(
+            input_hashes_match,
+            search_hash_match,
+            artifact["status"],
+            artifact["final_holdout_accessed"],
+            selected["apply_threshold"],
         ),
     )
 
@@ -310,6 +336,48 @@ def check_v7_structural_candidate(checks: list[dict]) -> None:
     )
 
 
+def check_v7_regression(checks: list[dict]) -> None:
+    path = ROOT / "results" / "v7" / "regression" / "candidate-v4" / "manifest.json"
+    if not path.is_file():
+        add(checks, "v7_regression", False, "manifest is missing")
+        return
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    changed = []
+    wrong: list[int] = []
+
+    for name, record in manifest["summaries"].items():
+        artifact = path.parent / record["path"]
+        actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        if actual != record["sha256"]:
+            changed.append(name)
+        content = record["content"]
+        systems = content.get("systems", {})
+        selected_system = next(
+            (
+                systems[name]
+                for name in ("lexitrace", "hybrid", "learned_asr", "event_lifecycle")
+                if name in systems
+            ),
+            content,
+        )
+        if "wrong_interventions" in selected_system:
+            wrong.append(selected_system["wrong_interventions"])
+    passed = (
+        not changed
+        and wrong
+        and not any(wrong)
+        and manifest["status"] == "regression_candidate_complete"
+        and manifest["dataset_role"] == "regression"
+        and manifest["final_holdout_accessed"] is False
+    )
+    add(
+        checks,
+        "v7_regression",
+        bool(passed),
+        f"changed_summaries={changed!r}, wrong_intervention_fields={wrong!r}",
+    )
+
+
 def main() -> None:
     checks: list[dict] = []
     missing = [path for path in REQUIRED_PATHS if not (ROOT / path).exists()]
@@ -373,6 +441,7 @@ def main() -> None:
     check_soak_artifact(checks)
     check_v7_protocol(checks)
     check_v7_structural_candidate(checks)
+    check_v7_regression(checks)
 
     secret_findings = scan_for_secrets()
     add(checks, "credential_scan", not secret_findings, "findings=" + repr(secret_findings))

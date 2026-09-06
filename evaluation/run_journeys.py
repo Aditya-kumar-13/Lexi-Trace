@@ -51,7 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--semantic-retrieval-mode",
         choices=("centroid", "nearest_example"),
-        default="centroid",
+        default="nearest_example",
     )
     parser.add_argument(
         "--disable-auto-lifecycle",
@@ -61,13 +61,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--minimum-conflict-positive-context",
         type=float,
-        default=0.15,
+        default=0.20,
         help="Evaluation override for the absolute positive-context floor in a collision.",
     )
     parser.add_argument(
         "--feedback-scope-mode",
         choices=("legacy", "auto"),
-        default="legacy",
+        default="auto",
         help="Choose legacy global demotion or scope-aware feedback for this run.",
     )
     parser.add_argument(
@@ -83,7 +83,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--semantic-evidence-cap",
         type=int,
-        default=None,
+        default=12,
     )
     return parser.parse_args()
 
@@ -108,13 +108,13 @@ def run_journey(
     encoder,
     *,
     enable_learned_asr: bool = True,
-    semantic_retrieval_mode: str = "centroid",
+    semantic_retrieval_mode: str = "nearest_example",
     enable_auto_lifecycle: bool = True,
-    minimum_conflict_positive_context: float = 0.15,
-    feedback_scope_mode: str = "legacy",
+    minimum_conflict_positive_context: float = 0.20,
+    feedback_scope_mode: str = "auto",
     asr_reliability_mode: str = "exact_route",
     authorization_score_mode: str = "boolean",
-    semantic_evidence_cap: int | None = None,
+    semantic_evidence_cap: int | None = 12,
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
