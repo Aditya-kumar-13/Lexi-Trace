@@ -57,6 +57,7 @@ REQUIRED_PATHS = [
     "docs/v7-phase2-semantic-retrieval-experiment.md",
     "docs/v7-phase2-semantic-safety-findings.md",
     "docs/v7-phase2-conflict-floor-experiment.md",
+    "docs/v7-phase2-typed-feedback-experiment.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -87,6 +88,8 @@ REQUIRED_PATHS = [
     "results/v7/development/conflict-floor-experiment-v1/combined-robustness-summary.json",
     "results/v7/development/conflict-floor-experiment-v1/combined-journeys-summary.json",
     "results/v7/development/conflict-floor-experiment-v1/combined-multimodal-summary.json",
+    "results/v7/development/typed-feedback-experiment-v1/lifecycle-summary.json",
+    "results/v7/development/typed-feedback-experiment-v1/semantic-safety-summary.json",
 ]
 RUN_TOKENS = [
     "Primary review method",

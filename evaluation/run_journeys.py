@@ -64,6 +64,12 @@ def parse_args() -> argparse.Namespace:
         default=0.15,
         help="Evaluation override for the absolute positive-context floor in a collision.",
     )
+    parser.add_argument(
+        "--feedback-scope-mode",
+        choices=("legacy", "auto"),
+        default="legacy",
+        help="Choose legacy global demotion or scope-aware feedback for this run.",
+    )
     return parser.parse_args()
 
 
@@ -90,6 +96,7 @@ def run_journey(
     semantic_retrieval_mode: str = "centroid",
     enable_auto_lifecycle: bool = True,
     minimum_conflict_positive_context: float = 0.15,
+    feedback_scope_mode: str = "legacy",
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -181,6 +188,7 @@ def run_journey(
                 session,
                 trace_id=response["trace_id"],
                 verdict=event["feedback"],
+                feedback_scope=feedback_scope_mode,
                 corrected_text=event["formatted_text"],
                 suppress_memories=False,
                 candidate_memory_id=(
@@ -319,6 +327,7 @@ def main() -> None:
                         semantic_retrieval_mode=args.semantic_retrieval_mode,
                         enable_auto_lifecycle=not args.disable_auto_lifecycle,
                         minimum_conflict_positive_context=(args.minimum_conflict_positive_context),
+                        feedback_scope_mode=args.feedback_scope_mode,
                     )
                 )
             all_rows[system_name] = system_rows
@@ -332,6 +341,7 @@ def main() -> None:
         "semantic_retrieval_mode": args.semantic_retrieval_mode,
         "auto_lifecycle_enabled": not args.disable_auto_lifecycle,
         "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
+        "feedback_scope_mode": args.feedback_scope_mode,
         "systems": {
             name: {
                 **metrics(rows),

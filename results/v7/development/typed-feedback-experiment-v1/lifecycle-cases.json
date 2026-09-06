@@ -1,0 +1,2064 @@
+{
+  "no_lifecycle_ablation": [
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-1",
+        "formatted_text": "Message Aditya today.",
+        "accepted_text": "Message Aaditya today.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-2",
+        "formatted_text": "Ask Aditya to review it.",
+        "accepted_text": "Ask Aaditya to review it.",
+        "expected_state": "candidate",
+        "expected_positive_events": 2
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 2,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSITIVE_EVENTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-3",
+        "formatted_text": "Email the report to Aditya.",
+        "accepted_text": "Email the report to Aaditya.",
+        "expected_state": "confirmed",
+        "expected_positive_events": 3
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 3,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "confirm",
+        "reason_code": "AUTO_CONFIRM_EVIDENCE_SATISFIED",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": false,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": false
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-1",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-2",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSITIVE_EVENTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-3",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_DISTINCT_CONTEXTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "contradiction-demotes-confirmed-memory",
+      "event_index": 1,
+      "event": {
+        "type": "teach",
+        "alias": "kivi",
+        "event_id": "teach-kivi",
+        "canonical_form": "Kivi",
+        "variants": [
+          "Kiwi"
+        ],
+        "scope_mode": "global",
+        "expected_state": "confirmed"
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "STABLE",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "contradiction-demotes-confirmed-memory",
+      "event_index": 2,
+      "event": {
+        "type": "infer",
+        "alias": "kivi",
+        "formatted_text": "Buy Kiwi at the market.",
+        "expected_output": "Buy Kivi at the market.",
+        "expected_action": "apply",
+        "feedback": "incorrect",
+        "expected_state": "candidate",
+        "expected_negative_events": 1
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.5556,
+        "alpha": 5.0,
+        "beta": 4.0,
+        "positive_events": 1,
+        "negative_events": 1,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 3.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "demote",
+        "reason_code": "POSTERIOR_BELOW_DEMOTION_THRESHOLD",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          },
+          "rejected_intervention": {
+            "events": 1,
+            "positive_weight": 0.0,
+            "negative_weight": 3.0
+          }
+        }
+      },
+      "inference": {
+        "trace_id": "3c7bcc46-e7f3-440b-8869-748bbff83267",
+        "raw_asr_text": "",
+        "formatted_text": "Buy Kiwi at the market.",
+        "memory_aware_text": "Buy Kivi at the market.",
+        "action": "apply",
+        "changes": [
+          {
+            "memory_id": "9d3f0532-1827-46e1-815a-dee4739ed65a",
+            "canonical_form": "Kivi",
+            "input_span": "Kiwi",
+            "output_span": "Kivi",
+            "start": 4,
+            "end": 8,
+            "score": 1.0,
+            "action": "apply",
+            "reason_codes": [
+              "EXACT_CANDIDATE",
+              "PHONETIC_MATCH"
+            ],
+            "blockers": [],
+            "features": {
+              "string_similarity": 1.0,
+              "lexical_signal": 1.0,
+              "phonetic_match": true,
+              "asr_alternative_confidence": 0.0,
+              "asr_provider": "",
+              "asr_model": "",
+              "asr_rank": 1,
+              "asr_provider_confidence": "not_supplied",
+              "asr_confidence_mode": "legacy_double",
+              "asr_evidence_span": "not_supplied",
+              "asr_reliability_state": "not_supplied",
+              "asr_reliability_observations": 0,
+              "asr_reliability_accepted": 0,
+              "asr_reliability_rejected": 0,
+              "asr_reliability_posterior": 0.0,
+              "asr_reliability_contribution": 0.0,
+              "memory_trust_posterior": 0.8333,
+              "memory_authorized": true,
+              "memory_trust_positive_events": 1,
+              "memory_trust_negative_events": 0,
+              "memory_trust_reason": "STABLE",
+              "positive_context_similarity": 0.0,
+              "negative_context_similarity": 0.0,
+              "sparse_positive_similarity": 0.0,
+              "sparse_negative_similarity": 0.0,
+              "semantic_positive_similarity": 0.0,
+              "semantic_negative_similarity": 0.0,
+              "normalized_semantic_positive": 0.0,
+              "normalized_semantic_negative": 0.0,
+              "semantic_margin": 0.0,
+              "semantic_positive_observations": 0,
+              "semantic_negative_observations": 0,
+              "semantic_model": "not_required",
+              "semantic_retrieval_mode": "centroid",
+              "positive_evidence_matches": "",
+              "negative_evidence_matches": "",
+              "context_evidence_count": 0,
+              "memory_state": "confirmed",
+              "scope_mode": "global",
+              "match_method": "exact",
+              "context_signal": 1.0,
+              "context_controller": "none",
+              "score_lexical_contribution": 0.72,
+              "score_authorization_contribution": 0.14,
+              "score_context_contribution": 0.1,
+              "score_phonetic_contribution": 0.1,
+              "score_asr_alternative_contribution": 0.0,
+              "score_learned_asr_contribution": 0.0,
+              "score_negative_context_contribution": -0.0,
+              "score_before_clamp": 1.06,
+              "score_after_clamp": 1.0,
+              "score_clamp_delta": -0.06
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "memory_id": "9d3f0532-1827-46e1-815a-dee4739ed65a",
+            "canonical_form": "Kivi",
+            "input_span": "Kiwi",
+            "output_span": "Kivi",
+            "start": 4,
+            "end": 8,
+            "score": 1.0,
+            "action": "apply",
+            "reason_codes": [
+              "EXACT_CANDIDATE",
+              "PHONETIC_MATCH"
+            ],
+            "blockers": [],
+            "features": {
+              "string_similarity": 1.0,
+              "lexical_signal": 1.0,
+              "phonetic_match": true,
+              "asr_alternative_confidence": 0.0,
+              "asr_provider": "",
+              "asr_model": "",
+              "asr_rank": 1,
+              "asr_provider_confidence": "not_supplied",
+              "asr_confidence_mode": "legacy_double",
+              "asr_evidence_span": "not_supplied",
+              "asr_reliability_state": "not_supplied",
+              "asr_reliability_observations": 0,
+              "asr_reliability_accepted": 0,
+              "asr_reliability_rejected": 0,
+              "asr_reliability_posterior": 0.0,
+              "asr_reliability_contribution": 0.0,
+              "memory_trust_posterior": 0.8333,
+              "memory_authorized": true,
+              "memory_trust_positive_events": 1,
+              "memory_trust_negative_events": 0,
+              "memory_trust_reason": "STABLE",
+              "positive_context_similarity": 0.0,
+              "negative_context_similarity": 0.0,
+              "sparse_positive_similarity": 0.0,
+              "sparse_negative_similarity": 0.0,
+              "semantic_positive_similarity": 0.0,
+              "semantic_negative_similarity": 0.0,
+              "normalized_semantic_positive": 0.0,
+              "normalized_semantic_negative": 0.0,
+              "semantic_margin": 0.0,
+              "semantic_positive_observations": 0,
+              "semantic_negative_observations": 0,
+              "semantic_model": "not_required",
+              "semantic_retrieval_mode": "centroid",
+              "positive_evidence_matches": "",
+              "negative_evidence_matches": "",
+              "context_evidence_count": 0,
+              "memory_state": "confirmed",
+              "scope_mode": "global",
+              "match_method": "exact",
+              "context_signal": 1.0,
+              "context_controller": "none",
+              "score_lexical_contribution": 0.72,
+              "score_authorization_contribution": 0.14,
+              "score_context_contribution": 0.1,
+              "score_phonetic_contribution": 0.1,
+              "score_asr_alternative_contribution": 0.0,
+              "score_learned_asr_contribution": 0.0,
+              "score_negative_context_contribution": -0.0,
+              "score_before_clamp": 1.06,
+              "score_after_clamp": 1.0,
+              "score_clamp_delta": -0.06
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
+            }
+          }
+        ],
+        "candidate_generation": {
+          "direct": {
+            "calls": 1,
+            "raw_total": 2,
+            "raw_by_method": {
+              "exact": 2
+            },
+            "variant_deduplicated_total": 1,
+            "variant_deduplicated_by_method": {
+              "exact": 1
+            },
+            "exact_pruned_total": 1,
+            "exact_pruned_by_method": {
+              "exact": 1
+            }
+          },
+          "asr_alternatives": {},
+          "scored_total": 1,
+          "scored_by_method": {
+            "exact": 1
+          },
+          "unique_memory_span_keys": 1,
+          "cross_variant_duplicates_removed": 0,
+          "higher_score_replacements": 0,
+          "maximum_memory_span_multiplicity": 1,
+          "retained_key_duplicates": 0,
+          "semantic_context_cache_entries": 0,
+          "semantic_context_cache_failures": 0
+        },
+        "counterfactual": {
+          "reason_code": "ELIGIBLE_AND_SELECTED",
+          "apply_threshold": 0.93,
+          "score_gap_to_apply": 0.0,
+          "blocking_conditions": [],
+          "minimum_change": "none"
+        },
+        "shadow": null,
+        "total_latency_ms": 6.694,
+        "engine_version": "1.1.0",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "semantic": {
+          "enabled": false,
+          "model": "disabled",
+          "state": "disabled",
+          "error": null
+        }
+      },
+      "checks": {
+        "state": false,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true,
+        "output": true,
+        "action": true
+      },
+      "exact": false
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 1,
+      "event": {
+        "type": "teach",
+        "alias": "name",
+        "event_id": "teach-name",
+        "canonical_form": "Aaditya",
+        "variants": [
+          "Aditya"
+        ],
+        "scope_mode": "global",
+        "expected_state": "confirmed"
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "STABLE",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 2,
+      "event": {
+        "type": "state",
+        "alias": "name",
+        "state": "suppressed",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-1",
+        "formatted_text": "Message Aditya today.",
+        "accepted_text": "Message Aaditya today.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 4,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-2",
+        "formatted_text": "Ask Aditya to review it.",
+        "accepted_text": "Ask Aaditya to review it.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.9,
+        "alpha": 9.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 8.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 2,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 5,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-3",
+        "formatted_text": "Email the report to Aditya.",
+        "accepted_text": "Email the report to Aaditya.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.9167,
+        "alpha": 11.0,
+        "beta": 1.0,
+        "positive_events": 4,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 10.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 3,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    }
+  ],
+  "event_lifecycle": [
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-1",
+        "formatted_text": "Message Aditya today.",
+        "accepted_text": "Message Aaditya today.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-2",
+        "formatted_text": "Ask Aditya to review it.",
+        "accepted_text": "Ask Aaditya to review it.",
+        "expected_state": "candidate",
+        "expected_positive_events": 2
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 2,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSITIVE_EVENTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "diverse-passive-corrections-auto-confirm",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "promote-3",
+        "formatted_text": "Email the report to Aditya.",
+        "accepted_text": "Email the report to Aaditya.",
+        "expected_state": "confirmed",
+        "expected_positive_events": 3
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 3,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold",
+        "reason_code": "STABLE",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "replayed-event-has-zero-influence",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "duplicate-1",
+        "formatted_text": "Open the Post grass dashboard.",
+        "accepted_text": "Open the Postgres dashboard.",
+        "expected_state": "candidate",
+        "expected_positive_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 1,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-1",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.75,
+        "alpha": 3.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 2.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 2,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-2",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSITIVE_EVENTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "same-context-does-not-satisfy-diversity",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "term",
+        "event_id": "same-3",
+        "formatted_text": "Deploy with Kuber net ease today.",
+        "accepted_text": "Deploy with Kubernetes today.",
+        "expected_state": "candidate",
+        "expected_distinct_contexts": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_DISTINCT_CONTEXTS",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "contradiction-demotes-confirmed-memory",
+      "event_index": 1,
+      "event": {
+        "type": "teach",
+        "alias": "kivi",
+        "event_id": "teach-kivi",
+        "canonical_form": "Kivi",
+        "variants": [
+          "Kiwi"
+        ],
+        "scope_mode": "global",
+        "expected_state": "confirmed"
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "STABLE",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "contradiction-demotes-confirmed-memory",
+      "event_index": 2,
+      "event": {
+        "type": "infer",
+        "alias": "kivi",
+        "formatted_text": "Buy Kiwi at the market.",
+        "expected_output": "Buy Kivi at the market.",
+        "expected_action": "apply",
+        "feedback": "incorrect",
+        "expected_state": "candidate",
+        "expected_negative_events": 1
+      },
+      "actual_state": "candidate",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.5556,
+        "alpha": 5.0,
+        "beta": 4.0,
+        "positive_events": 1,
+        "negative_events": 1,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 3.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": false,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "AWAITING_POSTERIOR",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          },
+          "rejected_intervention": {
+            "events": 1,
+            "positive_weight": 0.0,
+            "negative_weight": 3.0
+          }
+        }
+      },
+      "inference": {
+        "trace_id": "f754bf44-613d-47a5-abda-e53ea8d2a0d2",
+        "raw_asr_text": "",
+        "formatted_text": "Buy Kiwi at the market.",
+        "memory_aware_text": "Buy Kivi at the market.",
+        "action": "apply",
+        "changes": [
+          {
+            "memory_id": "2ea6775f-233c-4321-915c-68d83f6c3ccb",
+            "canonical_form": "Kivi",
+            "input_span": "Kiwi",
+            "output_span": "Kivi",
+            "start": 4,
+            "end": 8,
+            "score": 1.0,
+            "action": "apply",
+            "reason_codes": [
+              "EXACT_CANDIDATE",
+              "PHONETIC_MATCH"
+            ],
+            "blockers": [],
+            "features": {
+              "string_similarity": 1.0,
+              "lexical_signal": 1.0,
+              "phonetic_match": true,
+              "asr_alternative_confidence": 0.0,
+              "asr_provider": "",
+              "asr_model": "",
+              "asr_rank": 1,
+              "asr_provider_confidence": "not_supplied",
+              "asr_confidence_mode": "legacy_double",
+              "asr_evidence_span": "not_supplied",
+              "asr_reliability_state": "not_supplied",
+              "asr_reliability_observations": 0,
+              "asr_reliability_accepted": 0,
+              "asr_reliability_rejected": 0,
+              "asr_reliability_posterior": 0.0,
+              "asr_reliability_contribution": 0.0,
+              "memory_trust_posterior": 0.8333,
+              "memory_authorized": true,
+              "memory_trust_positive_events": 1,
+              "memory_trust_negative_events": 0,
+              "memory_trust_reason": "STABLE",
+              "positive_context_similarity": 0.0,
+              "negative_context_similarity": 0.0,
+              "sparse_positive_similarity": 0.0,
+              "sparse_negative_similarity": 0.0,
+              "semantic_positive_similarity": 0.0,
+              "semantic_negative_similarity": 0.0,
+              "normalized_semantic_positive": 0.0,
+              "normalized_semantic_negative": 0.0,
+              "semantic_margin": 0.0,
+              "semantic_positive_observations": 0,
+              "semantic_negative_observations": 0,
+              "semantic_model": "not_required",
+              "semantic_retrieval_mode": "centroid",
+              "positive_evidence_matches": "",
+              "negative_evidence_matches": "",
+              "context_evidence_count": 0,
+              "memory_state": "confirmed",
+              "scope_mode": "global",
+              "match_method": "exact",
+              "context_signal": 1.0,
+              "context_controller": "none",
+              "score_lexical_contribution": 0.72,
+              "score_authorization_contribution": 0.14,
+              "score_context_contribution": 0.1,
+              "score_phonetic_contribution": 0.1,
+              "score_asr_alternative_contribution": 0.0,
+              "score_learned_asr_contribution": 0.0,
+              "score_negative_context_contribution": -0.0,
+              "score_before_clamp": 1.06,
+              "score_after_clamp": 1.0,
+              "score_clamp_delta": -0.06
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
+            }
+          }
+        ],
+        "candidates": [
+          {
+            "memory_id": "2ea6775f-233c-4321-915c-68d83f6c3ccb",
+            "canonical_form": "Kivi",
+            "input_span": "Kiwi",
+            "output_span": "Kivi",
+            "start": 4,
+            "end": 8,
+            "score": 1.0,
+            "action": "apply",
+            "reason_codes": [
+              "EXACT_CANDIDATE",
+              "PHONETIC_MATCH"
+            ],
+            "blockers": [],
+            "features": {
+              "string_similarity": 1.0,
+              "lexical_signal": 1.0,
+              "phonetic_match": true,
+              "asr_alternative_confidence": 0.0,
+              "asr_provider": "",
+              "asr_model": "",
+              "asr_rank": 1,
+              "asr_provider_confidence": "not_supplied",
+              "asr_confidence_mode": "legacy_double",
+              "asr_evidence_span": "not_supplied",
+              "asr_reliability_state": "not_supplied",
+              "asr_reliability_observations": 0,
+              "asr_reliability_accepted": 0,
+              "asr_reliability_rejected": 0,
+              "asr_reliability_posterior": 0.0,
+              "asr_reliability_contribution": 0.0,
+              "memory_trust_posterior": 0.8333,
+              "memory_authorized": true,
+              "memory_trust_positive_events": 1,
+              "memory_trust_negative_events": 0,
+              "memory_trust_reason": "STABLE",
+              "positive_context_similarity": 0.0,
+              "negative_context_similarity": 0.0,
+              "sparse_positive_similarity": 0.0,
+              "sparse_negative_similarity": 0.0,
+              "semantic_positive_similarity": 0.0,
+              "semantic_negative_similarity": 0.0,
+              "normalized_semantic_positive": 0.0,
+              "normalized_semantic_negative": 0.0,
+              "semantic_margin": 0.0,
+              "semantic_positive_observations": 0,
+              "semantic_negative_observations": 0,
+              "semantic_model": "not_required",
+              "semantic_retrieval_mode": "centroid",
+              "positive_evidence_matches": "",
+              "negative_evidence_matches": "",
+              "context_evidence_count": 0,
+              "memory_state": "confirmed",
+              "scope_mode": "global",
+              "match_method": "exact",
+              "context_signal": 1.0,
+              "context_controller": "none",
+              "score_lexical_contribution": 0.72,
+              "score_authorization_contribution": 0.14,
+              "score_context_contribution": 0.1,
+              "score_phonetic_contribution": 0.1,
+              "score_asr_alternative_contribution": 0.0,
+              "score_learned_asr_contribution": 0.0,
+              "score_negative_context_contribution": -0.0,
+              "score_before_clamp": 1.06,
+              "score_after_clamp": 1.0,
+              "score_clamp_delta": -0.06
+            },
+            "counterfactual": {
+              "reason_code": "ELIGIBLE_AND_SELECTED",
+              "apply_threshold": 0.93,
+              "score_gap_to_apply": 0.0,
+              "blocking_conditions": [],
+              "minimum_change": "none"
+            }
+          }
+        ],
+        "candidate_generation": {
+          "direct": {
+            "calls": 1,
+            "raw_total": 2,
+            "raw_by_method": {
+              "exact": 2
+            },
+            "variant_deduplicated_total": 1,
+            "variant_deduplicated_by_method": {
+              "exact": 1
+            },
+            "exact_pruned_total": 1,
+            "exact_pruned_by_method": {
+              "exact": 1
+            }
+          },
+          "asr_alternatives": {},
+          "scored_total": 1,
+          "scored_by_method": {
+            "exact": 1
+          },
+          "unique_memory_span_keys": 1,
+          "cross_variant_duplicates_removed": 0,
+          "higher_score_replacements": 0,
+          "maximum_memory_span_multiplicity": 1,
+          "retained_key_duplicates": 0,
+          "semantic_context_cache_entries": 0,
+          "semantic_context_cache_failures": 0
+        },
+        "counterfactual": {
+          "reason_code": "ELIGIBLE_AND_SELECTED",
+          "apply_threshold": 0.93,
+          "score_gap_to_apply": 0.0,
+          "blocking_conditions": [],
+          "minimum_change": "none"
+        },
+        "shadow": null,
+        "total_latency_ms": 4.098,
+        "engine_version": "1.1.0",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "semantic": {
+          "enabled": false,
+          "model": "disabled",
+          "state": "disabled",
+          "error": null
+        }
+      },
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true,
+        "output": true,
+        "action": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 1,
+      "event": {
+        "type": "teach",
+        "alias": "name",
+        "event_id": "teach-name",
+        "canonical_form": "Aaditya",
+        "variants": [
+          "Aditya"
+        ],
+        "scope_mode": "global",
+        "expected_state": "confirmed"
+      },
+      "actual_state": "confirmed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold",
+        "reason_code": "STABLE",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 2,
+      "event": {
+        "type": "state",
+        "alias": "name",
+        "state": "suppressed",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.8333,
+        "alpha": 5.0,
+        "beta": 1.0,
+        "positive_events": 1,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 4.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 0,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 3,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-1",
+        "formatted_text": "Message Aditya today.",
+        "accepted_text": "Message Aaditya today.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.875,
+        "alpha": 7.0,
+        "beta": 1.0,
+        "positive_events": 2,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 6.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 1,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": false,
+          "distinct_contexts": false
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 1,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 4,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-2",
+        "formatted_text": "Ask Aditya to review it.",
+        "accepted_text": "Ask Aaditya to review it.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.9,
+        "alpha": 9.0,
+        "beta": 1.0,
+        "positive_events": 3,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 8.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 2,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 2,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    },
+    {
+      "journey_id": "explicit-suppression-is-authoritative",
+      "event_index": 5,
+      "event": {
+        "type": "correct",
+        "alias": "name",
+        "event_id": "suppressed-3",
+        "formatted_text": "Email the report to Aditya.",
+        "accepted_text": "Email the report to Aaditya.",
+        "expected_state": "suppressed"
+      },
+      "actual_state": "suppressed",
+      "trust_profile": {
+        "method": "weighted_beta_posterior",
+        "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+        "posterior_mean": 0.9167,
+        "alpha": 11.0,
+        "beta": 1.0,
+        "positive_events": 4,
+        "negative_events": 0,
+        "contextual_negative_events": 0,
+        "weighted_positive": 10.0,
+        "weighted_negative": 0.0,
+        "weighted_contextual_negative": 0.0,
+        "distinct_contexts": 3,
+        "confirmation_gates": {
+          "posterior": true,
+          "positive_events": true,
+          "distinct_contexts": true
+        },
+        "recommendation": "hold_suppressed",
+        "reason_code": "EXPLICITLY_SUPPRESSED",
+        "sources": {
+          "accepted_correction": {
+            "events": 3,
+            "positive_weight": 6.0,
+            "negative_weight": 0.0
+          },
+          "explicit_teach": {
+            "events": 1,
+            "positive_weight": 4.0,
+            "negative_weight": 0.0
+          }
+        }
+      },
+      "inference": null,
+      "checks": {
+        "state": true,
+        "positive_events": true,
+        "negative_events": true,
+        "distinct_contexts": true
+      },
+      "exact": true
+    }
+  ]
+}

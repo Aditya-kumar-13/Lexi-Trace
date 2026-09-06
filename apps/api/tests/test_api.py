@@ -233,11 +233,29 @@ def test_rejected_intervention_adds_negative_context_evidence(tmp_path: Path) ->
             f"/api/v1/decisions/{inference['trace_id']}/feedback",
             json={
                 "verdict": "incorrect",
+                "feedback_scope": "context",
                 "corrected_text": "Buy Kiwi fruit at the market.",
             },
         )
         assert feedback.status_code == 200
-        client.patch(f"/api/v1/memories/{memory['id']}", json={"state": "confirmed"})
+        feedback_body = feedback.json()
+        assert feedback_body["resulting_states"][memory["id"]] == "confirmed"
+        assert feedback_body["resolved_feedback_scopes"][memory["id"]] == "context"
+        assert feedback_body["trust_profiles"][memory["id"]]["negative_events"] == 0
+        assert feedback_body["trust_profiles"][memory["id"]]["contextual_negative_events"] == 1
+        repeated_feedback = client.post(
+            f"/api/v1/decisions/{inference['trace_id']}/feedback",
+            json={
+                "verdict": "incorrect",
+                "feedback_scope": "context",
+                "corrected_text": "Buy Kiwi fruit at the market.",
+            },
+        )
+        assert repeated_feedback.status_code == 200
+        assert (
+            repeated_feedback.json()["trust_profiles"][memory["id"]]["contextual_negative_events"]
+            == 1
+        )
 
         repeated = client.post(
             "/api/v1/infer",
@@ -248,6 +266,31 @@ def test_rejected_intervention_adds_negative_context_evidence(tmp_path: Path) ->
         updated = client.get(f"/api/v1/memories/{memory['id']}").json()
         assert updated["context_profile"]["negative_observations"] == 1
         assert updated["context_profile"]["negative_sources"] == ["rejected_intervention"]
+
+
+def test_identity_rejection_can_demote_a_contextual_memory(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        memory = teach(
+            client,
+            positive_context=[],
+            negative_context=[],
+            formatted_text="Open the Kiwi service dashboard.",
+            accepted_text="Open the Kivi service dashboard.",
+        )
+        inference = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Open the Kiwi service dashboard."},
+        ).json()
+        feedback = client.post(
+            f"/api/v1/decisions/{inference['trace_id']}/feedback",
+            json={"verdict": "incorrect", "feedback_scope": "identity"},
+        )
+
+        assert feedback.status_code == 200
+        body = feedback.json()
+        assert body["resolved_feedback_scopes"][memory["id"]] == "identity"
+        assert body["resulting_states"][memory["id"]] == "candidate"
+        assert body["trust_profiles"][memory["id"]]["negative_events"] == 1
 
 
 def test_global_name_memory_applies_without_context(tmp_path: Path) -> None:

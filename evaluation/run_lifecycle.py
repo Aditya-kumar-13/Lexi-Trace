@@ -39,6 +39,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "results" / "lifecycle",
     )
+    parser.add_argument(
+        "--feedback-scope-mode",
+        choices=("legacy", "auto"),
+        default="legacy",
+    )
     return parser.parse_args()
 
 
@@ -53,7 +58,13 @@ def reset_session(session) -> None:
     session.commit()
 
 
-def run_journey(session, journey: dict[str, Any], *, enabled: bool) -> list[dict[str, Any]]:
+def run_journey(
+    session,
+    journey: dict[str, Any],
+    *,
+    enabled: bool,
+    feedback_scope_mode: str = "legacy",
+) -> list[dict[str, Any]]:
     encoder = DisabledSemanticEncoder()
     aliases: dict[str, str] = {}
     rows = []
@@ -104,6 +115,7 @@ def run_journey(session, journey: dict[str, Any], *, enabled: bool) -> list[dict
                     session,
                     trace_id=response["trace_id"],
                     verdict=event["feedback"],
+                    feedback_scope=feedback_scope_mode,
                     corrected_text=event["formatted_text"],
                     suppress_memories=False,
                     semantic_encoder=encoder,
@@ -197,13 +209,21 @@ def main() -> None:
             rows = []
             for journey in journeys:
                 reset_session(session)
-                rows.extend(run_journey(session, journey, enabled=enabled))
+                rows.extend(
+                    run_journey(
+                        session,
+                        journey,
+                        enabled=enabled,
+                        feedback_scope_mode=args.feedback_scope_mode,
+                    )
+                )
             all_rows[name] = rows
     engine.dispose()
     summary = {
         "dataset": dataset.relative_to(ROOT).as_posix(),
         "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "journeys": len(journeys),
+        "feedback_scope_mode": args.feedback_scope_mode,
         "systems": {name: metrics(rows) for name, rows in all_rows.items()},
         "hosted_requests": 0,
         "estimated_api_cost_usd": 0.0,

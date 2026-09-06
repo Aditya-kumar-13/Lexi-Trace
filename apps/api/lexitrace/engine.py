@@ -709,8 +709,10 @@ def memory_trust_profile(memory: Memory) -> dict:
     beta = POLICY.trust_prior_beta
     positive_events = 0
     negative_events = 0
+    contextual_negative_events = 0
     weighted_positive = 0.0
     weighted_negative = 0.0
+    weighted_contextual_negative = 0.0
     contexts: set[str] = set()
     sources: dict[str, dict[str, float | int]] = defaultdict(
         lambda: {"events": 0, "positive_weight": 0.0, "negative_weight": 0.0}
@@ -725,6 +727,15 @@ def memory_trust_profile(memory: Memory) -> dict:
         if observation.evidence_type not in weights:
             continue
         if observation.evidence_type == "intervention_feedback" and not observation.accepted:
+            if observation.reason_code == "USER_REJECTED_CONTEXT":
+                contextual_negative_events += 1
+                weighted_contextual_negative += POLICY.trust_rejection_weight
+                source = sources["context_rejection"]
+                source["events"] = int(source["events"]) + 1
+                source["negative_weight"] = (
+                    float(source["negative_weight"]) + POLICY.trust_rejection_weight
+                )
+                continue
             weight = POLICY.trust_rejection_weight
             beta += weight
             weighted_negative += weight
@@ -786,8 +797,10 @@ def memory_trust_profile(memory: Memory) -> dict:
         "beta": round(beta, 4),
         "positive_events": positive_events,
         "negative_events": negative_events,
+        "contextual_negative_events": contextual_negative_events,
         "weighted_positive": round(weighted_positive, 4),
         "weighted_negative": round(weighted_negative, 4),
+        "weighted_contextual_negative": round(weighted_contextual_negative, 4),
         "distinct_contexts": len(contexts),
         "confirmation_gates": confirmation_gates,
         "recommendation": recommendation,
@@ -2069,6 +2082,7 @@ def apply_decision_feedback(
     *,
     trace_id: str,
     verdict: str,
+    feedback_scope: str = "legacy",
     corrected_text: str | None,
     suppress_memories: bool,
     candidate_memory_id: str | None = None,
@@ -2076,6 +2090,8 @@ def apply_decision_feedback(
     semantic_encoder: SemanticEncoder | None = None,
     enable_auto_lifecycle: bool = True,
 ) -> dict | None:
+    if feedback_scope not in {"legacy", "auto", "context", "identity"}:
+        raise ValueError("feedback_scope must be legacy, auto, context, or identity")
     decision = session.get(Decision, trace_id)
     if decision is None:
         return None
@@ -2096,11 +2112,21 @@ def apply_decision_feedback(
     resulting_states: dict[str, str] = {}
     asr_outcome_ids: list[str] = []
     trust_profiles: dict[str, dict] = {}
+    resolved_feedback_scopes: dict[str, str] = {}
     for memory_id in memory_ids:
         memory = session.get(Memory, memory_id)
         if memory is None:
             continue
         change = next(change for change in selected if change["memory_id"] == memory_id)
+        if verdict == "correct":
+            resolved_scope = "confirmation"
+        elif feedback_scope == "legacy":
+            resolved_scope = "legacy_identity"
+        elif feedback_scope == "auto":
+            resolved_scope = "identity" if memory.scope_mode == "global" else "context"
+        else:
+            resolved_scope = feedback_scope
+        resolved_feedback_scopes[memory.id] = resolved_scope
         features = change["features"]
         feedback_event_id = f"decision:{decision.id}:memory:{memory_id}:span:{change['start']}"
         existing_observation = session.scalar(
@@ -2113,6 +2139,22 @@ def apply_decision_feedback(
         if existing_observation is not None:
             if existing_observation.accepted != (verdict == "correct"):
                 raise ValueError("Conflicting feedback already exists for this candidate")
+            expected_reason = (
+                "USER_CONFIRMED"
+                if verdict == "correct"
+                else (
+                    "USER_REJECTED"
+                    if resolved_scope == "legacy_identity"
+                    else f"USER_REJECTED_{resolved_scope.upper()}"
+                )
+            )
+            allowed_reasons = {expected_reason}
+            if verdict == "incorrect" and feedback_scope == "auto":
+                allowed_reasons.add("USER_REJECTED")
+            if existing_observation.reason_code not in allowed_reasons:
+                raise ValueError("Conflicting feedback scope already exists for this candidate")
+            if existing_observation.reason_code == "USER_REJECTED":
+                resolved_feedback_scopes[memory.id] = "legacy_identity"
             existing_outcome = session.scalar(
                 select(AsrOutcome).where(
                     AsrOutcome.observation_id == existing_observation.id,
@@ -2135,7 +2177,15 @@ def apply_decision_feedback(
             target_span=change["output_span"],
             reliability=reliability,
             accepted=verdict == "correct",
-            reason_code="USER_CONFIRMED" if verdict == "correct" else "USER_REJECTED",
+            reason_code=(
+                "USER_CONFIRMED"
+                if verdict == "correct"
+                else (
+                    "USER_REJECTED"
+                    if resolved_scope == "legacy_identity"
+                    else f"USER_REJECTED_{resolved_scope.upper()}"
+                )
+            ),
             source_event_id=feedback_event_id,
             context_fingerprint=context_fingerprint(
                 decision.formatted_text,
@@ -2232,7 +2282,7 @@ def apply_decision_feedback(
             memory,
             action=event_name,
             reason=(
-                f"User {verdict} feedback; lifecycle "
+                f"User {verdict} feedback ({resolved_scope}); lifecycle "
                 f"{transition['previous_state']} -> {transition['new_state']} "
                 f"({transition['reason_code']})"
             ),
@@ -2244,6 +2294,7 @@ def apply_decision_feedback(
     return {
         "trace_id": trace_id,
         "verdict": verdict,
+        "resolved_feedback_scopes": resolved_feedback_scopes,
         "affected_memory_ids": memory_ids,
         "resulting_states": resulting_states,
         "asr_outcome_ids": asr_outcome_ids,

@@ -149,6 +149,7 @@ class MemoryVersionResponse(BaseModel):
 
 class DecisionFeedbackRequest(BaseModel):
     verdict: Literal["correct", "incorrect"]
+    feedback_scope: Literal["legacy", "auto", "context", "identity"] = "legacy"
     corrected_text: str | None = Field(default=None, max_length=20_000)
     suppress_memories: bool = False
     candidate_memory_id: str | None = Field(default=None, max_length=36)
@@ -162,6 +163,7 @@ class DecisionFeedbackResponse(BaseModel):
     resulting_states: dict[str, str]
     asr_outcome_ids: list[str]
     trust_profiles: dict[str, dict]
+    resolved_feedback_scopes: dict[str, str]
 
 
 class CandidateTrace(BaseModel):
