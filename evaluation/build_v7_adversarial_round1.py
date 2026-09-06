@@ -20,7 +20,15 @@ def memory(canonical: str, variant: str, scope: str = "global") -> dict:
     }
 
 
-def row(case_id: str, category: str, memories: list[dict], text: str, output: str, action: str, **extra: object) -> dict:
+def row(
+    case_id: str,
+    category: str,
+    memories: list[dict],
+    text: str,
+    output: str,
+    action: str,
+    **extra: object,
+) -> dict:
     return {
         "case_id": case_id,
         "category": category,
@@ -154,7 +162,9 @@ def main() -> None:
     rows = build()
     if len(rows) != 40:
         raise RuntimeError(f"Round 1 must contain exactly 40 cases, got {len(rows)}")
-    payload = "".join(json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n" for item in rows)
+    payload = "".join(
+        json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n" for item in rows
+    )
     OUTPUT.write_text(payload, encoding="utf-8")
     print(
         json.dumps(

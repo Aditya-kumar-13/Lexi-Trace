@@ -453,7 +453,9 @@ def calibration_journeys() -> list[dict]:
 
 def write_jsonl(path: Path, rows: list[dict]) -> dict:
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows)
+    payload = "".join(
+        json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows
+    )
     path.write_text(payload, encoding="utf-8")
     record = {
         "path": path.relative_to(ROOT).as_posix(),

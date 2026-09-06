@@ -37,7 +37,7 @@ def main() -> None:
     run("migrations", [PYTHON, "-m", "alembic", "check"])
     run("v6 baseline", [PYTHON, "scripts/freeze_v6_baseline.py", "verify"])
     if not args.quick:
-        development = ROOT / "results" / "v7" / "development" / "current"
+        development = ROOT / "results" / "v7" / "operational" / "current"
         run(
             "smoke",
             [PYTHON, "evaluation/run.py", "--output", str(development / "smoke")],
@@ -85,14 +85,10 @@ def main() -> None:
             ],
         )
         run(
-            "calibration",
+            "v7 calibration replay",
             [
                 PYTHON,
-                "evaluation/calibrate_policy.py",
-                "--cases",
-                str(development / "robustness" / "cases.jsonl"),
-                "--safety-cases",
-                str(development / "smoke" / "cases.jsonl"),
+                "evaluation/calibrate_v7_policy.py",
                 "--output",
                 str(development / "calibration"),
             ],
@@ -128,6 +124,18 @@ def main() -> None:
                 str(development / "soak"),
             ],
         )
+        run(
+            "adversarial regression",
+            [
+                PYTHON,
+                "evaluation/run.py",
+                "--dataset",
+                "data/benchmark/v7_adversarial_round1.jsonl",
+                "--output",
+                str(development / "adversarial"),
+            ],
+        )
+        run("reviewer demo", [PYTHON, "scripts/reviewer_demo.py"])
         npm = shutil.which("npm.cmd" if os.name == "nt" else "npm")
         if npm is None:
             raise SystemExit("npm is required for the full quality gate")

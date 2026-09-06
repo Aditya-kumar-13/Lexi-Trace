@@ -67,6 +67,7 @@ REQUIRED_PATHS = [
     "docs/v7-phase3-calibration-candidate3-review.md",
     "docs/v7-phase3-calibration-result.md",
     "docs/v7-phase4-adversarial-round1.md",
+    "docs/v7-phase5-operational-verification.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -222,7 +223,9 @@ def check_calibration_artifact(checks: list[dict]) -> None:
         for record in artifact["inputs"].values()
     )
     search = artifact_path.parent / artifact["search_results"]["path"]
-    search_hash_match = hashlib.sha256(search.read_bytes()).hexdigest() == artifact["search_results"]["sha256"]
+    search_hash_match = (
+        hashlib.sha256(search.read_bytes()).hexdigest() == artifact["search_results"]["sha256"]
+    )
     policy = tomllib.loads((ROOT / "apps/api/lexitrace/policy.toml").read_text(encoding="utf-8"))
     selected = artifact["selected"]["config"]
     checks_pass = (
@@ -315,7 +318,9 @@ def check_v7_structural_candidate(checks: list[dict]) -> None:
     changed = []
     for name, record in manifest["summaries"].items():
         artifact = path.parent / record["path"]
-        actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        actual = (
+            hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        )
         if actual != record["sha256"]:
             changed.append(name)
     instrumentation = manifest["instrumentation"]
@@ -351,7 +356,9 @@ def check_v7_regression(checks: list[dict]) -> None:
 
     for name, record in manifest["summaries"].items():
         artifact = path.parent / record["path"]
-        actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        actual = (
+            hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        )
         if actual != record["sha256"]:
             changed.append(name)
         content = record["content"]

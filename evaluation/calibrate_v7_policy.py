@@ -5,8 +5,9 @@ import hashlib
 import itertools
 import json
 import math
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFLICT_CONTEXT_FLOOR = 0.20
@@ -136,13 +137,11 @@ def rescore(candidate: dict[str, Any], config: dict[str, Any]) -> float:
         + config["authorization_weight"] * float(features["authorization_signal"])
         + config["context_weight"] * context_signal(features, config["context_transform"])
         + config["phonetic_weight"] * float(bool(features["phonetic_match"]))
-        + config["asr_alternative_weight"]
-        * float(features["asr_alternative_confidence"])
+        + config["asr_alternative_weight"] * float(features["asr_alternative_confidence"])
         + config["learned_asr_weight"]
         * float(features["asr_reliability_posterior"])
         * learned_active
-        - config["negative_context_weight"]
-        * float(features["negative_context_similarity"])
+        - config["negative_context_weight"] * float(features["negative_context_similarity"])
     )
     candidate["calibration_raw_score"] = raw
     candidate["score"] = max(0.0, min(1.0, raw))
@@ -181,7 +180,9 @@ def simulate(row: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     for candidate in candidates:
         if candidate["action"] != "apply":
             continue
-        competing = [other for other in candidates if other is not candidate and overlaps(candidate, other)]
+        competing = [
+            other for other in candidates if other is not candidate and overlaps(candidate, other)
+        ]
         runner_up = max((other["score"] for other in competing), default=0.0)
         if competing and candidate["score"] - runner_up < MINIMUM_WINNER_MARGIN:
             features = candidate["features"]
@@ -258,11 +259,14 @@ def metrics(
             "actual_output": result["output"],
             "expected_action": row["expected_action"],
             "actual_action": result["action"],
-            "wrong_intervention": result["intervened"] and result["output"] != row["expected_output"],
+            "wrong_intervention": result["intervened"]
+            and result["output"] != row["expected_output"],
         }
         for row, result in results
         if include_failures
-        and (result["output"] != row["expected_output"] or result["action"] != row["expected_action"])
+        and (
+            result["output"] != row["expected_output"] or result["action"] != row["expected_action"]
+        )
     ]
     result = {
         "cases": len(rows),
@@ -316,7 +320,10 @@ def selection_key(result: dict[str, Any]) -> tuple:
 
 
 def compact(result: dict[str, Any]) -> dict[str, Any]:
-    return {"config": result["config"], "metrics": {k: v for k, v in result["metrics"].items() if k != "failures"}}
+    return {
+        "config": result["config"],
+        "metrics": {k: v for k, v in result["metrics"].items() if k != "failures"},
+    }
 
 
 def main() -> None:
@@ -345,7 +352,9 @@ def main() -> None:
     }
     observed_baseline = {
         "exact_matches": sum(row["engine_output"] == row["expected_output"] for row in calibration),
-        "action_matches": sum(row["engine_action"] == row["expected_action"] for row in calibration),
+        "action_matches": sum(
+            row["engine_action"] == row["expected_action"] for row in calibration
+        ),
         "wrong_interventions": sum(
             row["engine_action"] == "apply" and row["engine_output"] != row["expected_output"]
             for row in calibration
@@ -394,10 +403,22 @@ def main() -> None:
         "search_space": SEARCH_SPACE,
         "searched_candidates": searched,
         "inputs": {
-            "corpus_manifest": {"path": manifest_path.relative_to(ROOT).as_posix(), "sha256": sha256(manifest_path)},
-            "static_traces": {"path": static_path.relative_to(ROOT).as_posix(), "sha256": sha256(static_path)},
-            "journey_traces": {"path": journey_path.relative_to(ROOT).as_posix(), "sha256": sha256(journey_path)},
-            "safety_traces": {"path": safety_path.relative_to(ROOT).as_posix(), "sha256": sha256(safety_path)},
+            "corpus_manifest": {
+                "path": manifest_path.relative_to(ROOT).as_posix(),
+                "sha256": sha256(manifest_path),
+            },
+            "static_traces": {
+                "path": static_path.relative_to(ROOT).as_posix(),
+                "sha256": sha256(static_path),
+            },
+            "journey_traces": {
+                "path": journey_path.relative_to(ROOT).as_posix(),
+                "sha256": sha256(journey_path),
+            },
+            "safety_traces": {
+                "path": safety_path.relative_to(ROOT).as_posix(),
+                "sha256": sha256(safety_path),
+            },
         },
         "corpus_hash_checks": source_checks,
         "calibration_cases": len(calibration),
@@ -430,7 +451,8 @@ def main() -> None:
         f"{selected_safety['wrong_interventions']} wrong automatic edits.",
         f"Gate: **{artifact['status']}**",
         "",
-        "The safety corpus was evaluated only after the calibration-only selection was fixed. It did not choose among candidates.",
+        "The safety corpus was evaluated only after the calibration-only selection was fixed. "
+        "It did not choose among candidates.",
         "",
         "## Selected constants",
         "",
