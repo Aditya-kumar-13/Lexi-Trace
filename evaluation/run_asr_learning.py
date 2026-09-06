@@ -30,6 +30,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "results" / "asr-learning",
     )
+    parser.add_argument(
+        "--asr-reliability-mode",
+        choices=("exact_route", "model_route"),
+        default="exact_route",
+    )
     return parser.parse_args()
 
 
@@ -128,6 +133,7 @@ def main() -> None:
                         journey,
                         DisabledSemanticEncoder(),
                         enable_learned_asr=enabled,
+                        asr_reliability_mode=args.asr_reliability_mode,
                     )
                 )
             all_rows[system_name] = rows
@@ -145,6 +151,7 @@ def main() -> None:
         "dataset": dataset.relative_to(ROOT).as_posix(),
         "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "journeys": len(journeys),
+        "asr_reliability_mode": args.asr_reliability_mode,
         "systems": {
             name: {**metrics(rows), "database": database_peaks[name]}
             for name, rows in all_rows.items()

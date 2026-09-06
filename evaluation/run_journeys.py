@@ -70,6 +70,11 @@ def parse_args() -> argparse.Namespace:
         default="legacy",
         help="Choose legacy global demotion or scope-aware feedback for this run.",
     )
+    parser.add_argument(
+        "--asr-reliability-mode",
+        choices=("exact_route", "model_route"),
+        default="exact_route",
+    )
     return parser.parse_args()
 
 
@@ -97,6 +102,7 @@ def run_journey(
     enable_auto_lifecycle: bool = True,
     minimum_conflict_positive_context: float = 0.15,
     feedback_scope_mode: str = "legacy",
+    asr_reliability_mode: str = "exact_route",
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -146,6 +152,7 @@ def run_journey(
             alternatives=event.get("alternatives", []),
             asr=event.get("asr"),
             enable_learned_asr=enable_learned_asr,
+            asr_reliability_mode=asr_reliability_mode,
             semantic_encoder=encoder,
             semantic_retrieval_mode=semantic_retrieval_mode,
             minimum_conflict_positive_context=minimum_conflict_positive_context,
@@ -188,7 +195,7 @@ def run_journey(
                 session,
                 trace_id=response["trace_id"],
                 verdict=event["feedback"],
-                feedback_scope=feedback_scope_mode,
+                feedback_scope=event.get("feedback_scope", feedback_scope_mode),
                 corrected_text=event["formatted_text"],
                 suppress_memories=False,
                 candidate_memory_id=(
@@ -328,6 +335,7 @@ def main() -> None:
                         enable_auto_lifecycle=not args.disable_auto_lifecycle,
                         minimum_conflict_positive_context=(args.minimum_conflict_positive_context),
                         feedback_scope_mode=args.feedback_scope_mode,
+                        asr_reliability_mode=args.asr_reliability_mode,
                     )
                 )
             all_rows[system_name] = system_rows
@@ -342,6 +350,7 @@ def main() -> None:
         "auto_lifecycle_enabled": not args.disable_auto_lifecycle,
         "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
         "feedback_scope_mode": args.feedback_scope_mode,
+        "asr_reliability_mode": args.asr_reliability_mode,
         "systems": {
             name: {
                 **metrics(rows),

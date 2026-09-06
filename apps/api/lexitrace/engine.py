@@ -637,8 +637,11 @@ def _asr_reliability(
     model_name: str,
     rank: int,
     source_form: str,
+    mode: str = "exact_route",
 ) -> dict[str, float | int | str | bool]:
-    """Estimate one exact confusion route from immutable outcomes and a skeptical prior."""
+    """Estimate a confusion route from immutable outcomes and a skeptical prior."""
+    if mode not in {"exact_route", "model_route"}:
+        raise ValueError(f"Unsupported ASR reliability mode: {mode}")
     provider_key = normalize(provider)
     model_key = normalize(model_name)
     source_key = normalize(source_form)
@@ -647,7 +650,7 @@ def _asr_reliability(
         for outcome in memory.asr_outcomes
         if normalize(outcome.provider) == provider_key
         and normalize(outcome.model_name) == model_key
-        and outcome.rank == rank
+        and (mode == "model_route" or outcome.rank == rank)
         and outcome.source_normalized == source_key
         and outcome.target_normalized == memory.canonical_normalized
     ]
@@ -662,6 +665,7 @@ def _asr_reliability(
         "accepted": accepted,
         "rejected": rejected,
         "posterior_mean": round(posterior, 4),
+        "route_level": mode,
     }
 
 
@@ -1467,6 +1471,7 @@ def _score_candidate(
     provider_confidence: float | None = None,
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
+    asr_reliability_mode: str = "exact_route",
     asr_evidence_span: str | None = None,
     semantic_retrieval_mode: str = "centroid",
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
@@ -1548,6 +1553,7 @@ def _score_candidate(
             model_name=asr_model,
             rank=asr_rank,
             source_form=input_span,
+            mode=asr_reliability_mode,
         )
         if asr_provider
         else {
@@ -1557,6 +1563,7 @@ def _score_candidate(
             "accepted": 0,
             "rejected": 0,
             "posterior_mean": 0.0,
+            "route_level": "not_supplied",
         }
     )
 
@@ -1640,6 +1647,7 @@ def _score_candidate(
             round(provider_confidence, 4) if provider_confidence is not None else "not_supplied"
         ),
         "asr_confidence_mode": asr_confidence_mode,
+        "asr_reliability_mode": asr_reliability_mode,
         "asr_evidence_span": asr_evidence_span or "not_supplied",
         "asr_reliability_state": str(asr_reliability["state"]),
         "asr_reliability_observations": int(asr_reliability["observations"]),
@@ -1833,6 +1841,7 @@ def infer(
     asr: dict | None = None,
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
+    asr_reliability_mode: str = "exact_route",
     semantic_retrieval_mode: str = "centroid",
     minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
     semantic_encoder: SemanticEncoder | None = None,
@@ -1879,6 +1888,7 @@ def infer(
                     ),
                     enable_learned_asr=enable_learned_asr,
                     asr_confidence_mode=asr_confidence_mode,
+                    asr_reliability_mode=asr_reliability_mode,
                     semantic_retrieval_mode=semantic_retrieval_mode,
                 )
                 candidate = TraceCandidate(
@@ -1937,6 +1947,7 @@ def infer(
                         provider_confidence=confidence,
                         enable_learned_asr=enable_learned_asr,
                         asr_confidence_mode=asr_confidence_mode,
+                        asr_reliability_mode=asr_reliability_mode,
                         asr_evidence_span=evidence_span,
                         semantic_retrieval_mode=semantic_retrieval_mode,
                     )
@@ -2017,6 +2028,7 @@ def infer(
         "policy_version": POLICY.version,
         "learned_asr_enabled": enable_learned_asr,
         "asr_confidence_mode": asr_confidence_mode,
+        "asr_reliability_mode": asr_reliability_mode,
         "semantic_retrieval_mode": semantic_retrieval_mode,
         "thresholds": {
             "apply": APPLY_THRESHOLD,

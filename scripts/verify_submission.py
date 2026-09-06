@@ -58,10 +58,12 @@ REQUIRED_PATHS = [
     "docs/v7-phase2-semantic-safety-findings.md",
     "docs/v7-phase2-conflict-floor-experiment.md",
     "docs/v7-phase2-typed-feedback-experiment.md",
+    "docs/v7-phase2-asr-reliability-experiment.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
     "data/benchmark/v7_semantic_safety_development.jsonl",
+    "data/benchmark/v7_asr_route_development.jsonl",
     "results/baselines/v6/manifest.json",
     "results/v7/development/baseline-v6-instrumented/summary.json",
     "results/v7/development/baseline-v6-instrumented/failures.json",
@@ -90,6 +92,9 @@ REQUIRED_PATHS = [
     "results/v7/development/conflict-floor-experiment-v1/combined-multimodal-summary.json",
     "results/v7/development/typed-feedback-experiment-v1/lifecycle-summary.json",
     "results/v7/development/typed-feedback-experiment-v1/semantic-safety-summary.json",
+    "results/v7/development/asr-reliability-experiment-v1/existing-exact-summary.json",
+    "results/v7/development/asr-reliability-experiment-v1/rank-exact-summary.json",
+    "results/v7/development/asr-reliability-experiment-v1/rank-model-summary.json",
 ]
 RUN_TOKENS = [
     "Primary review method",

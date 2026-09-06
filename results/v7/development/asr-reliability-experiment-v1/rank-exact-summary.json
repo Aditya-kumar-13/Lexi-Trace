@@ -1,0 +1,84 @@
+{
+  "dataset": "data/benchmark/v7_asr_route_development.jsonl",
+  "dataset_sha256": "bc14b20d67eb1eebed14e7a49b3ff48b56210de1ff7b69ead6bb06199cdf5f35",
+  "journeys": 2,
+  "asr_reliability_mode": "exact_route",
+  "systems": {
+    "no_learning_ablation": {
+      "queries": 2,
+      "exact_match_rate": 0.5,
+      "action_accuracy": 0.5,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 3.503,
+      "p95_latency_ms": 3.65,
+      "database": {
+        "peak_allocated_bytes": 282624,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 7,
+          "context_evidence": 32,
+          "context_embeddings": 0,
+          "decisions": 7,
+          "memory_versions": 7,
+          "asr_outcomes": 6
+        }
+      }
+    },
+    "learned_asr": {
+      "queries": 2,
+      "exact_match_rate": 0.5,
+      "action_accuracy": 0.5,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 3.758,
+      "p95_latency_ms": 3.767,
+      "database": {
+        "peak_allocated_bytes": 282624,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 7,
+          "context_evidence": 32,
+          "context_embeddings": 0,
+          "decisions": 7,
+          "memory_versions": 7,
+          "asr_outcomes": 6
+        }
+      }
+    }
+  },
+  "precision_coverage_curve": [
+    {
+      "threshold": 0.9,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    },
+    {
+      "threshold": 0.92,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    },
+    {
+      "threshold": 0.93,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    },
+    {
+      "threshold": 0.94,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    },
+    {
+      "threshold": 0.96,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    }
+  ],
+  "hosted_requests": 0,
+  "estimated_api_cost_usd": 0.0
+}

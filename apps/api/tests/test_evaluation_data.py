@@ -107,3 +107,23 @@ def test_semantic_safety_journeys_separate_learning_events_from_scored_cases() -
     assert sum(event["expected_action"] == "abstain" for event in scored_inferences) == 4
     assert sum(event["expected_action"] == "suggest" for event in scored_inferences) == 2
     assert sum(event["expected_action"] == "apply" for event in scored_inferences) == 7
+
+
+def test_asr_route_development_data_covers_rank_help_and_contradiction() -> None:
+    path = ROOT / "data" / "benchmark" / "v7_asr_route_development.jsonl"
+    journeys = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    assert {journey["journey_id"] for journey in journeys} == {
+        "rank-backoff-can-recover-a-stable-confusion",
+        "rank-pooling-must-respect-contradictory-outcomes",
+    }
+    events = [event for journey in journeys for event in journey["events"]]
+    learning_events = [event for event in events if event.get("score_case") is False]
+    assert sum(event.get("feedback") == "correct" for event in learning_events) == 6
+    assert sum(event.get("feedback") == "incorrect" for event in learning_events) == 3
+    assert {
+        alternative["rank"] for event in events for alternative in event.get("alternatives", [])
+    } == {
+        1,
+        2,
+    }
