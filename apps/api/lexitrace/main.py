@@ -1,22 +1,30 @@
 from __future__ import annotations
 
 import json
+import time
+import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, Query, status
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from .config import Settings
 from .database import build_engine, build_session_factory, get_session
 from .engine import (
+    POLICY,
     apply_decision_feedback,
     apply_memory_state_override,
+    discover_memory_conflicts,
     infer,
     memory_to_dict,
+    merge_memories,
     normalize,
     observe_correction,
     record_memory_version,
@@ -32,6 +40,7 @@ from .models import (
     MemoryVersion,
     Observation,
 )
+from .observability import RequestMetrics
 from .schemas import (
     CorrectionObservationRequest,
     CorrectionObservationResponse,
@@ -40,6 +49,8 @@ from .schemas import (
     ExplicitTeachRequest,
     InferenceRequest,
     InferenceResponse,
+    MemoryImportRequest,
+    MemoryMergeRequest,
     MemoryResponse,
     MemoryUpdateRequest,
     MemoryVersionResponse,
@@ -49,6 +60,28 @@ from .semantic import SemanticEncoder, build_semantic_encoder
 
 DatabaseSession = Annotated[Session, Depends(get_session)]
 UserIdQuery = Annotated[str, Query(min_length=1)]
+
+
+def delete_user_state(session: Session, user_id: str) -> dict[str, int]:
+    counts = {
+        "deleted_memories": session.scalar(
+            select(func.count()).select_from(Memory).where(Memory.user_id == user_id)
+        )
+        or 0,
+        "deleted_observations": session.scalar(
+            select(func.count()).select_from(Observation).where(Observation.user_id == user_id)
+        )
+        or 0,
+        "deleted_decisions": session.scalar(
+            select(func.count()).select_from(Decision).where(Decision.user_id == user_id)
+        )
+        or 0,
+    }
+    session.execute(delete(Decision).where(Decision.user_id == user_id))
+    session.execute(delete(Observation).where(Observation.user_id == user_id))
+    session.execute(delete(Memory).where(Memory.user_id == user_id))
+    session.commit()
+    return counts
 
 
 def create_app(
@@ -67,12 +100,13 @@ def create_app(
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.9.0",
+        version="1.1.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
     app.state.session_factory = session_factory
     app.state.semantic_encoder = semantic_encoder
+    app.state.request_metrics = RequestMetrics()
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(resolved_settings.cors_origins),
@@ -81,13 +115,88 @@ def create_app(
         allow_headers=["*"],
     )
 
+    @app.middleware("http")
+    async def request_safety_and_metrics(request: Request, call_next):
+        request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
+        request.state.request_id = request_id
+        started = time.perf_counter()
+        content_length = request.headers.get("content-length")
+        try:
+            request_too_large = (
+                content_length is not None
+                and int(content_length) > resolved_settings.max_request_bytes
+            )
+        except ValueError:
+            request_too_large = True
+        if request_too_large:
+            response = JSONResponse(
+                status_code=413,
+                content={
+                    "error": {
+                        "code": "REQUEST_TOO_LARGE",
+                        "message": (f"Request exceeds {resolved_settings.max_request_bytes} bytes"),
+                        "request_id": request_id,
+                    }
+                },
+            )
+        else:
+            response = await call_next(request)
+        latency_ms = (time.perf_counter() - started) * 1000
+        route = request.scope.get("route")
+        route_path = getattr(route, "path", request.url.path)
+        app.state.request_metrics.record(
+            f"{request.method} {route_path}", response.status_code, latency_ms
+        )
+        response.headers["X-Request-ID"] = request_id
+        return response
+
+    @app.exception_handler(HTTPException)
+    async def http_error(request: Request, error: HTTPException) -> JSONResponse:
+        return JSONResponse(
+            status_code=error.status_code,
+            content={
+                "error": {
+                    "code": f"HTTP_{error.status_code}",
+                    "message": str(error.detail),
+                    "request_id": request.state.request_id,
+                }
+            },
+            headers=error.headers,
+        )
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_error(request: Request, error: RequestValidationError) -> JSONResponse:
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "Request validation failed",
+                    "request_id": request.state.request_id,
+                    "issues": [
+                        {
+                            "location": ".".join(str(item) for item in issue["loc"]),
+                            "message": issue["msg"],
+                            "type": issue["type"],
+                        }
+                        for issue in error.errors()
+                    ],
+                }
+            },
+        )
+
     @app.get("/api/v1/health")
     def health() -> dict:
         return {
             "status": "ok",
-            "version": "0.9.0",
+            "version": "1.1.0",
             "semantic": semantic_encoder.status(),
+            "policy_version": POLICY.version,
         }
+
+    @app.get("/api/v1/metrics")
+    def metrics() -> dict:
+        return app.state.request_metrics.snapshot()
 
     @app.post(
         "/api/v1/observations/explicit",
@@ -152,6 +261,14 @@ def create_app(
             raise HTTPException(status_code=404, detail="Memory not found")
         return memory_to_dict(memory)
 
+    @app.get("/api/v1/conflicts")
+    def list_conflicts(
+        session: DatabaseSession,
+        user_id: UserIdQuery = "demo-user",
+    ) -> list[dict]:
+        memories = session.scalars(select(Memory).where(Memory.user_id == user_id)).all()
+        return discover_memory_conflicts(list(memories))
+
     @app.patch("/api/v1/memories/{memory_id}", response_model=MemoryResponse)
     def update_memory(
         memory_id: str,
@@ -192,6 +309,27 @@ def create_app(
         session.commit()
         session.refresh(memory)
         return memory_to_dict(memory)
+
+    @app.post("/api/v1/memories/{memory_id}/merge", response_model=MemoryResponse)
+    def merge_memory(
+        memory_id: str,
+        payload: MemoryMergeRequest,
+        session: DatabaseSession,
+    ) -> dict:
+        target = session.get(Memory, memory_id)
+        source = session.get(Memory, payload.source_memory_id)
+        if target is None or source is None:
+            raise HTTPException(status_code=404, detail="Memory not found")
+        try:
+            merged = merge_memories(
+                session,
+                target=target,
+                source=source,
+                reason=payload.reason,
+            )
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+        return memory_to_dict(merged)
 
     @app.get(
         "/api/v1/memories/{memory_id}/history",
@@ -346,29 +484,96 @@ def create_app(
             raise HTTPException(status_code=404, detail="Decision not found")
         return response
 
+    @app.get("/api/v1/users/{user_id}/export")
+    def export_memories(user_id: str, session: DatabaseSession) -> dict:
+        memories = session.scalars(
+            select(Memory).where(Memory.user_id == user_id).order_by(Memory.canonical_normalized)
+        ).all()
+        return {
+            "schema_version": "lexitrace-portable-memory-v1",
+            "bundle_id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "exported_at": datetime.now(UTC).isoformat(),
+            "memories": [
+                {
+                    "canonical_form": memory.canonical_form,
+                    "variants": [variant.surface_form for variant in memory.variants],
+                    "state": memory.state,
+                    "scope_mode": memory.scope_mode,
+                    "positive_context": json.loads(memory.positive_context_json),
+                    "negative_context": json.loads(memory.negative_context_json),
+                }
+                for memory in memories
+            ],
+            "note": "Portable definitions exclude transcript and decision history by design.",
+        }
+
+    @app.post("/api/v1/users/{user_id}/import")
+    def import_memories(
+        user_id: str,
+        payload: MemoryImportRequest,
+        session: DatabaseSession,
+    ) -> dict:
+        deleted = (
+            delete_user_state(session, user_id)
+            if payload.mode == "replace"
+            else {
+                "deleted_memories": 0,
+                "deleted_observations": 0,
+                "deleted_decisions": 0,
+            }
+        )
+        imported_ids: list[str] = []
+        for index, item in enumerate(payload.memories):
+            import_event_id = f"import:{payload.bundle_id}:{index}"
+            existing = session.scalar(
+                select(Observation).where(
+                    Observation.user_id == user_id,
+                    Observation.source_event_id == import_event_id,
+                )
+            )
+            if existing is not None and existing.memory_id is not None:
+                imported_ids.append(existing.memory_id)
+                continue
+            memory = teach_explicit(
+                session,
+                user_id=user_id,
+                canonical_form=item.canonical_form,
+                variants=item.variants,
+                scope_mode=item.scope_mode,
+                positive_context=item.positive_context,
+                negative_context=item.negative_context,
+                event_id=import_event_id,
+                semantic_encoder=semantic_encoder,
+            )
+            memory.state = item.state
+            record_memory_version(
+                session,
+                memory,
+                action="memory_imported",
+                reason=f"Portable bundle {payload.bundle_id}",
+                actor="user",
+            )
+            session.commit()
+            imported_ids.append(memory.id)
+        return {
+            "bundle_id": payload.bundle_id,
+            "mode": payload.mode,
+            "imported_memories": len(imported_ids),
+            "memory_ids": imported_ids,
+            **deleted,
+        }
+
+    @app.delete("/api/v1/users/{user_id}")
+    def delete_user(user_id: str, session: DatabaseSession) -> dict:
+        return delete_user_state(session, user_id)
+
     @app.post("/api/v1/reset", response_model=ResetResponse)
     def reset(
         session: DatabaseSession,
         user_id: UserIdQuery = "demo-user",
     ) -> dict:
-        deleted_decisions = session.scalar(
-            select(func.count()).select_from(Decision).where(Decision.user_id == user_id)
-        )
-        deleted_observations = session.scalar(
-            select(func.count()).select_from(Observation).where(Observation.user_id == user_id)
-        )
-        deleted_memories = session.scalar(
-            select(func.count()).select_from(Memory).where(Memory.user_id == user_id)
-        )
-        session.execute(delete(Decision).where(Decision.user_id == user_id))
-        session.execute(delete(Observation).where(Observation.user_id == user_id))
-        session.execute(delete(Memory).where(Memory.user_id == user_id))
-        session.commit()
-        return {
-            "deleted_memories": deleted_memories or 0,
-            "deleted_observations": deleted_observations or 0,
-            "deleted_decisions": deleted_decisions or 0,
-        }
+        return delete_user_state(session, user_id)
 
     return app
 

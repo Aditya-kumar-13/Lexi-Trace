@@ -28,11 +28,12 @@ from .models import (
 from .policy import load_policy
 from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.9.0"
+ENGINE_VERSION = "1.1.0"
 POLICY = load_policy()
 APPLY_THRESHOLD = POLICY.apply_threshold
 SUGGEST_THRESHOLD = POLICY.suggest_threshold
 MINIMUM_WINNER_MARGIN = POLICY.minimum_winner_margin
+MINIMUM_CONFLICT_CONTEXT_ADVANTAGE = POLICY.minimum_conflict_context_advantage
 FUZZY_CANDIDATE_THRESHOLD = POLICY.fuzzy_candidate_threshold
 MIN_POSITIVE_CONTEXT_SIMILARITY = POLICY.minimum_positive_context_similarity
 NEGATIVE_CONTEXT_BLOCK_THRESHOLD = POLICY.negative_context_block_threshold
@@ -842,6 +843,178 @@ def memory_to_dict(memory: Memory) -> dict:
     }
 
 
+def discover_memory_conflicts(memories: list[Memory]) -> list[dict]:
+    routes: dict[tuple[str, str], dict[str, Memory]] = defaultdict(dict)
+    for memory in memories:
+        if memory.state == "suppressed":
+            continue
+        for variant in memory.variants:
+            if len(variant.normalized_form) >= 4:
+                routes[("surface", variant.normalized_form)][memory.id] = memory
+            if variant.metaphone_key and len(variant.normalized_form) >= 5:
+                routes[("phonetic", variant.metaphone_key)][memory.id] = memory
+
+    conflicts: list[dict] = []
+    for (route_type, route_key), members_by_id in routes.items():
+        if len(members_by_id) < 2:
+            continue
+        members = sorted(
+            members_by_id.values(),
+            key=lambda item: (item.canonical_normalized, item.id),
+        )
+        has_context = any(
+            evidence.polarity == "positive"
+            for memory in members
+            for evidence in memory.context_evidence
+        )
+        conflict_id = hashlib.sha256(
+            f"{route_type}:{route_key}:{':'.join(item.id for item in members)}".encode()
+        ).hexdigest()[:16]
+        conflicts.append(
+            {
+                "conflict_id": conflict_id,
+                "route_type": route_type,
+                "route_key": route_key,
+                "state": "context_resolvable" if has_context else "unresolved",
+                "members": [
+                    {
+                        "memory_id": memory.id,
+                        "canonical_form": memory.canonical_form,
+                        "state": memory.state,
+                        "scope_mode": memory.scope_mode,
+                        "variants": sorted(variant.surface_form for variant in memory.variants),
+                        "positive_context_observations": sum(
+                            evidence.polarity == "positive" for evidence in memory.context_evidence
+                        ),
+                    }
+                    for memory in members
+                ],
+            }
+        )
+    return sorted(
+        conflicts,
+        key=lambda item: (item["route_type"], item["route_key"], item["conflict_id"]),
+    )
+
+
+def merge_memories(
+    session: Session,
+    *,
+    target: Memory,
+    source: Memory,
+    reason: str,
+) -> Memory:
+    if target.id == source.id:
+        raise ValueError("A memory cannot be merged into itself")
+    if target.user_id != source.user_id:
+        raise ValueError("Memories from different users cannot be merged")
+
+    known_variants = {variant.normalized_form for variant in target.variants}
+    aliases = [(source.canonical_form, normalize(source.canonical_form))] + [
+        (variant.surface_form, variant.normalized_form) for variant in source.variants
+    ]
+    for surface_form, normalized_form in aliases:
+        if normalized_form in known_variants or normalized_form == target.canonical_normalized:
+            continue
+        session.add(
+            MemoryVariant(
+                memory_id=target.id,
+                surface_form=surface_form,
+                normalized_form=normalized_form,
+                metaphone_key=metaphone(surface_form),
+            )
+        )
+        known_variants.add(normalized_form)
+
+    for observation in list(source.observations):
+        copied = Observation(
+            user_id=target.user_id,
+            memory=target,
+            evidence_type=observation.evidence_type,
+            raw_asr_text=observation.raw_asr_text,
+            formatted_text=observation.formatted_text,
+            accepted_text=observation.accepted_text,
+            source_span=observation.source_span,
+            target_span=target.canonical_form,
+            reliability=observation.reliability,
+            accepted=observation.accepted,
+            reason_code=observation.reason_code,
+            source_event_id=f"merge:{source.id}:{observation.id}",
+            context_fingerprint=observation.context_fingerprint,
+        )
+        session.add(copied)
+        session.flush()
+        for evidence in observation.context_evidence:
+            session.add(
+                ContextEvidence(
+                    memory_id=target.id,
+                    observation_id=copied.id,
+                    polarity=evidence.polarity,
+                    feature=evidence.feature,
+                    feature_kind=evidence.feature_kind,
+                    weight=evidence.weight,
+                    source_type=evidence.source_type,
+                    context_text=evidence.context_text,
+                )
+            )
+        for evidence in observation.semantic_evidence:
+            session.add(
+                ContextEmbedding(
+                    memory_id=target.id,
+                    observation_id=copied.id,
+                    polarity=evidence.polarity,
+                    model_name=evidence.model_name,
+                    dimension=evidence.dimension,
+                    vector_json=evidence.vector_json,
+                    weight=evidence.weight,
+                    source_type=evidence.source_type,
+                    context_text=evidence.context_text,
+                )
+            )
+        for outcome in source.asr_outcomes:
+            if outcome.observation_id != observation.id:
+                continue
+            existing = session.scalar(
+                select(AsrOutcome).where(
+                    AsrOutcome.decision_id == outcome.decision_id,
+                    AsrOutcome.memory_id == target.id,
+                    AsrOutcome.source_normalized == outcome.source_normalized,
+                )
+            )
+            if existing is not None:
+                continue
+            session.add(
+                AsrOutcome(
+                    user_id=target.user_id,
+                    memory_id=target.id,
+                    decision_id=outcome.decision_id,
+                    observation_id=copied.id,
+                    provider=outcome.provider,
+                    model_name=outcome.model_name,
+                    rank=outcome.rank,
+                    source_form=outcome.source_form,
+                    source_normalized=outcome.source_normalized,
+                    target_form=target.canonical_form,
+                    target_normalized=target.canonical_normalized,
+                    provider_confidence=outcome.provider_confidence,
+                    accepted=outcome.accepted,
+                    reason_code=outcome.reason_code,
+                )
+            )
+
+    record_memory_version(
+        session,
+        target,
+        action="memory_merged",
+        reason=f"Merged {source.canonical_form}: {reason}",
+        actor="user",
+    )
+    session.delete(source)
+    session.commit()
+    session.refresh(target)
+    return target
+
+
 def replace_manual_context_evidence(
     session: Session,
     *,
@@ -1468,7 +1641,14 @@ def _select_winners(
     for candidate in candidates:
         candidate.action = _initial_candidate_action(candidate, thresholds)
 
-    candidates.sort(key=lambda item: (-item.score, item.start, -(item.end - item.start)))
+    candidates.sort(
+        key=lambda item: (
+            -item.score,
+            item.start,
+            -(item.end - item.start),
+            item.canonical_form.casefold(),
+        )
+    )
     winners: list[TraceCandidate] = []
     occupied: list[tuple[int, int]] = []
     for candidate in candidates:
@@ -1483,10 +1663,30 @@ def _select_winners(
         ]
         runner_up = max((other.score for other in overlapping), default=0.0)
         if overlapping and candidate.score - runner_up < thresholds.minimum_winner_margin:
-            candidate.action = "suggest"
-            candidate.reason_codes.append("INSUFFICIENT_WINNER_MARGIN")
-            candidate.blockers.append("INSUFFICIENT_WINNER_MARGIN")
-            continue
+            context_strength = float(candidate.features["positive_context_similarity"]) - float(
+                candidate.features["negative_context_similarity"]
+            )
+            competing_strength = max(
+                (
+                    float(other.features["positive_context_similarity"])
+                    - float(other.features["negative_context_similarity"])
+                    for other in overlapping
+                ),
+                default=0.0,
+            )
+            context_advantage = context_strength - competing_strength
+            candidate.features["conflict_context_advantage"] = round(context_advantage, 4)
+            if (
+                float(candidate.features["positive_context_similarity"])
+                >= MIN_POSITIVE_CONTEXT_SIMILARITY
+                and context_advantage >= MINIMUM_CONFLICT_CONTEXT_ADVANTAGE
+            ):
+                candidate.reason_codes.append("CONFLICT_RESOLVED_BY_CONTEXT")
+            else:
+                candidate.action = "suggest"
+                candidate.reason_codes.append("INSUFFICIENT_WINNER_MARGIN")
+                candidate.blockers.append("INSUFFICIENT_WINNER_MARGIN")
+                continue
         if any(left < candidate.end and candidate.start < right for left, right in occupied):
             candidate.action = "abstain"
             candidate.reason_codes.append("OVERLAPPING_WINNER")
@@ -1664,6 +1864,7 @@ def infer(
             "apply": APPLY_THRESHOLD,
             "suggest": SUGGEST_THRESHOLD,
             "minimum_winner_margin": MINIMUM_WINNER_MARGIN,
+            "minimum_conflict_context_advantage": MINIMUM_CONFLICT_CONTEXT_ADVANTAGE,
             "minimum_positive_context_similarity": MIN_POSITIVE_CONTEXT_SIMILARITY,
             "negative_context_block_threshold": NEGATIVE_CONTEXT_BLOCK_THRESHOLD,
             "asr_minimum_outcomes": ASR_MINIMUM_OUTCOMES,
@@ -1671,7 +1872,7 @@ def infer(
         "candidates": [asdict(candidate) for candidate in candidates],
         "changes": [asdict(candidate) for candidate in winners],
         "counterfactual": (
-            candidates[0].counterfactual
+            (winners[0] if winners else candidates[0]).counterfactual
             if candidates
             else {
                 "reason_code": "NO_CANDIDATE",

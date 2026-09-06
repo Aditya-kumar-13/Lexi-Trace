@@ -89,6 +89,26 @@ class MemoryUpdateRequest(BaseModel):
     reason: str = Field(default="User updated memory", min_length=1, max_length=250)
 
 
+class MemoryMergeRequest(BaseModel):
+    source_memory_id: str = Field(min_length=36, max_length=36)
+    reason: str = Field(default="User resolved duplicate memories", min_length=1, max_length=250)
+
+
+class PortableMemory(BaseModel):
+    canonical_form: str = Field(min_length=1, max_length=250)
+    variants: list[str] = Field(min_length=1, max_length=20)
+    state: Literal["candidate", "confirmed", "suppressed"]
+    scope_mode: Literal["global", "contextual"]
+    positive_context: list[str] = Field(default_factory=list, max_length=30)
+    negative_context: list[str] = Field(default_factory=list, max_length=30)
+
+
+class MemoryImportRequest(BaseModel):
+    bundle_id: str = Field(min_length=1, max_length=100)
+    mode: Literal["merge", "replace"] = "merge"
+    memories: list[PortableMemory] = Field(max_length=1_000)
+
+
 class VariantResponse(BaseModel):
     id: str
     surface_form: str

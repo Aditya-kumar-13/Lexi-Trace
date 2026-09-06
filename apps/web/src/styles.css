@@ -80,6 +80,9 @@ form > button[type="submit"] { width: 100%; display: flex; justify-content: spac
 .history-button { justify-self: start; }
 .memory-meta span, .reason-list span { border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; font: 10px/1 Consolas, monospace; text-transform: uppercase; }
 .history-list { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.conflict-list { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.conflict-item { display: grid; gap: 5px; padding: 10px 0; border-top: 1px solid rgba(213, 239, 222, 0.07); }
+.conflict-item strong { color: var(--orange); font-size: 12px; }
 .history-item { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: start; padding: 11px 0; border-top: 1px solid rgba(213, 239, 222, 0.07); }
 .history-item > span { color: var(--lime); font: 10px/1.4 Consolas, monospace; }
 .history-item strong { display: block; color: var(--ink); font-size: 11px; text-transform: capitalize; }

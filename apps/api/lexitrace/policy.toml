@@ -1,9 +1,10 @@
-version = "2026-09-06-hybrid-v5-calibrated-shadow"
+version = "2026-09-06-hybrid-v6-conflict-safe"
 
 [thresholds]
 apply = 0.93
 suggest = 0.72
 minimum_winner_margin = 0.12
+minimum_conflict_context_advantage = 0.15
 fuzzy_candidate = 0.76
 minimum_positive_context = 0.15
 negative_context_block = 0.12

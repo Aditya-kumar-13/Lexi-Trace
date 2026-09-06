@@ -5,9 +5,9 @@ backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 0.9.0
+## Current milestone: 1.1.0
 
-The first vertical slice is implemented:
+The reviewer-ready release includes:
 
 - explicit teaching with global or learned-context scope;
 - correction observation that creates unconfirmed candidates;
@@ -39,6 +39,15 @@ The first vertical slice is implemented:
 - request-scoped shadow policies that are evaluated and persisted without changing user output;
 - split-safe threshold search constrained by a separate frozen safety corpus;
 - an automatic release gate that rejects candidates which improve recall by adding wrong edits.
+- deterministic collision groups for surface and phonetic routes shared by multiple memories;
+- context-learned conflict resolution with safe suggestions for unresolved ties;
+- explicit duplicate-memory merging with transferred aliases and evidence;
+- safe application of multiple non-overlapping memories in one transcript;
+- portable definition export/import and complete per-user data deletion;
+- request IDs, structured validation errors, payload limits, and route-level latency counters;
+- SQLite WAL, foreign-key enforcement, and a bounded lock wait for concurrent local requests;
+- frozen conflict journeys plus a 500-decision latency and database-growth soak test;
+- a disposable one-command reviewer demonstration that never touches the user's database.
 
 ## Product rule
 
@@ -64,6 +73,11 @@ may nominate a candidate, but promotion also requires no regression on the froze
 corpus. The current calibration-only candidate (`0.90`) recovered two cases but caused two wrong
 interventions elsewhere, so the gate rejected it and retained `0.93`. It remains available in
 shadow mode to make that trade-off visible without affecting the user-facing transcript.
+
+When several memories share a surface or phonetic route, LexiTrace does not choose by insertion
+order. It either finds a sufficient learned-context advantage or returns a visible suggestion. A
+user can select the intended candidate, and the resulting evidence can resolve similar future
+collisions. Independent, non-overlapping memories may still be applied together.
 
 ## Development
 

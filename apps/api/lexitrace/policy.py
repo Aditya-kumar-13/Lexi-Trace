@@ -13,6 +13,7 @@ class DecisionPolicy:
     apply_threshold: float
     suggest_threshold: float
     minimum_winner_margin: float
+    minimum_conflict_context_advantage: float
     fuzzy_candidate_threshold: float
     minimum_positive_context_similarity: float
     negative_context_block_threshold: float
@@ -56,6 +57,7 @@ def load_policy() -> DecisionPolicy:
         apply_threshold=thresholds["apply"],
         suggest_threshold=thresholds["suggest"],
         minimum_winner_margin=thresholds["minimum_winner_margin"],
+        minimum_conflict_context_advantage=thresholds["minimum_conflict_context_advantage"],
         fuzzy_candidate_threshold=thresholds["fuzzy_candidate"],
         minimum_positive_context_similarity=thresholds["minimum_positive_context"],
         negative_context_block_threshold=thresholds["negative_context_block"],

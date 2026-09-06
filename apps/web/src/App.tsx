@@ -87,6 +87,14 @@ type MemoryVersion = {
   created_at: string;
 };
 
+type MemoryConflict = {
+  conflict_id: string;
+  route_type: string;
+  route_key: string;
+  state: string;
+  members: { memory_id: string; canonical_form: string }[];
+};
+
 async function jsonRequest<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -101,6 +109,7 @@ async function jsonRequest<T>(path: string, init?: RequestInit): Promise<T> {
 
 function App() {
   const [memories, setMemories] = useState<Memory[]>([]);
+  const [conflicts, setConflicts] = useState<MemoryConflict[]>([]);
   const [canonical, setCanonical] = useState("Kivi");
   const [variant, setVariant] = useState("Kiwi");
   const [scope, setScope] = useState<"global" | "contextual">("contextual");
@@ -123,7 +132,12 @@ function App() {
   const [error, setError] = useState("");
 
   const refreshMemories = useCallback(async () => {
-    setMemories(await jsonRequest<Memory[]>("/api/v1/memories"));
+    const [memoryRows, conflictRows] = await Promise.all([
+      jsonRequest<Memory[]>("/api/v1/memories"),
+      jsonRequest<MemoryConflict[]>("/api/v1/conflicts"),
+    ]);
+    setMemories(memoryRows);
+    setConflicts(conflictRows);
   }, []);
 
   useEffect(() => {
@@ -136,6 +150,14 @@ function App() {
     () => result?.candidates.slice().sort((a, b) => b.score - a.score)[0],
     [result],
   );
+  const competingCandidates = useMemo(() => {
+    if (!result || !strongestCandidate) return [];
+    return result.candidates.filter(
+      (candidate) =>
+        candidate.start === strongestCandidate.start &&
+        candidate.end === strongestCandidate.end,
+    );
+  }, [result, strongestCandidate]);
 
   async function teach(event: FormEvent) {
     event.preventDefault();
@@ -237,9 +259,9 @@ function App() {
     }
   }
 
-  async function sendFeedback(verdict: "correct" | "incorrect") {
+  async function sendFeedback(verdict: "correct" | "incorrect", selected?: Candidate) {
     if (!result) return;
-    const target = result.action === "apply" ? result.changes[0] : strongestCandidate;
+    const target = selected ?? (result.action === "apply" ? result.changes[0] : strongestCandidate);
     if (!target) return;
     setBusy(true);
     setError("");
@@ -392,8 +414,10 @@ function App() {
               )}
               {(result?.action === "apply" || result?.action === "suggest") && strongestCandidate && (
                 <div className="feedback-row">
-                  <span>{result.action === "suggest" ? "Is this suggestion right?" : "Was this intervention right?"}</span>
-                  <button type="button" onClick={() => sendFeedback("correct")} disabled={busy}>{result.action === "suggest" ? "Accept" : "Correct"}</button>
+                  <span>{competingCandidates.length > 1 ? "Choose the intended memory:" : result.action === "suggest" ? "Is this suggestion right?" : "Was this intervention right?"}</span>
+                  {competingCandidates.length > 1 ? competingCandidates.map((candidate) => (
+                    <button type="button" key={candidate.memory_id} onClick={() => sendFeedback("correct", candidate)} disabled={busy}>Use {candidate.canonical_form}</button>
+                  )) : <button type="button" onClick={() => sendFeedback("correct")} disabled={busy}>{result.action === "suggest" ? "Accept" : "Correct"}</button>}
                   <button type="button" onClick={() => sendFeedback("incorrect")} disabled={busy}>Wrong</button>
                 </div>
               )}
@@ -443,6 +467,17 @@ function App() {
                 <button type="button" className="history-button" onClick={() => loadHistory(memory.id)}>View history</button>
               </article>
             ))}
+            {conflicts.length > 0 && (
+              <div className="conflict-list">
+                <p className="eyebrow">COLLISION GROUPS</p>
+                {conflicts.map((conflict) => (
+                  <div key={conflict.conflict_id} className="conflict-item">
+                    <strong>{conflict.members.map((member) => member.canonical_form).join(" ↔ ")}</strong>
+                    <small>{conflict.route_type} route · {conflict.state.replaceAll("_", " ")}</small>
+                  </div>
+                ))}
+              </div>
+            )}
             {selectedMemoryId && (
               <div className="history-list">
                 <p className="eyebrow">VERSION HISTORY</p>
@@ -481,7 +516,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.9.0</span><span>Calibrated decisions · Shadow-policy safety</span></footer>
+      <footer><span>LexiTrace 1.1.0</span><span>Conflict-safe memory · Reviewer-ready release</span></footer>
     </div>
   );
 }

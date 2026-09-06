@@ -22,10 +22,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 30.072,
-        "p50": 3.987,
-        "p95": 105.748,
-        "p99": 106.022
+        "mean": 27.941,
+        "p50": 3.753,
+        "p95": 94.508,
+        "p99": 111.532
       }
     }
   },
@@ -40,7 +40,7 @@
   },
   "database": {
     "peak_allocated_bytes": 221184,
-    "peak_trace_payload_bytes": 6753,
+    "peak_trace_payload_bytes": 6793,
     "peak_rows": {
       "memories": 2,
       "memory_variants": 2,
@@ -104,10 +104,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 30.072,
-        "p50": 3.987,
-        "p95": 105.748,
-        "p99": 106.022
+        "mean": 27.941,
+        "p50": 3.753,
+        "p95": 94.508,
+        "p99": 111.532
       }
     }
   }

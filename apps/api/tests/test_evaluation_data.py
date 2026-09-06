@@ -70,3 +70,18 @@ def test_lifecycle_journeys_cover_replay_diversity_and_state_changes() -> None:
         "contradiction-demotes-confirmed-memory",
         "explicit-suppression-is-authoritative",
     } <= identifiers
+
+
+def test_conflict_journeys_cover_ties_learning_order_and_multiple_edits() -> None:
+    path = ROOT / "data" / "benchmark" / "conflict_journeys.jsonl"
+    journeys = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    assert len(journeys) == 4
+    assert {journey["journey_id"] for journey in journeys} == {
+        "feedback-resolves-contextual-collision",
+        "unresolved-tie-never-silently-chooses",
+        "learned-context-selects-collision-winner",
+        "multiple-independent-memories-apply",
+    }
+    assert any(len(journey["memories"]) > 1 for journey in journeys)
+    assert any(len(journey["events"]) > 1 for journey in journeys)

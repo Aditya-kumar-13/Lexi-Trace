@@ -82,7 +82,14 @@ def simulate(
     candidates = deepcopy(row["systems"]["lexitrace"]["candidates"])
     for candidate in candidates:
         candidate["action"] = candidate_action(candidate, apply, suggest)
-    candidates.sort(key=lambda item: (-item["score"], item["start"], -item["end"]))
+    candidates.sort(
+        key=lambda item: (
+            -item["score"],
+            item["start"],
+            -item["end"],
+            item["canonical_form"].casefold(),
+        )
+    )
 
     winners: list[dict[str, Any]] = []
     occupied: list[tuple[int, int]] = []
@@ -98,8 +105,24 @@ def simulate(
         ]
         runner_up = max((other["score"] for other in overlapping), default=0.0)
         if overlapping and candidate["score"] - runner_up < minimum_winner_margin:
-            candidate["action"] = "suggest"
-            continue
+            features = candidate["features"]
+            context_strength = float(features["positive_context_similarity"]) - float(
+                features["negative_context_similarity"]
+            )
+            competing_strength = max(
+                (
+                    float(other["features"]["positive_context_similarity"])
+                    - float(other["features"]["negative_context_similarity"])
+                    for other in overlapping
+                ),
+                default=0.0,
+            )
+            if not (
+                float(features["positive_context_similarity"]) >= 0.15
+                and context_strength - competing_strength >= 0.15
+            ):
+                candidate["action"] = "suggest"
+                continue
         if any(left < candidate["end"] and candidate["start"] < right for left, right in occupied):
             candidate["action"] = "abstain"
             continue

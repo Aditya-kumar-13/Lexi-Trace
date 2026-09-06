@@ -1,0 +1,19 @@
+{
+  "dataset": "data/benchmark/conflict_journeys.jsonl",
+  "dataset_sha256": "b12b15c428cacad868c25bebd1f7b43b1c2663c7bce74f283de48964d6cc85f9",
+  "journeys": 4,
+  "events": 5,
+  "exact_match_rate": 1.0,
+  "action_accuracy": 1.0,
+  "wrong_interventions": 0,
+  "deterministic_journeys": 4,
+  "model_usage": {
+    "execution": "local",
+    "model": "BAAI/bge-small-en-v1.5",
+    "embedding_calls": 10,
+    "input_characters": 330,
+    "failed_calls": 0,
+    "hosted_requests": 0,
+    "estimated_api_cost_usd": 0.0
+  }
+}

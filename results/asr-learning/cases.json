@@ -10,11 +10,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 9.583,
-      "trace_id": "adf7cf78-d747-4bad-9210-75c8aa15ca2e",
+      "latency_ms": 11.013,
+      "trace_id": "107ca15c-9cad-4dae-9313-3f98538f6316",
       "candidates": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -89,13 +89,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -124,7 +124,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b65c3684-6f59-4e16-94c9-e7bf53378f38",
+              "observation_id": "fb10cc05-65f7-4e6d-900d-626d168c5541",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -156,7 +156,7 @@
         "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2214,
+        "trace_payload_bytes": 2254,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -181,11 +181,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.617,
-      "trace_id": "87908591-5a30-4057-8f91-0642dce5f66f",
+      "latency_ms": 3.997,
+      "trace_id": "38bda1b3-17ad-4c8e-8872-07cf95f53edd",
       "candidates": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -261,13 +261,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -301,7 +301,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b65c3684-6f59-4e16-94c9-e7bf53378f38",
+              "observation_id": "fb10cc05-65f7-4e6d-900d-626d168c5541",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -310,7 +310,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4153d7a-ad49-43e5-b9c7-a0c8fb2add0c",
+              "observation_id": "d8165b82-99f9-472c-be13-0017393459e8",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -348,7 +348,7 @@
         "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4478,
+        "trace_payload_bytes": 4558,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -373,11 +373,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.537,
-      "trace_id": "fecbccaf-075a-45bc-bd81-af11b268cef3",
+      "latency_ms": 3.964,
+      "trace_id": "0b6940d0-aa2a-40a2-9220-94da3529debb",
       "candidates": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -453,13 +453,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -493,7 +493,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b65c3684-6f59-4e16-94c9-e7bf53378f38",
+              "observation_id": "fb10cc05-65f7-4e6d-900d-626d168c5541",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -502,7 +502,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4153d7a-ad49-43e5-b9c7-a0c8fb2add0c",
+              "observation_id": "d8165b82-99f9-472c-be13-0017393459e8",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -511,7 +511,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "7224d583-ee40-441b-b23a-769e9739d6c6",
+              "observation_id": "c17f9698-1878-4c61-9ad0-e2b6b4d41305",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -549,7 +549,7 @@
         "page_count": 56,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6740,
+        "trace_payload_bytes": 6860,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -574,11 +574,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 3.712,
-      "trace_id": "807b4872-71a3-43e5-9c9d-b82fba109c97",
+      "latency_ms": 4.218,
+      "trace_id": "aaf5a302-826a-4427-a23c-1b602d051ad3",
       "candidates": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -654,13 +654,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "fed54e11-d059-437d-a3c3-428b7d6f8160",
+          "memory_id": "fdb62473-2dfb-4504-8724-a63908f5c448",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -694,7 +694,7 @@
           ],
           "observations": [
             {
-              "observation_id": "b65c3684-6f59-4e16-94c9-e7bf53378f38",
+              "observation_id": "fb10cc05-65f7-4e6d-900d-626d168c5541",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -703,7 +703,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4153d7a-ad49-43e5-b9c7-a0c8fb2add0c",
+              "observation_id": "d8165b82-99f9-472c-be13-0017393459e8",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -712,7 +712,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "7224d583-ee40-441b-b23a-769e9739d6c6",
+              "observation_id": "c17f9698-1878-4c61-9ad0-e2b6b4d41305",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -721,7 +721,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "e9f0fe8b-87f7-457b-a96b-85e93291d747",
+              "observation_id": "a31215f2-f55a-44c1-8c32-3e1a4e2d02de",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -759,7 +759,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 8998,
+        "trace_payload_bytes": 9158,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -784,11 +784,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.549,
-      "trace_id": "6e8498e5-ff06-422a-9dc8-6ce2c9d1d4ab",
+      "latency_ms": 3.524,
+      "trace_id": "6d03c375-4484-4be1-a935-ba53746e386d",
       "candidates": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -863,13 +863,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -898,7 +898,7 @@
           ],
           "observations": [
             {
-              "observation_id": "0a481fea-b948-47bc-ba19-17c4f4ea28e4",
+              "observation_id": "cc01a77f-487e-4e3b-af40-524f20203d4a",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -930,7 +930,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2214,
+        "trace_payload_bytes": 2254,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -955,11 +955,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.084,
-      "trace_id": "ee22def2-5db4-4cd2-8a28-c99bcd178d5a",
+      "latency_ms": 4.046,
+      "trace_id": "be9e7d8b-819b-4ea3-a7c8-dac27dbe315c",
       "candidates": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1035,13 +1035,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -1075,7 +1075,7 @@
           ],
           "observations": [
             {
-              "observation_id": "0a481fea-b948-47bc-ba19-17c4f4ea28e4",
+              "observation_id": "cc01a77f-487e-4e3b-af40-524f20203d4a",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1084,7 +1084,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "1a35a078-0406-4eb2-86cc-70fa3ef7b413",
+              "observation_id": "9452b3dd-4ef0-412d-86b1-bfb8775e87fa",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1122,7 +1122,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4476,
+        "trace_payload_bytes": 4556,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1147,11 +1147,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.629,
-      "trace_id": "e1ae071d-bbfd-4777-b8d6-f4230e3414fa",
+      "latency_ms": 5.014,
+      "trace_id": "c2e200fe-aa07-404d-8237-4d3f906743d8",
       "candidates": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1227,13 +1227,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -1267,7 +1267,7 @@
           ],
           "observations": [
             {
-              "observation_id": "0a481fea-b948-47bc-ba19-17c4f4ea28e4",
+              "observation_id": "cc01a77f-487e-4e3b-af40-524f20203d4a",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1276,7 +1276,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "1a35a078-0406-4eb2-86cc-70fa3ef7b413",
+              "observation_id": "9452b3dd-4ef0-412d-86b1-bfb8775e87fa",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1285,7 +1285,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "2e4b4727-a756-48c0-947a-62ea4145ba26",
+              "observation_id": "ad71f9bb-90dd-4456-a618-305fb815b9ea",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1323,7 +1323,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6736,
+        "trace_payload_bytes": 6856,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1348,11 +1348,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.758,
-      "trace_id": "4458a3a6-2478-4f39-8c90-47c43c395875",
+      "latency_ms": 3.862,
+      "trace_id": "8f43c172-d41a-474c-8d98-940c5691fe7d",
       "candidates": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1428,13 +1428,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "d037a9fc-4c35-4670-8e13-215d3f0d0b23",
+          "memory_id": "877697fd-7718-4f6e-8072-c7b4c312bafb",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -1468,7 +1468,7 @@
           ],
           "observations": [
             {
-              "observation_id": "0a481fea-b948-47bc-ba19-17c4f4ea28e4",
+              "observation_id": "cc01a77f-487e-4e3b-af40-524f20203d4a",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1477,7 +1477,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "1a35a078-0406-4eb2-86cc-70fa3ef7b413",
+              "observation_id": "9452b3dd-4ef0-412d-86b1-bfb8775e87fa",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1486,7 +1486,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "2e4b4727-a756-48c0-947a-62ea4145ba26",
+              "observation_id": "ad71f9bb-90dd-4456-a618-305fb815b9ea",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1495,7 +1495,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "a1c6f0f7-00bb-4f68-8cc7-a78680cbbd6d",
+              "observation_id": "dcc01f21-7dc3-4ae5-abf0-e9f916246cff",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1533,7 +1533,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 9001,
+        "trace_payload_bytes": 9161,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1558,11 +1558,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.851,
-      "trace_id": "19ac4f9d-185d-41b9-970d-ffdfa4aa38ea",
+      "latency_ms": 3.545,
+      "trace_id": "13987d14-5e85-444e-b0f9-7bed5f8a7290",
       "candidates": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1637,13 +1637,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -1672,7 +1672,7 @@
           ],
           "observations": [
             {
-              "observation_id": "35aa631d-1918-425d-bdc5-eda3f2e70dbd",
+              "observation_id": "3a218a85-55ba-4577-a8e8-375eaef1377f",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1704,7 +1704,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2214,
+        "trace_payload_bytes": 2254,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1729,11 +1729,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.62,
-      "trace_id": "a1944332-16bb-4a22-9a93-d6c41851bede",
+      "latency_ms": 3.769,
+      "trace_id": "2612d9e7-3425-4dc8-ba4f-af0a66d2b9b8",
       "candidates": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1777,7 +1777,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 3,
             "memory_state": "confirmed",
@@ -1809,13 +1809,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -1849,7 +1849,7 @@
           ],
           "observations": [
             {
-              "observation_id": "35aa631d-1918-425d-bdc5-eda3f2e70dbd",
+              "observation_id": "3a218a85-55ba-4577-a8e8-375eaef1377f",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1858,7 +1858,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "c2ed769e-6b67-4f42-81c2-79e44d4d96cc",
+              "observation_id": "2eaaae27-b947-4cbf-8bea-f11fbe87bf89",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1896,7 +1896,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4503,
+        "trace_payload_bytes": 4583,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1921,11 +1921,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.607,
-      "trace_id": "07500b9c-b567-401f-99b2-9e45b144de48",
+      "latency_ms": 3.725,
+      "trace_id": "e00266e8-c7aa-4f72-a9e0-c86f1aa956cd",
       "candidates": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1969,7 +1969,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 6,
             "memory_state": "confirmed",
@@ -2001,13 +2001,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -2041,7 +2041,7 @@
           ],
           "observations": [
             {
-              "observation_id": "35aa631d-1918-425d-bdc5-eda3f2e70dbd",
+              "observation_id": "3a218a85-55ba-4577-a8e8-375eaef1377f",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2050,7 +2050,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "c2ed769e-6b67-4f42-81c2-79e44d4d96cc",
+              "observation_id": "2eaaae27-b947-4cbf-8bea-f11fbe87bf89",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2059,7 +2059,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "7b477e7a-557c-4fe2-b463-c215df705e6a",
+              "observation_id": "a0222fd8-feff-4652-925c-9ccec1d7809e",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2097,7 +2097,7 @@
         "page_count": 57,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6790,
+        "trace_payload_bytes": 6910,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2122,11 +2122,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.154,
-      "trace_id": "2bb4a7ec-9fa2-400d-83f8-e4a743710772",
+      "latency_ms": 4.219,
+      "trace_id": "a1316b94-9f28-4ab4-b961-4f9c9477663c",
       "candidates": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2170,7 +2170,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 9,
             "memory_state": "confirmed",
@@ -2202,13 +2202,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "12cbea3e-a3e0-405e-b2f2-d239d8665a49",
+          "memory_id": "ce69b0b1-fd99-4b3b-a40e-494a33a7634d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -2242,7 +2242,7 @@
           ],
           "observations": [
             {
-              "observation_id": "35aa631d-1918-425d-bdc5-eda3f2e70dbd",
+              "observation_id": "3a218a85-55ba-4577-a8e8-375eaef1377f",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2251,7 +2251,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "c2ed769e-6b67-4f42-81c2-79e44d4d96cc",
+              "observation_id": "2eaaae27-b947-4cbf-8bea-f11fbe87bf89",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2260,7 +2260,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "7b477e7a-557c-4fe2-b463-c215df705e6a",
+              "observation_id": "a0222fd8-feff-4652-925c-9ccec1d7809e",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2269,7 +2269,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "046c2b1c-1554-49b8-8965-90f209c421d1",
+              "observation_id": "0b53f997-bc65-497e-923b-01193183f604",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2307,7 +2307,7 @@
         "page_count": 58,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 9081,
+        "trace_payload_bytes": 9241,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2332,11 +2332,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.347,
-      "trace_id": "7d1ffe05-8cce-490f-abf7-59595346cf78",
+      "latency_ms": 3.897,
+      "trace_id": "83bca5c2-50e3-473e-8025-e9583489cbae",
       "candidates": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2412,13 +2412,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -2447,7 +2447,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5eaa7ba9-79a0-4500-baf6-515f095664bc",
+              "observation_id": "017db334-5e1d-4b90-9ce6-62a25542a224",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2481,7 +2481,7 @@
         "page_count": 58,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2307,
+        "trace_payload_bytes": 2347,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2506,11 +2506,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.539,
-      "trace_id": "6f87a689-3351-4ffa-b43e-9ef6e10dd9d8",
+      "latency_ms": 4.753,
+      "trace_id": "f633b728-9f7e-4ef6-ad27-7fa3238b44fb",
       "candidates": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2586,13 +2586,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -2626,7 +2626,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5eaa7ba9-79a0-4500-baf6-515f095664bc",
+              "observation_id": "017db334-5e1d-4b90-9ce6-62a25542a224",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2635,7 +2635,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a6978579-a5fc-4039-910b-bcc91faed253",
+              "observation_id": "f3ef2127-5fc3-4fa4-8f14-900cc9d2c952",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2674,7 +2674,7 @@
         "page_count": 58,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4653,
+        "trace_payload_bytes": 4733,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2699,11 +2699,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.801,
-      "trace_id": "89afb46b-e026-4353-a91d-67bcad7a65f0",
+      "latency_ms": 4.032,
+      "trace_id": "f5106141-f017-49a5-a912-3cbcc12309d1",
       "candidates": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2779,13 +2779,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -2819,7 +2819,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5eaa7ba9-79a0-4500-baf6-515f095664bc",
+              "observation_id": "017db334-5e1d-4b90-9ce6-62a25542a224",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2828,7 +2828,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a6978579-a5fc-4039-910b-bcc91faed253",
+              "observation_id": "f3ef2127-5fc3-4fa4-8f14-900cc9d2c952",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2837,7 +2837,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "63771936-54a5-48c5-a99f-349b07f7526e",
+              "observation_id": "12dee0cd-c4b2-43ca-80a3-7c17eeb83e7d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2876,7 +2876,7 @@
         "page_count": 59,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6997,
+        "trace_payload_bytes": 7117,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2901,11 +2901,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.063,
-      "trace_id": "203f3044-73de-43ca-b7f2-f16295a7c1b4",
+      "latency_ms": 4.078,
+      "trace_id": "88abe14b-9f84-4333-9572-e9de3e8e1a20",
       "candidates": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2985,13 +2985,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "efcf0333-1aae-44ba-a4e1-3de65db422db",
+          "memory_id": "16fb3e1f-f345-42a9-8af3-ae70cd77ef2f",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -3025,7 +3025,7 @@
           ],
           "observations": [
             {
-              "observation_id": "5eaa7ba9-79a0-4500-baf6-515f095664bc",
+              "observation_id": "017db334-5e1d-4b90-9ce6-62a25542a224",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3034,7 +3034,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a6978579-a5fc-4039-910b-bcc91faed253",
+              "observation_id": "f3ef2127-5fc3-4fa4-8f14-900cc9d2c952",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3043,7 +3043,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "63771936-54a5-48c5-a99f-349b07f7526e",
+              "observation_id": "12dee0cd-c4b2-43ca-80a3-7c17eeb83e7d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3052,7 +3052,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "a1f55ef2-e0ef-458c-b1b7-c14496b63218",
+              "observation_id": "eb241e99-846b-4769-9fb4-dbc3e3e9420c",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3091,7 +3091,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 9366,
+        "trace_payload_bytes": 9526,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3118,11 +3118,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.44,
-      "trace_id": "c7704d95-91a7-46e7-b001-73eb2b6552fe",
+      "latency_ms": 4.725,
+      "trace_id": "eb25d766-e779-46cd-ba40-2f53eb8a938d",
       "candidates": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3197,13 +3197,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -3232,7 +3232,7 @@
           ],
           "observations": [
             {
-              "observation_id": "a60fc31f-711d-4e56-ad01-b28c7166d109",
+              "observation_id": "b0e5b150-9ec0-4158-891d-9dbb4c92e0ce",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3264,7 +3264,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2213,
+        "trace_payload_bytes": 2253,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3289,11 +3289,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.325,
-      "trace_id": "ff14aedc-974a-423d-acb3-169054928cca",
+      "latency_ms": 5.27,
+      "trace_id": "800ebfd8-6b02-4545-8834-280e25a086ed",
       "candidates": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3369,13 +3369,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -3409,7 +3409,7 @@
           ],
           "observations": [
             {
-              "observation_id": "a60fc31f-711d-4e56-ad01-b28c7166d109",
+              "observation_id": "b0e5b150-9ec0-4158-891d-9dbb4c92e0ce",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3418,7 +3418,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "fe45a49a-bd44-4d5d-8152-39da1eb04eee",
+              "observation_id": "f03650d6-9c58-40bd-9100-59585f8c5d4f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3456,7 +3456,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4476,
+        "trace_payload_bytes": 4556,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3481,11 +3481,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.489,
-      "trace_id": "370d518f-bbdd-4dbc-8a43-7674abd96e76",
+      "latency_ms": 3.869,
+      "trace_id": "a51bc6e1-cc4b-495f-aed5-74b7f2abbc24",
       "candidates": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3561,13 +3561,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -3601,7 +3601,7 @@
           ],
           "observations": [
             {
-              "observation_id": "a60fc31f-711d-4e56-ad01-b28c7166d109",
+              "observation_id": "b0e5b150-9ec0-4158-891d-9dbb4c92e0ce",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3610,7 +3610,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "fe45a49a-bd44-4d5d-8152-39da1eb04eee",
+              "observation_id": "f03650d6-9c58-40bd-9100-59585f8c5d4f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3619,7 +3619,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "1c491662-831c-493b-92c3-996bdc8ee693",
+              "observation_id": "b910e8bc-780e-42fa-b49e-12c04354e0cf",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3657,7 +3657,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6737,
+        "trace_payload_bytes": 6857,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3682,11 +3682,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.368,
-      "trace_id": "04ca5201-2e1d-4c73-94b9-ae7290c3b317",
+      "latency_ms": 3.536,
+      "trace_id": "83437943-c85c-4895-b965-40905925287a",
       "candidates": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3762,13 +3762,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "92dd9270-43ec-4c47-bdb1-e261c3367eef",
+          "memory_id": "86c218cd-a0cc-422f-a849-53d32fe40be7",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -3802,7 +3802,7 @@
           ],
           "observations": [
             {
-              "observation_id": "a60fc31f-711d-4e56-ad01-b28c7166d109",
+              "observation_id": "b0e5b150-9ec0-4158-891d-9dbb4c92e0ce",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3811,7 +3811,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "fe45a49a-bd44-4d5d-8152-39da1eb04eee",
+              "observation_id": "f03650d6-9c58-40bd-9100-59585f8c5d4f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3820,7 +3820,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "1c491662-831c-493b-92c3-996bdc8ee693",
+              "observation_id": "b910e8bc-780e-42fa-b49e-12c04354e0cf",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3829,7 +3829,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "96b16b14-9555-464d-9a9d-4989bd20e49f",
+              "observation_id": "ba607d66-61df-4774-a6b4-13897dcab52f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3867,7 +3867,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 10544,
+        "trace_payload_bytes": 10704,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3892,11 +3892,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.109,
-      "trace_id": "492f97fd-e79d-4935-b09f-9e3ad22e6814",
+      "latency_ms": 3.757,
+      "trace_id": "96850357-da31-4ec0-85fa-e7cbbc0fa6ae",
       "candidates": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3971,13 +3971,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -4006,7 +4006,7 @@
           ],
           "observations": [
             {
-              "observation_id": "134c1b63-4352-4c62-9137-e75107a26bd2",
+              "observation_id": "a4a5bf93-ce78-43d5-a905-f33ceb3d6d76",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4038,7 +4038,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2213,
+        "trace_payload_bytes": 2253,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4063,11 +4063,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.64,
-      "trace_id": "9b58d3cf-d572-4552-99bc-dfdadb6a8fe4",
+      "latency_ms": 3.887,
+      "trace_id": "fcc474e1-6056-404b-98d2-1d0df1fcc50b",
       "candidates": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4143,13 +4143,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -4183,7 +4183,7 @@
           ],
           "observations": [
             {
-              "observation_id": "134c1b63-4352-4c62-9137-e75107a26bd2",
+              "observation_id": "a4a5bf93-ce78-43d5-a905-f33ceb3d6d76",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4192,7 +4192,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "40e0369f-b3ce-4728-b176-856607be58d2",
+              "observation_id": "5452fc5a-682e-4de2-b1cd-91c9a92fe4e9",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4230,7 +4230,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4474,
+        "trace_payload_bytes": 4554,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4255,11 +4255,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.554,
-      "trace_id": "78116b16-9640-4109-bd24-16e68c8f7782",
+      "latency_ms": 4.549,
+      "trace_id": "6df37139-1afe-41e9-ac75-cd32a8586833",
       "candidates": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4335,13 +4335,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -4375,7 +4375,7 @@
           ],
           "observations": [
             {
-              "observation_id": "134c1b63-4352-4c62-9137-e75107a26bd2",
+              "observation_id": "a4a5bf93-ce78-43d5-a905-f33ceb3d6d76",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4384,7 +4384,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "40e0369f-b3ce-4728-b176-856607be58d2",
+              "observation_id": "5452fc5a-682e-4de2-b1cd-91c9a92fe4e9",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4393,7 +4393,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "4c3b0bc9-3cf4-4fcd-b632-3e31ae03e0fb",
+              "observation_id": "8cdf0449-2756-4010-9f6f-f901650c9c5f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4431,7 +4431,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6733,
+        "trace_payload_bytes": 6853,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4456,11 +4456,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.367,
-      "trace_id": "7490d439-acf0-4bc7-8373-d0b2e054aa2f",
+      "latency_ms": 3.826,
+      "trace_id": "8f820939-f081-4808-a273-8f69eede2fab",
       "candidates": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4536,13 +4536,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "c6347682-675a-4ad1-8627-45aef1e0b496",
+          "memory_id": "e2c95a11-3f9e-47bf-ac0d-9d2fc2db28a6",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -4576,7 +4576,7 @@
           ],
           "observations": [
             {
-              "observation_id": "134c1b63-4352-4c62-9137-e75107a26bd2",
+              "observation_id": "a4a5bf93-ce78-43d5-a905-f33ceb3d6d76",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4585,7 +4585,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "40e0369f-b3ce-4728-b176-856607be58d2",
+              "observation_id": "5452fc5a-682e-4de2-b1cd-91c9a92fe4e9",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4594,7 +4594,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "4c3b0bc9-3cf4-4fcd-b632-3e31ae03e0fb",
+              "observation_id": "8cdf0449-2756-4010-9f6f-f901650c9c5f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4603,7 +4603,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "ecf71c03-30d8-41f4-867b-8a418183d9d9",
+              "observation_id": "5d0e78ae-314c-415e-852a-1403e783d89d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4641,7 +4641,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 8997,
+        "trace_payload_bytes": 9157,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4666,11 +4666,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.063,
-      "trace_id": "8d473833-622d-4ca9-90dd-aa69b2963f3a",
+      "latency_ms": 3.866,
+      "trace_id": "bbfbdb88-efdf-4eb3-8a08-00aa237f5c63",
       "candidates": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4745,13 +4745,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -4780,7 +4780,7 @@
           ],
           "observations": [
             {
-              "observation_id": "d20fffee-65d8-4282-9c98-c2879287e4e5",
+              "observation_id": "57144888-ebfa-46e1-a881-3c8c7cb1da1c",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4812,7 +4812,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2213,
+        "trace_payload_bytes": 2253,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4837,11 +4837,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.633,
-      "trace_id": "56fd0d3d-2e61-41a5-a243-f54cefa403bb",
+      "latency_ms": 3.772,
+      "trace_id": "28d03e20-bca4-4721-9b7a-b43542686d27",
       "candidates": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4885,7 +4885,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 3,
             "memory_state": "confirmed",
@@ -4917,13 +4917,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -4957,7 +4957,7 @@
           ],
           "observations": [
             {
-              "observation_id": "d20fffee-65d8-4282-9c98-c2879287e4e5",
+              "observation_id": "57144888-ebfa-46e1-a881-3c8c7cb1da1c",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4966,7 +4966,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cf91e906-b9fe-4552-93be-4c961269a197",
+              "observation_id": "a8ec7722-5135-480a-9730-e08df9b6d826",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5004,7 +5004,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4501,
+        "trace_payload_bytes": 4581,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -5029,11 +5029,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.814,
-      "trace_id": "b7ba23bd-8eb1-42b8-ad55-b1e45943cd76",
+      "latency_ms": 3.899,
+      "trace_id": "d0dd04ff-28b7-4d24-8a64-e7339edb6c34",
       "candidates": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -5077,7 +5077,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 6,
             "memory_state": "confirmed",
@@ -5109,13 +5109,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -5149,7 +5149,7 @@
           ],
           "observations": [
             {
-              "observation_id": "d20fffee-65d8-4282-9c98-c2879287e4e5",
+              "observation_id": "57144888-ebfa-46e1-a881-3c8c7cb1da1c",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -5158,7 +5158,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cf91e906-b9fe-4552-93be-4c961269a197",
+              "observation_id": "a8ec7722-5135-480a-9730-e08df9b6d826",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5167,7 +5167,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "688a36b8-4f0f-4e32-b5e9-206f4817f09e",
+              "observation_id": "64172690-375c-403e-b9d1-9ffdca0650ce",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5205,7 +5205,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6787,
+        "trace_payload_bytes": 6907,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -5230,11 +5230,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.651,
-      "trace_id": "50ae609f-21bc-4135-b81c-21bd54a45051",
+      "latency_ms": 6.163,
+      "trace_id": "c82ce134-a165-481c-b819-d7f3b7691680",
       "candidates": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -5278,7 +5278,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "not_required",
-            "positive_evidence_matches": "bigram:message today, token:today, token:message",
+            "positive_evidence_matches": "bigram:message today, token:message, token:today",
             "negative_evidence_matches": "",
             "context_evidence_count": 9,
             "memory_state": "confirmed",
@@ -5310,13 +5310,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "e350d98c-28d6-4ac9-840f-49934c500317",
+          "memory_id": "e9fddf26-99a0-4b0a-829d-f0f8ea260f6e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -5350,7 +5350,7 @@
           ],
           "observations": [
             {
-              "observation_id": "d20fffee-65d8-4282-9c98-c2879287e4e5",
+              "observation_id": "57144888-ebfa-46e1-a881-3c8c7cb1da1c",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -5359,7 +5359,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cf91e906-b9fe-4552-93be-4c961269a197",
+              "observation_id": "a8ec7722-5135-480a-9730-e08df9b6d826",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5368,7 +5368,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "688a36b8-4f0f-4e32-b5e9-206f4817f09e",
+              "observation_id": "64172690-375c-403e-b9d1-9ffdca0650ce",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5377,7 +5377,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "bb221aa3-0c18-4995-b826-ec392e6307d2",
+              "observation_id": "4dbdc1b7-f94a-490c-af87-c6d7ee7318ed",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5415,7 +5415,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 9077,
+        "trace_payload_bytes": 9237,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -5440,11 +5440,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.989,
-      "trace_id": "511853b7-d75c-46a1-a2d0-84a855dadb46",
+      "latency_ms": 3.823,
+      "trace_id": "4aaf0129-2cbd-4788-acf8-37d602ee621b",
       "candidates": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -5520,13 +5520,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.8333,
             "alpha": 5.0,
             "beta": 1.0,
@@ -5555,7 +5555,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f328d3de-e5c4-42c4-860d-d2b11f8977f4",
+              "observation_id": "2082db7b-beb1-4a47-b14c-a5dbc0267a34",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -5589,7 +5589,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 2306,
+        "trace_payload_bytes": 2346,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -5614,11 +5614,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.03,
-      "trace_id": "82d213e8-2a75-479a-82b9-35a8f2332993",
+      "latency_ms": 3.893,
+      "trace_id": "417604e1-f269-4e19-9866-177ba1b5a8bf",
       "candidates": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -5694,13 +5694,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.875,
             "alpha": 7.0,
             "beta": 1.0,
@@ -5734,7 +5734,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f328d3de-e5c4-42c4-860d-d2b11f8977f4",
+              "observation_id": "2082db7b-beb1-4a47-b14c-a5dbc0267a34",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -5743,7 +5743,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "153812d0-5887-444f-88ce-a5261d63aed0",
+              "observation_id": "52ff7a29-86a9-4adf-8191-94268454941b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5782,7 +5782,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4651,
+        "trace_payload_bytes": 4731,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -5807,11 +5807,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.021,
-      "trace_id": "cba91833-43dc-43e2-bb0f-af912252de89",
+      "latency_ms": 3.989,
+      "trace_id": "ed221fdc-f9e0-4d5c-923f-edcb6ac17f86",
       "candidates": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -5887,13 +5887,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9,
             "alpha": 9.0,
             "beta": 1.0,
@@ -5927,7 +5927,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f328d3de-e5c4-42c4-860d-d2b11f8977f4",
+              "observation_id": "2082db7b-beb1-4a47-b14c-a5dbc0267a34",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -5936,7 +5936,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "153812d0-5887-444f-88ce-a5261d63aed0",
+              "observation_id": "52ff7a29-86a9-4adf-8191-94268454941b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5945,7 +5945,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "12b18cc2-c45b-4b56-98ef-84e2c8e19afd",
+              "observation_id": "bf447445-eab0-4933-b631-3de6b1574b8f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -5984,7 +5984,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6994,
+        "trace_payload_bytes": 7114,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -6009,11 +6009,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.174,
-      "trace_id": "bc8f64a8-a9c1-48e3-b8db-b12b5503bd22",
+      "latency_ms": 4.913,
+      "trace_id": "b17e530b-35d0-4432-b038-f3811a80eeac",
       "candidates": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -6093,13 +6093,13 @@
       },
       "memory_state": [
         {
-          "memory_id": "df5f9a37-c764-475a-8285-6bdcaeb98f05",
+          "memory_id": "67d21682-1fd8-4e5f-8ebb-eea02104bf26",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
           "trust_profile": {
             "method": "weighted_beta_posterior",
-            "policy_version": "2026-09-06-hybrid-v5-calibrated-shadow",
+            "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
             "posterior_mean": 0.9167,
             "alpha": 11.0,
             "beta": 1.0,
@@ -6133,7 +6133,7 @@
           ],
           "observations": [
             {
-              "observation_id": "f328d3de-e5c4-42c4-860d-d2b11f8977f4",
+              "observation_id": "2082db7b-beb1-4a47-b14c-a5dbc0267a34",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -6142,7 +6142,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "153812d0-5887-444f-88ce-a5261d63aed0",
+              "observation_id": "52ff7a29-86a9-4adf-8191-94268454941b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -6151,7 +6151,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "12b18cc2-c45b-4b56-98ef-84e2c8e19afd",
+              "observation_id": "bf447445-eab0-4933-b631-3de6b1574b8f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -6160,7 +6160,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "14f281ab-e1b7-4fad-8f09-aa8805f35f93",
+              "observation_id": "791c0ab1-836a-4aa3-a9ed-a1682c875999",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -6199,7 +6199,7 @@
         "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 9365,
+        "trace_payload_bytes": 9525,
         "rows": {
           "memories": 1,
           "memory_variants": 1,

@@ -1,0 +1,1586 @@
+[
+  {
+    "journey_id": "feedback-resolves-contextual-collision",
+    "normal": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Review the Kiwi deployment.",
+          "expected_output": "Review the Kiwi deployment.",
+          "expected_action": "suggest",
+          "actual_output": "Review the Kiwi deployment.",
+          "actual_action": "suggest",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "a6aef207-d4c3-4c8b-8ad1-44f237c1ac8a",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 11,
+              "end": 15,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            },
+            {
+              "memory_id": "82a7c0aa-2be0-4433-86f3-3f4005271dd8",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 11,
+              "end": 15,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        },
+        {
+          "event_index": 1,
+          "input": "Inspect the Kiwi deployment.",
+          "expected_output": "Inspect the Kivi deployment.",
+          "expected_action": "apply",
+          "actual_output": "Inspect the Kivi deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "a6aef207-d4c3-4c8b-8ad1-44f237c1ac8a",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "POSITIVE_CONTEXT_EVIDENCE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "CONFLICT_RESOLVED_BY_CONTEXT"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.875,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 2,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.7645,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.5416,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.9058,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.9058,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "token:deployment",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 2,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.7645
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "82a7c0aa-2be0-4433-86f3-3f4005271dd8",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": -0.7645
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 225280,
+        "page_count": 55,
+        "page_size": 4096,
+        "vector_payload_bytes": 8097,
+        "trace_payload_bytes": 9854,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 3,
+          "context_evidence": 2,
+          "context_embeddings": 1,
+          "decisions": 2,
+          "memory_versions": 3,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "reversed": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Review the Kiwi deployment.",
+          "expected_output": "Review the Kiwi deployment.",
+          "expected_action": "suggest",
+          "actual_output": "Review the Kiwi deployment.",
+          "actual_action": "suggest",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "bd51e58a-2107-42bc-8363-1fce5eba1d51",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 11,
+              "end": 15,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            },
+            {
+              "memory_id": "4245b724-106f-49bc-a8e0-c782fd5fdfbb",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 11,
+              "end": 15,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        },
+        {
+          "event_index": 1,
+          "input": "Inspect the Kiwi deployment.",
+          "expected_output": "Inspect the Kivi deployment.",
+          "expected_action": "apply",
+          "actual_output": "Inspect the Kivi deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "bd51e58a-2107-42bc-8363-1fce5eba1d51",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "POSITIVE_CONTEXT_EVIDENCE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "CONFLICT_RESOLVED_BY_CONTEXT"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.875,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 2,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.7645,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.5416,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.9058,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.9058,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "token:deployment",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 2,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.7645
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "4245b724-106f-49bc-a8e0-c782fd5fdfbb",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": -0.7645
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 225280,
+        "page_count": 55,
+        "page_size": 4096,
+        "vector_payload_bytes": 8097,
+        "trace_payload_bytes": 9855,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 3,
+          "context_evidence": 2,
+          "context_embeddings": 1,
+          "decisions": 2,
+          "memory_versions": 3,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "insertion_order_deterministic": true
+  },
+  {
+    "journey_id": "unresolved-tie-never-silently-chooses",
+    "normal": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Mention Kiwi tomorrow.",
+          "expected_output": "Mention Kiwi tomorrow.",
+          "expected_action": "suggest",
+          "actual_output": "Mention Kiwi tomorrow.",
+          "actual_action": "suggest",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "912506f9-467e-44de-b5ad-17ec748f9fde",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 8,
+              "end": 12,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            },
+            {
+              "memory_id": "616569cd-c529-49f4-b5d9-d2af73939f8e",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 8,
+              "end": 12,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 212992,
+        "page_count": 52,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 4112,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "reversed": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Mention Kiwi tomorrow.",
+          "expected_output": "Mention Kiwi tomorrow.",
+          "expected_action": "suggest",
+          "actual_output": "Mention Kiwi tomorrow.",
+          "actual_action": "suggest",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "1fe3502c-ba0f-45fc-ae06-d0e39e128a6c",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 8,
+              "end": 12,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            },
+            {
+              "memory_id": "9abe77f2-3649-4062-b462-8626028af546",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 8,
+              "end": 12,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.0
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 212992,
+        "page_count": 52,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 4112,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "insertion_order_deterministic": true
+  },
+  {
+    "journey_id": "learned-context-selects-collision-winner",
+    "normal": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Inspect the Kiwi platform deployment.",
+          "expected_output": "Inspect the Kivi platform deployment.",
+          "expected_action": "apply",
+          "actual_output": "Inspect the Kivi platform deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "b250bec2-1ea3-4afb-b710-a554f8f3fa79",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "POSITIVE_CONTEXT_EVIDENCE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "CONFLICT_RESOLVED_BY_CONTEXT"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.7892,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.7892,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.9148,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.9148,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "bigram:platform deployment, token:platform, token:deployment",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 4,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.7855
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "ea474495-1cf8-4ee7-a17e-237d9ebfd27f",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0037,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.6015,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.6015,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 4,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": -0.7855
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 229376,
+        "page_count": 56,
+        "page_size": 4096,
+        "vector_payload_bytes": 16157,
+        "trace_payload_bytes": 5878,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 8,
+          "context_embeddings": 2,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "reversed": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Inspect the Kiwi platform deployment.",
+          "expected_output": "Inspect the Kivi platform deployment.",
+          "expected_action": "apply",
+          "actual_output": "Inspect the Kivi platform deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "c8cd3257-23c3-431d-8bec-3ef78a5c58a9",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "POSITIVE_CONTEXT_EVIDENCE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "CONFLICT_RESOLVED_BY_CONTEXT"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.7892,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.7892,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.9148,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.9148,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "bigram:platform deployment, token:platform, token:deployment",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 4,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": 0.7855
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "6badab1c-8b35-41af-b267-c19a096422d6",
+              "canonical_form": "Kiwi Labs",
+              "input_span": "Kiwi",
+              "output_span": "Kiwi Labs",
+              "start": 12,
+              "end": 16,
+              "score": 1.0,
+              "action": "suggest",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH",
+                "SEMANTIC_CONTEXT_PROFILE",
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "blockers": [
+                "INSUFFICIENT_WINNER_MARGIN"
+              ],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0037,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.6015,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.6015,
+                "semantic_positive_observations": 1,
+                "semantic_negative_observations": 0,
+                "semantic_model": "BAAI/bge-small-en-v1.5",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 4,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact",
+                "conflict_context_advantage": -0.7855
+              },
+              "counterfactual": {
+                "reason_code": "INSUFFICIENT_WINNER_MARGIN",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [
+                  "INSUFFICIENT_WINNER_MARGIN"
+                ],
+                "minimum_change": "clear blocker INSUFFICIENT_WINNER_MARGIN"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 229376,
+        "page_count": 56,
+        "page_size": 4096,
+        "vector_payload_bytes": 16157,
+        "trace_payload_bytes": 5878,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 8,
+          "context_embeddings": 2,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "insertion_order_deterministic": true
+  },
+  {
+    "journey_id": "multiple-independent-memories-apply",
+    "normal": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Ask Aditya to review the Kiwi deployment.",
+          "expected_output": "Ask Aaditya to review the Kivi deployment.",
+          "expected_action": "apply",
+          "actual_output": "Ask Aaditya to review the Kivi deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "fb9ac24b-61b0-4bee-9e53-d6b14cd504f2",
+              "canonical_form": "Aaditya",
+              "input_span": "Aditya",
+              "output_span": "Aaditya",
+              "start": 4,
+              "end": 10,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact"
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "16237c99-1be4-447c-9bbf-984034af9073",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 25,
+              "end": 29,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact"
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 212992,
+        "page_count": 52,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6779,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "reversed": {
+      "events": [
+        {
+          "event_index": 0,
+          "input": "Ask Aditya to review the Kiwi deployment.",
+          "expected_output": "Ask Aaditya to review the Kivi deployment.",
+          "expected_action": "apply",
+          "actual_output": "Ask Aaditya to review the Kivi deployment.",
+          "actual_action": "apply",
+          "exact": true,
+          "action_matches": true,
+          "wrong_intervention": false,
+          "candidates": [
+            {
+              "memory_id": "3999881f-ee16-4692-ac49-2aa861755579",
+              "canonical_form": "Aaditya",
+              "input_span": "Aditya",
+              "output_span": "Aaditya",
+              "start": 4,
+              "end": 10,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact"
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            },
+            {
+              "memory_id": "842df7d0-7391-48ea-b0ab-222f543d1e58",
+              "canonical_form": "Kivi",
+              "input_span": "Kiwi",
+              "output_span": "Kivi",
+              "start": 25,
+              "end": 29,
+              "score": 1.0,
+              "action": "apply",
+              "reason_codes": [
+                "EXACT_CANDIDATE",
+                "PHONETIC_MATCH"
+              ],
+              "blockers": [],
+              "features": {
+                "string_similarity": 1.0,
+                "lexical_signal": 1.0,
+                "phonetic_match": true,
+                "asr_alternative_confidence": 0.0,
+                "asr_provider": "",
+                "asr_model": "",
+                "asr_rank": 1,
+                "asr_provider_confidence": "not_supplied",
+                "asr_reliability_state": "not_supplied",
+                "asr_reliability_observations": 0,
+                "asr_reliability_accepted": 0,
+                "asr_reliability_rejected": 0,
+                "asr_reliability_posterior": 0.0,
+                "asr_reliability_contribution": 0.0,
+                "memory_trust_posterior": 0.8333,
+                "memory_authorized": true,
+                "memory_trust_positive_events": 1,
+                "memory_trust_negative_events": 0,
+                "memory_trust_reason": "STABLE",
+                "positive_context_similarity": 0.0,
+                "negative_context_similarity": 0.0,
+                "sparse_positive_similarity": 0.0,
+                "sparse_negative_similarity": 0.0,
+                "semantic_positive_similarity": 0.0,
+                "semantic_negative_similarity": 0.0,
+                "semantic_margin": 0.0,
+                "semantic_positive_observations": 0,
+                "semantic_negative_observations": 0,
+                "semantic_model": "not_required",
+                "positive_evidence_matches": "",
+                "negative_evidence_matches": "",
+                "context_evidence_count": 0,
+                "memory_state": "confirmed",
+                "scope_mode": "global",
+                "match_method": "exact"
+              },
+              "counterfactual": {
+                "reason_code": "ELIGIBLE_AND_SELECTED",
+                "apply_threshold": 0.93,
+                "score_gap_to_apply": 0.0,
+                "blocking_conditions": [],
+                "minimum_change": "none"
+              }
+            }
+          ]
+        }
+      ],
+      "database": {
+        "allocated_bytes": 212992,
+        "page_count": 52,
+        "page_size": 4096,
+        "vector_payload_bytes": 0,
+        "trace_payload_bytes": 6779,
+        "rows": {
+          "memories": 2,
+          "memory_variants": 2,
+          "observations": 2,
+          "context_evidence": 0,
+          "context_embeddings": 0,
+          "decisions": 1,
+          "memory_versions": 2,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "insertion_order_deterministic": true
+  }
+]

@@ -1,7 +1,7 @@
 # Evaluation design
 
-LexiTrace uses five complementary suites plus a cross-suite policy-release gate. None is presented
-as external or production accuracy.
+LexiTrace uses six behavioral suites, a local soak, and a cross-suite policy-release gate. None is
+presented as external or production accuracy.
 
 ## Smoke suite
 
@@ -59,6 +59,20 @@ The calibration split nominated `0.90` because it improved from 106/109 to 108/1
 intervention inside that split. The safety corpus exposed two wrong edits at that boundary, so the
 release gate rejected it and retained `0.93`. This visible negative result is intentional: a policy
 cannot buy recall by weakening the product's zero-wrong-intervention invariant.
+
+## Conflict journeys
+
+`data/benchmark/conflict_journeys.jsonl` covers an unresolved collision, feedback-driven
+resolution, two memories with distinct learned contexts, and multiple independent edits. Every
+journey is replayed with normal and reversed teaching order. The committed result requires exact
+output, exact action, zero wrong interventions, and identical behavior under both orders.
+
+## Local soak
+
+`evaluation/run_soak.py` executes 500 decisions in a disposable SQLite database. It verifies unique
+trace IDs and expected outputs while recording mean/p50/p95/p99 latency, row counts, allocated
+database growth, hosted requests, and failures. This is a bounded local engineering measurement,
+not a production load claim.
 
 ## Recorded evidence
 

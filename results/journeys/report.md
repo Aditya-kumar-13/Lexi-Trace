@@ -7,8 +7,8 @@ Journeys: **3**
 
 | System | Query exact match | Action accuracy | Wrong interventions | p95 latency |
 |---|---:|---:|---:|---:|
-| sparse_ablation | 83.3% | 66.7% | 0 | 8.173 ms |
-| hybrid | 100.0% | 100.0% | 0 | 101.005 ms |
+| sparse_ablation | 83.3% | 66.7% | 0 | 9.128 ms |
+| hybrid | 100.0% | 100.0% | 0 | 101.299 ms |
 
 ## Operational accounting
 
@@ -19,7 +19,7 @@ Journeys: **3**
 - Embedded input characters: **0**
 - Hosted requests: **0**
 - Estimated API cost: **$0.00**
-- Peak allocated SQLite bytes: **225280**
+- Peak allocated SQLite bytes: **221184**
 - Peak vector payload bytes: **0**
 
 ### hybrid

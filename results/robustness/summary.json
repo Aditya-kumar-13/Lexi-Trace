@@ -23,10 +23,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 26.987,
-        "p50": 3.77,
-        "p95": 72.559,
-        "p99": 75.413
+        "mean": 28.86,
+        "p50": 4.209,
+        "p95": 77.544,
+        "p99": 89.673
       }
     },
     "heldout": {
@@ -42,10 +42,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 28.749,
-        "p50": 3.73,
-        "p95": 72.138,
-        "p99": 78.104
+        "mean": 30.447,
+        "p50": 4.359,
+        "p95": 78.973,
+        "p99": 83.204
       }
     }
   },
@@ -60,7 +60,7 @@
   },
   "database": {
     "peak_allocated_bytes": 221184,
-    "peak_trace_payload_bytes": 6871,
+    "peak_trace_payload_bytes": 6911,
     "peak_rows": {
       "memories": 2,
       "memory_variants": 2,
@@ -124,10 +124,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 27.987,
-        "p50": 3.77,
-        "p95": 72.138,
-        "p99": 77.59
+        "mean": 29.76,
+        "p50": 4.24,
+        "p95": 77.711,
+        "p99": 83.935
       }
     }
   }

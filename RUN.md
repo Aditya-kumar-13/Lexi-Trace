@@ -24,6 +24,8 @@ No environment variable is required for the primary path. Defaults are built in 
 | `LEXITRACE_SEMANTIC_ENABLED` | Enable local context embeddings | `true` |
 | `LEXITRACE_SEMANTIC_MODEL` | FastEmbed model | `BAAI/bge-small-en-v1.5` |
 | `LEXITRACE_SEMANTIC_CACHE_DIR` | Local model cache | `./data/models` |
+| `LEXITRACE_SEMANTIC_THREADS` | Local ONNX worker threads | `1` |
+| `LEXITRACE_MAX_REQUEST_BYTES` | Declared HTTP payload limit | `65536` |
 | `LEXITRACE_POLICY_PATH` | Optional versioned policy override | unset |
 | `VITE_API_BASE_URL` | Browser API base URL | `http://localhost:8000` |
 
@@ -75,6 +77,12 @@ http://localhost:8000/docs.
 5. Open the memory detail, evidence, and history views; reject or confirm an intervention.
 6. Reset the demo and confirm that memories, observations, and traces disappear.
 
+For a disposable reviewer demonstration that creates its own temporary database:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/reviewer_demo.py
+```
+
 ## Run the evaluations
 
 Run the 28-case smoke suite against the complete hybrid product:
@@ -107,6 +115,18 @@ Run event-derived memory lifecycle journeys and the no-lifecycle ablation:
 .\.venv\Scripts\python.exe evaluation/run_lifecycle.py
 ```
 
+Run conflict learning in both memory insertion orders:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run_conflicts.py
+```
+
+Run the 500-decision local soak:
+
+```powershell
+.\.venv\Scripts\python.exe evaluation/run_soak.py
+```
+
 Freeze a threshold candidate from calibration data and run the safety release gate:
 
 ```powershell
@@ -133,10 +153,17 @@ dataset version:
 - `results/asr-learning`: learned-ASR/no-learning comparison and precision/coverage curve
 - `results/lifecycle`: event-lifecycle/no-lifecycle comparison with per-event posterior evidence
 - `results/calibration`: frozen threshold search, safety gate, and rollback boundaries
+- `results/conflicts`: collision learning, multi-edit, and insertion-order evidence
+- `results/soak`: sustained latency, trace uniqueness, failures, and database growth
 - `data/lexitrace.db`: persistent SQLite memory state
 - `GET /api/v1/memories`: current memory state
 - `GET /api/v1/memories/{memory_id}/asr-evidence`: immutable provider-linked outcomes
 - `GET /api/v1/decisions/{trace_id}`: persisted decision explanation
+- `GET /api/v1/conflicts`: current surface and phonetic collision groups
+- `GET /api/v1/metrics`: content-free request counters and mean route latency
+- `GET /api/v1/users/{user_id}/export`: portable memory definitions
+- `POST /api/v1/users/{user_id}/import`: merge or replace portable definitions
+- `DELETE /api/v1/users/{user_id}`: complete user-state deletion
 
 Every evaluated case retains the input, expected and actual behavior, relevant memory and
 observation provenance, reason codes, blockers, database allocation, model calls, API cost, and

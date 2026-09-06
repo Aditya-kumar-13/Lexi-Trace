@@ -27,6 +27,7 @@ REQUIRED_PATHS = [
     "data/benchmark/journeys.jsonl",
     "data/benchmark/asr_journeys.jsonl",
     "data/benchmark/lifecycle_journeys.jsonl",
+    "data/benchmark/conflict_journeys.jsonl",
     "results/latest/summary.json",
     "results/latest/cases.jsonl",
     "results/robustness/summary.json",
@@ -39,6 +40,13 @@ REQUIRED_PATHS = [
     "results/lifecycle/cases.json",
     "results/calibration/policy.json",
     "results/calibration/report.md",
+    "results/conflicts/summary.json",
+    "results/conflicts/cases.json",
+    "results/conflicts/report.md",
+    "results/soak/summary.json",
+    "results/soak/failures.json",
+    "results/soak/report.md",
+    "scripts/reviewer_demo.py",
     "docs/brief-alignment.md",
     "docs/evaluation.md",
 ]
@@ -53,8 +61,11 @@ RUN_TOKENS = [
     "evaluation/run_asr_learning.py",
     "evaluation/run_lifecycle.py",
     "evaluation/calibrate_policy.py",
+    "evaluation/run_conflicts.py",
+    "evaluation/run_soak.py",
     "data/benchmark/robustness.jsonl",
     "results/robustness",
+    "scripts/reviewer_demo.py",
     "api/v1/reset",
     "docker compose down --volumes",
 ]
@@ -157,6 +168,31 @@ def check_calibration_artifact(checks: list[dict]) -> None:
     )
 
 
+def check_soak_artifact(checks: list[dict]) -> None:
+    path = ROOT / "results" / "soak" / "summary.json"
+    if not path.exists():
+        add(checks, "local_soak", False, "summary.json is missing")
+        return
+    summary = json.loads(path.read_text(encoding="utf-8"))
+    passed = (
+        summary["iterations"] >= 500
+        and summary["unique_traces"] == summary["iterations"]
+        and summary["failures"] == 0
+        and summary["hosted_requests"] == 0
+    )
+    add(
+        checks,
+        "local_soak",
+        passed,
+        "iterations={}, unique_traces={}, failures={}, p95_ms={}".format(
+            summary["iterations"],
+            summary["unique_traces"],
+            summary["failures"],
+            summary["latency_ms"]["p95"],
+        ),
+    )
+
+
 def main() -> None:
     checks: list[dict] = []
     missing = [path for path in REQUIRED_PATHS if not (ROOT / path).exists()]
@@ -212,10 +248,12 @@ def main() -> None:
         "results/journeys",
         "results/asr-learning",
         "results/lifecycle",
+        "results/conflicts",
     ):
         check_results(checks, result_dir)
 
     check_calibration_artifact(checks)
+    check_soak_artifact(checks)
 
     secret_findings = scan_for_secrets()
     add(checks, "credential_scan", not secret_findings, "findings=" + repr(secret_findings))

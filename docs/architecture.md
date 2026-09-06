@@ -85,6 +85,30 @@ Every candidate also receives a counterfactual explanation: the active threshold
 blocking conditions, and the minimum condition that would have to change. These explanations are
 mechanical descriptions of the actual decision path, not generated prose.
 
+## Conflict arbitration
+
+Surface and phonetic routes shared by multiple canonical memories are exposed as collision groups.
+Candidate ordering is canonical and deterministic, so database insertion order cannot decide the
+winner. If overlapping candidates fall inside the winner margin, a memory may win only when its
+positive-minus-negative learned context exceeds every competitor by the configured conflict
+advantage. Otherwise every competing edit remains a suggestion.
+
+Feedback targets one exact memory and span. Its observation becomes context evidence for that
+route, allowing a later similar sentence to resolve without a hard-coded word rule. Explicit merge
+combines aliases and copies immutable evidence under auditable merge event IDs before deleting the
+duplicate memory. Non-overlapping winners are applied from right to left so offsets remain stable.
+
+## Local operations and privacy
+
+SQLite connections enable foreign keys, WAL, normal synchronous mode, and a five-second busy wait.
+API middleware assigns request IDs, rejects declared oversized payloads, and records aggregate
+route counts, errors, and mean latency without storing transcript content. Validation and HTTP
+errors use a stable envelope containing a code, message, and request ID.
+
+Portable export contains only memory definitions, aliases, state, scope, and explicit context
+lists. Transcript observations, vectors, traces, and provider outcomes are deliberately excluded.
+Complete user deletion removes decisions, observations, memories, and their cascading evidence.
+
 ## Safety policy
 
 Retrieval is not permission to edit. The following blockers prevent automatic application:

@@ -1,0 +1,28 @@
+{
+  "iterations": 500,
+  "unique_traces": 500,
+  "failures": 0,
+  "latency_ms": {
+    "mean": 3.663,
+    "p50": 3.522,
+    "p95": 4.728,
+    "p99": 5.629
+  },
+  "database": {
+    "before_bytes": 208896,
+    "after_bytes": 1978368,
+    "growth_bytes": 1769472,
+    "rows": {
+      "memories": 2,
+      "memory_variants": 2,
+      "observations": 2,
+      "context_evidence": 0,
+      "context_embeddings": 0,
+      "decisions": 500,
+      "memory_versions": 2,
+      "asr_outcomes": 0
+    }
+  },
+  "hosted_requests": 0,
+  "estimated_api_cost_usd": 0.0
+}
