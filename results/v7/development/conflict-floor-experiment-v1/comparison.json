@@ -1,0 +1,50 @@
+{
+  "dataset": "data/benchmark/v7_semantic_safety_development.jsonl",
+  "dataset_sha256": "c4a02d40e27a47cf7ce4518a702e78cae5bdfe04050690673f9ac5818dba8157",
+  "dataset_role": "exploratory_development",
+  "retrieval_mode": "nearest_example",
+  "auto_lifecycle_enabled": false,
+  "floors": [
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "selection_rule": "zero wrong interventions, then maximum exact-match rate, then the least restrictive floor",
+  "runs": [
+    {
+      "floor": 0.15,
+      "exact_match_rate": 0.9231,
+      "action_accuracy": 0.9231,
+      "wrong_interventions": 1,
+      "summary": "floor-0.15/summary.json",
+      "cases": "floor-0.15/cases.json"
+    },
+    {
+      "floor": 0.2,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "summary": "floor-0.20/summary.json",
+      "cases": "floor-0.20/cases.json"
+    },
+    {
+      "floor": 0.25,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "summary": "floor-0.25/summary.json",
+      "cases": "floor-0.25/cases.json"
+    },
+    {
+      "floor": 0.3,
+      "exact_match_rate": 0.9231,
+      "action_accuracy": 0.9231,
+      "wrong_interventions": 0,
+      "summary": "floor-0.30/summary.json",
+      "cases": "floor-0.30/cases.json"
+    }
+  ],
+  "selected_development_candidate": 0.2,
+  "promotion_status": "not_promoted"
+}

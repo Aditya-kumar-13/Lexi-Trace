@@ -58,6 +58,11 @@ def parse_args() -> argparse.Namespace:
         choices=("centroid", "nearest_example"),
         default="centroid",
     )
+    parser.add_argument(
+        "--minimum-conflict-positive-context",
+        type=float,
+        default=0.15,
+    )
     return parser.parse_args()
 
 
@@ -154,6 +159,7 @@ def full_system(
     semantic_encoder,
     asr_confidence_mode: str = "legacy_double",
     semantic_retrieval_mode: str = "centroid",
+    minimum_conflict_positive_context: float = 0.15,
 ) -> dict[str, Any]:
     _, response = infer(
         session,
@@ -165,6 +171,7 @@ def full_system(
         semantic_encoder=semantic_encoder,
         asr_confidence_mode=asr_confidence_mode,
         semantic_retrieval_mode=semantic_retrieval_mode,
+        minimum_conflict_positive_context=minimum_conflict_positive_context,
     )
     return {
         "output": response["memory_aware_text"],
@@ -379,6 +386,7 @@ def main() -> None:
                         semantic_encoder,
                         args.asr_confidence_mode,
                         args.semantic_retrieval_mode,
+                        args.minimum_conflict_positive_context,
                     ),
                 }
                 for result in systems.values():
@@ -418,6 +426,7 @@ def main() -> None:
         else str(dataset_path),
         "dataset_sha256": dataset_hash,
         "case_count": len(cases),
+        "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
         "dataset_versions": sorted({case.get("dataset_version", "unspecified") for case in cases}),
         "split_counts": {
             split: sum(row["split"] == split for row in rows) for split in split_names

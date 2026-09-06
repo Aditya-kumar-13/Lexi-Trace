@@ -56,6 +56,7 @@ REQUIRED_PATHS = [
     "docs/v7-phase2-asr-confidence-experiment.md",
     "docs/v7-phase2-semantic-retrieval-experiment.md",
     "docs/v7-phase2-semantic-safety-findings.md",
+    "docs/v7-phase2-conflict-floor-experiment.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -64,6 +65,7 @@ REQUIRED_PATHS = [
     "results/v7/development/baseline-v6-instrumented/summary.json",
     "results/v7/development/baseline-v6-instrumented/failures.json",
     "scripts/freeze_v6_baseline.py",
+    "evaluation/run_conflict_floor_sweep.py",
     "scripts/holdout_guard.py",
     "scripts/run_quality_gate.py",
     "evaluation/run_v7_instrumentation.py",
@@ -80,6 +82,11 @@ REQUIRED_PATHS = [
     "results/v7/development/semantic-safety-experiment-v1/nearest-lifecycle-summary.json",
     "results/v7/development/semantic-safety-experiment-v1/centroid-fixed-summary.json",
     "results/v7/development/semantic-safety-experiment-v1/nearest-fixed-summary.json",
+    "results/v7/development/conflict-floor-experiment-v1/comparison.json",
+    "results/v7/development/conflict-floor-experiment-v1/combined-smoke-summary.json",
+    "results/v7/development/conflict-floor-experiment-v1/combined-robustness-summary.json",
+    "results/v7/development/conflict-floor-experiment-v1/combined-journeys-summary.json",
+    "results/v7/development/conflict-floor-experiment-v1/combined-multimodal-summary.json",
 ]
 RUN_TOKENS = [
     "Primary review method",

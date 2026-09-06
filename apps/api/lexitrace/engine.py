@@ -1719,6 +1719,8 @@ def _counterfactual(
 def _select_winners(
     source: list[TraceCandidate],
     thresholds: DecisionThresholds,
+    *,
+    minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
 ) -> tuple[list[TraceCandidate], list[TraceCandidate]]:
     candidates = [
         replace(
@@ -1771,7 +1773,7 @@ def _select_winners(
             candidate.features["conflict_context_advantage"] = round(context_advantage, 4)
             if (
                 float(candidate.features["positive_context_similarity"])
-                >= MIN_POSITIVE_CONTEXT_SIMILARITY
+                >= minimum_conflict_positive_context
                 and context_advantage >= MINIMUM_CONFLICT_CONTEXT_ADVANTAGE
             ):
                 candidate.reason_codes.append("CONFLICT_RESOLVED_BY_CONTEXT")
@@ -1819,6 +1821,7 @@ def infer(
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
     semantic_retrieval_mode: str = "centroid",
+    minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
     semantic_encoder: SemanticEncoder | None = None,
     shadow_policy: dict | None = None,
 ) -> tuple[Decision, dict]:
@@ -1965,14 +1968,24 @@ def infer(
         ),
     }
     active_thresholds = active_decision_thresholds()
-    candidates, winners = _select_winners(base_candidates, active_thresholds)
+    if not 0.0 <= minimum_conflict_positive_context <= 1.0:
+        raise ValueError("minimum_conflict_positive_context must be between 0 and 1")
+    candidates, winners = _select_winners(
+        base_candidates,
+        active_thresholds,
+        minimum_conflict_positive_context=minimum_conflict_positive_context,
+    )
     output = _render_winners(formatted_text, winners)
     action = _decision_action(candidates, winners)
 
     shadow: dict | None = None
     if shadow_policy is not None:
         shadow_thresholds = resolve_shadow_thresholds(shadow_policy)
-        shadow_candidates, shadow_winners = _select_winners(base_candidates, shadow_thresholds)
+        shadow_candidates, shadow_winners = _select_winners(
+            base_candidates,
+            shadow_thresholds,
+            minimum_conflict_positive_context=minimum_conflict_positive_context,
+        )
         shadow_output = _render_winners(formatted_text, shadow_winners)
         shadow_action = _decision_action(shadow_candidates, shadow_winners)
         shadow = {
@@ -1998,6 +2011,7 @@ def infer(
             "minimum_winner_margin": MINIMUM_WINNER_MARGIN,
             "minimum_conflict_context_advantage": MINIMUM_CONFLICT_CONTEXT_ADVANTAGE,
             "minimum_positive_context_similarity": MIN_POSITIVE_CONTEXT_SIMILARITY,
+            "minimum_conflict_positive_context": minimum_conflict_positive_context,
             "negative_context_block_threshold": NEGATIVE_CONTEXT_BLOCK_THRESHOLD,
             "asr_minimum_outcomes": ASR_MINIMUM_OUTCOMES,
         },

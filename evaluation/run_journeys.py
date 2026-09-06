@@ -58,6 +58,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Keep memory state fixed while still recording feedback evidence.",
     )
+    parser.add_argument(
+        "--minimum-conflict-positive-context",
+        type=float,
+        default=0.15,
+        help="Evaluation override for the absolute positive-context floor in a collision.",
+    )
     return parser.parse_args()
 
 
@@ -83,6 +89,7 @@ def run_journey(
     enable_learned_asr: bool = True,
     semantic_retrieval_mode: str = "centroid",
     enable_auto_lifecycle: bool = True,
+    minimum_conflict_positive_context: float = 0.15,
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -134,6 +141,7 @@ def run_journey(
             enable_learned_asr=enable_learned_asr,
             semantic_encoder=encoder,
             semantic_retrieval_mode=semantic_retrieval_mode,
+            minimum_conflict_positive_context=minimum_conflict_positive_context,
         )
         row = {
             "journey_id": journey["journey_id"],
@@ -310,6 +318,7 @@ def main() -> None:
                         encoder,
                         semantic_retrieval_mode=args.semantic_retrieval_mode,
                         enable_auto_lifecycle=not args.disable_auto_lifecycle,
+                        minimum_conflict_positive_context=(args.minimum_conflict_positive_context),
                     )
                 )
             all_rows[system_name] = system_rows
@@ -322,6 +331,7 @@ def main() -> None:
         "model": args.model,
         "semantic_retrieval_mode": args.semantic_retrieval_mode,
         "auto_lifecycle_enabled": not args.disable_auto_lifecycle,
+        "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
         "systems": {
             name: {
                 **metrics(rows),
