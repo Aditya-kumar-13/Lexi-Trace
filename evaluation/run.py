@@ -63,6 +63,11 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.15,
     )
+    parser.add_argument(
+        "--authorization-score-mode",
+        choices=("boolean", "posterior"),
+        default="boolean",
+    )
     return parser.parse_args()
 
 
@@ -160,6 +165,7 @@ def full_system(
     asr_confidence_mode: str = "legacy_double",
     semantic_retrieval_mode: str = "centroid",
     minimum_conflict_positive_context: float = 0.15,
+    authorization_score_mode: str = "boolean",
 ) -> dict[str, Any]:
     _, response = infer(
         session,
@@ -172,6 +178,7 @@ def full_system(
         asr_confidence_mode=asr_confidence_mode,
         semantic_retrieval_mode=semantic_retrieval_mode,
         minimum_conflict_positive_context=minimum_conflict_positive_context,
+        authorization_score_mode=authorization_score_mode,
     )
     return {
         "output": response["memory_aware_text"],
@@ -387,6 +394,7 @@ def main() -> None:
                         args.asr_confidence_mode,
                         args.semantic_retrieval_mode,
                         args.minimum_conflict_positive_context,
+                        args.authorization_score_mode,
                     ),
                 }
                 for result in systems.values():
@@ -427,6 +435,7 @@ def main() -> None:
         "dataset_sha256": dataset_hash,
         "case_count": len(cases),
         "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
+        "authorization_score_mode": args.authorization_score_mode,
         "dataset_versions": sorted({case.get("dataset_version", "unspecified") for case in cases}),
         "split_counts": {
             split: sum(row["split"] == split for row in rows) for split in split_names

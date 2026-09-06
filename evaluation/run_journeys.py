@@ -75,6 +75,11 @@ def parse_args() -> argparse.Namespace:
         choices=("exact_route", "model_route"),
         default="exact_route",
     )
+    parser.add_argument(
+        "--authorization-score-mode",
+        choices=("boolean", "posterior"),
+        default="boolean",
+    )
     return parser.parse_args()
 
 
@@ -103,6 +108,7 @@ def run_journey(
     minimum_conflict_positive_context: float = 0.15,
     feedback_scope_mode: str = "legacy",
     asr_reliability_mode: str = "exact_route",
+    authorization_score_mode: str = "boolean",
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -153,6 +159,7 @@ def run_journey(
             asr=event.get("asr"),
             enable_learned_asr=enable_learned_asr,
             asr_reliability_mode=asr_reliability_mode,
+            authorization_score_mode=authorization_score_mode,
             semantic_encoder=encoder,
             semantic_retrieval_mode=semantic_retrieval_mode,
             minimum_conflict_positive_context=minimum_conflict_positive_context,
@@ -336,6 +343,7 @@ def main() -> None:
                         minimum_conflict_positive_context=(args.minimum_conflict_positive_context),
                         feedback_scope_mode=args.feedback_scope_mode,
                         asr_reliability_mode=args.asr_reliability_mode,
+                        authorization_score_mode=args.authorization_score_mode,
                     )
                 )
             all_rows[system_name] = system_rows
@@ -351,6 +359,7 @@ def main() -> None:
         "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
         "feedback_scope_mode": args.feedback_scope_mode,
         "asr_reliability_mode": args.asr_reliability_mode,
+        "authorization_score_mode": args.authorization_score_mode,
         "systems": {
             name: {
                 **metrics(rows),

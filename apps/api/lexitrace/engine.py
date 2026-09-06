@@ -1472,6 +1472,7 @@ def _score_candidate(
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
     asr_reliability_mode: str = "exact_route",
+    authorization_score_mode: str = "boolean",
     asr_evidence_span: str | None = None,
     semantic_retrieval_mode: str = "centroid",
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
@@ -1484,6 +1485,8 @@ def _score_candidate(
     )
     memory_trust = float(trust_profile["posterior_mean"])
     memory_authorized = memory.state == "confirmed"
+    if authorization_score_mode not in {"boolean", "posterior"}:
+        raise ValueError(f"Unsupported authorization score mode: {authorization_score_mode}")
     sparse_positive, positive_matches = context_similarity(memory, current, "positive")
     sparse_negative, negative_matches = context_similarity(memory, current, "negative")
     has_sparse_positive = any(
@@ -1600,7 +1603,14 @@ def _score_candidate(
         1.0 if memory.scope_mode == "global" else min(1.0, (positive_similarity**0.35) * 1.2)
     )
     lexical_contribution = POLICY.lexical_weight * lexical_signal
-    authorization_contribution = POLICY.memory_authorization_weight * memory_authorized
+    authorization_signal = (
+        float(memory_authorized)
+        if authorization_score_mode == "boolean"
+        else memory_trust
+        if memory_authorized
+        else 0.0
+    )
+    authorization_contribution = POLICY.memory_authorization_weight * authorization_signal
     context_contribution = POLICY.context_weight * context_signal
     phonetic_contribution = POLICY.phonetic_weight if phonetic_match else 0.0
     asr_alternative_contribution = (
@@ -1660,6 +1670,8 @@ def _score_candidate(
         ),
         "memory_trust_posterior": memory_trust,
         "memory_authorized": memory_authorized,
+        "authorization_score_mode": authorization_score_mode,
+        "authorization_signal": round(authorization_signal, 4),
         "memory_trust_positive_events": int(trust_profile["positive_events"]),
         "memory_trust_negative_events": int(trust_profile["negative_events"]),
         "memory_trust_reason": str(trust_profile["reason_code"]),
@@ -1842,6 +1854,7 @@ def infer(
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
     asr_reliability_mode: str = "exact_route",
+    authorization_score_mode: str = "boolean",
     semantic_retrieval_mode: str = "centroid",
     minimum_conflict_positive_context: float = MIN_POSITIVE_CONTEXT_SIMILARITY,
     semantic_encoder: SemanticEncoder | None = None,
@@ -1889,6 +1902,7 @@ def infer(
                     enable_learned_asr=enable_learned_asr,
                     asr_confidence_mode=asr_confidence_mode,
                     asr_reliability_mode=asr_reliability_mode,
+                    authorization_score_mode=authorization_score_mode,
                     semantic_retrieval_mode=semantic_retrieval_mode,
                 )
                 candidate = TraceCandidate(
@@ -1948,6 +1962,7 @@ def infer(
                         enable_learned_asr=enable_learned_asr,
                         asr_confidence_mode=asr_confidence_mode,
                         asr_reliability_mode=asr_reliability_mode,
+                        authorization_score_mode=authorization_score_mode,
                         asr_evidence_span=evidence_span,
                         semantic_retrieval_mode=semantic_retrieval_mode,
                     )
@@ -2029,6 +2044,7 @@ def infer(
         "learned_asr_enabled": enable_learned_asr,
         "asr_confidence_mode": asr_confidence_mode,
         "asr_reliability_mode": asr_reliability_mode,
+        "authorization_score_mode": authorization_score_mode,
         "semantic_retrieval_mode": semantic_retrieval_mode,
         "thresholds": {
             "apply": APPLY_THRESHOLD,
