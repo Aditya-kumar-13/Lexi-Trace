@@ -66,6 +66,7 @@ REQUIRED_PATHS = [
     "docs/v7-phase3-calibration-candidate2-review.md",
     "docs/v7-phase3-calibration-candidate3-review.md",
     "docs/v7-phase3-calibration-result.md",
+    "docs/v7-phase4-adversarial-round1.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -83,6 +84,9 @@ REQUIRED_PATHS = [
     "evaluation/run_v7_structural_candidate.py",
     "evaluation/calibrate_v7_policy.py",
     "evaluation/build_v7_calibration_corpora.py",
+    "evaluation/build_v7_adversarial_round1.py",
+    "data/benchmark/v7_adversarial_round1.jsonl",
+    "results/v7/adversarial/round1/summary.json",
     "data/benchmark/v7_calibration_manifest.json",
     "results/v7/calibration/candidate-v4/policy.json",
     "results/v7/regression/candidate-v4/manifest.json",
@@ -434,6 +438,7 @@ def main() -> None:
         "results/asr-learning",
         "results/lifecycle",
         "results/conflicts",
+        "results/v7/adversarial/round1",
     ):
         check_results(checks, result_dir)
 
