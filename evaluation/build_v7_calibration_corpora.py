@@ -7,7 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "v7-calibration-corpus-v1"
+VERSION = "v7-calibration-corpus-v2"
 
 
 def memory(
@@ -183,7 +183,7 @@ def calibration_cases() -> list[dict]:
                     [learned],
                     formatted,
                     formatted,
-                    "suggest",
+                    "suggest" if variant.casefold() in formatted.casefold() else "abstain",
                 )
             )
 
