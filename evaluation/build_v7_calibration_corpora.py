@@ -7,7 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "v7-calibration-corpus-v2"
+VERSION = "v7-calibration-corpus-v3"
 
 
 def memory(
@@ -345,6 +345,112 @@ def safety_cases() -> list[dict]:
     return rows
 
 
+def calibration_journeys() -> list[dict]:
+    return [
+        {
+            "journey_id": "cal-learn-exact-asr-route",
+            "events": [
+                {
+                    "type": "teach",
+                    "alias": "person",
+                    "canonical_form": "Nivetha",
+                    "variants": ["Niveta"],
+                    "scope_mode": "global",
+                },
+                *[
+                    {
+                        "type": "infer",
+                        "formatted_text": "Ask Nivitha to inspect the release.",
+                        "asr": {
+                            "provider": "calibration-voice",
+                            "model": "speaker-1",
+                            "confidence": confidence,
+                        },
+                        "expected_output": (
+                            "Ask Nivetha to inspect the release."
+                            if index == 3
+                            else "Ask Nivitha to inspect the release."
+                        ),
+                        "expected_action": "apply" if index == 3 else "suggest",
+                        **(
+                            {"feedback": "correct", "feedback_target": "person"}
+                            if index < 3
+                            else {}
+                        ),
+                    }
+                    for index, confidence in enumerate((0.97, 0.94, 0.91, 0.88))
+                ],
+            ],
+        },
+        {
+            "journey_id": "cal-asr-route-does-not-cross-model",
+            "events": [
+                {
+                    "type": "teach",
+                    "alias": "person",
+                    "canonical_form": "Dhruvi",
+                    "variants": ["Dhruvee"],
+                    "scope_mode": "global",
+                },
+                *[
+                    {
+                        "type": "infer",
+                        "formatted_text": "Message Dhruvie about the review.",
+                        "asr": {
+                            "provider": "calibration-voice",
+                            "model": "speaker-2",
+                            "confidence": confidence,
+                        },
+                        "expected_output": "Message Dhruvie about the review.",
+                        "expected_action": "suggest",
+                        "feedback": "correct",
+                        "feedback_target": "person",
+                    }
+                    for confidence in (0.96, 0.93, 0.90)
+                ],
+                {
+                    "type": "infer",
+                    "formatted_text": "Message Dhruvie about the review.",
+                    "asr": {
+                        "provider": "calibration-voice",
+                        "model": "speaker-3",
+                        "confidence": 0.99,
+                    },
+                    "expected_output": "Message Dhruvie about the review.",
+                    "expected_action": "suggest",
+                },
+            ],
+        },
+        {
+            "journey_id": "cal-negative-context-outweighs-rank",
+            "events": [
+                {
+                    "type": "teach",
+                    "alias": "mailer",
+                    "canonical_form": "Brevo",
+                    "variants": ["Bravo"],
+                    "scope_mode": "contextual",
+                    "positive_context": ["email campaign marketing console newsletter"],
+                },
+                {
+                    "type": "infer",
+                    "formatted_text": "The audience shouted Bravo after the concert.",
+                    "expected_output": "The audience shouted Bravo after the concert.",
+                    "expected_action": "suggest",
+                    "feedback": "incorrect",
+                    "feedback_target": "mailer",
+                },
+                {
+                    "type": "infer",
+                    "formatted_text": "The audience shouted Bravo after the concert.",
+                    "expected_output": "The audience shouted Bravo after the concert.",
+                    "expected_action": "abstain",
+                },
+            ],
+        },
+    ]
+
+
 def write_jsonl(path: Path, rows: list[dict]) -> dict:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = "".join(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows)
@@ -367,11 +473,13 @@ def main() -> None:
     args = parser.parse_args()
     calibration_path = ROOT / "data" / "benchmark" / "v7_calibration.jsonl"
     safety_path = ROOT / "data" / "benchmark" / "v7_calibration_safety.jsonl"
+    journeys_path = ROOT / "data" / "benchmark" / "v7_calibration_journeys.jsonl"
     manifest = {
         "dataset_version": VERSION,
         "status": "frozen_before_score_search",
         "roles": {
             "calibration": write_jsonl(calibration_path, calibration_cases()),
+            "calibration_journeys": write_jsonl(journeys_path, calibration_journeys()),
             "safety": write_jsonl(safety_path, safety_cases()),
         },
         "final_holdout_accessed": False,
