@@ -1,0 +1,31 @@
+{
+  "dataset_version": "v7-calibration-corpus-v1",
+  "status": "frozen_before_score_search",
+  "roles": {
+    "calibration": {
+      "path": "data/benchmark/v7_calibration.jsonl",
+      "sha256": "f160e3474602f6545516c65d768eb16ef96e1639d29d45ce7a93cf6294d8533f",
+      "cases": 62,
+      "categories": {
+        "asr-alternative-confidence": 6,
+        "confirmed-global-exact": 24,
+        "contextual-homograph-negative": 12,
+        "contextual-positive": 12,
+        "independent-repeated-spans": 4,
+        "unconfirmed-memory": 4
+      }
+    },
+    "safety": {
+      "path": "data/benchmark/v7_calibration_safety.jsonl",
+      "sha256": "dd6711f607f6519077717fd85b7b1b148e854b72f0733aa579c8d8751e0aef86",
+      "cases": 16,
+      "categories": {
+        "safety-context-homograph": 4,
+        "safety-context-positive": 4,
+        "safety-provider-confidence-abuse": 4,
+        "safety-unconfirmed": 4
+      }
+    }
+  },
+  "final_holdout_accessed": false
+}
