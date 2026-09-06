@@ -294,6 +294,80 @@ def test_global_exact_memory_skips_semantics_and_prunes_overlapping_fuzzy_spans(
         assert encoder.calls == 0
 
 
+def test_candidate_instrumentation_exposes_deduplication_and_score_arithmetic(
+    tmp_path: Path,
+) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya", "Adithya"],
+            scope_mode="global",
+            positive_context=[],
+            negative_context=[],
+        )
+        response = client.post(
+            "/api/v1/infer",
+            json={"formatted_text": "Ask Aditya to review this."},
+        ).json()
+
+        assert len(response["candidates"]) == 1
+        diagnostics = response["candidate_generation"]
+        assert diagnostics["scored_total"] >= 2
+        assert diagnostics["unique_memory_span_keys"] == 1
+        assert diagnostics["cross_variant_duplicates_removed"] >= 1
+        assert diagnostics["retained_key_duplicates"] == 0
+
+        candidate = response["candidates"][0]
+        features = candidate["features"]
+        contribution_keys = (
+            "score_lexical_contribution",
+            "score_authorization_contribution",
+            "score_context_contribution",
+            "score_phonetic_contribution",
+            "score_asr_alternative_contribution",
+            "score_learned_asr_contribution",
+            "score_negative_context_contribution",
+        )
+        contribution_total = round(sum(features[key] for key in contribution_keys), 4)
+        assert contribution_total == features["score_before_clamp"]
+        assert features["score_after_clamp"] == candidate["score"]
+        assert features["score_clamp_delta"] == round(
+            features["score_after_clamp"] - features["score_before_clamp"], 4
+        )
+
+
+def test_separate_occurrences_receive_separate_context_decisions(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            positive_context=["service deployment dashboard"],
+            negative_context=["fresh fruit market"],
+        )
+        response = client.post(
+            "/api/v1/infer",
+            json={
+                "formatted_text": (
+                    "Review the Kiwi service deployment dashboard before the afternoon meeting. "
+                    "After dinner, buy fresh kiwi fruit at the market."
+                )
+            },
+        ).json()
+
+        assert response["memory_aware_text"] == (
+            "Review the Kivi service deployment dashboard before the afternoon meeting. "
+            "After dinner, buy fresh kiwi fruit at the market."
+        )
+        assert len(response["candidates"]) == 2
+        assert [candidate["action"] for candidate in response["candidates"]] == [
+            "apply",
+            "abstain",
+        ]
+        assert response["candidates"][0]["start"] != response["candidates"][1]["start"]
+        assert "NEGATIVE_CONTEXT_EVIDENCE" in response["candidates"][1]["blockers"]
+        assert response["candidates"][1]["features"]["score_negative_context_contribution"] < 0
+
+
 def test_manual_context_override_remains_auditable_and_replaceable(tmp_path: Path) -> None:
     with make_client(tmp_path) as client:
         memory = teach(

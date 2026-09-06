@@ -187,6 +187,7 @@ class InferenceResponse(BaseModel):
     action: Literal["apply", "suggest", "abstain"]
     changes: list[CandidateTrace]
     candidates: list[CandidateTrace]
+    candidate_generation: dict
     counterfactual: dict
     shadow: dict | None
     total_latency_ms: float

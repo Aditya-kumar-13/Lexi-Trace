@@ -9,6 +9,7 @@ import uuid
 from collections import defaultdict
 from dataclasses import asdict, dataclass, replace
 from difflib import SequenceMatcher
+from typing import Any
 
 import jellyfish
 from rapidfuzz.fuzz import ratio
@@ -424,7 +425,29 @@ def context_similarity(
     return min(1.0, similarity), matched[:5]
 
 
-def generate_candidate_spans(text: str, variant: MemoryVariant) -> list[tuple[int, int, str, str]]:
+def _increment(stats: dict[str, Any], key: str, amount: int = 1) -> None:
+    stats[key] = int(stats.get(key, 0)) + amount
+
+
+def _record_generation_stage(
+    stats: dict[str, Any] | None,
+    stage: str,
+    spans: list[tuple[int, int, str, str]],
+) -> None:
+    if stats is None:
+        return
+    _increment(stats, f"{stage}_total", len(spans))
+    method_key = f"{stage}_by_method"
+    methods = stats.setdefault(method_key, {})
+    for _, _, _, method in spans:
+        methods[method] = int(methods.get(method, 0)) + 1
+
+
+def generate_candidate_spans(
+    text: str,
+    variant: MemoryVariant,
+    diagnostics: dict[str, Any] | None = None,
+) -> list[tuple[int, int, str, str]]:
     """Return safe exact, fuzzy, and phonetic spans for one learned variant."""
     results: list[tuple[int, int, str, str]] = [
         (start, end, surface, "exact")
@@ -477,6 +500,9 @@ def generate_candidate_spans(text: str, variant: MemoryVariant) -> list[tuple[in
                 continue
             results.append((start, end, surface, method))
 
+    if diagnostics is not None:
+        _increment(diagnostics, "calls")
+    _record_generation_stage(diagnostics, "raw", results)
     method_priority = {"exact": 4, "phonetic_fuzzy": 3, "phonetic": 2, "fuzzy": 1}
     best_by_span: dict[tuple[int, int], tuple[int, int, str, str]] = {}
     for result in results:
@@ -485,19 +511,23 @@ def generate_candidate_spans(text: str, variant: MemoryVariant) -> list[tuple[in
         if previous is None or method_priority[result[3]] > method_priority[previous[3]]:
             best_by_span[key] = result
     selected = list(best_by_span.values())
+    _record_generation_stage(diagnostics, "variant_deduplicated", selected)
     exact_spans = [(start, end) for start, end, _, method in selected if method == "exact"]
-    return [
+    final = [
         result
         for result in selected
         if result[3] == "exact"
         or not any(left < result[1] and result[0] < right for left, right in exact_spans)
     ]
+    _record_generation_stage(diagnostics, "exact_pruned", final)
+    return final
 
 
 def generate_asr_alternative_spans(
     formatted_text: str,
     alternative_text: str,
     variant: MemoryVariant,
+    diagnostics: dict[str, Any] | None = None,
 ) -> list[tuple[int, int, str]]:
     """Align variant evidence in an ASR alternative back to an editable formatted span."""
     formatted_tokens = list(TOKEN_PATTERN.finditer(formatted_text))
@@ -512,7 +542,9 @@ def generate_asr_alternative_spans(
     )
     opcodes = matcher.get_opcodes()
     aligned: list[tuple[int, int, str]] = []
-    for alt_start, alt_end, _, _ in generate_candidate_spans(alternative_text, variant):
+    for alt_start, alt_end, _, _ in generate_candidate_spans(
+        alternative_text, variant, diagnostics
+    ):
         alternative_indexes = [
             index
             for index, token in enumerate(alternative_tokens)
@@ -536,7 +568,11 @@ def generate_asr_alternative_spans(
         start = formatted_tokens[ordered[0]].start()
         end = formatted_tokens[ordered[-1]].end()
         aligned.append((start, end, formatted_text[start:end]))
-    return list(dict.fromkeys(aligned))
+    deduplicated = list(dict.fromkeys(aligned))
+    if diagnostics is not None:
+        _increment(diagnostics, "aligned_raw_total", len(aligned))
+        _increment(diagnostics, "aligned_deduplicated_total", len(deduplicated))
+    return deduplicated
 
 
 @dataclass(slots=True)
@@ -1522,19 +1558,37 @@ def _score_candidate(
     context_signal = (
         1.0 if memory.scope_mode == "global" else min(1.0, (positive_similarity**0.35) * 1.2)
     )
-    score = (
-        POLICY.lexical_weight * lexical_signal
-        + POLICY.memory_authorization_weight * memory_authorized
-        + POLICY.context_weight * context_signal
-        + (POLICY.phonetic_weight if phonetic_match else 0.0)
-        + POLICY.asr_alternative_weight * asr_confidence
-        + POLICY.learned_asr_weight
+    lexical_contribution = POLICY.lexical_weight * lexical_signal
+    authorization_contribution = POLICY.memory_authorization_weight * memory_authorized
+    context_contribution = POLICY.context_weight * context_signal
+    phonetic_contribution = POLICY.phonetic_weight if phonetic_match else 0.0
+    asr_alternative_contribution = POLICY.asr_alternative_weight * asr_confidence
+    learned_asr_contribution = (
+        POLICY.learned_asr_weight
         * float(asr_reliability["posterior_mean"])
         * bool(asr_reliability["active"])
         * enable_learned_asr
-        - POLICY.negative_context_weight * negative_similarity
     )
-    score = max(0.0, min(1.0, score))
+    negative_context_contribution = -POLICY.negative_context_weight * negative_similarity
+    raw_score = (
+        lexical_contribution
+        + authorization_contribution
+        + context_contribution
+        + phonetic_contribution
+        + asr_alternative_contribution
+        + learned_asr_contribution
+        + negative_context_contribution
+    )
+    score = max(0.0, min(1.0, raw_score))
+    context_controller = (
+        "none"
+        if positive_similarity == 0.0
+        else "tie"
+        if sparse_positive == normalized_semantic_positive
+        else "sparse"
+        if sparse_positive > normalized_semantic_positive
+        else "semantic"
+    )
     reasons.extend(blockers)
     features: dict[str, float | str | bool] = {
         "string_similarity": round(string_similarity, 4),
@@ -1553,10 +1607,7 @@ def _score_candidate(
         "asr_reliability_rejected": int(asr_reliability["rejected"]),
         "asr_reliability_posterior": float(asr_reliability["posterior_mean"]),
         "asr_reliability_contribution": round(
-            POLICY.learned_asr_weight
-            * float(asr_reliability["posterior_mean"])
-            * bool(asr_reliability["active"])
-            * enable_learned_asr,
+            learned_asr_contribution,
             4,
         ),
         "memory_trust_posterior": memory_trust,
@@ -1570,6 +1621,8 @@ def _score_candidate(
         "sparse_negative_similarity": round(sparse_negative, 4),
         "semantic_positive_similarity": round(semantic_positive, 4),
         "semantic_negative_similarity": round(semantic_negative, 4),
+        "normalized_semantic_positive": round(normalized_semantic_positive, 4),
+        "normalized_semantic_negative": round(normalized_semantic_negative, 4),
         "semantic_margin": round(semantic_positive - semantic_negative, 4),
         "semantic_positive_observations": semantic_positive_count,
         "semantic_negative_observations": semantic_negative_count,
@@ -1580,6 +1633,18 @@ def _score_candidate(
         "memory_state": memory.state,
         "scope_mode": memory.scope_mode,
         "match_method": match_method,
+        "context_signal": round(context_signal, 4),
+        "context_controller": context_controller,
+        "score_lexical_contribution": round(lexical_contribution, 4),
+        "score_authorization_contribution": round(authorization_contribution, 4),
+        "score_context_contribution": round(context_contribution, 4),
+        "score_phonetic_contribution": round(phonetic_contribution, 4),
+        "score_asr_alternative_contribution": round(asr_alternative_contribution, 4),
+        "score_learned_asr_contribution": round(learned_asr_contribution, 4),
+        "score_negative_context_contribution": round(negative_context_contribution, 4),
+        "score_before_clamp": round(raw_score, 4),
+        "score_after_clamp": round(score, 4),
+        "score_clamp_delta": round(score - raw_score, 4),
     }
     return score, reasons, blockers, features
 
@@ -1733,12 +1798,17 @@ def infer(
     ).all()
     candidates_by_key: dict[tuple[str, int, int], TraceCandidate] = {}
     semantic_vector_cache: dict[str, list[float] | None] = {}
+    direct_generation: dict[str, Any] = {}
+    alternative_generation: dict[str, Any] = {}
+    scored_by_method: dict[str, int] = defaultdict(int)
+    scored_key_counts: dict[tuple[str, int, int], int] = defaultdict(int)
+    dedup_replacements = 0
 
     for memory in memories:
         trust_profile = memory_trust_profile(memory)
         for variant in memory.variants:
             for start, end, matched, match_method in generate_candidate_spans(
-                formatted_text, variant
+                formatted_text, variant, direct_generation
             ):
                 if normalize(matched) == memory.canonical_normalized:
                     continue
@@ -1778,8 +1848,12 @@ def infer(
                     counterfactual={},
                 )
                 key = (memory.id, start, end)
+                scored_by_method[match_method] += 1
+                scored_key_counts[key] += 1
                 previous = candidates_by_key.get(key)
                 if previous is None or candidate.score > previous.score:
+                    if previous is not None:
+                        dedup_replacements += 1
                     candidates_by_key[key] = candidate
 
         for alternative_index, alternative in enumerate(alternatives or [], 1):
@@ -1793,6 +1867,7 @@ def infer(
                     formatted_text,
                     alternative_text,
                     variant,
+                    alternative_generation,
                 ):
                     if normalize(matched) == memory.canonical_normalized:
                         continue
@@ -1829,11 +1904,31 @@ def infer(
                         counterfactual={},
                     )
                     key = (memory.id, start, end)
+                    scored_by_method["asr_alternative"] += 1
+                    scored_key_counts[key] += 1
                     previous = candidates_by_key.get(key)
                     if previous is None or candidate.score > previous.score:
+                        if previous is not None:
+                            dedup_replacements += 1
                         candidates_by_key[key] = candidate
 
     base_candidates = list(candidates_by_key.values())
+    scored_candidates = sum(scored_key_counts.values())
+    candidate_generation = {
+        "direct": direct_generation,
+        "asr_alternatives": alternative_generation,
+        "scored_total": scored_candidates,
+        "scored_by_method": dict(sorted(scored_by_method.items())),
+        "unique_memory_span_keys": len(candidates_by_key),
+        "cross_variant_duplicates_removed": scored_candidates - len(candidates_by_key),
+        "higher_score_replacements": dedup_replacements,
+        "maximum_memory_span_multiplicity": max(scored_key_counts.values(), default=0),
+        "retained_key_duplicates": len(candidates_by_key) - len(set(candidates_by_key)),
+        "semantic_context_cache_entries": len(semantic_vector_cache),
+        "semantic_context_cache_failures": sum(
+            vector is None for vector in semantic_vector_cache.values()
+        ),
+    }
     active_thresholds = active_decision_thresholds()
     candidates, winners = _select_winners(base_candidates, active_thresholds)
     output = _render_winners(formatted_text, winners)
@@ -1869,6 +1964,7 @@ def infer(
             "negative_context_block_threshold": NEGATIVE_CONTEXT_BLOCK_THRESHOLD,
             "asr_minimum_outcomes": ASR_MINIMUM_OUTCOMES,
         },
+        "candidate_generation": candidate_generation,
         "candidates": [asdict(candidate) for candidate in candidates],
         "changes": [asdict(candidate) for candidate in winners],
         "counterfactual": (
@@ -1906,6 +2002,7 @@ def infer(
         "action": action,
         "changes": trace["changes"],
         "candidates": trace["candidates"],
+        "candidate_generation": trace["candidate_generation"],
         "counterfactual": trace["counterfactual"],
         "shadow": trace["shadow"],
         "total_latency_ms": round(latency_ms, 3),

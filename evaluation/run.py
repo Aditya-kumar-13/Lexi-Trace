@@ -154,6 +154,7 @@ def full_system(session, case: dict[str, Any], semantic_encoder) -> dict[str, An
         "latency_ms": response["total_latency_ms"],
         "trace_id": response["trace_id"],
         "candidates": response["candidates"],
+        "candidate_generation": response["candidate_generation"],
         "policy_version": response["policy_version"],
         "semantic": response["semantic"],
     }

@@ -98,6 +98,19 @@ def main() -> None:
             ],
         )
         run(
+            "v7 instrumentation",
+            [
+                PYTHON,
+                "evaluation/run_v7_instrumentation.py",
+                "--cases",
+                str(development / "smoke" / "cases.jsonl"),
+                "--cases",
+                str(development / "robustness" / "cases.jsonl"),
+                "--output",
+                str(development / "instrumentation"),
+            ],
+        )
+        run(
             "soak",
             [
                 PYTHON,

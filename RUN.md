@@ -96,6 +96,13 @@ python scripts/run_quality_gate.py
 Use `python scripts/run_quality_gate.py --quick` for tests, formatting, lint, migrations, baseline
 integrity, and submission checks without the longer behavioral suites.
 
+The full gate also regenerates Phase 1 score and candidate diagnostics. Run the aggregator directly
+against existing development case files with:
+
+```text
+python evaluation/run_v7_instrumentation.py --cases results/v7/development/current/smoke/cases.jsonl --cases results/v7/development/current/robustness/cases.jsonl
+```
+
 Run the 28-case smoke suite against the complete hybrid product:
 
 ```powershell

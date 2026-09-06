@@ -92,6 +92,10 @@ Policy v7 work is governed by a frozen [Definition of Done](docs/v7-definition-o
 treated as known development evidence; a separately sealed final holdout cannot influence v7
 selection, calibration, or stopping decisions.
 
+The first [v7 instrumentation findings](docs/v7-phase1-findings.md) publish the current score
+saturation, candidate-deduplication counts, signal coverage gaps, and all four known misses before
+any alternative is selected.
+
 ## AI use
 
 Generative AI was used only as a limited coding assistance tool during the development of this work, primarily for minor programming-related support and clarification. The major conceptual work, system design, implementation, analysis, calculations, technical decisions, and evaluation were carried out independently by the candidate. All design choices, assumptions, results, and conclusions were determined and verified by the candidate. The final work, including any code developed with limited AI assistance, was reviewed, modified, tested, and validated by the candidate before submission.

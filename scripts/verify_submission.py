@@ -51,11 +51,15 @@ REQUIRED_PATHS = [
     "docs/evaluation.md",
     "docs/v7-definition-of-done.md",
     "docs/v7-experimental-protocol.md",
+    "docs/v7-phase1-findings.md",
     "evaluation/v7_holdout_seal.json",
     "results/baselines/v6/manifest.json",
+    "results/v7/development/baseline-v6-instrumented/summary.json",
+    "results/v7/development/baseline-v6-instrumented/failures.json",
     "scripts/freeze_v6_baseline.py",
     "scripts/holdout_guard.py",
     "scripts/run_quality_gate.py",
+    "evaluation/run_v7_instrumentation.py",
 ]
 RUN_TOKENS = [
     "Primary review method",
