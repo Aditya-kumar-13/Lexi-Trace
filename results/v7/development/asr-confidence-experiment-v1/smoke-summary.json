@@ -1,0 +1,22 @@
+{
+  "artifact_version": "structural-comparison-v1",
+  "evidence_role": "structural_development",
+  "experiment": "asr-single-path-smoke",
+  "cases": 28,
+  "baseline": {
+    "path": "results/v7/development/current/smoke/cases.jsonl",
+    "sha256": "901aadced1ac6b161a1ee7300ade19dd495b15c984008ea2a64d38a7b3a3b17e",
+    "wrong_interventions": 0
+  },
+  "candidate": {
+    "path": "results/v7/development/current/asr-single-smoke/cases.jsonl",
+    "sha256": "358643d3ee0c20a5c817c61d7740c033247cc796f274c4818b97d0ba5a0526b6",
+    "wrong_interventions": 0
+  },
+  "action_changed": 0,
+  "output_changed": 0,
+  "fixed": 0,
+  "broken": 0,
+  "decision_impact_rate": 0.0,
+  "selection": "none; structural development comparison only"
+}

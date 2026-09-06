@@ -528,7 +528,7 @@ def generate_asr_alternative_spans(
     alternative_text: str,
     variant: MemoryVariant,
     diagnostics: dict[str, Any] | None = None,
-) -> list[tuple[int, int, str]]:
+) -> list[tuple[int, int, str, str]]:
     """Align variant evidence in an ASR alternative back to an editable formatted span."""
     formatted_tokens = list(TOKEN_PATTERN.finditer(formatted_text))
     alternative_tokens = list(TOKEN_PATTERN.finditer(alternative_text))
@@ -541,8 +541,8 @@ def generate_asr_alternative_spans(
         autojunk=False,
     )
     opcodes = matcher.get_opcodes()
-    aligned: list[tuple[int, int, str]] = []
-    for alt_start, alt_end, _, _ in generate_candidate_spans(
+    aligned: list[tuple[int, int, str, str]] = []
+    for alt_start, alt_end, alternative_surface, _ in generate_candidate_spans(
         alternative_text, variant, diagnostics
     ):
         alternative_indexes = [
@@ -567,7 +567,7 @@ def generate_asr_alternative_spans(
             continue
         start = formatted_tokens[ordered[0]].start()
         end = formatted_tokens[ordered[-1]].end()
-        aligned.append((start, end, formatted_text[start:end]))
+        aligned.append((start, end, formatted_text[start:end], alternative_surface))
     deduplicated = list(dict.fromkeys(aligned))
     if diagnostics is not None:
         _increment(diagnostics, "aligned_raw_total", len(aligned))
@@ -1443,6 +1443,8 @@ def _score_candidate(
     asr_rank: int = 1,
     provider_confidence: float | None = None,
     enable_learned_asr: bool = True,
+    asr_confidence_mode: str = "legacy_double",
+    asr_evidence_span: str | None = None,
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
     current = extract_context_features(
         input_text,
@@ -1502,9 +1504,15 @@ def _score_candidate(
     positive_similarity = max(sparse_positive, normalized_semantic_positive)
     negative_similarity = max(sparse_negative, normalized_semantic_negative)
     has_positive_profile = has_sparse_positive or semantic_positive_count > 0
-    string_similarity = ratio(normalize(input_span), variant.normalized_form) / 100
-    lexical_signal = max(string_similarity, 0.96 * asr_confidence)
-    phonetic_match = metaphone(input_span) == variant.metaphone_key
+    if asr_confidence_mode not in {"legacy_double", "single_path"}:
+        raise ValueError(f"Unsupported ASR confidence mode: {asr_confidence_mode}")
+    evidence_span = asr_evidence_span if asr_confidence_mode == "single_path" else input_span
+    string_similarity = ratio(normalize(evidence_span or input_span), variant.normalized_form) / 100
+    if asr_confidence_mode == "single_path" and asr_evidence_span is not None:
+        lexical_signal = string_similarity * asr_confidence
+    else:
+        lexical_signal = max(string_similarity, 0.96 * asr_confidence)
+    phonetic_match = metaphone(evidence_span or input_span) == variant.metaphone_key
     reasons: list[str] = [f"{match_method.upper()}_CANDIDATE"]
     blockers: list[str] = []
     asr_reliability = (
@@ -1562,7 +1570,11 @@ def _score_candidate(
     authorization_contribution = POLICY.memory_authorization_weight * memory_authorized
     context_contribution = POLICY.context_weight * context_signal
     phonetic_contribution = POLICY.phonetic_weight if phonetic_match else 0.0
-    asr_alternative_contribution = POLICY.asr_alternative_weight * asr_confidence
+    asr_alternative_contribution = (
+        0.0
+        if asr_confidence_mode == "single_path"
+        else POLICY.asr_alternative_weight * asr_confidence
+    )
     learned_asr_contribution = (
         POLICY.learned_asr_weight
         * float(asr_reliability["posterior_mean"])
@@ -1601,6 +1613,8 @@ def _score_candidate(
         "asr_provider_confidence": (
             round(provider_confidence, 4) if provider_confidence is not None else "not_supplied"
         ),
+        "asr_confidence_mode": asr_confidence_mode,
+        "asr_evidence_span": asr_evidence_span or "not_supplied",
         "asr_reliability_state": str(asr_reliability["state"]),
         "asr_reliability_observations": int(asr_reliability["observations"]),
         "asr_reliability_accepted": int(asr_reliability["accepted"]),
@@ -1789,6 +1803,7 @@ def infer(
     alternatives: list[dict] | None = None,
     asr: dict | None = None,
     enable_learned_asr: bool = True,
+    asr_confidence_mode: str = "legacy_double",
     semantic_encoder: SemanticEncoder | None = None,
     shadow_policy: dict | None = None,
 ) -> tuple[Decision, dict]:
@@ -1832,6 +1847,7 @@ def infer(
                         else None
                     ),
                     enable_learned_asr=enable_learned_asr,
+                    asr_confidence_mode=asr_confidence_mode,
                 )
                 candidate = TraceCandidate(
                     memory_id=memory.id,
@@ -1863,7 +1879,7 @@ def infer(
             rank = int(alternative.get("rank") or alternative_index)
             alternative_text = str(alternative["text"])
             for variant in memory.variants:
-                for start, end, matched in generate_asr_alternative_spans(
+                for start, end, matched, evidence_span in generate_asr_alternative_spans(
                     formatted_text,
                     alternative_text,
                     variant,
@@ -1888,6 +1904,8 @@ def infer(
                         asr_rank=rank,
                         provider_confidence=confidence,
                         enable_learned_asr=enable_learned_asr,
+                        asr_confidence_mode=asr_confidence_mode,
+                        asr_evidence_span=evidence_span,
                     )
                     candidate = TraceCandidate(
                         memory_id=memory.id,
@@ -1955,6 +1973,7 @@ def infer(
     trace = {
         "policy_version": POLICY.version,
         "learned_asr_enabled": enable_learned_asr,
+        "asr_confidence_mode": asr_confidence_mode,
         "thresholds": {
             "apply": APPLY_THRESHOLD,
             "suggest": SUGGEST_THRESHOLD,

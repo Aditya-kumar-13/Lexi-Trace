@@ -1,0 +1,22 @@
+{
+  "artifact_version": "structural-comparison-v1",
+  "evidence_role": "structural_development",
+  "experiment": "asr-single-path-robustness",
+  "cases": 252,
+  "baseline": {
+    "path": "results/v7/development/current/robustness/cases.jsonl",
+    "sha256": "6d9cdebb2cbe3db7dca22fba3fd5ac3fa480081481f88bcdd1effb2f9e1fbef9",
+    "wrong_interventions": 0
+  },
+  "candidate": {
+    "path": "results/v7/development/current/asr-single-robustness/cases.jsonl",
+    "sha256": "619486e362fbfe3f993ba98783d20a8849b534858e3e515b79564fd7af12c3c2",
+    "wrong_interventions": 0
+  },
+  "action_changed": 0,
+  "output_changed": 0,
+  "fixed": 0,
+  "broken": 0,
+  "decision_impact_rate": 0.0,
+  "selection": "none; structural development comparison only"
+}

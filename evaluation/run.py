@@ -48,6 +48,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Run the deterministic sparse ablation instead of the default hybrid product.",
     )
+    parser.add_argument(
+        "--asr-confidence-mode",
+        choices=("legacy_double", "single_path"),
+        default="legacy_double",
+    )
     return parser.parse_args()
 
 
@@ -138,7 +143,12 @@ def naive_dictionary(case: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def full_system(session, case: dict[str, Any], semantic_encoder) -> dict[str, Any]:
+def full_system(
+    session,
+    case: dict[str, Any],
+    semantic_encoder,
+    asr_confidence_mode: str = "legacy_double",
+) -> dict[str, Any]:
     _, response = infer(
         session,
         user_id=case.get("user_id", "benchmark-user"),
@@ -147,6 +157,7 @@ def full_system(session, case: dict[str, Any], semantic_encoder) -> dict[str, An
         alternatives=case.get("alternatives", []),
         asr=case.get("asr"),
         semantic_encoder=semantic_encoder,
+        asr_confidence_mode=asr_confidence_mode,
     )
     return {
         "output": response["memory_aware_text"],
@@ -355,7 +366,9 @@ def main() -> None:
                 systems: dict[str, dict[str, Any]] = {
                     "no_memory": no_memory(case),
                     "naive_dictionary": naive_dictionary(case),
-                    "lexitrace": full_system(session, case, semantic_encoder),
+                    "lexitrace": full_system(
+                        session, case, semantic_encoder, args.asr_confidence_mode
+                    ),
                 }
                 for result in systems.values():
                     result["exact"] = result["output"] == case["expected_output"]

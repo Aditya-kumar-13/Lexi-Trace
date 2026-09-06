@@ -1,0 +1,199 @@
+{
+  "artifact_version": "v7-baseline-instrumentation-v1",
+  "evidence_role": "structural_development",
+  "sources": [
+    {
+      "path": "results/v7/development/current/asr-single-smoke/cases.jsonl",
+      "sha256": "358643d3ee0c20a5c817c61d7740c033247cc796f274c4818b97d0ba5a0526b6"
+    },
+    {
+      "path": "results/v7/development/current/asr-single-robustness/cases.jsonl",
+      "sha256": "619486e362fbfe3f993ba98783d20a8849b534858e3e515b79564fd7af12c3c2"
+    }
+  ],
+  "cases": 280,
+  "candidate_generation": {
+    "scored_total": 242,
+    "unique_memory_span_keys": 242,
+    "duplicates_removed": 0,
+    "higher_score_replacements": 0,
+    "maximum_memory_span_multiplicity": 1,
+    "retained_duplicate_violations": 0,
+    "generation_stages": {
+      "asr_alternatives.aligned_deduplicated_total": 12,
+      "asr_alternatives.aligned_raw_total": 12,
+      "asr_alternatives.calls": 12,
+      "asr_alternatives.exact_pruned_total": 12,
+      "asr_alternatives.raw_total": 24,
+      "asr_alternatives.variant_deduplicated_total": 12,
+      "direct.calls": 284,
+      "direct.exact_pruned_total": 231,
+      "direct.raw_total": 595,
+      "direct.variant_deduplicated_total": 400
+    },
+    "generation_methods": {
+      "asr_alternatives.exact_pruned_by_method": {
+        "exact": 12
+      },
+      "asr_alternatives.raw_by_method": {
+        "exact": 24
+      },
+      "asr_alternatives.variant_deduplicated_by_method": {
+        "exact": 12
+      },
+      "direct.exact_pruned_by_method": {
+        "exact": 196,
+        "fuzzy": 9,
+        "phonetic": 1,
+        "phonetic_fuzzy": 25
+      },
+      "direct.raw_by_method": {
+        "exact": 391,
+        "fuzzy": 178,
+        "phonetic": 1,
+        "phonetic_fuzzy": 25
+      },
+      "direct.variant_deduplicated_by_method": {
+        "exact": 196,
+        "fuzzy": 178,
+        "phonetic": 1,
+        "phonetic_fuzzy": 25
+      }
+    }
+  },
+  "scoring": {
+    "candidates": 242,
+    "score_before_clamp": {
+      "count": 242,
+      "minimum": 0.592,
+      "mean": 1.0002,
+      "p50": 1.0342,
+      "p95": 1.06,
+      "maximum": 1.06
+    },
+    "upper_clamp_count": 148,
+    "lower_clamp_count": 0,
+    "context_controller": {
+      "none": 181,
+      "semantic": 48,
+      "sparse": 11,
+      "tie": 2
+    },
+    "contributions": {
+      "score_lexical_contribution": {
+        "nonzero": 242,
+        "mean": 0.6941,
+        "mean_absolute": 0.6941
+      },
+      "score_authorization_contribution": {
+        "nonzero": 229,
+        "mean": 0.1325,
+        "mean_absolute": 0.1325
+      },
+      "score_context_contribution": {
+        "nonzero": 199,
+        "mean": 0.0769,
+        "mean_absolute": 0.0769
+      },
+      "score_phonetic_contribution": {
+        "nonzero": 234,
+        "mean": 0.0967,
+        "mean_absolute": 0.0967
+      },
+      "score_asr_alternative_contribution": {
+        "nonzero": 0,
+        "mean": 0.0,
+        "mean_absolute": 0.0
+      },
+      "score_learned_asr_contribution": {
+        "nonzero": 0,
+        "mean": 0.0,
+        "mean_absolute": 0.0
+      },
+      "score_negative_context_contribution": {
+        "nonzero": 0,
+        "mean": 0.0,
+        "mean_absolute": 0.0
+      }
+    },
+    "sparse_positive": {
+      "count": 242,
+      "minimum": 0.0,
+      "mean": 0.0622,
+      "p50": 0.0,
+      "p95": 0.301,
+      "maximum": 1.0
+    },
+    "semantic_positive": {
+      "count": 242,
+      "minimum": 0.0,
+      "mean": 0.2837,
+      "p50": 0.0,
+      "p95": 0.7971,
+      "maximum": 1.0
+    },
+    "semantic_negative": {
+      "count": 242,
+      "minimum": 0.0,
+      "mean": 0.0,
+      "p50": 0.0,
+      "p95": 0.0,
+      "maximum": 0.0
+    },
+    "semantic_positive_histogram": {
+      "[-1.0,0.0)": 0,
+      "[0.0,0.4)": 138,
+      "[0.4,0.5)": 4,
+      "[0.5,0.6)": 39,
+      "[0.6,0.7)": 19,
+      "[0.7,0.8)": 30,
+      "[0.8,0.9)": 8,
+      "[0.9,1.0]": 4
+    },
+    "semantic_negative_histogram": {
+      "[-1.0,0.0)": 0,
+      "[0.0,0.4)": 242,
+      "[0.4,0.5)": 0,
+      "[0.5,0.6)": 0,
+      "[0.6,0.7)": 0,
+      "[0.7,0.8)": 0,
+      "[0.8,0.9)": 0,
+      "[0.9,1.0]": 0
+    }
+  },
+  "latency_by_retained_candidate_count": {
+    "0": {
+      "count": 59,
+      "minimum": 0.426,
+      "mean": 2.4477,
+      "p50": 2.231,
+      "p95": 4.124,
+      "maximum": 4.887
+    },
+    "1": {
+      "count": 201,
+      "minimum": 1.694,
+      "mean": 52.152,
+      "p50": 51.756,
+      "p95": 140.298,
+      "maximum": 158.642
+    },
+    "2": {
+      "count": 19,
+      "minimum": 2.342,
+      "mean": 4.9727,
+      "p50": 5.266,
+      "p95": 5.813,
+      "maximum": 7.519
+    },
+    "3": {
+      "count": 1,
+      "minimum": 2.027,
+      "mean": 2.027,
+      "p50": 2.027,
+      "p95": 2.027,
+      "maximum": 2.027
+    }
+  },
+  "failures": 4
+}
