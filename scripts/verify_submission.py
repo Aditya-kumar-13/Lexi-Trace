@@ -54,8 +54,10 @@ REQUIRED_PATHS = [
     "docs/v7-phase1-findings.md",
     "docs/v7-phase2-phonetic-experiment.md",
     "docs/v7-phase2-asr-confidence-experiment.md",
+    "docs/v7-phase2-semantic-retrieval-experiment.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
+    "data/benchmark/v7_semantic_multimodal_development.jsonl",
     "results/baselines/v6/manifest.json",
     "results/v7/development/baseline-v6-instrumented/summary.json",
     "results/v7/development/baseline-v6-instrumented/failures.json",
@@ -69,6 +71,9 @@ REQUIRED_PATHS = [
     "results/v7/development/indic-transliteration-experiment-v1/cases.json",
     "results/v7/development/asr-confidence-experiment-v1/instrumentation-summary.json",
     "results/v7/development/asr-confidence-experiment-v1/robustness-summary.json",
+    "results/v7/development/semantic-retrieval-experiment-v1/centroid-summary.json",
+    "results/v7/development/semantic-retrieval-experiment-v1/nearest-summary.json",
+    "results/v7/development/semantic-retrieval-experiment-v1/mean-top-three-summary.json",
 ]
 RUN_TOKENS = [
     "Primary review method",

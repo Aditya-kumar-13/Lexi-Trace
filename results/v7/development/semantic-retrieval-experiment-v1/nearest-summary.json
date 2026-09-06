@@ -1,0 +1,70 @@
+{
+  "dataset": "data/benchmark/v7_semantic_multimodal_development.jsonl",
+  "dataset_sha256": "c19bf01d4002a502a6a7eef9afba9a96a8ab346acaa9220632afb388d2207ce9",
+  "journeys": 2,
+  "model": "BAAI/bge-small-en-v1.5",
+  "systems": {
+    "sparse_ablation": {
+      "queries": 6,
+      "exact_match_rate": 0.0,
+      "action_accuracy": 0.0,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 3.706,
+      "p95_latency_ms": 4.468,
+      "model_usage": {
+        "execution": "disabled",
+        "model": "disabled",
+        "embedding_calls": 0,
+        "input_characters": 0,
+        "failed_calls": 0,
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      },
+      "database": {
+        "peak_allocated_bytes": 245760,
+        "peak_vector_payload_bytes": 0,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 26,
+          "context_embeddings": 0,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 0
+        }
+      }
+    },
+    "hybrid": {
+      "queries": 6,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 91.168,
+      "p95_latency_ms": 99.534,
+      "model_usage": {
+        "execution": "local",
+        "model": "BAAI/bge-small-en-v1.5",
+        "embedding_calls": 12,
+        "input_characters": 609,
+        "failed_calls": 0,
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      },
+      "database": {
+        "peak_allocated_bytes": 278528,
+        "peak_vector_payload_bytes": 24294,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 3,
+          "context_evidence": 26,
+          "context_embeddings": 3,
+          "decisions": 3,
+          "memory_versions": 3,
+          "asr_outcomes": 0
+        }
+      }
+    }
+  }
+}

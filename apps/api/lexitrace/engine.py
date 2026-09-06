@@ -321,6 +321,7 @@ def semantic_context_similarity(
     current_vector: list[float] | None,
     polarity: str,
     model_name: str,
+    retrieval_mode: str = "centroid",
 ) -> tuple[float, int]:
     if current_vector is None:
         return 0.0, 0
@@ -333,6 +334,15 @@ def semantic_context_similarity(
             vectors.append((vector, evidence.weight))
     if not vectors:
         return 0.0, 0
+    if retrieval_mode == "nearest_example":
+        ranked = sorted(
+            ((_cosine(current_vector, vector), weight) for vector, weight in vectors),
+            reverse=True,
+        )[:3]
+        similarity = ranked[0][0]
+        return max(-1.0, min(1.0, similarity)), len(vectors)
+    if retrieval_mode != "centroid":
+        raise ValueError(f"Unsupported semantic retrieval mode: {retrieval_mode}")
     total_weight = sum(weight for _, weight in vectors)
     centroid = [
         sum(vector[index] * weight for vector, weight in vectors) / total_weight
@@ -1445,6 +1455,7 @@ def _score_candidate(
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
     asr_evidence_span: str | None = None,
+    semantic_retrieval_mode: str = "centroid",
 ) -> tuple[float, list[str], list[str], dict[str, float | str | bool]]:
     current = extract_context_features(
         input_text,
@@ -1486,12 +1497,14 @@ def _score_candidate(
         current_vector,
         "positive",
         semantic_model,
+        semantic_retrieval_mode,
     )
     semantic_negative, semantic_negative_count = semantic_context_similarity(
         memory,
         current_vector,
         "negative",
         semantic_model,
+        semantic_retrieval_mode,
     )
     normalized_semantic_positive = max(
         0.0,
@@ -1641,6 +1654,7 @@ def _score_candidate(
         "semantic_positive_observations": semantic_positive_count,
         "semantic_negative_observations": semantic_negative_count,
         "semantic_model": semantic_model,
+        "semantic_retrieval_mode": semantic_retrieval_mode,
         "positive_evidence_matches": ", ".join(positive_matches),
         "negative_evidence_matches": ", ".join(negative_matches),
         "context_evidence_count": len(memory.context_evidence),
@@ -1804,6 +1818,7 @@ def infer(
     asr: dict | None = None,
     enable_learned_asr: bool = True,
     asr_confidence_mode: str = "legacy_double",
+    semantic_retrieval_mode: str = "centroid",
     semantic_encoder: SemanticEncoder | None = None,
     shadow_policy: dict | None = None,
 ) -> tuple[Decision, dict]:
@@ -1848,6 +1863,7 @@ def infer(
                     ),
                     enable_learned_asr=enable_learned_asr,
                     asr_confidence_mode=asr_confidence_mode,
+                    semantic_retrieval_mode=semantic_retrieval_mode,
                 )
                 candidate = TraceCandidate(
                     memory_id=memory.id,
@@ -1906,6 +1922,7 @@ def infer(
                         enable_learned_asr=enable_learned_asr,
                         asr_confidence_mode=asr_confidence_mode,
                         asr_evidence_span=evidence_span,
+                        semantic_retrieval_mode=semantic_retrieval_mode,
                     )
                     candidate = TraceCandidate(
                         memory_id=memory.id,
@@ -1974,6 +1991,7 @@ def infer(
         "policy_version": POLICY.version,
         "learned_asr_enabled": enable_learned_asr,
         "asr_confidence_mode": asr_confidence_mode,
+        "semantic_retrieval_mode": semantic_retrieval_mode,
         "thresholds": {
             "apply": APPLY_THRESHOLD,
             "suggest": SUGGEST_THRESHOLD,

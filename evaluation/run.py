@@ -53,6 +53,11 @@ def parse_args() -> argparse.Namespace:
         choices=("legacy_double", "single_path"),
         default="legacy_double",
     )
+    parser.add_argument(
+        "--semantic-retrieval-mode",
+        choices=("centroid", "nearest_example"),
+        default="centroid",
+    )
     return parser.parse_args()
 
 
@@ -148,6 +153,7 @@ def full_system(
     case: dict[str, Any],
     semantic_encoder,
     asr_confidence_mode: str = "legacy_double",
+    semantic_retrieval_mode: str = "centroid",
 ) -> dict[str, Any]:
     _, response = infer(
         session,
@@ -158,6 +164,7 @@ def full_system(
         asr=case.get("asr"),
         semantic_encoder=semantic_encoder,
         asr_confidence_mode=asr_confidence_mode,
+        semantic_retrieval_mode=semantic_retrieval_mode,
     )
     return {
         "output": response["memory_aware_text"],
@@ -367,7 +374,11 @@ def main() -> None:
                     "no_memory": no_memory(case),
                     "naive_dictionary": naive_dictionary(case),
                     "lexitrace": full_system(
-                        session, case, semantic_encoder, args.asr_confidence_mode
+                        session,
+                        case,
+                        semantic_encoder,
+                        args.asr_confidence_mode,
+                        args.semantic_retrieval_mode,
                     ),
                 }
                 for result in systems.values():

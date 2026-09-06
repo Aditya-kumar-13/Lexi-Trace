@@ -22,6 +22,7 @@ from lexitrace.engine import (  # noqa: E402
     apply_decision_feedback,
     apply_memory_state_override,
     infer,
+    observe_correction,
     teach_explicit,
 )
 from lexitrace.models import Decision, Memory, Observation  # noqa: E402
@@ -47,6 +48,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--model", default="BAAI/bge-small-en-v1.5")
     parser.add_argument("--cache-dir", default=str(ROOT / "data" / "models"))
+    parser.add_argument(
+        "--semantic-retrieval-mode",
+        choices=("centroid", "nearest_example"),
+        default="centroid",
+    )
     return parser.parse_args()
 
 
@@ -70,6 +76,7 @@ def run_journey(
     encoder,
     *,
     enable_learned_asr: bool = True,
+    semantic_retrieval_mode: str = "centroid",
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -95,6 +102,18 @@ def run_journey(
             apply_memory_state_override(session, memory=memory, state="confirmed")
             session.commit()
             continue
+        if event_type == "correction":
+            observe_correction(
+                session,
+                user_id="journey-user",
+                raw_asr_text=event.get("raw_asr_text", ""),
+                formatted_text=event["formatted_text"],
+                accepted_text=event["accepted_text"],
+                confirm_candidates=False,
+                event_id=event.get("event_id"),
+                semantic_encoder=encoder,
+            )
+            continue
         if event_type != "infer":
             raise ValueError(f"Unsupported journey event: {event_type}")
 
@@ -107,6 +126,7 @@ def run_journey(
             asr=event.get("asr"),
             enable_learned_asr=enable_learned_asr,
             semantic_encoder=encoder,
+            semantic_retrieval_mode=semantic_retrieval_mode,
         )
         row = {
             "journey_id": journey["journey_id"],
@@ -271,7 +291,14 @@ def main() -> None:
             system_rows: list[dict[str, Any]] = []
             for journey in journeys:
                 reset_session(session)
-                system_rows.extend(run_journey(session, journey, encoder))
+                system_rows.extend(
+                    run_journey(
+                        session,
+                        journey,
+                        encoder,
+                        semantic_retrieval_mode=args.semantic_retrieval_mode,
+                    )
+                )
             all_rows[system_name] = system_rows
     engine.dispose()
 
