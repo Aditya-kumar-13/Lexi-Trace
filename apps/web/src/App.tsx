@@ -7,7 +7,13 @@ type Memory = {
   canonical_form: string;
   state: string;
   scope_mode: string;
-  evidence_confidence: number;
+  trust_profile: {
+    posterior_mean: number;
+    positive_events: number;
+    negative_events: number;
+    distinct_contexts: number;
+    reason_code: string;
+  };
   positive_context: string[];
   negative_context: string[];
   context_evidence_count: number;
@@ -79,6 +85,9 @@ function App() {
   const [variant, setVariant] = useState("Kiwi");
   const [scope, setScope] = useState<"global" | "contextual">("contextual");
   const [example, setExample] = useState("Review the Kiwi service dashboard.");
+  const [observedText, setObservedText] = useState("Message Aditya today.");
+  const [acceptedText, setAcceptedText] = useState("Message Aaditya today.");
+  const [observationMessage, setObservationMessage] = useState("");
   const [formatted, setFormatted] = useState("Inspect the Kiwi platform deployment.");
   const [asrAlternative, setAsrAlternative] = useState("");
   const [asrConfidence, setAsrConfidence] = useState("0.95");
@@ -162,6 +171,39 @@ function App() {
       );
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Unable to run inference");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function observeCorrection(event: FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const response = await jsonRequest<{
+        created_memory_ids: string[];
+        trust_profiles: Record<string, { positive_events: number; distinct_contexts: number }>;
+      }>("/api/v1/observations/correction", {
+        method: "POST",
+        body: JSON.stringify({
+          event_id: crypto.randomUUID(),
+          formatted_text: observedText,
+          accepted_text: acceptedText,
+        }),
+      });
+      const memoryId = response.created_memory_ids[0];
+      if (!memoryId) {
+        setObservationMessage("No supported word-level replacement was found.");
+        return;
+      }
+      const trust = response.trust_profiles[memoryId];
+      setObservationMessage(
+        `Stored event: ${trust.positive_events} positive observations across ${trust.distinct_contexts} contexts.`,
+      );
+      await refreshMemories();
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Unable to observe correction");
     } finally {
       setBusy(false);
     }
@@ -317,13 +359,29 @@ function App() {
           </form>
         </section>
 
+        <form className="panel lifecycle-panel" onSubmit={observeCorrection}>
+          <div className="panel-heading compact">
+            <span className="step">02B</span>
+            <div><p className="eyebrow">LEARN FROM USE</p><h2>Observe an accepted correction</h2></div>
+          </div>
+          <div className="two-column">
+            <label>Formatter produced<textarea value={observedText} onChange={(e) => setObservedText(e.target.value)} rows={3} /></label>
+            <label>User accepted<textarea value={acceptedText} onChange={(e) => setAcceptedText(e.target.value)} rows={3} /></label>
+          </div>
+          <small>Three accepted events across at least two contexts can confirm a candidate automatically. Replayed event IDs do not increase trust.</small>
+          <button type="submit" disabled={busy}>Record ordinary-use evidence <span>→</span></button>
+          {observationMessage && <small className="feedback-message">{observationMessage}</small>}
+        </form>
+
         <section className="inspector-grid">
           <div className="panel library">
             <div className="panel-heading compact"><span className="step">03</span><div><p className="eyebrow">MEMORY</p><h2>What LexiTrace knows</h2></div></div>
             {memories.length === 0 ? <p className="empty">No memories yet. Teach the first word above.</p> : memories.map((memory) => (
               <article className="memory-card" key={memory.id}>
                 <div><strong>{memory.canonical_form}</strong><span>{memory.variants.map((item) => item.surface_form).join(", ")} → {memory.canonical_form}</span></div>
-                <div className="memory-meta"><span>{memory.state}</span><span>{memory.scope_mode}</span><span>{Math.round(memory.evidence_confidence * 100)}% evidence</span></div>
+                <div className="memory-meta"><span>{memory.state}</span><span>{memory.scope_mode}</span><span>{Math.round(memory.trust_profile.posterior_mean * 100)}% posterior trust</span></div>
+                <small>{memory.trust_profile.positive_events} positive · {memory.trust_profile.negative_events} negative · {memory.trust_profile.distinct_contexts} contexts</small>
+                <small>{memory.trust_profile.reason_code.replaceAll("_", " ").toLowerCase()}</small>
                 <small>{memory.context_evidence_count} learned context signals</small>
                 <small>{memory.semantic_evidence_count} semantic observations</small>
                 <small>{memory.asr_evidence_count} provider-linked ASR outcomes</small>
@@ -374,7 +432,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>LexiTrace 0.7.0</span><span>Hybrid context · Learned ASR reliability</span></footer>
+      <footer><span>LexiTrace 0.8.0</span><span>Event-derived trust · Learned ASR reliability</span></footer>
     </div>
   );
 }

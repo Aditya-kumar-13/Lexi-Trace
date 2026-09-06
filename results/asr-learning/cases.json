@@ -10,11 +10,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 10.788,
-      "trace_id": "f8280a5c-3456-4387-83bb-72043977b580",
+      "latency_ms": 8.982,
+      "trace_id": "cb93d8ed-3c62-4876-b2ed-455ec3a606ce",
       "candidates": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -42,7 +42,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -78,19 +82,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "observation_id": "9701a106-cd2e-4799-b41a-15564f91d8a1",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -118,11 +145,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 204800,
-        "page_count": 50,
+        "allocated_bytes": 208896,
+        "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1662,
+        "trace_payload_bytes": 1802,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -147,11 +174,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.623,
-      "trace_id": "ec429bb3-80e4-4e8d-80dc-e8c67d7cadc9",
+      "latency_ms": 3.658,
+      "trace_id": "2b8ddfd3-d0c1-473a-b227-27c1cf763e69",
       "candidates": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -180,7 +207,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -216,19 +247,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "observation_id": "9701a106-cd2e-4799-b41a-15564f91d8a1",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -237,7 +296,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "observation_id": "4eb40284-08e9-4381-9cb6-3a174196fc9d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -271,11 +330,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 204800,
-        "page_count": 50,
+        "allocated_bytes": 208896,
+        "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3375,
+        "trace_payload_bytes": 3654,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -300,11 +359,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.419,
-      "trace_id": "44260459-acff-440f-a404-d4a6c28783ba",
+      "latency_ms": 3.603,
+      "trace_id": "3cc54779-cef2-485e-ae39-547ef7581904",
       "candidates": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -333,7 +392,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -369,19 +432,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "observation_id": "9701a106-cd2e-4799-b41a-15564f91d8a1",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -390,7 +481,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "observation_id": "4eb40284-08e9-4381-9cb6-3a174196fc9d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -399,7 +490,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "96d9a3a9-17d1-454a-8aec-3da4573f6305",
+              "observation_id": "af9b351d-1515-49d2-9848-04b4f9cf8fdd",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -433,11 +524,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 212992,
-        "page_count": 52,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5088,
+        "trace_payload_bytes": 5504,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -462,11 +553,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 6.833,
-      "trace_id": "0eefa190-5ca6-4b43-8616-2ee15eec3533",
+      "latency_ms": 3.529,
+      "trace_id": "91fbb15c-c9ed-454c-93ca-3194c352319b",
       "candidates": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -495,7 +586,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5714,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -531,19 +626,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "ac69eefa-0efc-4c62-b6a0-efe69af81ed5",
+          "memory_id": "d5188711-f2e4-435f-afa8-c9654dc9291d",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "9edddee1-9303-4785-ab32-40818117a50e",
+              "observation_id": "9701a106-cd2e-4799-b41a-15564f91d8a1",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -552,7 +675,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "165c1f47-0cb1-400f-a8ba-432e80dd353b",
+              "observation_id": "4eb40284-08e9-4381-9cb6-3a174196fc9d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -561,7 +684,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "96d9a3a9-17d1-454a-8aec-3da4573f6305",
+              "observation_id": "af9b351d-1515-49d2-9848-04b4f9cf8fdd",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -570,7 +693,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "139e7171-0543-46d0-ac23-08ca88c699eb",
+              "observation_id": "4386f1b8-452d-484e-8743-3d070c65d1be",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -604,11 +727,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6794,
+        "trace_payload_bytes": 7350,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -633,11 +756,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.955,
-      "trace_id": "e16719a7-debb-4827-9310-cc22e45882b9",
+      "latency_ms": 2.9,
+      "trace_id": "ccff9775-259b-4118-a80f-4947d0f276db",
       "candidates": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -665,7 +788,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -701,19 +828,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "observation_id": "b4964245-4463-44dd-82a9-7e5a72c89f08",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -741,11 +891,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1662,
+        "trace_payload_bytes": 1802,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -770,11 +920,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.74,
-      "trace_id": "d09a9474-47c9-4701-9bea-67c1421f2125",
+      "latency_ms": 3.684,
+      "trace_id": "6d7cfafb-58ca-4f4c-9f46-54ca167f845e",
       "candidates": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -803,7 +953,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -839,19 +993,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "observation_id": "b4964245-4463-44dd-82a9-7e5a72c89f08",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -860,7 +1042,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "observation_id": "cd90375f-b18b-406a-94f4-0b2f5f9b14e5",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -894,11 +1076,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3373,
+        "trace_payload_bytes": 3652,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -923,11 +1105,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.232,
-      "trace_id": "2e21a191-fd81-4c82-b84c-dc4b0c623827",
+      "latency_ms": 3.246,
+      "trace_id": "eff62d01-2725-40d1-b388-5848e9c7c4a1",
       "candidates": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -956,7 +1138,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -992,19 +1178,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "observation_id": "b4964245-4463-44dd-82a9-7e5a72c89f08",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1013,7 +1227,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "observation_id": "cd90375f-b18b-406a-94f4-0b2f5f9b14e5",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1022,7 +1236,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "887fde5e-39ed-44d3-976d-2ebb7f644762",
+              "observation_id": "6fce41f4-c25c-486f-8409-b848cd269f32",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1056,11 +1270,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5084,
+        "trace_payload_bytes": 5500,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1085,11 +1299,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.603,
-      "trace_id": "1de9ddde-4cfd-40c2-bfd8-f8336be8403b",
+      "latency_ms": 3.67,
+      "trace_id": "a9b12296-eefd-448f-8f98-3d1dd9fd30dc",
       "candidates": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1118,7 +1332,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -1154,19 +1372,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7ce251fc-e0b5-4509-bdb0-0adfd1d593a5",
+          "memory_id": "b4ad1d40-b2b9-4b52-a11b-53605840d64e",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "d36fce68-6daa-42fa-9e2a-50293931ec6a",
+              "observation_id": "b4964245-4463-44dd-82a9-7e5a72c89f08",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1175,7 +1421,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "7daff84a-010d-41f0-93db-a6a1159315fa",
+              "observation_id": "cd90375f-b18b-406a-94f4-0b2f5f9b14e5",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1184,7 +1430,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "887fde5e-39ed-44d3-976d-2ebb7f644762",
+              "observation_id": "6fce41f4-c25c-486f-8409-b848cd269f32",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1193,7 +1439,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "2bc5d147-45ab-435d-b6fb-527295f0614c",
+              "observation_id": "d9186aad-a5ff-4af8-97fb-3d6878a8ec2b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1227,11 +1473,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6797,
+        "trace_payload_bytes": 7353,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1256,11 +1502,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.209,
-      "trace_id": "4a8dab04-be03-4d77-9046-fbc2e63faafd",
+      "latency_ms": 2.912,
+      "trace_id": "7360870d-54c1-404a-8228-9f7235063000",
       "candidates": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1288,7 +1534,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -1324,19 +1574,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "observation_id": "0cdd6208-230e-41f9-9da0-5fd5f11c61d4",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1364,11 +1637,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1662,
+        "trace_payload_bytes": 1802,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1393,11 +1666,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.225,
-      "trace_id": "d605277b-3ccb-435c-87a3-eb931755f4b5",
+      "latency_ms": 3.257,
+      "trace_id": "0333cf10-fe53-49b0-93b7-14c0d731154f",
       "candidates": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1426,7 +1699,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -1462,19 +1739,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "observation_id": "0cdd6208-230e-41f9-9da0-5fd5f11c61d4",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1483,7 +1788,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "observation_id": "348e2ec1-7ec2-4185-b91e-034c053aa7fd",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1517,11 +1822,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3400,
+        "trace_payload_bytes": 3679,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1546,11 +1851,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.721,
-      "trace_id": "83e2c4aa-e9d4-4b9b-9b19-25b510b4b228",
+      "latency_ms": 3.855,
+      "trace_id": "e8e83fea-d689-4de7-a0c4-73a8fd7f838d",
       "candidates": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1579,7 +1884,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -1615,19 +1924,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "observation_id": "0cdd6208-230e-41f9-9da0-5fd5f11c61d4",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1636,7 +1973,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "observation_id": "348e2ec1-7ec2-4185-b91e-034c053aa7fd",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1645,7 +1982,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "a858265a-2681-455f-90d1-6c5dd775f7ba",
+              "observation_id": "798d23a4-ebce-4d86-9de3-a6371f23775f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1679,11 +2016,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5138,
+        "trace_payload_bytes": 5554,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1708,11 +2045,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.81,
-      "trace_id": "b9c549e0-d4e7-40b1-aa66-c1fbb09dc642",
+      "latency_ms": 4.079,
+      "trace_id": "0d8eba72-ed92-46c6-a8e1-314a52fb87df",
       "candidates": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1741,7 +2078,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -1777,19 +2118,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "5579a34f-8f17-475e-8f7a-f04c01f2618d",
+          "memory_id": "f2aca3d5-da74-4d80-80e9-da9983699f79",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "f4025757-7af7-48d2-9a04-1ac5000ce594",
+              "observation_id": "0cdd6208-230e-41f9-9da0-5fd5f11c61d4",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1798,7 +2167,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e56bdd74-d0f5-4fa6-838b-3ac81f1e6d68",
+              "observation_id": "348e2ec1-7ec2-4185-b91e-034c053aa7fd",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1807,7 +2176,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "a858265a-2681-455f-90d1-6c5dd775f7ba",
+              "observation_id": "798d23a4-ebce-4d86-9de3-a6371f23775f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1816,7 +2185,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "25787974-c392-4066-868a-92bbd5419a4f",
+              "observation_id": "b2995ce8-5765-439e-bf13-f2c56411504f",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -1850,11 +2219,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 229376,
+        "page_count": 56,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6877,
+        "trace_payload_bytes": 7433,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1879,11 +2248,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.964,
-      "trace_id": "aa522941-1d88-4e80-9ead-bc67eb1ef334",
+      "latency_ms": 3.423,
+      "trace_id": "afa09f71-0f82-43c6-81d1-b796f18f4300",
       "candidates": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -1912,7 +2281,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.5642,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.5642,
@@ -1948,19 +2321,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "observation_id": "3dddeba5-42b1-4f9a-9f6d-d9e8b8f5f523",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -1990,11 +2386,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 229376,
+        "page_count": 56,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1755,
+        "trace_payload_bytes": 1895,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2019,11 +2415,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.507,
-      "trace_id": "e992791d-df15-439b-8238-e5235a1da509",
+      "latency_ms": 3.669,
+      "trace_id": "1684e309-b6ff-4622-a89c-43619aa1491d",
       "candidates": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2052,7 +2448,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.9209,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.9209,
@@ -2088,19 +2488,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "observation_id": "3dddeba5-42b1-4f9a-9f6d-d9e8b8f5f523",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2109,7 +2537,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "observation_id": "be8f6738-caae-4384-a521-1336d2145cf0",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2144,11 +2572,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 229376,
+        "page_count": 56,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3550,
+        "trace_payload_bytes": 3829,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2173,11 +2601,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.972,
-      "trace_id": "21f097d2-2a4a-41a9-a16d-f7375c4c41c4",
+      "latency_ms": 3.62,
+      "trace_id": "a5603123-8712-4a8a-a036-bccbd0696401",
       "candidates": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2206,7 +2634,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.9707,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.9707,
@@ -2242,19 +2674,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "observation_id": "3dddeba5-42b1-4f9a-9f6d-d9e8b8f5f523",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2263,7 +2723,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "observation_id": "be8f6738-caae-4384-a521-1336d2145cf0",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2272,7 +2732,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "522c8f4e-f943-4468-b9a1-d9f4add0eddc",
+              "observation_id": "c600373d-dad9-44c7-84c7-06d6b4792e27",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2307,11 +2767,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 229376,
-        "page_count": 56,
+        "allocated_bytes": 241664,
+        "page_count": 59,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5345,
+        "trace_payload_bytes": 5761,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2336,11 +2796,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.643,
-      "trace_id": "23d1dfb2-38eb-4e34-933c-06dfba24f4ea",
+      "latency_ms": 4.945,
+      "trace_id": "06fa1844-ee5c-4246-8747-93933547d07b",
       "candidates": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2371,7 +2831,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5714,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -2407,19 +2871,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "00d7cd9b-2c17-42d1-b7bf-6e61fe5f3a85",
+          "memory_id": "0060153f-01b2-4f42-8db9-6cbcedc435ca",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "b29774a9-51f9-417c-96dd-48df0558a1a7",
+              "observation_id": "3dddeba5-42b1-4f9a-9f6d-d9e8b8f5f523",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2428,7 +2920,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "e0b74a16-8599-48df-a495-2f1245a4c9ea",
+              "observation_id": "be8f6738-caae-4384-a521-1336d2145cf0",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2437,7 +2929,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "522c8f4e-f943-4468-b9a1-d9f4add0eddc",
+              "observation_id": "c600373d-dad9-44c7-84c7-06d6b4792e27",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2446,7 +2938,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "711ecfea-e808-4507-abc5-abf6197a367d",
+              "observation_id": "319ad5fe-7f4c-40f6-9655-a12e2b7a64e7",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2481,11 +2973,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 7064,
+        "trace_payload_bytes": 7620,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2512,11 +3004,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.733,
-      "trace_id": "37b6a0f5-bdfb-45bf-9cff-4f5eaf9ef9a0",
+      "latency_ms": 3.272,
+      "trace_id": "84f6c727-a377-4823-a066-ae7a49c796a3",
       "candidates": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2544,7 +3036,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -2580,19 +3076,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "observation_id": "54ea98d7-7795-4956-8043-bcb7cc9609a9",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2620,11 +3139,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1661,
+        "trace_payload_bytes": 1801,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2649,11 +3168,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 7.0,
-      "trace_id": "b6ca42db-1b98-436e-9dcb-be42d30122a2",
+      "latency_ms": 3.575,
+      "trace_id": "d85fcb59-c554-42dc-a9bf-b3223278b21c",
       "candidates": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2682,7 +3201,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -2718,19 +3241,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "observation_id": "54ea98d7-7795-4956-8043-bcb7cc9609a9",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2739,7 +3290,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "observation_id": "eed199c8-aed7-498d-b0c4-2774a5daabe7",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2773,11 +3324,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3373,
+        "trace_payload_bytes": 3652,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2802,11 +3353,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.338,
-      "trace_id": "1aba689e-5c77-46c3-85ab-8e439ea8da68",
+      "latency_ms": 3.886,
+      "trace_id": "1ac02abd-d3cb-4b2a-8413-e79aced310ae",
       "candidates": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -2835,7 +3386,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -2871,19 +3426,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "observation_id": "54ea98d7-7795-4956-8043-bcb7cc9609a9",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -2892,7 +3475,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "observation_id": "eed199c8-aed7-498d-b0c4-2774a5daabe7",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2901,7 +3484,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "17d30b9f-9fac-4289-938a-a31fe97f0be8",
+              "observation_id": "a5dc9d71-127c-4ffa-a14d-28b887946265",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -2935,11 +3518,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5085,
+        "trace_payload_bytes": 5501,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -2964,17 +3547,17 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.386,
-      "trace_id": "5e7343de-f99c-4907-ba3e-eee506a2ac5d",
+      "latency_ms": 3.744,
+      "trace_id": "817456a2-4515-4901-b0f5-4a657483bbd3",
       "candidates": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
           "start": 4,
           "end": 11,
-          "score": 0.9389,
+          "score": 0.956,
           "action": "apply",
           "reason_codes": [
             "FUZZY_CANDIDATE",
@@ -2996,8 +3579,12 @@
             "asr_reliability_accepted": 3,
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5714,
-            "asr_reliability_contribution": 0.0343,
-            "evidence_confidence": 1.0,
+            "asr_reliability_contribution": 0.0514,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -3033,19 +3620,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "a8e55bcc-28c1-4274-a178-558da612beda",
+          "memory_id": "5a62f737-12ff-48b2-af7f-e3fdbda2de5c",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "3b659f2a-93f9-47dc-90b7-79fc0b3a82df",
+              "observation_id": "54ea98d7-7795-4956-8043-bcb7cc9609a9",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3054,7 +3669,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "3c097c7e-37a3-43bd-bb65-89045c63d7a7",
+              "observation_id": "eed199c8-aed7-498d-b0c4-2774a5daabe7",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3063,7 +3678,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "17d30b9f-9fac-4289-938a-a31fe97f0be8",
+              "observation_id": "a5dc9d71-127c-4ffa-a14d-28b887946265",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3072,7 +3687,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "d1b9dd98-bde8-476f-bba9-08438e8c157b",
+              "observation_id": "36cc6234-5ce2-4b55-ba50-6f4c4de7bafb",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3106,11 +3721,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 8105,
+        "trace_payload_bytes": 8795,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3135,11 +3750,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.409,
-      "trace_id": "38e50147-2300-4637-a793-923746c8ef49",
+      "latency_ms": 3.145,
+      "trace_id": "d7fc7134-29a9-4973-99c2-b34d9e88a870",
       "candidates": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3167,7 +3782,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -3203,19 +3822,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "observation_id": "86b9df11-adff-44eb-a4a8-4645e98d6737",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3243,11 +3885,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1661,
+        "trace_payload_bytes": 1801,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3272,11 +3914,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.237,
-      "trace_id": "ee0994c5-9eb3-4f02-b23b-f56f1ab3b2d6",
+      "latency_ms": 3.376,
+      "trace_id": "9bf6004f-a1ea-461e-b7c4-29f723934ac2",
       "candidates": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3305,7 +3947,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -3341,19 +3987,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "observation_id": "86b9df11-adff-44eb-a4a8-4645e98d6737",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3362,7 +4036,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "observation_id": "45a92620-3d5a-47d9-8f35-70df450fe52a",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3396,11 +4070,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3371,
+        "trace_payload_bytes": 3650,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3425,11 +4099,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.388,
-      "trace_id": "626b8a4f-4552-4ab2-bcc5-5dcf5515afa8",
+      "latency_ms": 3.51,
+      "trace_id": "49899c42-6614-4721-aee1-9c3d5af3aad6",
       "candidates": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3458,7 +4132,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -3494,19 +4172,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "observation_id": "86b9df11-adff-44eb-a4a8-4645e98d6737",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3515,7 +4221,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "observation_id": "45a92620-3d5a-47d9-8f35-70df450fe52a",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3524,7 +4230,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "624273a8-8ae7-496f-ab9c-fabc2580f549",
+              "observation_id": "2a17ce0c-e0ba-4509-b08f-972d01af70b2",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3558,11 +4264,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5081,
+        "trace_payload_bytes": 5497,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3587,11 +4293,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.74,
-      "trace_id": "d4ba4c2c-c81d-4d52-ae40-02ff7d1f8035",
+      "latency_ms": 3.458,
+      "trace_id": "e2beaa94-68d1-4b34-a26f-405297bf77d3",
       "candidates": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3620,7 +4326,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -3656,19 +4366,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "352f8932-4709-4783-91a9-d101bf04f5a7",
+          "memory_id": "ef1db624-51a2-4825-a1fd-c93c50839cdd",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "5749f5f2-296f-4962-a5c6-5740efeab26e",
+              "observation_id": "86b9df11-adff-44eb-a4a8-4645e98d6737",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3677,7 +4415,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "cc85cc5f-aaa1-4db5-aa74-4216b3b5105e",
+              "observation_id": "45a92620-3d5a-47d9-8f35-70df450fe52a",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3686,7 +4424,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "624273a8-8ae7-496f-ab9c-fabc2580f549",
+              "observation_id": "2a17ce0c-e0ba-4509-b08f-972d01af70b2",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3695,7 +4433,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "16c1e735-73da-4d1e-b344-b18e07f99cd4",
+              "observation_id": "566e2d79-fbe2-4f7d-a64f-7979aedf773b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -3729,11 +4467,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6793,
+        "trace_payload_bytes": 7349,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3758,11 +4496,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 3.724,
-      "trace_id": "7f1b718f-ab34-40ec-a6eb-d30e384b4fec",
+      "latency_ms": 2.954,
+      "trace_id": "d607e7ee-12ea-476e-8cb6-245dc9718daf",
       "candidates": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3790,7 +4528,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -3826,19 +4568,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "observation_id": "6a9242f2-c7ca-4c5c-99d5-27fb188ab886",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3866,11 +4631,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1661,
+        "trace_payload_bytes": 1801,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -3895,11 +4660,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.438,
-      "trace_id": "8b2cd71d-d507-4d4e-a99a-5d8c5c9e4c6d",
+      "latency_ms": 3.238,
+      "trace_id": "b41dc1ff-ce40-46a0-a181-b827d2154ebe",
       "candidates": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -3928,7 +4693,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -3964,19 +4733,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "observation_id": "6a9242f2-c7ca-4c5c-99d5-27fb188ab886",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -3985,7 +4782,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "observation_id": "9328ecfe-8315-4947-9851-ce59c5a0653b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4019,11 +4816,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3398,
+        "trace_payload_bytes": 3677,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4048,11 +4845,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.298,
-      "trace_id": "ade3bb57-5519-41d3-982d-b16a1a905451",
+      "latency_ms": 3.553,
+      "trace_id": "9d63f788-1698-4b10-922e-d0af95137461",
       "candidates": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4081,7 +4878,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -4117,19 +4918,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "observation_id": "6a9242f2-c7ca-4c5c-99d5-27fb188ab886",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4138,7 +4967,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "observation_id": "9328ecfe-8315-4947-9851-ce59c5a0653b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4147,7 +4976,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "0ca470e5-2f8a-41e7-b158-452a49eac3c6",
+              "observation_id": "bb8efd07-10aa-464e-b5ad-5a8c652c4592",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4181,11 +5010,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5135,
+        "trace_payload_bytes": 5551,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4210,11 +5039,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.802,
-      "trace_id": "683817aa-74d3-427a-bd39-5f1a9ac2a9a7",
+      "latency_ms": 3.421,
+      "trace_id": "f686ed16-fa94-4ff3-b581-ec3c2f67c836",
       "candidates": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4243,7 +5072,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -4279,19 +5112,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "7417820c-4ca3-4ef2-9a36-09b1510e5a0c",
+          "memory_id": "3cb04313-291e-4810-915f-83da237af79b",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "1012a90a-94b2-4047-b8ab-e88f2ef46652",
+              "observation_id": "6a9242f2-c7ca-4c5c-99d5-27fb188ab886",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4300,7 +5161,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a755317c-9a55-40a8-8925-5bba1aec3e09",
+              "observation_id": "9328ecfe-8315-4947-9851-ce59c5a0653b",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4309,7 +5170,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "0ca470e5-2f8a-41e7-b158-452a49eac3c6",
+              "observation_id": "bb8efd07-10aa-464e-b5ad-5a8c652c4592",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4318,7 +5179,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "877dd7b6-1804-41da-95c7-6b7c47598179",
+              "observation_id": "afefab41-a6f2-4e38-b965-5dbf419d0cbf",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4352,11 +5213,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 6873,
+        "trace_payload_bytes": 7429,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4381,11 +5242,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.679,
-      "trace_id": "11e4d813-80a9-460e-9dbd-3b5cab492e29",
+      "latency_ms": 3.615,
+      "trace_id": "542f4695-55e7-41fd-bcde-c25e7ff7d616",
       "candidates": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4414,7 +5275,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.5642,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.5642,
@@ -4450,19 +5315,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "observation_id": "9de958a1-a768-4929-b884-b0e360549b16",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4492,11 +5380,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1754,
+        "trace_payload_bytes": 1894,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4521,11 +5409,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.466,
-      "trace_id": "6e823061-84ae-4cf8-9fb8-027b16e4b3e6",
+      "latency_ms": 3.845,
+      "trace_id": "abfe89e2-4a14-425b-a4c2-8a4608acc09c",
       "candidates": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4554,7 +5442,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.4,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.875,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.9209,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.9209,
@@ -4590,19 +5482,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 2,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.875,
+            "alpha": 7.0,
+            "beta": 1.0,
+            "positive_events": 2,
+            "negative_events": 0,
+            "weighted_positive": 6.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 1,
+                "positive_weight": 2.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "observation_id": "9de958a1-a768-4929-b884-b0e360549b16",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4611,7 +5531,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "observation_id": "19c4ea0e-c12a-469e-a6dc-b5b1e885586e",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4646,11 +5566,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3548,
+        "trace_payload_bytes": 3827,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4675,11 +5595,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.172,
-      "trace_id": "fbbb60a8-8747-49ce-bc43-a151db2a2ee6",
+      "latency_ms": 3.664,
+      "trace_id": "4842106f-fa54-485d-a08b-0a6101d6b12d",
       "candidates": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
@@ -4708,7 +5628,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.9,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 3,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.9707,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.9707,
@@ -4744,19 +5668,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 3,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9,
+            "alpha": 9.0,
+            "beta": 1.0,
+            "positive_events": 3,
+            "negative_events": 0,
+            "weighted_positive": 8.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 2,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "observation_id": "9de958a1-a768-4929-b884-b0e360549b16",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4765,7 +5717,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "observation_id": "19c4ea0e-c12a-469e-a6dc-b5b1e885586e",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4774,7 +5726,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "c6ba1512-9e80-4bdf-942c-291529e88e32",
+              "observation_id": "fcd10d46-03e6-4fc2-8acc-ee7784bbe34d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4809,11 +5761,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 5342,
+        "trace_payload_bytes": 5758,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -4838,17 +5790,17 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 6.831,
-      "trace_id": "65d0be85-4e5e-4c84-ad89-1baa5e4c881f",
+      "latency_ms": 3.743,
+      "trace_id": "e6e5c9c1-31d0-44aa-a13a-8dbd4a5d373f",
       "candidates": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "input_span": "Adithya",
           "output_span": "Aaditya",
           "start": 6,
           "end": 13,
-          "score": 0.8389,
+          "score": 0.856,
           "action": "suggest",
           "reason_codes": [
             "FUZZY_CANDIDATE",
@@ -4872,8 +5824,12 @@
             "asr_reliability_accepted": 3,
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.5714,
-            "asr_reliability_contribution": 0.0343,
-            "evidence_confidence": 1.0,
+            "asr_reliability_contribution": 0.0514,
+            "memory_trust_posterior": 0.9167,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 4,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -4909,19 +5865,47 @@
       },
       "memory_state": [
         {
-          "memory_id": "dfe99b38-8637-4f48-a587-21b5e1c5a320",
+          "memory_id": "2f69f277-dd84-4776-b935-c89d87ec50e1",
           "canonical_form": "Aaditya",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 4,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.9167,
+            "alpha": 11.0,
+            "beta": 1.0,
+            "positive_events": 4,
+            "negative_events": 0,
+            "weighted_positive": 10.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": true,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "intervention_feedback": {
+                "events": 3,
+                "positive_weight": 6.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Aditya"
           ],
           "observations": [
             {
-              "observation_id": "6ade56e6-429c-43c5-9bd3-7bbcac24fd09",
+              "observation_id": "9de958a1-a768-4929-b884-b0e360549b16",
               "evidence_type": "explicit_teach",
               "source_span": "Aditya",
               "target_span": "Aaditya",
@@ -4930,7 +5914,7 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "a4d18755-c901-4135-90be-ab28a29bc804",
+              "observation_id": "19c4ea0e-c12a-469e-a6dc-b5b1e885586e",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4939,7 +5923,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "c6ba1512-9e80-4bdf-942c-291529e88e32",
+              "observation_id": "fcd10d46-03e6-4fc2-8acc-ee7784bbe34d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4948,7 +5932,7 @@
               "reason_code": "USER_CONFIRMED"
             },
             {
-              "observation_id": "45e84498-00a9-44ed-bd9e-1e647e77e51f",
+              "observation_id": "037e2f49-e0d8-4bd2-8dee-4f4f1d7ba06d",
               "evidence_type": "intervention_feedback",
               "source_span": "Adithya",
               "target_span": "Aaditya",
@@ -4983,11 +5967,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 233472,
-        "page_count": 57,
+        "allocated_bytes": 249856,
+        "page_count": 61,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 7066,
+        "trace_payload_bytes": 7621,
         "rows": {
           "memories": 1,
           "memory_variants": 1,

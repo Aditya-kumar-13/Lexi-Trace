@@ -6,8 +6,8 @@ Journeys: **4**
 
 | System | Exact output | Action accuracy | Wrong interventions | p95 latency |
 |---|---:|---:|---:|---:|
-| no_learning_ablation | 93.8% | 93.8% | 0 | 6.972 ms |
-| learned_asr | 100.0% | 100.0% | 0 | 6.831 ms |
+| no_learning_ablation | 93.8% | 93.8% | 0 | 4.945 ms |
+| learned_asr | 100.0% | 100.0% | 0 | 3.845 ms |
 
 ## Precision and coverage
 
@@ -18,7 +18,7 @@ The curve replays the committed chronological labels at alternate apply threshol
 | 0.90 | 15 | 86.7% | 100.0% |
 | 0.92 | 1 | 100.0% | 7.7% |
 | 0.93 | 1 | 100.0% | 7.7% |
-| 0.94 | 0 | 100.0% | 0.0% |
+| 0.94 | 1 | 100.0% | 7.7% |
 | 0.96 | 0 | 100.0% | 0.0% |
 
 ## Interpretation

@@ -13,7 +13,7 @@ class SemanticEncoder(Protocol):
 
     def encode(self, text: str) -> list[float] | None: ...
 
-    def status(self) -> dict[str, str | bool | None]: ...
+    def status(self) -> dict[str, str | bool | int | None]: ...
 
 
 class DisabledSemanticEncoder:
@@ -23,7 +23,7 @@ class DisabledSemanticEncoder:
     def encode(self, text: str) -> list[float] | None:
         return None
 
-    def status(self) -> dict[str, str | bool | None]:
+    def status(self) -> dict[str, str | bool | int | None]:
         return {
             "enabled": False,
             "model": self.model_name,
@@ -35,9 +35,10 @@ class DisabledSemanticEncoder:
 class FastEmbedSemanticEncoder:
     enabled = True
 
-    def __init__(self, model_name: str, cache_dir: str) -> None:
+    def __init__(self, model_name: str, cache_dir: str, threads: int = 1) -> None:
         self.model_name = model_name
         self.cache_dir = str(Path(cache_dir).resolve())
+        self.threads = threads
         self._model = None
         self._error: str | None = None
 
@@ -50,6 +51,7 @@ class FastEmbedSemanticEncoder:
             self._model = TextEmbedding(
                 model_name=self.model_name,
                 cache_dir=self.cache_dir,
+                threads=self.threads,
                 lazy_load=True,
             )
             self._error = None
@@ -74,13 +76,14 @@ class FastEmbedSemanticEncoder:
         self._error = None
         return [value / norm for value in vector]
 
-    def status(self) -> dict[str, str | bool | None]:
+    def status(self) -> dict[str, str | bool | int | None]:
         state = "error" if self._error else "ready" if self._model is not None else "lazy"
         return {
             "enabled": True,
             "model": self.model_name,
             "state": state,
             "error": self._error,
+            "threads": self.threads,
         }
 
 
@@ -90,4 +93,5 @@ def build_semantic_encoder(settings: Settings) -> SemanticEncoder:
     return FastEmbedSemanticEncoder(
         model_name=settings.semantic_model,
         cache_dir=settings.semantic_cache_dir,
+        threads=settings.semantic_threads,
     )

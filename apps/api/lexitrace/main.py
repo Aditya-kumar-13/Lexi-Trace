@@ -14,6 +14,7 @@ from .config import Settings
 from .database import build_engine, build_session_factory, get_session
 from .engine import (
     apply_decision_feedback,
+    apply_memory_state_override,
     infer,
     memory_to_dict,
     normalize,
@@ -66,7 +67,7 @@ def create_app(
 
     app = FastAPI(
         title="LexiTrace API",
-        version="0.7.0",
+        version="0.8.0",
         description="Inspectable personal word memory for transcript formatting.",
         lifespan=lifespan,
     )
@@ -84,7 +85,7 @@ def create_app(
     def health() -> dict:
         return {
             "status": "ok",
-            "version": "0.7.0",
+            "version": "0.8.0",
             "semantic": semantic_encoder.status(),
         }
 
@@ -118,6 +119,11 @@ def create_app(
             "observation_ids": observation_ids,
             "created_memory_ids": memory_ids,
             "rejected": rejected,
+            "trust_profiles": {
+                memory_id: memory_to_dict(session.get(Memory, memory_id))["trust_profile"]
+                for memory_id in memory_ids
+                if session.get(Memory, memory_id) is not None
+            },
         }
 
     @app.post("/api/v1/infer", response_model=InferenceResponse)
@@ -161,10 +167,7 @@ def create_app(
             memory.canonical_form = changes["canonical_form"]
             memory.canonical_normalized = normalize(changes["canonical_form"])
         if "state" in changes:
-            if changes["state"] == "confirmed" and memory.state != "confirmed":
-                memory.evidence_confidence = 1.0
-                memory.support_count += 1
-            memory.state = changes["state"]
+            apply_memory_state_override(session, memory=memory, state=changes["state"])
         if "scope_mode" in changes:
             memory.scope_mode = changes["scope_mode"]
         if "positive_context" in changes:

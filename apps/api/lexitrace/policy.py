@@ -18,7 +18,7 @@ class DecisionPolicy:
     negative_context_block_threshold: float
     semantic_similarity_floor: float
     lexical_weight: float
-    memory_evidence_weight: float
+    memory_authorization_weight: float
     context_weight: float
     phonetic_weight: float
     asr_alternative_weight: float
@@ -27,6 +27,16 @@ class DecisionPolicy:
     asr_prior_alpha: float
     asr_prior_beta: float
     asr_minimum_outcomes: int
+    trust_prior_alpha: float
+    trust_prior_beta: float
+    trust_explicit_weight: float
+    trust_correction_weight: float
+    trust_confirmation_weight: float
+    trust_rejection_weight: float
+    trust_auto_confirm_threshold: float
+    trust_demote_threshold: float
+    trust_minimum_positive_events: int
+    trust_minimum_distinct_contexts: int
 
 
 def load_policy() -> DecisionPolicy:
@@ -40,6 +50,7 @@ def load_policy() -> DecisionPolicy:
     semantic = data["semantic"]
     weights = data["weights"]
     asr_learning = data["asr_learning"]
+    lifecycle = data["memory_lifecycle"]
     return DecisionPolicy(
         version=data["version"],
         apply_threshold=thresholds["apply"],
@@ -50,7 +61,7 @@ def load_policy() -> DecisionPolicy:
         negative_context_block_threshold=thresholds["negative_context_block"],
         semantic_similarity_floor=semantic["similarity_floor"],
         lexical_weight=weights["lexical"],
-        memory_evidence_weight=weights["memory_evidence"],
+        memory_authorization_weight=weights["memory_authorization"],
         context_weight=weights["context"],
         phonetic_weight=weights["phonetic"],
         asr_alternative_weight=weights["asr_alternative"],
@@ -59,4 +70,14 @@ def load_policy() -> DecisionPolicy:
         asr_prior_alpha=asr_learning["prior_alpha"],
         asr_prior_beta=asr_learning["prior_beta"],
         asr_minimum_outcomes=asr_learning["minimum_outcomes"],
+        trust_prior_alpha=lifecycle["prior_alpha"],
+        trust_prior_beta=lifecycle["prior_beta"],
+        trust_explicit_weight=lifecycle["explicit_teach_weight"],
+        trust_correction_weight=lifecycle["accepted_correction_weight"],
+        trust_confirmation_weight=lifecycle["confirmed_intervention_weight"],
+        trust_rejection_weight=lifecycle["rejected_intervention_weight"],
+        trust_auto_confirm_threshold=lifecycle["auto_confirm_threshold"],
+        trust_demote_threshold=lifecycle["demote_threshold"],
+        trust_minimum_positive_events=lifecycle["minimum_positive_events"],
+        trust_minimum_distinct_contexts=lifecycle["minimum_distinct_contexts"],
     )

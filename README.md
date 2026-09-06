@@ -5,7 +5,7 @@ backend-focused **The Words Kivi Keeps** assignment, not the Golden Goose track.
 canonical spellings and their observed variants, then chooses to apply, suggest, or abstain when
 similar text appears later.
 
-## Current milestone: 0.7.0
+## Current milestone: 0.8.0
 
 The first vertical slice is implemented:
 
@@ -27,11 +27,14 @@ The first vertical slice is implemented:
 - fixed 252-case robustness corpus with predeclared calibration and held-out splits;
 - per-case input, expected/actual output, memory provenance, model use, cost, storage, and trace;
 - chronological journey evaluation with a sparse-context ablation;
-- fully documented native reviewer path, optional Docker path, and executable submission preflight.
+- fully documented native reviewer path, optional Docker path, and executable submission preflight;
 - provider/model/rank-specific ASR confusion outcomes linked to decisions and observations;
 - conservative Beta-posterior reliability that activates only after three independent outcomes;
 - feedback on safe suggestions, not only edits that were already auto-applied;
 - a frozen chronological ASR-learning suite, no-learning ablation, and precision/coverage curve.
+- event-derived memory trust with no mutable confidence percentage;
+- idempotent observation ingestion and automatic evidence-gated promotion or demotion;
+- a frozen lifecycle suite covering replay, context diversity, contradiction, and suppression.
 
 ## Product rule
 
@@ -46,6 +49,11 @@ Provider confidence is preserved as an input feature, not presented as calibrate
 accepted and rejected outcomes build a separate reliability estimate for one exact provider, model,
 rank, observed form, and canonical form. It cannot override memory-state, context, negative-evidence,
 or collision blockers.
+
+Memory trust is a versioned weighted Beta posterior computed from immutable observations. Passive
+corrections require three positive events across at least two distinct contexts before automatic
+confirmation. Duplicate event IDs contribute nothing, contradictory evidence can demote a memory,
+and only the user can suppress one.
 
 ## Development
 

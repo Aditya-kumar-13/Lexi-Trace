@@ -53,3 +53,27 @@ def test_asr_learning_evaluation_is_reproducible(tmp_path: Path) -> None:
     assert learned["wrong_interventions"] == 0
     assert learned["exact_match_rate"] == 1.0
     assert learned["exact_match_rate"] > ablation["exact_match_rate"]
+
+
+def test_memory_lifecycle_evaluation_is_reproducible(tmp_path: Path) -> None:
+    root = Path(__file__).resolve().parents[3]
+    output = tmp_path / "lifecycle-results"
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(root / "evaluation" / "run_lifecycle.py"),
+            "--output",
+            str(output),
+        ],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert completed.returncode == 0, completed.stderr
+    summary = json.loads((output / "summary.json").read_text(encoding="utf-8"))
+    lifecycle = summary["systems"]["event_lifecycle"]
+    ablation = summary["systems"]["no_lifecycle_ablation"]
+    assert lifecycle["event_accuracy"] == 1.0
+    assert lifecycle["wrong_interventions"] == 0
+    assert lifecycle["event_accuracy"] > ablation["event_accuracy"]

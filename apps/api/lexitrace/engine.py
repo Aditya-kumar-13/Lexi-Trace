@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
 import unicodedata
+import uuid
 from collections import defaultdict
 from dataclasses import asdict, dataclass
 from difflib import SequenceMatcher
@@ -26,7 +28,7 @@ from .models import (
 from .policy import load_policy
 from .semantic import SemanticEncoder
 
-ENGINE_VERSION = "0.7.0"
+ENGINE_VERSION = "0.8.0"
 POLICY = load_policy()
 APPLY_THRESHOLD = POLICY.apply_threshold
 SUGGEST_THRESHOLD = POLICY.suggest_threshold
@@ -246,6 +248,19 @@ def semantic_context_text(
     if start is not None and end is not None:
         return " ".join((text[:start] + " [TERM] " + text[end:]).split())
     return " ".join(text.split())
+
+
+def context_fingerprint(
+    text: str,
+    source_span: str,
+    *,
+    start: int | None = None,
+    end: int | None = None,
+) -> str | None:
+    if not text.strip():
+        return None
+    masked = normalize(semantic_context_text(text, source_span, start=start, end=end))
+    return hashlib.sha256(masked.encode("utf-8")).hexdigest()
 
 
 def store_semantic_evidence(
@@ -611,14 +626,128 @@ def aggregate_asr_profile(memory: Memory) -> dict:
     }
 
 
+def memory_trust_profile(memory: Memory) -> dict:
+    """Derive memory trust entirely from observation events under the versioned policy."""
+    alpha = POLICY.trust_prior_alpha
+    beta = POLICY.trust_prior_beta
+    positive_events = 0
+    negative_events = 0
+    weighted_positive = 0.0
+    weighted_negative = 0.0
+    contexts: set[str] = set()
+    sources: dict[str, dict[str, float | int]] = defaultdict(
+        lambda: {"events": 0, "positive_weight": 0.0, "negative_weight": 0.0}
+    )
+    weights = {
+        "explicit_teach": POLICY.trust_explicit_weight,
+        "state_override_confirmed": POLICY.trust_explicit_weight,
+        "accepted_correction": POLICY.trust_correction_weight,
+        "intervention_feedback": POLICY.trust_confirmation_weight,
+    }
+    for observation in memory.observations:
+        if observation.evidence_type not in weights:
+            continue
+        if observation.evidence_type == "intervention_feedback" and not observation.accepted:
+            weight = POLICY.trust_rejection_weight
+            beta += weight
+            weighted_negative += weight
+            negative_events += 1
+            source = sources["rejected_intervention"]
+            source["events"] = int(source["events"]) + 1
+            source["negative_weight"] = float(source["negative_weight"]) + weight
+            continue
+        if not observation.accepted:
+            continue
+        weight = weights[observation.evidence_type]
+        alpha += weight
+        weighted_positive += weight
+        positive_events += 1
+        source = sources[observation.evidence_type]
+        source["events"] = int(source["events"]) + 1
+        source["positive_weight"] = float(source["positive_weight"]) + weight
+        fingerprint = observation.context_fingerprint or context_fingerprint(
+            observation.formatted_text,
+            observation.source_span,
+        )
+        if fingerprint:
+            contexts.add(fingerprint)
+
+    posterior = alpha / (alpha + beta)
+    confirmation_gates = {
+        "posterior": posterior >= POLICY.trust_auto_confirm_threshold,
+        "positive_events": positive_events >= POLICY.trust_minimum_positive_events,
+        "distinct_contexts": len(contexts) >= POLICY.trust_minimum_distinct_contexts,
+    }
+    if memory.state == "suppressed":
+        recommendation = "hold_suppressed"
+        reason_code = "EXPLICITLY_SUPPRESSED"
+    elif memory.state == "candidate" and all(confirmation_gates.values()):
+        recommendation = "confirm"
+        reason_code = "AUTO_CONFIRM_EVIDENCE_SATISFIED"
+    elif (
+        memory.state == "confirmed"
+        and negative_events > 0
+        and posterior < POLICY.trust_demote_threshold
+    ):
+        recommendation = "demote"
+        reason_code = "POSTERIOR_BELOW_DEMOTION_THRESHOLD"
+    else:
+        recommendation = "hold"
+        failed_gate = next(
+            (name for name, passed in confirmation_gates.items() if not passed), None
+        )
+        reason_code = (
+            f"AWAITING_{failed_gate.upper()}"
+            if memory.state == "candidate" and failed_gate
+            else "STABLE"
+        )
+    return {
+        "method": "weighted_beta_posterior",
+        "policy_version": POLICY.version,
+        "posterior_mean": round(posterior, 4),
+        "alpha": round(alpha, 4),
+        "beta": round(beta, 4),
+        "positive_events": positive_events,
+        "negative_events": negative_events,
+        "weighted_positive": round(weighted_positive, 4),
+        "weighted_negative": round(weighted_negative, 4),
+        "distinct_contexts": len(contexts),
+        "confirmation_gates": confirmation_gates,
+        "recommendation": recommendation,
+        "reason_code": reason_code,
+        "sources": dict(sorted(sources.items())),
+    }
+
+
+def reconcile_memory_state(memory: Memory, *, force_confirm: bool = False) -> dict:
+    previous = memory.state
+    before = memory_trust_profile(memory)
+    if force_confirm and memory.state != "suppressed":
+        memory.state = "confirmed"
+        transition_reason = "EXPLICIT_CONFIRMATION"
+    elif before["recommendation"] == "confirm":
+        memory.state = "confirmed"
+        transition_reason = str(before["reason_code"])
+    elif before["recommendation"] == "demote":
+        memory.state = "candidate"
+        transition_reason = str(before["reason_code"])
+    else:
+        transition_reason = str(before["reason_code"])
+    return {
+        "previous_state": previous,
+        "new_state": memory.state,
+        "changed": previous != memory.state,
+        "reason_code": transition_reason,
+        "trust": memory_trust_profile(memory),
+    }
+
+
 def memory_snapshot(memory: Memory) -> dict:
     return {
         "canonical_form": memory.canonical_form,
         "state": memory.state,
         "scope_mode": memory.scope_mode,
-        "evidence_confidence": round(memory.evidence_confidence, 4),
-        "support_count": memory.support_count,
-        "contradiction_count": memory.contradiction_count,
+        "trust_profile": memory_trust_profile(memory),
         "positive_context": json.loads(memory.positive_context_json),
         "negative_context": json.loads(memory.negative_context_json),
         "context_profile": aggregate_context_profile(memory),
@@ -660,9 +789,7 @@ def memory_to_dict(memory: Memory) -> dict:
         "canonical_form": memory.canonical_form,
         "state": memory.state,
         "scope_mode": memory.scope_mode,
-        "evidence_confidence": memory.evidence_confidence,
-        "support_count": memory.support_count,
-        "contradiction_count": memory.contradiction_count,
+        "trust_profile": memory_trust_profile(memory),
         "positive_context": json.loads(memory.positive_context_json),
         "negative_context": json.loads(memory.negative_context_json),
         "context_evidence_count": len(memory.context_evidence),
@@ -677,7 +804,6 @@ def memory_to_dict(memory: Memory) -> dict:
                 "surface_form": variant.surface_form,
                 "normalized_form": variant.normalized_form,
                 "metaphone_key": variant.metaphone_key,
-                "support_count": variant.support_count,
             }
             for variant in memory.variants
         ],
@@ -735,6 +861,22 @@ def replace_manual_context_evidence(
         )
 
 
+def apply_memory_state_override(session: Session, *, memory: Memory, state: str) -> None:
+    """Apply an explicit user state decision and preserve its provenance."""
+    memory.state = state
+    observation = Observation(
+        user_id=memory.user_id,
+        memory=memory,
+        evidence_type=("state_override_confirmed" if state == "confirmed" else "state_override"),
+        target_span=memory.canonical_form,
+        reliability=1.0,
+        accepted=state == "confirmed",
+        reason_code=f"USER_SET_{state.upper()}",
+        source_event_id=f"state:{uuid.uuid4()}",
+    )
+    session.add(observation)
+
+
 def teach_explicit(
     session: Session,
     *,
@@ -747,6 +889,7 @@ def teach_explicit(
     raw_asr_text: str = "",
     formatted_text: str = "",
     accepted_text: str = "",
+    event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
 ) -> Memory:
     normalized_canonical = normalize(canonical_form)
@@ -756,6 +899,16 @@ def teach_explicit(
             Memory.canonical_normalized == normalized_canonical,
         )
     )
+    if memory is not None and event_id:
+        existing_observation = session.scalar(
+            select(Observation).where(
+                Observation.user_id == user_id,
+                Observation.memory_id == memory.id,
+                Observation.source_event_id == event_id,
+            )
+        )
+        if existing_observation is not None:
+            return memory
     if memory is None:
         memory = Memory(
             user_id=user_id,
@@ -763,7 +916,6 @@ def teach_explicit(
             canonical_normalized=normalized_canonical,
             state="confirmed",
             scope_mode=scope_mode,
-            evidence_confidence=1.0,
             positive_context_json=json.dumps(positive_context),
             negative_context_json=json.dumps(negative_context),
         )
@@ -773,8 +925,6 @@ def teach_explicit(
         memory.canonical_form = canonical_form
         memory.state = "confirmed"
         memory.scope_mode = scope_mode
-        memory.evidence_confidence = 1.0
-        memory.support_count += 1
         memory.positive_context_json = json.dumps(positive_context)
         memory.negative_context_json = json.dumps(negative_context)
 
@@ -782,7 +932,6 @@ def teach_explicit(
     for variant_text in variants:
         normalized_variant = normalize(variant_text)
         if normalized_variant in existing:
-            existing[normalized_variant].support_count += 1
             continue
         session.add(
             MemoryVariant(
@@ -803,6 +952,11 @@ def teach_explicit(
         source_span=", ".join(variants),
         target_span=canonical_form,
         reliability=1.0,
+        source_event_id=event_id or f"explicit:{uuid.uuid4()}",
+        context_fingerprint=context_fingerprint(
+            formatted_text or accepted_text or raw_asr_text,
+            variants[0],
+        ),
     )
     session.add(observation)
     session.flush()
@@ -873,12 +1027,15 @@ def observe_correction(
     formatted_text: str,
     accepted_text: str,
     confirm_candidates: bool,
+    event_id: str | None = None,
     semantic_encoder: SemanticEncoder | None = None,
+    enable_auto_lifecycle: bool = True,
 ) -> tuple[list[str], list[str], list[dict[str, str]]]:
     matcher = SequenceMatcher(None, formatted_text.split(), accepted_text.split(), autojunk=False)
     observation_ids: list[str] = []
     memory_ids: list[str] = []
     rejected: list[dict[str, str]] = []
+    source_event_id = event_id or f"correction:{uuid.uuid4()}"
 
     for tag, left_start, left_end, right_start, right_end in matcher.get_opcodes():
         if tag == "equal":
@@ -910,6 +1067,18 @@ def observe_correction(
                 Memory.canonical_normalized == normalized_target,
             )
         )
+        if memory is not None:
+            existing_observation = session.scalar(
+                select(Observation).where(
+                    Observation.user_id == user_id,
+                    Observation.memory_id == memory.id,
+                    Observation.source_event_id == source_event_id,
+                )
+            )
+            if existing_observation is not None:
+                observation_ids.append(existing_observation.id)
+                memory_ids.append(memory.id)
+                continue
         if memory is None:
             memory = Memory(
                 user_id=user_id,
@@ -917,7 +1086,6 @@ def observe_correction(
                 canonical_normalized=normalized_target,
                 state="confirmed" if confirm_candidates else "candidate",
                 scope_mode="contextual",
-                evidence_confidence=1.0 if confirm_candidates else 0.7,
             )
             session.add(memory)
             session.flush()
@@ -930,8 +1098,6 @@ def observe_correction(
                 )
             )
         else:
-            memory.support_count += 1
-            memory.evidence_confidence = min(0.95, memory.evidence_confidence + 0.1)
             if confirm_candidates:
                 memory.state = "confirmed"
             existing_variant = next(
@@ -952,7 +1118,7 @@ def observe_correction(
                     )
                 )
             else:
-                existing_variant.support_count += 1
+                pass
 
         observation = Observation(
             user_id=user_id,
@@ -963,7 +1129,9 @@ def observe_correction(
             accepted_text=accepted_text,
             source_span=source_span,
             target_span=target_span,
-            reliability=0.7,
+            reliability=1.0,
+            source_event_id=source_event_id,
+            context_fingerprint=context_fingerprint(formatted_text, source_span),
         )
         session.add(observation)
         session.flush()
@@ -991,11 +1159,24 @@ def observe_correction(
             reliability=observation.reliability,
             semantic_encoder=semantic_encoder,
         )
+        if enable_auto_lifecycle or confirm_candidates:
+            transition = reconcile_memory_state(memory, force_confirm=confirm_candidates)
+        else:
+            transition = {
+                "previous_state": memory.state,
+                "new_state": memory.state,
+                "changed": False,
+                "reason_code": "AUTO_LIFECYCLE_DISABLED",
+            }
         record_memory_version(
             session,
             memory,
-            action="correction_observed",
-            reason="Accepted transcript contained a supported word-level correction",
+            action=("memory_auto_confirmed" if transition["changed"] else "correction_observed"),
+            reason=(
+                "Accepted word-level correction; lifecycle "
+                f"{transition['previous_state']} -> {transition['new_state']} "
+                f"({transition['reason_code']})"
+            ),
             actor="system",
         )
         observation_ids.append(observation.id)
@@ -1016,6 +1197,7 @@ def _score_candidate(
     end: int,
     semantic_encoder: SemanticEncoder | None,
     semantic_vector_cache: dict[str, list[float] | None],
+    trust_profile: dict,
     asr_confidence: float = 0.0,
     asr_provider: str = "",
     asr_model: str = "",
@@ -1030,6 +1212,8 @@ def _score_candidate(
         start=start,
         end=end,
     )
+    memory_trust = float(trust_profile["posterior_mean"])
+    memory_authorized = memory.state == "confirmed"
     sparse_positive, positive_matches = context_similarity(memory, current, "positive")
     sparse_negative, negative_matches = context_similarity(memory, current, "negative")
     has_sparse_positive = any(
@@ -1137,7 +1321,7 @@ def _score_candidate(
     )
     score = (
         POLICY.lexical_weight * lexical_signal
-        + POLICY.memory_evidence_weight * memory.evidence_confidence
+        + POLICY.memory_authorization_weight * memory_authorized
         + POLICY.context_weight * context_signal
         + (POLICY.phonetic_weight if phonetic_match else 0.0)
         + POLICY.asr_alternative_weight * asr_confidence
@@ -1172,7 +1356,11 @@ def _score_candidate(
             * enable_learned_asr,
             4,
         ),
-        "evidence_confidence": round(memory.evidence_confidence, 4),
+        "memory_trust_posterior": memory_trust,
+        "memory_authorized": memory_authorized,
+        "memory_trust_positive_events": int(trust_profile["positive_events"]),
+        "memory_trust_negative_events": int(trust_profile["negative_events"]),
+        "memory_trust_reason": str(trust_profile["reason_code"]),
         "positive_context_similarity": round(positive_similarity, 4),
         "negative_context_similarity": round(negative_similarity, 4),
         "sparse_positive_similarity": round(sparse_positive, 4),
@@ -1212,6 +1400,7 @@ def infer(
     semantic_vector_cache: dict[str, list[float] | None] = {}
 
     for memory in memories:
+        trust_profile = memory_trust_profile(memory)
         for variant in memory.variants:
             for start, end, matched, match_method in generate_candidate_spans(
                 formatted_text, variant
@@ -1228,6 +1417,7 @@ def infer(
                     end=end,
                     semantic_encoder=semantic_encoder,
                     semantic_vector_cache=semantic_vector_cache,
+                    trust_profile=trust_profile,
                     asr_provider=str(asr["provider"]) if asr else "",
                     asr_model=str(asr.get("model", "unknown")) if asr else "",
                     asr_rank=1,
@@ -1289,6 +1479,7 @@ def infer(
                         end=end,
                         semantic_encoder=semantic_encoder,
                         semantic_vector_cache=semantic_vector_cache,
+                        trust_profile=trust_profile,
                         asr_confidence=confidence,
                         asr_provider=provider,
                         asr_model=model_name,
@@ -1419,6 +1610,7 @@ def apply_decision_feedback(
     candidate_memory_id: str | None = None,
     candidate_start: int | None = None,
     semantic_encoder: SemanticEncoder | None = None,
+    enable_auto_lifecycle: bool = True,
 ) -> dict | None:
     decision = session.get(Decision, trace_id)
     if decision is None:
@@ -1439,42 +1631,35 @@ def apply_decision_feedback(
     memory_ids = list(dict.fromkeys(change["memory_id"] for change in selected))
     resulting_states: dict[str, str] = {}
     asr_outcome_ids: list[str] = []
+    trust_profiles: dict[str, dict] = {}
     for memory_id in memory_ids:
         memory = session.get(Memory, memory_id)
         if memory is None:
             continue
         change = next(change for change in selected if change["memory_id"] == memory_id)
         features = change["features"]
-        if features.get("asr_provider"):
+        feedback_event_id = f"decision:{decision.id}:memory:{memory_id}:span:{change['start']}"
+        existing_observation = session.scalar(
+            select(Observation).where(
+                Observation.user_id == decision.user_id,
+                Observation.memory_id == memory_id,
+                Observation.source_event_id == feedback_event_id,
+            )
+        )
+        if existing_observation is not None:
+            if existing_observation.accepted != (verdict == "correct"):
+                raise ValueError("Conflicting feedback already exists for this candidate")
             existing_outcome = session.scalar(
                 select(AsrOutcome).where(
-                    AsrOutcome.decision_id == decision.id,
-                    AsrOutcome.memory_id == memory_id,
-                    AsrOutcome.source_normalized == normalize(change["input_span"]),
+                    AsrOutcome.observation_id == existing_observation.id,
                 )
             )
             if existing_outcome is not None:
-                if existing_outcome.accepted != (verdict == "correct"):
-                    raise ValueError("Conflicting feedback already exists for this candidate")
                 asr_outcome_ids.append(existing_outcome.id)
-                resulting_states[memory.id] = memory.state
-                continue
-        if verdict == "correct":
-            memory.support_count += 1
-            memory.evidence_confidence = min(1.0, memory.evidence_confidence + 0.02)
-            action = "intervention_confirmed"
-            reason = "User confirmed the memory-aware intervention"
-            reliability = 1.0
-        else:
-            memory.contradiction_count += 1
-            memory.evidence_confidence = max(0.0, memory.evidence_confidence - 0.25)
-            if suppress_memories:
-                memory.state = "suppressed"
-            elif memory.evidence_confidence <= 0.75:
-                memory.state = "candidate"
-            action = "intervention_rejected"
-            reason = "User rejected the memory-aware intervention"
-            reliability = -1.0
+            resulting_states[memory.id] = memory.state
+            trust_profiles[memory.id] = memory_trust_profile(memory)
+            continue
+        reliability = 1.0 if verdict == "correct" else -1.0
         observation = Observation(
             user_id=decision.user_id,
             memory=memory,
@@ -1487,6 +1672,13 @@ def apply_decision_feedback(
             reliability=reliability,
             accepted=verdict == "correct",
             reason_code="USER_CONFIRMED" if verdict == "correct" else "USER_REJECTED",
+            source_event_id=feedback_event_id,
+            context_fingerprint=context_fingerprint(
+                decision.formatted_text,
+                change["input_span"],
+                start=change["start"],
+                end=change["end"],
+            ),
         )
         session.add(observation)
         session.flush()
@@ -1550,14 +1742,40 @@ def apply_decision_feedback(
             start=change["start"],
             end=change["end"],
         )
+        if suppress_memories and verdict == "incorrect":
+            previous_state = memory.state
+            memory.state = "suppressed"
+            transition = {
+                "previous_state": previous_state,
+                "new_state": memory.state,
+                "changed": previous_state != memory.state,
+                "reason_code": "EXPLICIT_USER_SUPPRESSION",
+            }
+        elif enable_auto_lifecycle:
+            transition = reconcile_memory_state(memory)
+        else:
+            transition = {
+                "previous_state": memory.state,
+                "new_state": memory.state,
+                "changed": False,
+                "reason_code": "AUTO_LIFECYCLE_DISABLED",
+            }
+        event_name = "intervention_confirmed" if verdict == "correct" else "intervention_rejected"
+        if transition["changed"]:
+            event_name += f"_{transition['new_state']}"
         record_memory_version(
             session,
             memory,
-            action=action,
-            reason=reason,
+            action=event_name,
+            reason=(
+                f"User {verdict} feedback; lifecycle "
+                f"{transition['previous_state']} -> {transition['new_state']} "
+                f"({transition['reason_code']})"
+            ),
             actor="user",
         )
         resulting_states[memory.id] = memory.state
+        trust_profiles[memory.id] = memory_trust_profile(memory)
     session.commit()
     return {
         "trace_id": trace_id,
@@ -1565,4 +1783,5 @@ def apply_decision_feedback(
         "affected_memory_ids": memory_ids,
         "resulting_states": resulting_states,
         "asr_outcome_ids": asr_outcome_ids,
+        "trust_profiles": trust_profiles,
     }

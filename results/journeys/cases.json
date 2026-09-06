@@ -10,11 +10,11 @@
       "actual_action": "suggest",
       "exact": false,
       "action_matches": false,
-      "latency_ms": 12.564,
-      "trace_id": "134e5e41-5ea8-47b1-bce4-2c8d03866cf8",
+      "latency_ms": 8.707,
+      "trace_id": "b822270f-86e0-4e1a-8842-5281abc72b0a",
       "candidates": [
         {
-          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
+          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -45,7 +45,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -77,19 +81,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
+          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "1a085251-d1de-49ad-8c61-0fb108b8df45",
+              "observation_id": "91b12ad6-0de8-4d90-9027-158578e554e8",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -119,11 +146,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 204800,
-        "page_count": 50,
+        "allocated_bytes": 208896,
+        "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 1692,
+        "trace_payload_bytes": 1832,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -148,11 +175,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.123,
-      "trace_id": "af3ec056-d3b8-44cf-ad1d-a27f8f00c5c0",
+      "latency_ms": 3.648,
+      "trace_id": "6750ccdb-74db-4aef-84f7-5940c4751688",
       "candidates": [
         {
-          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
+          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -183,7 +210,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -215,19 +246,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "612b38b3-aac2-47e0-a833-22e8ed5a8979",
+          "memory_id": "08016c33-75cb-4970-9e9c-5f32afb11de5",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "1a085251-d1de-49ad-8c61-0fb108b8df45",
+              "observation_id": "91b12ad6-0de8-4d90-9027-158578e554e8",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -257,11 +311,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 204800,
-        "page_count": 50,
+        "allocated_bytes": 208896,
+        "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3384,
+        "trace_payload_bytes": 3664,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -286,11 +340,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.24,
-      "trace_id": "a4ee55a9-1d86-4e4a-9e36-393106b23986",
+      "latency_ms": 4.172,
+      "trace_id": "aec54ff0-ee48-451c-b8a7-070f95fd84c3",
       "candidates": [
         {
-          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
+          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -319,7 +373,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -357,19 +415,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
+          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "dd86d91e-cd4a-4468-acd8-15adcfea7dd7",
+              "observation_id": "870ddd76-c6fa-4a28-adbc-bcea72825374",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -397,11 +478,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 204800,
-        "page_count": 50,
+        "allocated_bytes": 208896,
+        "page_count": 51,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3002,
+        "trace_payload_bytes": 3278,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -426,11 +507,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.391,
-      "trace_id": "ffe4614e-3dae-414c-9882-621f74fdde7c",
+      "latency_ms": 4.06,
+      "trace_id": "a938f6f0-4f24-4bb6-9490-6b199ebb23af",
       "candidates": [
         {
-          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
+          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -459,7 +540,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -497,19 +582,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "86f42351-977c-4340-b01a-ec4cc52d740a",
+          "memory_id": "07d03c52-1d6b-4e3d-b786-a6cb830df26b",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "dd86d91e-cd4a-4468-acd8-15adcfea7dd7",
+              "observation_id": "870ddd76-c6fa-4a28-adbc-bcea72825374",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -537,11 +645,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 212992,
-        "page_count": 52,
+        "allocated_bytes": 217088,
+        "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4704,
+        "trace_payload_bytes": 5120,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -566,11 +674,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 5.576,
-      "trace_id": "958d727f-b167-4ba0-ab06-827d6f7375bf",
+      "latency_ms": 3.739,
+      "trace_id": "975a994f-4971-46c2-877b-b4a48fbae06c",
       "candidates": [
         {
-          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
+          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -599,7 +707,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -610,7 +722,7 @@
             "semantic_positive_observations": 0,
             "semantic_negative_observations": 0,
             "semantic_model": "disabled",
-            "positive_evidence_matches": "bigram:add fruit, token:fruit, token:add, bigram:breakfast bowl, token:breakfast",
+            "positive_evidence_matches": "bigram:add fruit, token:add, token:fruit, bigram:breakfast bowl, token:breakfast",
             "negative_evidence_matches": "",
             "context_evidence_count": 6,
             "memory_state": "confirmed",
@@ -631,19 +743,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
+          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "5ce80e98-002b-466c-ac7d-63905f355d7e",
+              "observation_id": "f4dca3d1-ca58-49d2-8f96-48effadcc75b",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -673,11 +808,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 212992,
-        "page_count": 52,
+        "allocated_bytes": 217088,
+        "page_count": 53,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3066,
+        "trace_payload_bytes": 3342,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -702,11 +837,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": false,
-      "latency_ms": 4.721,
-      "trace_id": "7b214f36-a7ef-4758-9bef-1530b876b573",
+      "latency_ms": 4.101,
+      "trace_id": "046df5b5-c16e-43df-8e7f-fc3883c7eac2",
       "candidates": [
         {
-          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
+          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -737,7 +872,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.6923,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 1,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -769,19 +908,52 @@
       },
       "memory_state": [
         {
-          "memory_id": "80e5f5b9-72b8-4d33-b9f4-21558c03ad6b",
+          "memory_id": "1870c022-8037-40cd-849c-3edf4aefaf5d",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 1,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.6923,
+            "alpha": 9.0,
+            "beta": 4.0,
+            "positive_events": 2,
+            "negative_events": 1,
+            "weighted_positive": 8.0,
+            "weighted_negative": 3.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": false,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "rejected_intervention": {
+                "events": 1,
+                "positive_weight": 0.0,
+                "negative_weight": 3.0
+              },
+              "state_override_confirmed": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "5ce80e98-002b-466c-ac7d-63905f355d7e",
+              "observation_id": "f4dca3d1-ca58-49d2-8f96-48effadcc75b",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -790,13 +962,22 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "986e8a58-0bba-47fe-9d1d-241c0fe1898c",
+              "observation_id": "e28ea8a9-423a-4562-8542-8c95ed5ad8f3",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
               "reliability": -1.0,
               "accepted": false,
               "reason_code": "USER_REJECTED"
+            },
+            {
+              "observation_id": "5bcee9f7-e173-465e-b55e-676f3f5b4235",
+              "evidence_type": "state_override_confirmed",
+              "source_span": "",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_SET_CONFIRMED"
             }
           ],
           "context_evidence": {
@@ -821,15 +1002,15 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4759,
+        "trace_payload_bytes": 5175,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
-          "observations": 2,
+          "observations": 3,
           "context_evidence": 12,
           "context_embeddings": 0,
           "decisions": 2,
@@ -852,11 +1033,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 138.804,
-      "trace_id": "bd4810d0-5902-4741-99ac-ac08bb7f4eba",
+      "latency_ms": 152.674,
+      "trace_id": "ceb2e9c2-8789-4cba-9679-6004a54ba541",
       "candidates": [
         {
-          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
+          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -886,7 +1067,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.2938,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -918,19 +1103,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
+          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "6d33aae3-8f85-4985-b33c-a49d9e1158c3",
+              "observation_id": "981396c9-5897-4354-921c-114e7a0a70ef",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -962,11 +1170,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8076,
-        "trace_payload_bytes": 3022,
+        "trace_payload_bytes": 3312,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -991,11 +1199,11 @@
       "actual_action": "suggest",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 153.2,
-      "trace_id": "5059516b-a46d-457e-a8ec-10835eb73a80",
+      "latency_ms": 154.304,
+      "trace_id": "0f092cf7-14c0-466c-8db5-d2ed136e893c",
       "candidates": [
         {
-          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
+          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
           "canonical_form": "Kivi",
           "input_span": "kiwi",
           "output_span": "Kivi",
@@ -1027,7 +1235,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -1059,19 +1271,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "9be6eba8-b580-45b7-9a50-f20387cc3327",
+          "memory_id": "ff9c171e-cf8a-44a4-a7da-b6e06c93bef6",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "6d33aae3-8f85-4985-b33c-a49d9e1158c3",
+              "observation_id": "981396c9-5897-4354-921c-114e7a0a70ef",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1103,11 +1338,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8076,
-        "trace_payload_bytes": 4772,
+        "trace_payload_bytes": 5216,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1132,11 +1367,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.085,
-      "trace_id": "45bd8c30-0ff3-435e-8051-88957aa17528",
+      "latency_ms": 5.358,
+      "trace_id": "55908531-7717-4623-b75d-5b0024bf6614",
       "candidates": [
         {
-          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
+          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -1165,7 +1400,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -1203,19 +1442,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
+          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "5b055700-c550-4835-8c28-cdfef5ce3e5f",
+              "observation_id": "b263074b-274d-4cd1-95da-358e544a3be1",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1243,11 +1505,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 3012,
+        "trace_payload_bytes": 3302,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1272,11 +1534,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 4.048,
-      "trace_id": "c72d9376-55a3-4b3f-bb45-20be8acb01ae",
+      "latency_ms": 5.413,
+      "trace_id": "f918a922-e49d-49ec-af90-c7d3b1a8acf3",
       "candidates": [
         {
-          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
+          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
           "canonical_form": "Kivi",
           "input_span": "company",
           "output_span": "Kivi",
@@ -1305,7 +1567,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.25,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 0.0,
@@ -1343,19 +1609,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "24b710f8-74e3-4579-a018-d10322774e97",
+          "memory_id": "3a648258-7f88-4aa5-a29d-b3d2699fdc29",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "global",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 0,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "5b055700-c550-4835-8c28-cdfef5ce3e5f",
+              "observation_id": "b263074b-274d-4cd1-95da-358e544a3be1",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1383,11 +1672,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 0,
-        "trace_payload_bytes": 4724,
+        "trace_payload_bytes": 5168,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1412,11 +1701,11 @@
       "actual_action": "apply",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 186.823,
-      "trace_id": "d460ad26-acf7-40ac-b8ae-bff68f5cfc1b",
+      "latency_ms": 159.425,
+      "trace_id": "5b8e0dc9-ec68-40dd-95e0-70a4d7b2c305",
       "candidates": [
         {
-          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
+          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1446,7 +1735,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.8333,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 1,
+            "memory_trust_negative_events": 0,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 1.0,
             "negative_context_similarity": 0.0,
             "sparse_positive_similarity": 1.0,
@@ -1457,7 +1750,7 @@
             "semantic_positive_observations": 1,
             "semantic_negative_observations": 0,
             "semantic_model": "BAAI/bge-small-en-v1.5",
-            "positive_evidence_matches": "bigram:add fruit, token:fruit, token:add, bigram:breakfast bowl, token:breakfast",
+            "positive_evidence_matches": "bigram:add fruit, token:add, token:fruit, bigram:breakfast bowl, token:breakfast",
             "negative_evidence_matches": "",
             "context_evidence_count": 6,
             "memory_state": "confirmed",
@@ -1478,19 +1771,42 @@
       },
       "memory_state": [
         {
-          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
+          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 0,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.8333,
+            "alpha": 5.0,
+            "beta": 1.0,
+            "positive_events": 1,
+            "negative_events": 0,
+            "weighted_positive": 4.0,
+            "weighted_negative": 0.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": true,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "f610bc8b-0e8f-44c9-8681-531ccb514db4",
+              "observation_id": "b4749fef-cd2b-4aa1-87e9-3a902c7a3bb9",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1522,11 +1838,11 @@
         }
       ],
       "database": {
-        "allocated_bytes": 221184,
-        "page_count": 54,
+        "allocated_bytes": 225280,
+        "page_count": 55,
         "page_size": 4096,
         "vector_payload_bytes": 8071,
-        "trace_payload_bytes": 3160,
+        "trace_payload_bytes": 3450,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -1551,11 +1867,11 @@
       "actual_action": "abstain",
       "exact": true,
       "action_matches": true,
-      "latency_ms": 164.815,
-      "trace_id": "54f89e05-05ac-4d6c-9881-8611a27320a5",
+      "latency_ms": 159.239,
+      "trace_id": "662bca1c-a34f-46b0-b4f1-ee1a99ea9349",
       "candidates": [
         {
-          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
+          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
           "canonical_form": "Kivi",
           "input_span": "Kiwi",
           "output_span": "Kivi",
@@ -1588,7 +1904,11 @@
             "asr_reliability_rejected": 0,
             "asr_reliability_posterior": 0.0,
             "asr_reliability_contribution": 0.0,
-            "evidence_confidence": 1.0,
+            "memory_trust_posterior": 0.6923,
+            "memory_authorized": true,
+            "memory_trust_positive_events": 2,
+            "memory_trust_negative_events": 1,
+            "memory_trust_reason": "STABLE",
             "positive_context_similarity": 0.5429,
             "negative_context_similarity": 0.5429,
             "sparse_positive_similarity": 0.0,
@@ -1620,19 +1940,52 @@
       },
       "memory_state": [
         {
-          "memory_id": "3d884038-7531-44a0-9cb7-10fa166b2ab4",
+          "memory_id": "97915231-5301-45cc-a627-57f7844a8f36",
           "canonical_form": "Kivi",
           "state": "confirmed",
           "scope_mode": "contextual",
-          "evidence_confidence": 1.0,
-          "support_count": 1,
-          "contradiction_count": 1,
+          "trust_profile": {
+            "method": "weighted_beta_posterior",
+            "policy_version": "2026-09-06-hybrid-v4-event-lifecycle",
+            "posterior_mean": 0.6923,
+            "alpha": 9.0,
+            "beta": 4.0,
+            "positive_events": 2,
+            "negative_events": 1,
+            "weighted_positive": 8.0,
+            "weighted_negative": 3.0,
+            "distinct_contexts": 1,
+            "confirmation_gates": {
+              "posterior": false,
+              "positive_events": false,
+              "distinct_contexts": false
+            },
+            "recommendation": "hold",
+            "reason_code": "STABLE",
+            "sources": {
+              "explicit_teach": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              },
+              "rejected_intervention": {
+                "events": 1,
+                "positive_weight": 0.0,
+                "negative_weight": 3.0
+              },
+              "state_override_confirmed": {
+                "events": 1,
+                "positive_weight": 4.0,
+                "negative_weight": 0.0
+              }
+            }
+          },
           "variants": [
             "Kiwi"
           ],
           "observations": [
             {
-              "observation_id": "f610bc8b-0e8f-44c9-8681-531ccb514db4",
+              "observation_id": "b4749fef-cd2b-4aa1-87e9-3a902c7a3bb9",
               "evidence_type": "explicit_teach",
               "source_span": "Kiwi",
               "target_span": "Kivi",
@@ -1641,13 +1994,22 @@
               "reason_code": "ACCEPTED"
             },
             {
-              "observation_id": "3f11dfed-2fd3-4537-ac67-04c9b92db4c1",
+              "observation_id": "161809fe-49d3-4fc0-992b-1600e14d72d6",
               "evidence_type": "intervention_feedback",
               "source_span": "Kiwi",
               "target_span": "Kivi",
               "reliability": -1.0,
               "accepted": false,
               "reason_code": "USER_REJECTED"
+            },
+            {
+              "observation_id": "02fff310-05e2-48a9-a6a8-aae92760a9ef",
+              "evidence_type": "state_override_confirmed",
+              "source_span": "",
+              "target_span": "Kivi",
+              "reliability": 1.0,
+              "accepted": true,
+              "reason_code": "USER_SET_CONFIRMED"
             }
           ],
           "context_evidence": {
@@ -1674,15 +2036,15 @@
         }
       ],
       "database": {
-        "allocated_bytes": 237568,
-        "page_count": 58,
+        "allocated_bytes": 241664,
+        "page_count": 59,
         "page_size": 4096,
         "vector_payload_bytes": 16142,
-        "trace_payload_bytes": 4939,
+        "trace_payload_bytes": 5383,
         "rows": {
           "memories": 1,
           "memory_variants": 1,
-          "observations": 2,
+          "observations": 3,
           "context_evidence": 12,
           "context_embeddings": 2,
           "decisions": 2,

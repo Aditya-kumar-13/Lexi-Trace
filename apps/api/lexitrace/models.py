@@ -30,9 +30,15 @@ class Memory(Base):
     canonical_normalized: Mapped[str] = mapped_column(String(250))
     state: Mapped[str] = mapped_column(String(30), default="candidate", index=True)
     scope_mode: Mapped[str] = mapped_column(String(20), default="global")
-    evidence_confidence: Mapped[float] = mapped_column(Float, default=0.7)
-    support_count: Mapped[int] = mapped_column(Integer, default=1)
-    contradiction_count: Mapped[int] = mapped_column(Integer, default=0)
+    # Kept only for migration compatibility with pre-0.8 databases. Decision code never reads
+    # or mutates these legacy counters; trust is derived from immutable observations.
+    legacy_evidence_confidence: Mapped[float] = mapped_column(
+        "evidence_confidence", Float, default=0.0
+    )
+    legacy_support_count: Mapped[int] = mapped_column("support_count", Integer, default=0)
+    legacy_contradiction_count: Mapped[int] = mapped_column(
+        "contradiction_count", Integer, default=0
+    )
     positive_context_json: Mapped[str] = mapped_column(Text, default="[]")
     negative_context_json: Mapped[str] = mapped_column(Text, default="[]")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
@@ -42,7 +48,7 @@ class Memory(Base):
         back_populates="memory", cascade="all, delete-orphan", lazy="selectin"
     )
     observations: Mapped[list[Observation]] = relationship(
-        back_populates="memory", cascade="all, delete-orphan"
+        back_populates="memory", cascade="all, delete-orphan", lazy="selectin"
     )
     versions: Mapped[list[MemoryVersion]] = relationship(
         back_populates="memory",
@@ -88,7 +94,16 @@ class MemoryVariant(Base):
 
 class Observation(Base):
     __tablename__ = "observations"
-    __table_args__ = (Index("ix_observations_user_created", "user_id", "created_at"),)
+    __table_args__ = (
+        Index("ix_observations_user_created", "user_id", "created_at"),
+        Index(
+            "uq_observation_user_event_memory",
+            "user_id",
+            "source_event_id",
+            "memory_id",
+            unique=True,
+        ),
+    )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     user_id: Mapped[str] = mapped_column(String(100), index=True)
@@ -104,6 +119,8 @@ class Observation(Base):
     reliability: Mapped[float] = mapped_column(Float)
     accepted: Mapped[bool] = mapped_column(Boolean, default=True)
     reason_code: Mapped[str] = mapped_column(String(80), default="ACCEPTED")
+    source_event_id: Mapped[str | None] = mapped_column(String(150), nullable=True)
+    context_fingerprint: Mapped[str | None] = mapped_column(String(64), nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
     memory: Mapped[Memory | None] = relationship(back_populates="observations")
@@ -193,7 +210,7 @@ class Decision(Base):
     action: Mapped[str] = mapped_column(String(20))
     trace_json: Mapped[str] = mapped_column(Text)
     total_latency_ms: Mapped[float] = mapped_column(Float)
-    engine_version: Mapped[str] = mapped_column(String(30), default="0.7.0")
+    engine_version: Mapped[str] = mapped_column(String(30), default="0.8.0")
     created_at: Mapped[datetime] = mapped_column(default=utc_now)
 
 

@@ -9,8 +9,8 @@
       "exact_match_rate": 0.8333,
       "action_accuracy": 0.6667,
       "wrong_interventions": 0,
-      "mean_latency_ms": 6.436,
-      "p95_latency_ms": 12.564,
+      "mean_latency_ms": 4.738,
+      "p95_latency_ms": 8.707,
       "model_usage": {
         "execution": "disabled",
         "model": "disabled",
@@ -21,12 +21,12 @@
         "estimated_api_cost_usd": 0.0
       },
       "database": {
-        "peak_allocated_bytes": 221184,
+        "peak_allocated_bytes": 225280,
         "peak_vector_payload_bytes": 0,
         "peak_rows": {
           "memories": 1,
           "memory_variants": 1,
-          "observations": 2,
+          "observations": 3,
           "context_evidence": 12,
           "context_embeddings": 0,
           "decisions": 2,
@@ -40,8 +40,8 @@
       "exact_match_rate": 1.0,
       "action_accuracy": 1.0,
       "wrong_interventions": 0,
-      "mean_latency_ms": 108.629,
-      "p95_latency_ms": 186.823,
+      "mean_latency_ms": 106.069,
+      "p95_latency_ms": 159.425,
       "model_usage": {
         "execution": "local",
         "model": "BAAI/bge-small-en-v1.5",
@@ -52,12 +52,12 @@
         "estimated_api_cost_usd": 0.0
       },
       "database": {
-        "peak_allocated_bytes": 237568,
+        "peak_allocated_bytes": 241664,
         "peak_vector_payload_bytes": 16142,
         "peak_rows": {
           "memories": 1,
           "memory_variants": 1,
-          "observations": 2,
+          "observations": 3,
           "context_evidence": 12,
           "context_embeddings": 2,
           "decisions": 2,

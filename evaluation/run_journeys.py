@@ -20,6 +20,7 @@ from evidence import (  # noqa: E402
 from lexitrace.database import Base, build_engine, build_session_factory  # noqa: E402
 from lexitrace.engine import (  # noqa: E402
     apply_decision_feedback,
+    apply_memory_state_override,
     infer,
     teach_explicit,
 )
@@ -91,8 +92,7 @@ def run_journey(
             continue
         if event_type == "confirm":
             memory = session.get(Memory, memories[event["alias"]])
-            memory.state = "confirmed"
-            memory.evidence_confidence = 1.0
+            apply_memory_state_override(session, memory=memory, state="confirmed")
             session.commit()
             continue
         if event_type != "infer":

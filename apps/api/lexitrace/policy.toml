@@ -1,4 +1,4 @@
-version = "2026-09-06-hybrid-v3-learned-asr"
+version = "2026-09-06-hybrid-v4-event-lifecycle"
 
 [thresholds]
 apply = 0.93
@@ -16,11 +16,23 @@ prior_alpha = 1.0
 prior_beta = 3.0
 minimum_outcomes = 3
 
+[memory_lifecycle]
+prior_alpha = 1.0
+prior_beta = 1.0
+explicit_teach_weight = 4.0
+accepted_correction_weight = 2.0
+confirmed_intervention_weight = 2.0
+rejected_intervention_weight = 3.0
+auto_confirm_threshold = 0.80
+demote_threshold = 0.60
+minimum_positive_events = 3
+minimum_distinct_contexts = 2
+
 [weights]
 lexical = 0.72
-memory_evidence = 0.14
+memory_authorization = 0.14
 context = 0.10
 phonetic = 0.10
 asr_alternative = 0.10
 negative_context = 0.65
-learned_asr = 0.06
+learned_asr = 0.09

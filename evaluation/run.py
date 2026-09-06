@@ -103,7 +103,6 @@ def seed_case(session, case: dict[str, Any], semantic_encoder) -> None:
             semantic_encoder=semantic_encoder,
         )
         memory.state = item.get("state", "confirmed")
-        memory.evidence_confidence = item.get("evidence_confidence", 1.0)
         session.commit()
 
 

@@ -327,6 +327,74 @@ def test_passive_correction_stays_candidate_until_confirmed(tmp_path: Path) -> N
         assert after.json()["memory_aware_text"] == "Message Aaditya tomorrow."
 
 
+def test_passive_corrections_auto_confirm_with_distinct_idempotent_evidence(
+    tmp_path: Path,
+) -> None:
+    examples = [
+        ("correction-1", "Message Aditya today.", "Message Aaditya today."),
+        ("correction-2", "Ask Aditya to review it.", "Ask Aaditya to review it."),
+        ("correction-3", "Email the report to Aditya.", "Email the report to Aaditya."),
+    ]
+    with make_client(tmp_path) as client:
+        first = client.post(
+            "/api/v1/observations/correction",
+            json={
+                "event_id": examples[0][0],
+                "formatted_text": examples[0][1],
+                "accepted_text": examples[0][2],
+            },
+        ).json()
+        memory_id = first["created_memory_ids"][0]
+        assert first["trust_profiles"][memory_id]["positive_events"] == 1
+        assert client.get(f"/api/v1/memories/{memory_id}").json()["state"] == "candidate"
+
+        duplicate = client.post(
+            "/api/v1/observations/correction",
+            json={
+                "event_id": examples[0][0],
+                "formatted_text": examples[0][1],
+                "accepted_text": examples[0][2],
+            },
+        ).json()
+        assert duplicate["observation_ids"] == first["observation_ids"]
+        assert duplicate["trust_profiles"][memory_id]["positive_events"] == 1
+
+        for event_id, formatted_text, accepted_text in examples[1:]:
+            client.post(
+                "/api/v1/observations/correction",
+                json={
+                    "event_id": event_id,
+                    "formatted_text": formatted_text,
+                    "accepted_text": accepted_text,
+                },
+            )
+
+        memory = client.get(f"/api/v1/memories/{memory_id}").json()
+        assert memory["state"] == "confirmed"
+        assert memory["trust_profile"]["posterior_mean"] == 0.875
+        assert memory["trust_profile"]["positive_events"] == 3
+        assert memory["trust_profile"]["distinct_contexts"] == 3
+        assert memory["trust_profile"]["reason_code"] == "STABLE"
+        history = client.get(f"/api/v1/memories/{memory_id}/history").json()
+        assert history[-1]["action"] == "memory_auto_confirmed"
+
+
+def test_explicit_teach_event_is_idempotent(tmp_path: Path) -> None:
+    with make_client(tmp_path) as client:
+        payload = {
+            "event_id": "teach-kivi-1",
+            "canonical_form": "Kivi",
+            "variants": ["Kiwi"],
+            "scope_mode": "global",
+        }
+        first = client.post("/api/v1/observations/explicit", json=payload).json()
+        second = client.post("/api/v1/observations/explicit", json=payload).json()
+        assert second["id"] == first["id"]
+        assert second["trust_profile"]["positive_events"] == 1
+        history = client.get(f"/api/v1/memories/{first['id']}/history").json()
+        assert len(history) == 1
+
+
 def test_reset_removes_all_user_state(tmp_path: Path) -> None:
     with make_client(tmp_path) as client:
         teach(client)
@@ -398,11 +466,13 @@ def test_memory_history_and_rejected_feedback_demote_an_intervention(tmp_path: P
         assert history.status_code == 200
         assert [item["action"] for item in history.json()] == [
             "explicit_teach",
-            "intervention_rejected",
+            "intervention_rejected_candidate",
         ]
         memory_after = client.get(f"/api/v1/memories/{memory['id']}").json()
-        assert memory_after["contradiction_count"] == 1
-        assert memory_after["evidence_confidence"] == 0.75
+        trust = memory_after["trust_profile"]
+        assert trust["negative_events"] == 1
+        assert trust["posterior_mean"] == 0.5556
+        assert trust["reason_code"] == "AWAITING_POSTERIOR"
 
 
 def test_confirmed_suggestions_learn_provider_specific_asr_reliability(tmp_path: Path) -> None:

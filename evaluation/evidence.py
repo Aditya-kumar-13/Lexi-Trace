@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from lexitrace.engine import memory_trust_profile
 from lexitrace.models import (
     AsrOutcome,
     ContextEmbedding,
@@ -62,9 +63,7 @@ def memory_state_snapshot(session) -> list[dict[str, Any]]:
             "canonical_form": memory.canonical_form,
             "state": memory.state,
             "scope_mode": memory.scope_mode,
-            "evidence_confidence": round(memory.evidence_confidence, 4),
-            "support_count": memory.support_count,
-            "contradiction_count": memory.contradiction_count,
+            "trust_profile": memory_trust_profile(memory),
             "variants": sorted(variant.surface_form for variant in memory.variants),
             "observations": [
                 {

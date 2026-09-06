@@ -55,3 +55,18 @@ def test_asr_learning_journeys_cover_activation_and_drift() -> None:
         sum(event.get("feedback") == "correct" for event in journey["events"]) >= 3
         for journey in journeys
     )
+
+
+def test_lifecycle_journeys_cover_replay_diversity_and_state_changes() -> None:
+    path = ROOT / "data" / "benchmark" / "lifecycle_journeys.jsonl"
+    journeys = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    assert len(journeys) >= 5
+    identifiers = {journey["journey_id"] for journey in journeys}
+    assert {
+        "diverse-passive-corrections-auto-confirm",
+        "replayed-event-has-zero-influence",
+        "same-context-does-not-satisfy-diversity",
+        "contradiction-demotes-confirmed-memory",
+        "explicit-suppression-is-authoritative",
+    } <= identifiers

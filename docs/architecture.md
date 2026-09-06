@@ -50,6 +50,23 @@ Feedback can target a visible suggestion by memory and span. Each accepted or re
 an ordinary observation plus an immutable ASR outcome linked to the original decision. The trace
 exposes outcome count, accepts, rejects, posterior mean, activation state, and exact contribution.
 
+## Event-derived memory lifecycle
+
+The memory row stores lifecycle state but not a decision-making confidence value. Trust is rebuilt
+from immutable observations using a weighted Beta posterior. Explicit teaching, accepted passive
+corrections, confirmed interventions, and rejected interventions have separately versioned evidence
+weights. Manual context edits do not affect trust.
+
+Passive promotion requires all three gates: posterior at or above 0.80, at least three positive
+events, and at least two distinct masked-context fingerprints. A confirmed memory is demoted when
+contradictory evidence moves its posterior below 0.60. Suppression is never automatic. Client event
+IDs are unique per user and memory, making observation replay idempotent; decision feedback derives
+its event ID from the persisted trace and candidate span.
+
+The API and trace expose alpha, beta, posterior mean, positive and negative event counts, context
+diversity, failed gates, source weights, and the policy version. Legacy confidence counters remain
+mapped only so older databases can migrate; no product decision reads or mutates them.
+
 ## Safety policy
 
 Retrieval is not permission to edit. The following blockers prevent automatic application:
@@ -79,6 +96,6 @@ silently alter historical interpretation.
 
 ## Remaining limitation
 
-The posterior is deliberately local and uncalibrated across providers. Real deployment data would
+The posteriors are deliberately local and uncalibrated across providers. Real deployment data would
 be required to select priors by locale or provider and test decay under provider model drift. The
 prototype does not claim to recognize speech or estimate acoustic confidence itself.

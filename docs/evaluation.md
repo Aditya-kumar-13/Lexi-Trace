@@ -1,6 +1,6 @@
 # Evaluation design
 
-LexiTrace uses four complementary suites. None is presented as external or production accuracy.
+LexiTrace uses five complementary suites. None is presented as external or production accuracy.
 
 ## Smoke suite
 
@@ -38,6 +38,13 @@ complete policy and once with only the learned-ASR contribution disabled. Both s
 identical outcomes. The report includes output and action accuracy, wrong interventions, latency,
 storage growth, and a threshold precision/coverage curve. A training suggestion counts as useful
 only when its committed event contains explicit positive feedback.
+
+## Memory-lifecycle journeys
+
+`data/benchmark/lifecycle_journeys.jsonl` freezes passive promotion, duplicate replay, insufficient
+context diversity, contradiction-driven demotion, and explicit suppression. The runner replays the
+same immutable observations with automatic lifecycle transitions enabled and disabled. Every event
+retains its expected state, actual state, posterior components, gate results, and assertion outcome.
 
 ## Recorded evidence
 

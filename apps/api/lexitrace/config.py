@@ -11,6 +11,7 @@ class Settings:
     semantic_enabled: bool = False
     semantic_model: str = "BAAI/bge-small-en-v1.5"
     semantic_cache_dir: str = "./data/models"
+    semantic_threads: int = 1
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -25,4 +26,5 @@ class Settings:
             in {"1", "true", "yes", "on"},
             semantic_model=os.getenv("LEXITRACE_SEMANTIC_MODEL", "BAAI/bge-small-en-v1.5"),
             semantic_cache_dir=os.getenv("LEXITRACE_SEMANTIC_CACHE_DIR", "./data/models"),
+            semantic_threads=max(1, int(os.getenv("LEXITRACE_SEMANTIC_THREADS", "1"))),
         )

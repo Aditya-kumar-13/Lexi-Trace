@@ -16,6 +16,7 @@ class ExplicitTeachRequest(BaseModel):
     raw_asr_text: str = Field(default="", max_length=20_000)
     formatted_text: str = Field(default="", max_length=20_000)
     accepted_text: str = Field(default="", max_length=20_000)
+    event_id: str | None = Field(default=None, min_length=1, max_length=150)
 
     @field_validator("canonical_form")
     @classmethod
@@ -40,6 +41,7 @@ class CorrectionObservationRequest(BaseModel):
     formatted_text: str = Field(min_length=1, max_length=20_000)
     accepted_text: str = Field(min_length=1, max_length=20_000)
     confirm_candidates: bool = False
+    event_id: str | None = Field(default=None, min_length=1, max_length=150)
 
 
 class AsrAlternative(BaseModel):
@@ -78,7 +80,6 @@ class VariantResponse(BaseModel):
     surface_form: str
     normalized_form: str
     metaphone_key: str
-    support_count: int
 
 
 class MemoryResponse(BaseModel):
@@ -87,9 +88,7 @@ class MemoryResponse(BaseModel):
     canonical_form: str
     state: str
     scope_mode: str
-    evidence_confidence: float
-    support_count: int
-    contradiction_count: int
+    trust_profile: dict
     positive_context: list[str]
     negative_context: list[str]
     context_evidence_count: int
@@ -128,6 +127,7 @@ class DecisionFeedbackResponse(BaseModel):
     affected_memory_ids: list[str]
     resulting_states: dict[str, str]
     asr_outcome_ids: list[str]
+    trust_profiles: dict[str, dict]
 
 
 class CandidateTrace(BaseModel):
@@ -162,6 +162,7 @@ class CorrectionObservationResponse(BaseModel):
     observation_ids: list[str]
     created_memory_ids: list[str]
     rejected: list[dict[str, str]]
+    trust_profiles: dict[str, dict]
 
 
 class ResetResponse(BaseModel):

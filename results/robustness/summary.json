@@ -23,10 +23,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 65.685,
-        "p50": 5.173,
-        "p95": 179.478,
-        "p99": 182.418
+        "mean": 59.405,
+        "p50": 6.391,
+        "p95": 156.762,
+        "p99": 171.577
       }
     },
     "heldout": {
@@ -42,10 +42,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 69.134,
-        "p50": 5.472,
-        "p95": 179.605,
-        "p99": 190.304
+        "mean": 62.344,
+        "p50": 6.54,
+        "p95": 154.701,
+        "p99": 161.198
       }
     }
   },
@@ -59,8 +59,8 @@
     "estimated_api_cost_usd": 0.0
   },
   "database": {
-    "peak_allocated_bytes": 212992,
-    "peak_trace_payload_bytes": 5403,
+    "peak_allocated_bytes": 217088,
+    "peak_trace_payload_bytes": 5965,
     "peak_rows": {
       "memories": 2,
       "memory_variants": 2,
@@ -124,10 +124,10 @@
       "incorrect_intervention_rate": 0.0,
       "abstention_accuracy": 1.0,
       "latency_ms": {
-        "mean": 67.642,
-        "p50": 5.437,
-        "p95": 179.48,
-        "p99": 183.877
+        "mean": 61.073,
+        "p50": 6.458,
+        "p95": 155.924,
+        "p99": 161.198
       }
     }
   }

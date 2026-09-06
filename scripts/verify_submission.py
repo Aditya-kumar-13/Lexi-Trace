@@ -21,10 +21,12 @@ REQUIRED_PATHS = [
     "apps/web/src/App.tsx",
     "migrations/versions/0004_semantic_context.py",
     "migrations/versions/0005_asr_outcomes.py",
+    "migrations/versions/0006_observation_lifecycle.py",
     "data/benchmark/smoke.jsonl",
     "data/benchmark/robustness.jsonl",
     "data/benchmark/journeys.jsonl",
     "data/benchmark/asr_journeys.jsonl",
+    "data/benchmark/lifecycle_journeys.jsonl",
     "results/latest/summary.json",
     "results/latest/cases.jsonl",
     "results/robustness/summary.json",
@@ -33,6 +35,8 @@ REQUIRED_PATHS = [
     "results/journeys/cases.json",
     "results/asr-learning/summary.json",
     "results/asr-learning/cases.json",
+    "results/lifecycle/summary.json",
+    "results/lifecycle/cases.json",
     "docs/brief-alignment.md",
     "docs/evaluation.md",
 ]
@@ -45,6 +49,7 @@ RUN_TOKENS = [
     "http://localhost:5173",
     "evaluation/run.py",
     "evaluation/run_asr_learning.py",
+    "evaluation/run_lifecycle.py",
     "data/benchmark/robustness.jsonl",
     "results/robustness",
     "api/v1/reset",
@@ -173,6 +178,7 @@ def main() -> None:
         "results/robustness",
         "results/journeys",
         "results/asr-learning",
+        "results/lifecycle",
     ):
         check_results(checks, result_dir)
 

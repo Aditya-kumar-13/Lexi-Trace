@@ -18,6 +18,8 @@ masked context, model name, observation reference, and evidence polarity are sto
 ## Operational behavior
 
 - Model loading is lazy, so health and deterministic endpoints do not wait for model download.
+- ONNX execution defaults to one worker thread to avoid oversubscription when the API and evaluation
+  processes share a laptop; `LEXITRACE_SEMANTIC_THREADS` makes this explicit and configurable.
 - If the model cannot load, sparse context and explicit blockers remain active.
 - The inference trace reports encoder state, model name, sparse similarity, semantic similarity,
   prototype margin, and observation counts.
@@ -26,5 +28,5 @@ masked context, model name, observation reference, and evidence polarity are sto
 ## Known limitation
 
 The current semantic similarity floor is a transparent policy value validated on the included
-development journeys. It is not yet probability-calibrated on a large held-out corpus. That work is
-part of the calibration milestone and must precede production accuracy claims.
+development journeys. It is not probability-calibrated on a large external corpus, so production
+accuracy claims would require independently collected speech and formatter data.

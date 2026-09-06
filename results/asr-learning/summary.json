@@ -8,10 +8,10 @@
       "exact_match_rate": 0.9375,
       "action_accuracy": 0.9375,
       "wrong_interventions": 0,
-      "mean_latency_ms": 5.265,
-      "p95_latency_ms": 6.972,
+      "mean_latency_ms": 3.939,
+      "p95_latency_ms": 4.945,
       "database": {
-        "peak_allocated_bytes": 233472,
+        "peak_allocated_bytes": 249856,
         "peak_rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -29,10 +29,10 @@
       "exact_match_rate": 1.0,
       "action_accuracy": 1.0,
       "wrong_interventions": 0,
-      "mean_latency_ms": 5.103,
-      "p95_latency_ms": 6.831,
+      "mean_latency_ms": 3.5,
+      "p95_latency_ms": 3.845,
       "database": {
-        "peak_allocated_bytes": 233472,
+        "peak_allocated_bytes": 249856,
         "peak_rows": {
           "memories": 1,
           "memory_variants": 1,
@@ -67,9 +67,9 @@
     },
     {
       "threshold": 0.94,
-      "interventions": 0,
+      "interventions": 1,
       "precision": 1.0,
-      "coverage": 0.0
+      "coverage": 0.0769
     },
     {
       "threshold": 0.96,
