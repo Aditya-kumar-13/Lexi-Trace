@@ -85,3 +85,25 @@ def test_conflict_journeys_cover_ties_learning_order_and_multiple_edits() -> Non
     }
     assert any(len(journey["memories"]) > 1 for journey in journeys)
     assert any(len(journey["events"]) > 1 for journey in journeys)
+
+
+def test_semantic_safety_journeys_separate_learning_events_from_scored_cases() -> None:
+    path = ROOT / "data" / "benchmark" / "v7_semantic_safety_development.jsonl"
+    journeys = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    assert {journey["journey_id"] for journey in journeys} == {
+        "kivi-negative-feedback-neighborhood",
+        "kiwi-overlapping-memory-collision",
+    }
+    events = [event for journey in journeys for event in journey["events"]]
+    learning_events = [event for event in events if event.get("score_case") is False]
+    scored_inferences = [
+        event for event in events if event["type"] == "infer" and event.get("score_case", True)
+    ]
+
+    assert len(learning_events) == 3
+    assert all(event.get("feedback") == "incorrect" for event in learning_events)
+    assert len(scored_inferences) == 13
+    assert sum(event["expected_action"] == "abstain" for event in scored_inferences) == 4
+    assert sum(event["expected_action"] == "suggest" for event in scored_inferences) == 2
+    assert sum(event["expected_action"] == "apply" for event in scored_inferences) == 7

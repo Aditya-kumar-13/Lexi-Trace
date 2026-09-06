@@ -53,6 +53,11 @@ def parse_args() -> argparse.Namespace:
         choices=("centroid", "nearest_example"),
         default="centroid",
     )
+    parser.add_argument(
+        "--disable-auto-lifecycle",
+        action="store_true",
+        help="Keep memory state fixed while still recording feedback evidence.",
+    )
     return parser.parse_args()
 
 
@@ -77,6 +82,7 @@ def run_journey(
     *,
     enable_learned_asr: bool = True,
     semantic_retrieval_mode: str = "centroid",
+    enable_auto_lifecycle: bool = True,
 ) -> list[dict[str, Any]]:
     memories: dict[str, str] = {}
     rows: list[dict[str, Any]] = []
@@ -93,6 +99,7 @@ def run_journey(
                 negative_context=event.get("negative_context", []),
                 formatted_text=event.get("formatted_text", ""),
                 accepted_text=event.get("accepted_text", ""),
+                event_id=event.get("event_id"),
                 semantic_encoder=encoder,
             )
             memories[event["alias"]] = memory.id
@@ -158,6 +165,7 @@ def run_journey(
                 event.get("feedback") == "correct"
                 or event["expected_output"] != event["formatted_text"]
             ),
+            "score_case": event.get("score_case", True),
         }
         rows.append(row)
         if event.get("feedback"):
@@ -171,11 +179,15 @@ def run_journey(
                     memories[event["feedback_target"]] if event.get("feedback_target") else None
                 ),
                 semantic_encoder=encoder,
+                enable_auto_lifecycle=enable_auto_lifecycle,
             )
     return rows
 
 
 def metrics(rows: list[dict[str, Any]]) -> dict[str, float | int]:
+    rows = [row for row in rows if row["score_case"]]
+    if not rows:
+        raise ValueError("Journey dataset has no scored inference events")
     wrong_interventions = sum(
         row["actual_output"] != row["formatted_text"] and not row["exact"] for row in rows
     )
@@ -297,6 +309,7 @@ def main() -> None:
                         journey,
                         encoder,
                         semantic_retrieval_mode=args.semantic_retrieval_mode,
+                        enable_auto_lifecycle=not args.disable_auto_lifecycle,
                     )
                 )
             all_rows[system_name] = system_rows
@@ -307,6 +320,8 @@ def main() -> None:
         "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "journeys": len(journeys),
         "model": args.model,
+        "semantic_retrieval_mode": args.semantic_retrieval_mode,
+        "auto_lifecycle_enabled": not args.disable_auto_lifecycle,
         "systems": {
             name: {
                 **metrics(rows),
