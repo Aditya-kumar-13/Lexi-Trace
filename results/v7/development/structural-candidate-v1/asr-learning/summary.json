@@ -1,0 +1,84 @@
+{
+  "dataset": "data/benchmark/asr_journeys.jsonl",
+  "dataset_sha256": "3e11769754ecec1508f0fe4418a8f19e7f4023b5967924db48dc7c55de683a1f",
+  "journeys": 4,
+  "asr_reliability_mode": "exact_route",
+  "systems": {
+    "no_learning_ablation": {
+      "queries": 16,
+      "exact_match_rate": 0.9375,
+      "action_accuracy": 0.9375,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 4.444,
+      "p95_latency_ms": 5.447,
+      "database": {
+        "peak_allocated_bytes": 249856,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 24,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      }
+    },
+    "learned_asr": {
+      "queries": 16,
+      "exact_match_rate": 1.0,
+      "action_accuracy": 1.0,
+      "wrong_interventions": 0,
+      "mean_latency_ms": 3.827,
+      "p95_latency_ms": 5.143,
+      "database": {
+        "peak_allocated_bytes": 249856,
+        "peak_rows": {
+          "memories": 1,
+          "memory_variants": 1,
+          "observations": 4,
+          "context_evidence": 24,
+          "context_embeddings": 0,
+          "decisions": 4,
+          "memory_versions": 4,
+          "asr_outcomes": 3
+        }
+      }
+    }
+  },
+  "precision_coverage_curve": [
+    {
+      "threshold": 0.9,
+      "interventions": 15,
+      "precision": 0.8667,
+      "coverage": 1.0
+    },
+    {
+      "threshold": 0.92,
+      "interventions": 1,
+      "precision": 1.0,
+      "coverage": 0.0769
+    },
+    {
+      "threshold": 0.93,
+      "interventions": 1,
+      "precision": 1.0,
+      "coverage": 0.0769
+    },
+    {
+      "threshold": 0.94,
+      "interventions": 1,
+      "precision": 1.0,
+      "coverage": 0.0769
+    },
+    {
+      "threshold": 0.96,
+      "interventions": 0,
+      "precision": 1.0,
+      "coverage": 0.0
+    }
+  ],
+  "hosted_requests": 0,
+  "estimated_api_cost_usd": 0.0
+}

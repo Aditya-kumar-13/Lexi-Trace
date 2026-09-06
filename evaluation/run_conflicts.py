@@ -31,6 +31,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--model", default="BAAI/bge-small-en-v1.5")
     parser.add_argument("--cache-dir", default=str(ROOT / "data" / "models"))
+    parser.add_argument(
+        "--semantic-retrieval-mode",
+        choices=("centroid", "nearest_example"),
+        default="centroid",
+    )
+    parser.add_argument("--minimum-conflict-positive-context", type=float, default=0.15)
+    parser.add_argument(
+        "--feedback-scope-mode",
+        choices=("legacy", "auto"),
+        default="legacy",
+    )
+    parser.add_argument("--semantic-evidence-cap", type=int, default=None)
     return parser.parse_args()
 
 
@@ -41,7 +53,16 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def replay(journey: dict[str, Any], *, reverse: bool, semantic_encoder) -> dict[str, Any]:
+def replay(
+    journey: dict[str, Any],
+    *,
+    reverse: bool,
+    semantic_encoder,
+    semantic_retrieval_mode: str,
+    minimum_conflict_positive_context: float,
+    feedback_scope_mode: str,
+    semantic_evidence_cap: int | None,
+) -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="lexitrace-conflict-") as temp_dir:
         url = f"sqlite:///{(Path(temp_dir) / 'conflict.db').as_posix()}"
         engine = build_engine(url)
@@ -64,6 +85,7 @@ def replay(journey: dict[str, Any], *, reverse: bool, semantic_encoder) -> dict[
                     formatted_text=item.get("source_formatted", ""),
                     accepted_text=item.get("source_accepted", ""),
                     semantic_encoder=semantic_encoder,
+                    semantic_evidence_cap=semantic_evidence_cap,
                 )
             for index, event in enumerate(journey["events"]):
                 _, response = infer(
@@ -72,6 +94,8 @@ def replay(journey: dict[str, Any], *, reverse: bool, semantic_encoder) -> dict[
                     raw_asr_text="",
                     formatted_text=event["formatted_text"],
                     semantic_encoder=semantic_encoder,
+                    semantic_retrieval_mode=semantic_retrieval_mode,
+                    minimum_conflict_positive_context=minimum_conflict_positive_context,
                 )
                 exact = response["memory_aware_text"] == event["expected_output"]
                 action_matches = response["action"] == event["expected_action"]
@@ -85,11 +109,13 @@ def replay(journey: dict[str, Any], *, reverse: bool, semantic_encoder) -> dict[
                         session,
                         trace_id=response["trace_id"],
                         verdict="correct",
+                        feedback_scope=feedback_scope_mode,
                         corrected_text=event["expected_output"],
                         suppress_memories=False,
                         candidate_memory_id=target["memory_id"],
                         candidate_start=target["start"],
                         semantic_encoder=semantic_encoder,
+                        semantic_evidence_cap=semantic_evidence_cap,
                     )
                 rows.append(
                     {
@@ -120,8 +146,15 @@ def main() -> None:
     encoder = CountingSemanticEncoder(FastEmbedSemanticEncoder(args.model, args.cache_dir))
     cases: list[dict[str, Any]] = []
     for journey in journeys:
-        normal = replay(journey, reverse=False, semantic_encoder=encoder)
-        reversed_order = replay(journey, reverse=True, semantic_encoder=encoder)
+        replay_options = {
+            "semantic_encoder": encoder,
+            "semantic_retrieval_mode": args.semantic_retrieval_mode,
+            "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
+            "feedback_scope_mode": args.feedback_scope_mode,
+            "semantic_evidence_cap": args.semantic_evidence_cap,
+        }
+        normal = replay(journey, reverse=False, **replay_options)
+        reversed_order = replay(journey, reverse=True, **replay_options)
         deterministic = [
             (event["actual_output"], event["actual_action"]) for event in normal["events"]
         ] == [
@@ -141,6 +174,10 @@ def main() -> None:
         "dataset": dataset.relative_to(ROOT).as_posix(),
         "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "journeys": len(journeys),
+        "semantic_retrieval_mode": args.semantic_retrieval_mode,
+        "minimum_conflict_positive_context": args.minimum_conflict_positive_context,
+        "feedback_scope_mode": args.feedback_scope_mode,
+        "semantic_evidence_cap": args.semantic_evidence_cap,
         "events": len(events),
         "exact_match_rate": round(sum(event["exact"] for event in events) / len(events), 4),
         "action_accuracy": round(sum(event["action_matches"] for event in events) / len(events), 4),

@@ -1,0 +1,136 @@
+{
+  "dataset": "data/benchmark/robustness.jsonl",
+  "dataset_sha256": "70f53d755220ef7b6244f375ff0978a2b620347fed69cb64b7048dabc624458e",
+  "case_count": 252,
+  "minimum_conflict_positive_context": 0.2,
+  "authorization_score_mode": "boolean",
+  "dataset_versions": [
+    "backend-phonetic-robustness-v1"
+  ],
+  "split_counts": {
+    "calibration": 109,
+    "heldout": 143
+  },
+  "lexitrace_by_split": {
+    "calibration": {
+      "cases": 109,
+      "exact_matches": 106,
+      "exact_match_rate": 0.9725,
+      "action_accuracy": 0.9725,
+      "interventions": 52,
+      "useful_interventions": 52,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 0.9455,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 36.98,
+        "p50": 4.944,
+        "p95": 109.167,
+        "p99": 115.759
+      }
+    },
+    "heldout": {
+      "cases": 143,
+      "exact_matches": 142,
+      "exact_match_rate": 0.993,
+      "action_accuracy": 0.993,
+      "interventions": 62,
+      "useful_interventions": 62,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 0.9841,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 39.022,
+        "p50": 5.619,
+        "p95": 107.051,
+        "p99": 120.073
+      }
+    }
+  },
+  "model_usage": {
+    "execution": "local",
+    "model": "BAAI/bge-small-en-v1.5",
+    "embedding_calls": 192,
+    "input_characters": 6623,
+    "failed_calls": 0,
+    "hosted_requests": 0,
+    "estimated_api_cost_usd": 0.0
+  },
+  "database": {
+    "peak_allocated_bytes": 221184,
+    "peak_trace_payload_bytes": 10645,
+    "peak_rows": {
+      "memories": 2,
+      "memory_variants": 2,
+      "observations": 2,
+      "context_evidence": 5,
+      "context_embeddings": 1,
+      "decisions": 1,
+      "memory_versions": 2,
+      "asr_outcomes": 0
+    }
+  },
+  "systems": {
+    "no_memory": {
+      "cases": 252,
+      "exact_matches": 134,
+      "exact_match_rate": 0.5317,
+      "action_accuracy": 0.2302,
+      "interventions": 0,
+      "useful_interventions": 0,
+      "wrong_interventions": 0,
+      "intervention_precision": null,
+      "intervention_recall": 0.0,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      }
+    },
+    "naive_dictionary": {
+      "cases": 252,
+      "exact_matches": 134,
+      "exact_match_rate": 0.5317,
+      "action_accuracy": 0.5317,
+      "interventions": 176,
+      "useful_interventions": 88,
+      "wrong_interventions": 88,
+      "intervention_precision": 0.5,
+      "intervention_recall": 0.7458,
+      "incorrect_intervention_rate": 0.3492,
+      "abstention_accuracy": 0.3433,
+      "latency_ms": {
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      }
+    },
+    "lexitrace": {
+      "cases": 252,
+      "exact_matches": 248,
+      "exact_match_rate": 0.9841,
+      "action_accuracy": 0.9841,
+      "interventions": 114,
+      "useful_interventions": 114,
+      "wrong_interventions": 0,
+      "intervention_precision": 1.0,
+      "intervention_recall": 0.9661,
+      "incorrect_intervention_rate": 0.0,
+      "abstention_accuracy": 1.0,
+      "latency_ms": {
+        "mean": 38.139,
+        "p50": 5.167,
+        "p95": 107.15,
+        "p99": 118.229
+      }
+    }
+  }
+}

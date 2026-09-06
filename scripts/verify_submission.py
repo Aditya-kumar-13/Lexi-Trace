@@ -61,6 +61,7 @@ REQUIRED_PATHS = [
     "docs/v7-phase2-asr-reliability-experiment.md",
     "docs/v7-phase2-authorization-experiment.md",
     "docs/v7-phase2-semantic-storage-experiment.md",
+    "docs/v7-phase2-structural-selection.md",
     "evaluation/v7_holdout_seal.json",
     "data/benchmark/v7_indic_phonetic_development.jsonl",
     "data/benchmark/v7_semantic_multimodal_development.jsonl",
@@ -75,6 +76,7 @@ REQUIRED_PATHS = [
     "scripts/holdout_guard.py",
     "scripts/run_quality_gate.py",
     "evaluation/run_v7_instrumentation.py",
+    "evaluation/run_v7_structural_candidate.py",
     "evaluation/run_phonetic_ground_truth.py",
     "evaluation/compare_structural_runs.py",
     "results/v7/development/indic-transliteration-experiment-v1/summary.json",
@@ -106,6 +108,7 @@ REQUIRED_PATHS = [
     "results/v7/development/semantic-storage-experiment-v1/cap-12-summary.json",
     "results/v7/development/semantic-storage-experiment-v1/capped-safety-summary.json",
     "results/v7/development/semantic-storage-experiment-v1/capped-multimodal-summary.json",
+    "results/v7/development/structural-candidate-v1/manifest.json",
 ]
 RUN_TOKENS = [
     "Primary review method",
@@ -273,6 +276,40 @@ def check_v7_protocol(checks: list[dict]) -> None:
     )
 
 
+def check_v7_structural_candidate(checks: list[dict]) -> None:
+    path = ROOT / "results" / "v7" / "development" / "structural-candidate-v1" / "manifest.json"
+    if not path.is_file():
+        add(checks, "v7_structural_candidate", False, "manifest is missing")
+        return
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    changed = []
+    for name, record in manifest["summaries"].items():
+        artifact = path.parent / record["path"]
+        actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
+        if actual != record["sha256"]:
+            changed.append(name)
+    instrumentation = manifest["instrumentation"]
+    required_instrumentation = {
+        "candidate_routes",
+        "context_distributions",
+        "context_controllers",
+        "score_contributions",
+    }
+    passed = (
+        not changed
+        and manifest["status"] == "structural_candidate_frozen_for_calibration"
+        and manifest["dataset_role"] == "development_only"
+        and manifest["final_holdout_accessed"] is False
+        and required_instrumentation <= instrumentation.keys()
+    )
+    add(
+        checks,
+        "v7_structural_candidate",
+        passed,
+        f"changed_summaries={changed!r}, instrumentation={sorted(instrumentation)!r}",
+    )
+
+
 def main() -> None:
     checks: list[dict] = []
     missing = [path for path in REQUIRED_PATHS if not (ROOT / path).exists()]
@@ -335,6 +372,7 @@ def main() -> None:
     check_calibration_artifact(checks)
     check_soak_artifact(checks)
     check_v7_protocol(checks)
+    check_v7_structural_candidate(checks)
 
     secret_findings = scan_for_secrets()
     add(checks, "credential_scan", not secret_findings, "findings=" + repr(secret_findings))

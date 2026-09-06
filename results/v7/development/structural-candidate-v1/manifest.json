@@ -1,0 +1,846 @@
+{
+  "status": "structural_candidate_frozen_for_calibration",
+  "dataset_role": "development_only",
+  "configuration": {
+    "semantic_retrieval": "nearest_example",
+    "semantic_evidence_cap_per_memory_polarity": 12,
+    "feedback_scope": "auto",
+    "minimum_conflict_positive_context": 0.2,
+    "asr_reliability": "exact_route",
+    "asr_confidence": "legacy_double",
+    "authorization": "boolean",
+    "phonetic_matcher": "metaphone_active_indic_alternative_unselected"
+  },
+  "instrumentation": {
+    "cases": 280,
+    "candidates": 242,
+    "candidate_generation": {
+      "cross_variant_duplicates_removed": 0,
+      "higher_score_replacements": 0,
+      "maximum_memory_span_multiplicity": 221,
+      "retained_key_duplicates": 0,
+      "scored_total": 242,
+      "semantic_context_cache_entries": 104,
+      "semantic_context_cache_failures": 0,
+      "unique_memory_span_keys": 242
+    },
+    "raw_score_mean": 0.997517,
+    "clamped_score_mean": 0.967488,
+    "upper_clamped": 142,
+    "lower_clamped": 0,
+    "context_controllers": {
+      "none": 181,
+      "semantic": 48,
+      "sparse": 11,
+      "tie": 2
+    },
+    "candidate_routes": {
+      "asr_alternative": 12,
+      "exact": 196,
+      "fuzzy": 8,
+      "phonetic": 1,
+      "phonetic_fuzzy": 25
+    },
+    "context_distributions": {
+      "sparse_positive_similarity": {
+        "count": 242,
+        "minimum": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "maximum": 1.0,
+        "mean": 0.062175,
+        "nonzero": 49
+      },
+      "sparse_negative_similarity": {
+        "count": 242,
+        "minimum": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "nonzero": 0
+      },
+      "semantic_positive_similarity": {
+        "count": 242,
+        "minimum": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.6014,
+        "maximum": 1.0,
+        "mean": 0.283702,
+        "nonzero": 104
+      },
+      "semantic_negative_similarity": {
+        "count": 242,
+        "minimum": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "nonzero": 0
+      }
+    },
+    "score_contributions": {
+      "score_asr_alternative_contribution": {
+        "mean": 0.003223,
+        "nonzero": 12
+      },
+      "score_authorization_contribution": {
+        "mean": 0.132479,
+        "nonzero": 229
+      },
+      "score_context_contribution": {
+        "mean": 0.076921,
+        "nonzero": 199
+      },
+      "score_learned_asr_contribution": {
+        "mean": 0.0,
+        "nonzero": 0
+      },
+      "score_lexical_contribution": {
+        "mean": 0.693157,
+        "nonzero": 242
+      },
+      "score_negative_context_contribution": {
+        "mean": 0.0,
+        "nonzero": 0
+      },
+      "score_phonetic_contribution": {
+        "mean": 0.091736,
+        "nonzero": 222
+      }
+    }
+  },
+  "summaries": {
+    "smoke": {
+      "path": "smoke/summary.json",
+      "sha256": "676d5cd92e0fcf9d734b7b8c11f3adabd396c9ec45c2050ff230b66f126c4a49",
+      "content": {
+        "dataset": "data/benchmark/smoke.jsonl",
+        "dataset_sha256": "3455df3d22b8ed106f0eee83ecd45221310c7450988073808b9a39993a5d55f8",
+        "case_count": 28,
+        "minimum_conflict_positive_context": 0.2,
+        "authorization_score_mode": "boolean",
+        "dataset_versions": [
+          "unspecified"
+        ],
+        "split_counts": {
+          "all": 28
+        },
+        "lexitrace_by_split": {
+          "all": {
+            "cases": 28,
+            "exact_matches": 28,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "interventions": 12,
+            "useful_interventions": 12,
+            "wrong_interventions": 0,
+            "intervention_precision": 1.0,
+            "intervention_recall": 1.0,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 32.236,
+              "p50": 3.635,
+              "p95": 137.048,
+              "p99": 147.537
+            }
+          }
+        },
+        "model_usage": {
+          "execution": "local",
+          "model": "BAAI/bge-small-en-v1.5",
+          "embedding_calls": 16,
+          "input_characters": 526,
+          "failed_calls": 0,
+          "hosted_requests": 0,
+          "estimated_api_cost_usd": 0.0
+        },
+        "database": {
+          "peak_allocated_bytes": 221184,
+          "peak_trace_payload_bytes": 10448,
+          "peak_rows": {
+            "memories": 2,
+            "memory_variants": 2,
+            "observations": 2,
+            "context_evidence": 7,
+            "context_embeddings": 1,
+            "decisions": 1,
+            "memory_versions": 2,
+            "asr_outcomes": 0
+          }
+        },
+        "systems": {
+          "no_memory": {
+            "cases": 28,
+            "exact_matches": 16,
+            "exact_match_rate": 0.5714,
+            "action_accuracy": 0.25,
+            "interventions": 0,
+            "useful_interventions": 0,
+            "wrong_interventions": 0,
+            "intervention_precision": null,
+            "intervention_recall": 0.0,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            }
+          },
+          "naive_dictionary": {
+            "cases": 28,
+            "exact_matches": 19,
+            "exact_match_rate": 0.6786,
+            "action_accuracy": 0.5357,
+            "interventions": 15,
+            "useful_interventions": 9,
+            "wrong_interventions": 6,
+            "intervention_precision": 0.6,
+            "intervention_recall": 0.75,
+            "incorrect_intervention_rate": 0.2143,
+            "abstention_accuracy": 0.625,
+            "latency_ms": {
+              "mean": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            }
+          },
+          "lexitrace": {
+            "cases": 28,
+            "exact_matches": 28,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "interventions": 12,
+            "useful_interventions": 12,
+            "wrong_interventions": 0,
+            "intervention_precision": 1.0,
+            "intervention_recall": 1.0,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 32.236,
+              "p50": 3.635,
+              "p95": 137.048,
+              "p99": 147.537
+            }
+          }
+        }
+      }
+    },
+    "robustness": {
+      "path": "robustness/summary.json",
+      "sha256": "83da79cb80a457ca752e8c0d9de12c1d2002ff08fae3203ce1f942bad4a93442",
+      "content": {
+        "dataset": "data/benchmark/robustness.jsonl",
+        "dataset_sha256": "70f53d755220ef7b6244f375ff0978a2b620347fed69cb64b7048dabc624458e",
+        "case_count": 252,
+        "minimum_conflict_positive_context": 0.2,
+        "authorization_score_mode": "boolean",
+        "dataset_versions": [
+          "backend-phonetic-robustness-v1"
+        ],
+        "split_counts": {
+          "calibration": 109,
+          "heldout": 143
+        },
+        "lexitrace_by_split": {
+          "calibration": {
+            "cases": 109,
+            "exact_matches": 106,
+            "exact_match_rate": 0.9725,
+            "action_accuracy": 0.9725,
+            "interventions": 52,
+            "useful_interventions": 52,
+            "wrong_interventions": 0,
+            "intervention_precision": 1.0,
+            "intervention_recall": 0.9455,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 36.98,
+              "p50": 4.944,
+              "p95": 109.167,
+              "p99": 115.759
+            }
+          },
+          "heldout": {
+            "cases": 143,
+            "exact_matches": 142,
+            "exact_match_rate": 0.993,
+            "action_accuracy": 0.993,
+            "interventions": 62,
+            "useful_interventions": 62,
+            "wrong_interventions": 0,
+            "intervention_precision": 1.0,
+            "intervention_recall": 0.9841,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 39.022,
+              "p50": 5.619,
+              "p95": 107.051,
+              "p99": 120.073
+            }
+          }
+        },
+        "model_usage": {
+          "execution": "local",
+          "model": "BAAI/bge-small-en-v1.5",
+          "embedding_calls": 192,
+          "input_characters": 6623,
+          "failed_calls": 0,
+          "hosted_requests": 0,
+          "estimated_api_cost_usd": 0.0
+        },
+        "database": {
+          "peak_allocated_bytes": 221184,
+          "peak_trace_payload_bytes": 10645,
+          "peak_rows": {
+            "memories": 2,
+            "memory_variants": 2,
+            "observations": 2,
+            "context_evidence": 5,
+            "context_embeddings": 1,
+            "decisions": 1,
+            "memory_versions": 2,
+            "asr_outcomes": 0
+          }
+        },
+        "systems": {
+          "no_memory": {
+            "cases": 252,
+            "exact_matches": 134,
+            "exact_match_rate": 0.5317,
+            "action_accuracy": 0.2302,
+            "interventions": 0,
+            "useful_interventions": 0,
+            "wrong_interventions": 0,
+            "intervention_precision": null,
+            "intervention_recall": 0.0,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            }
+          },
+          "naive_dictionary": {
+            "cases": 252,
+            "exact_matches": 134,
+            "exact_match_rate": 0.5317,
+            "action_accuracy": 0.5317,
+            "interventions": 176,
+            "useful_interventions": 88,
+            "wrong_interventions": 88,
+            "intervention_precision": 0.5,
+            "intervention_recall": 0.7458,
+            "incorrect_intervention_rate": 0.3492,
+            "abstention_accuracy": 0.3433,
+            "latency_ms": {
+              "mean": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            }
+          },
+          "lexitrace": {
+            "cases": 252,
+            "exact_matches": 248,
+            "exact_match_rate": 0.9841,
+            "action_accuracy": 0.9841,
+            "interventions": 114,
+            "useful_interventions": 114,
+            "wrong_interventions": 0,
+            "intervention_precision": 1.0,
+            "intervention_recall": 0.9661,
+            "incorrect_intervention_rate": 0.0,
+            "abstention_accuracy": 1.0,
+            "latency_ms": {
+              "mean": 38.139,
+              "p50": 5.167,
+              "p95": 107.15,
+              "p99": 118.229
+            }
+          }
+        }
+      }
+    },
+    "journeys": {
+      "path": "journeys/summary.json",
+      "sha256": "19df6bf3e06d8bb94d187e0f3e1c8a61e9184efd063df37c9fd8deef7163b56c",
+      "content": {
+        "dataset": "data/benchmark/journeys.jsonl",
+        "dataset_sha256": "7a7b95fc6e74dd062156b4e9041e5117b6df14b5b527553b0a1f3ccbe9548819",
+        "journeys": 3,
+        "model": "BAAI/bge-small-en-v1.5",
+        "semantic_retrieval_mode": "nearest_example",
+        "auto_lifecycle_enabled": true,
+        "minimum_conflict_positive_context": 0.2,
+        "feedback_scope_mode": "auto",
+        "asr_reliability_mode": "exact_route",
+        "authorization_score_mode": "boolean",
+        "semantic_evidence_cap": 12,
+        "systems": {
+          "sparse_ablation": {
+            "queries": 6,
+            "exact_match_rate": 0.8333,
+            "action_accuracy": 0.6667,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 4.494,
+            "p95_latency_ms": 12.047,
+            "model_usage": {
+              "execution": "disabled",
+              "model": "disabled",
+              "embedding_calls": 0,
+              "input_characters": 0,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 229376,
+              "peak_vector_payload_bytes": 0,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 3,
+                "context_evidence": 12,
+                "context_embeddings": 0,
+                "decisions": 2,
+                "memory_versions": 2,
+                "asr_outcomes": 0
+              }
+            }
+          },
+          "hybrid": {
+            "queries": 6,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 59.291,
+            "p95_latency_ms": 90.008,
+            "model_usage": {
+              "execution": "local",
+              "model": "BAAI/bge-small-en-v1.5",
+              "embedding_calls": 7,
+              "input_characters": 261,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 241664,
+              "peak_vector_payload_bytes": 16142,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 3,
+                "context_evidence": 12,
+                "context_embeddings": 2,
+                "decisions": 2,
+                "memory_versions": 2,
+                "asr_outcomes": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "multimodal": {
+      "path": "multimodal/summary.json",
+      "sha256": "02c2ff68f8df7648836a41b2a1fc90b0efedb316768f0aa791881eecab634194",
+      "content": {
+        "dataset": "data/benchmark/v7_semantic_multimodal_development.jsonl",
+        "dataset_sha256": "c19bf01d4002a502a6a7eef9afba9a96a8ab346acaa9220632afb388d2207ce9",
+        "journeys": 2,
+        "model": "BAAI/bge-small-en-v1.5",
+        "semantic_retrieval_mode": "nearest_example",
+        "auto_lifecycle_enabled": true,
+        "minimum_conflict_positive_context": 0.2,
+        "feedback_scope_mode": "auto",
+        "asr_reliability_mode": "exact_route",
+        "authorization_score_mode": "boolean",
+        "semantic_evidence_cap": 12,
+        "systems": {
+          "sparse_ablation": {
+            "queries": 6,
+            "exact_match_rate": 0.0,
+            "action_accuracy": 0.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 4.558,
+            "p95_latency_ms": 6.334,
+            "model_usage": {
+              "execution": "disabled",
+              "model": "disabled",
+              "embedding_calls": 0,
+              "input_characters": 0,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 253952,
+              "peak_vector_payload_bytes": 0,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 3,
+                "context_evidence": 26,
+                "context_embeddings": 0,
+                "decisions": 3,
+                "memory_versions": 3,
+                "asr_outcomes": 0
+              }
+            }
+          },
+          "hybrid": {
+            "queries": 6,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 126.407,
+            "p95_latency_ms": 229.961,
+            "model_usage": {
+              "execution": "local",
+              "model": "BAAI/bge-small-en-v1.5",
+              "embedding_calls": 12,
+              "input_characters": 609,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 282624,
+              "peak_vector_payload_bytes": 24294,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 3,
+                "context_evidence": 26,
+                "context_embeddings": 3,
+                "decisions": 3,
+                "memory_versions": 3,
+                "asr_outcomes": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "semantic-safety": {
+      "path": "semantic-safety/summary.json",
+      "sha256": "f79d73e753793d2083c10d2d4cb61ef504c8ece928dd4c1c6b2d329029e4d21c",
+      "content": {
+        "dataset": "data/benchmark/v7_semantic_safety_development.jsonl",
+        "dataset_sha256": "c4a02d40e27a47cf7ce4518a702e78cae5bdfe04050690673f9ac5818dba8157",
+        "journeys": 2,
+        "model": "BAAI/bge-small-en-v1.5",
+        "semantic_retrieval_mode": "nearest_example",
+        "auto_lifecycle_enabled": true,
+        "minimum_conflict_positive_context": 0.2,
+        "feedback_scope_mode": "auto",
+        "asr_reliability_mode": "exact_route",
+        "authorization_score_mode": "boolean",
+        "semantic_evidence_cap": 12,
+        "systems": {
+          "sparse_ablation": {
+            "queries": 13,
+            "exact_match_rate": 0.5385,
+            "action_accuracy": 0.2308,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 4.38,
+            "p95_latency_ms": 6.131,
+            "model_usage": {
+              "execution": "disabled",
+              "model": "disabled",
+              "embedding_calls": 0,
+              "input_characters": 0,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 315392,
+              "peak_vector_payload_bytes": 0,
+              "peak_rows": {
+                "memories": 2,
+                "memory_variants": 2,
+                "observations": 6,
+                "context_evidence": 53,
+                "context_embeddings": 0,
+                "decisions": 10,
+                "memory_versions": 6,
+                "asr_outcomes": 0
+              }
+            }
+          },
+          "hybrid": {
+            "queries": 13,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 95.497,
+            "p95_latency_ms": 101.422,
+            "model_usage": {
+              "execution": "local",
+              "model": "BAAI/bge-small-en-v1.5",
+              "embedding_calls": 28,
+              "input_characters": 1674,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 376832,
+              "peak_vector_payload_bytes": 48435,
+              "peak_rows": {
+                "memories": 2,
+                "memory_variants": 2,
+                "observations": 6,
+                "context_evidence": 53,
+                "context_embeddings": 6,
+                "decisions": 10,
+                "memory_versions": 6,
+                "asr_outcomes": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "semantic-storage": {
+      "path": "semantic-storage/summary.json",
+      "sha256": "7ee24296d82c2b462d37786d17e86303ee3d72959bee6d62d6b5cdcbc2571a0e",
+      "content": {
+        "dataset": "data/benchmark/v7_semantic_storage_development.jsonl",
+        "dataset_sha256": "4801f914d258d6b80f0ec5a23725618e1a4c1bbf89accc28bf9b98af717e6654",
+        "journeys": 1,
+        "model": "BAAI/bge-small-en-v1.5",
+        "semantic_retrieval_mode": "nearest_example",
+        "auto_lifecycle_enabled": true,
+        "minimum_conflict_positive_context": 0.2,
+        "feedback_scope_mode": "auto",
+        "asr_reliability_mode": "exact_route",
+        "authorization_score_mode": "boolean",
+        "semantic_evidence_cap": 12,
+        "systems": {
+          "sparse_ablation": {
+            "queries": 8,
+            "exact_match_rate": 0.125,
+            "action_accuracy": 0.125,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 8.385,
+            "p95_latency_ms": 10.391,
+            "model_usage": {
+              "execution": "disabled",
+              "model": "disabled",
+              "embedding_calls": 0,
+              "input_characters": 0,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 438272,
+              "peak_vector_payload_bytes": 0,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 18,
+                "context_evidence": 137,
+                "context_embeddings": 0,
+                "decisions": 8,
+                "memory_versions": 18,
+                "asr_outcomes": 0
+              }
+            }
+          },
+          "hybrid": {
+            "queries": 8,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 98.384,
+            "p95_latency_ms": 108.248,
+            "model_usage": {
+              "execution": "local",
+              "model": "BAAI/bge-small-en-v1.5",
+              "embedding_calls": 25,
+              "input_characters": 1450,
+              "failed_calls": 0,
+              "hosted_requests": 0,
+              "estimated_api_cost_usd": 0.0
+            },
+            "database": {
+              "peak_allocated_bytes": 573440,
+              "peak_vector_payload_bytes": 96904,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 18,
+                "context_evidence": 137,
+                "context_embeddings": 12,
+                "decisions": 8,
+                "memory_versions": 18,
+                "asr_outcomes": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "asr-learning": {
+      "path": "asr-learning/summary.json",
+      "sha256": "b2d35df875a973ab667f1fb9804f497cb4ca1716ae236c132776fccfa87feb4e",
+      "content": {
+        "dataset": "data/benchmark/asr_journeys.jsonl",
+        "dataset_sha256": "3e11769754ecec1508f0fe4418a8f19e7f4023b5967924db48dc7c55de683a1f",
+        "journeys": 4,
+        "asr_reliability_mode": "exact_route",
+        "systems": {
+          "no_learning_ablation": {
+            "queries": 16,
+            "exact_match_rate": 0.9375,
+            "action_accuracy": 0.9375,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 4.444,
+            "p95_latency_ms": 5.447,
+            "database": {
+              "peak_allocated_bytes": 249856,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 4,
+                "context_evidence": 24,
+                "context_embeddings": 0,
+                "decisions": 4,
+                "memory_versions": 4,
+                "asr_outcomes": 3
+              }
+            }
+          },
+          "learned_asr": {
+            "queries": 16,
+            "exact_match_rate": 1.0,
+            "action_accuracy": 1.0,
+            "wrong_interventions": 0,
+            "mean_latency_ms": 3.827,
+            "p95_latency_ms": 5.143,
+            "database": {
+              "peak_allocated_bytes": 249856,
+              "peak_rows": {
+                "memories": 1,
+                "memory_variants": 1,
+                "observations": 4,
+                "context_evidence": 24,
+                "context_embeddings": 0,
+                "decisions": 4,
+                "memory_versions": 4,
+                "asr_outcomes": 3
+              }
+            }
+          }
+        },
+        "precision_coverage_curve": [
+          {
+            "threshold": 0.9,
+            "interventions": 15,
+            "precision": 0.8667,
+            "coverage": 1.0
+          },
+          {
+            "threshold": 0.92,
+            "interventions": 1,
+            "precision": 1.0,
+            "coverage": 0.0769
+          },
+          {
+            "threshold": 0.93,
+            "interventions": 1,
+            "precision": 1.0,
+            "coverage": 0.0769
+          },
+          {
+            "threshold": 0.94,
+            "interventions": 1,
+            "precision": 1.0,
+            "coverage": 0.0769
+          },
+          {
+            "threshold": 0.96,
+            "interventions": 0,
+            "precision": 1.0,
+            "coverage": 0.0
+          }
+        ],
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      }
+    },
+    "lifecycle": {
+      "path": "lifecycle/summary.json",
+      "sha256": "f8ece65d8ffe19f2b78bc1097700ee8e716770daaeba6087066a30d1946ae6de",
+      "content": {
+        "dataset": "data/benchmark/lifecycle_journeys.jsonl",
+        "dataset_sha256": "bf48c310ae6711b88c5bc2f5ebe26f857ddb1e95c2ba878f97663f2bdca5fcf1",
+        "journeys": 5,
+        "feedback_scope_mode": "auto",
+        "systems": {
+          "no_lifecycle_ablation": {
+            "events": 16,
+            "event_accuracy": 0.875,
+            "failed_events": 2,
+            "wrong_interventions": 0
+          },
+          "event_lifecycle": {
+            "events": 16,
+            "event_accuracy": 1.0,
+            "failed_events": 0,
+            "wrong_interventions": 0
+          }
+        },
+        "hosted_requests": 0,
+        "estimated_api_cost_usd": 0.0
+      }
+    },
+    "conflicts": {
+      "path": "conflicts/summary.json",
+      "sha256": "f7d90739a40edc8fc2108c82c900dae0b3145c9b2277fd6a4233a968897f6545",
+      "content": {
+        "dataset": "data/benchmark/conflict_journeys.jsonl",
+        "dataset_sha256": "b12b15c428cacad868c25bebd1f7b43b1c2663c7bce74f283de48964d6cc85f9",
+        "journeys": 4,
+        "semantic_retrieval_mode": "nearest_example",
+        "minimum_conflict_positive_context": 0.2,
+        "feedback_scope_mode": "auto",
+        "semantic_evidence_cap": 12,
+        "events": 5,
+        "exact_match_rate": 1.0,
+        "action_accuracy": 1.0,
+        "wrong_interventions": 0,
+        "deterministic_journeys": 4,
+        "model_usage": {
+          "execution": "local",
+          "model": "BAAI/bge-small-en-v1.5",
+          "embedding_calls": 10,
+          "input_characters": 330,
+          "failed_calls": 0,
+          "hosted_requests": 0,
+          "estimated_api_cost_usd": 0.0
+        }
+      }
+    }
+  },
+  "final_holdout_accessed": false,
+  "next_stage": "score_recalibration"
+}
