@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "baseline": "v6",
+  "git_commit": "ca9cbe7a1d61eb3445e3c48656cb7db326c5e705",
+  "policy_version": "2026-09-06-hybrid-v6-conflict-safe",
+  "frozen_at_utc": "2026-09-06T17:20:18.306647+00:00",
+  "compatibility": "immutable_json_artifacts",
+  "git_files": {
+    "apps/api/lexitrace/engine.py": "6a75a6ee1051216e1bcb04ae33e909b952fc467ae75f797e97f9fd6e7b8de6d4",
+    "apps/api/lexitrace/policy.py": "129b0e63fd833af67ecd46cfa16546a1e348381f15382bf83d3720ad50772aaf",
+    "apps/api/lexitrace/policy.toml": "4d343cb21fbc4474329bb7ce8bc4628aa2913a73d0c07feab002ababe3db256a"
+  },
+  "files": {
+    "data/benchmark/smoke.jsonl": "3455df3d22b8ed106f0eee83ecd45221310c7450988073808b9a39993a5d55f8",
+    "data/benchmark/robustness.jsonl": "70f53d755220ef7b6244f375ff0978a2b620347fed69cb64b7048dabc624458e",
+    "data/benchmark/journeys.jsonl": "7a7b95fc6e74dd062156b4e9041e5117b6df14b5b527553b0a1f3ccbe9548819",
+    "data/benchmark/asr_journeys.jsonl": "3e11769754ecec1508f0fe4418a8f19e7f4023b5967924db48dc7c55de683a1f",
+    "data/benchmark/lifecycle_journeys.jsonl": "bf48c310ae6711b88c5bc2f5ebe26f857ddb1e95c2ba878f97663f2bdca5fcf1",
+    "data/benchmark/conflict_journeys.jsonl": "b12b15c428cacad868c25bebd1f7b43b1c2663c7bce74f283de48964d6cc85f9",
+    "results/latest/summary.json": "ab7560ca24477d38868429ab0dd31c5ba8d9f0a09f3977116ad41d2b724cb9e2",
+    "results/latest/cases.jsonl": "6f19064f74e935fa767a9b57a84a2de6779fcec0ed5f74c6d05b7668e4e8b1b9",
+    "results/robustness/summary.json": "9663992274eb3b3459f20a1ca0cf3054142276dee9920f6b38a4f6204cbcb8ce",
+    "results/robustness/cases.jsonl": "2d01b52db3e1853e77d8992aeb66e59f6fd9f5d25d6867a0338a147f3dd72957",
+    "results/journeys/summary.json": "ffd99c5202a3a21f63642e69c0cf7701d802ad5a0e1840cef2f1d06d26702ec1",
+    "results/journeys/cases.json": "42ff682cb53b633552aca08ff06ad984ec200f230e24b3062c822499934a0d51",
+    "results/asr-learning/summary.json": "598f5db08fac0932bf737455faa9cb69b08ab4a6a4f7eaff3b8a42d7614d748f",
+    "results/asr-learning/cases.json": "86b72ac7cccc72c437ff63d900033994da5144c15b238f7a1c1fff844d165a96",
+    "results/lifecycle/summary.json": "4d2bebf2de15651b2c06f62ab0e07531d50eb83e0e35280ef115ae9941d30d15",
+    "results/lifecycle/cases.json": "d71b96c8efdc9a09745a4d722c0b54914cce4900958733f597ff1cfef4523225",
+    "results/calibration/policy.json": "4a37fb7db2c7c31a8d843af0734e3333b168d65817c7b2640a56806b6fe2e6cc",
+    "results/conflicts/summary.json": "4b54d373d35ea05e20bf5fda7c226ec7c32a641d574569837ad104b5dc8f48f3",
+    "results/conflicts/cases.json": "dee61b91cfbdb08944d9c837f8de7dfe62821e4644a766404865cd2f0b0adb2d",
+    "results/soak/summary.json": "4658f8932353393a6d91c82146b7eeac7e63ebd0d955a42eaef797003506529a",
+    "results/soak/failures.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+  }
+}

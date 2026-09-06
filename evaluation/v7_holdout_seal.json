@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "awaiting_independent_custodian",
+  "dataset_id": null,
+  "dataset_sha256": null,
+  "case_count": null,
+  "custodian": null,
+  "sealed_at_utc": null,
+  "opened_receipt": null,
+  "note": "The final holdout must be prepared outside the development working tree and sealed before v7 structural selection."
+}

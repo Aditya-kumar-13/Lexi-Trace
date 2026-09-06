@@ -87,6 +87,11 @@ limitations. [docs/model.md](docs/model.md) documents the local model, data flow
 operational fallback. [docs/evaluation.md](docs/evaluation.md) defines the benchmark method, and
 [docs/brief-alignment.md](docs/brief-alignment.md) records the assignment boundary and guardrails.
 
+Policy v7 work is governed by a frozen [Definition of Done](docs/v7-definition-of-done.md) and
+[experimental protocol](docs/v7-experimental-protocol.md). Existing v6 datasets are explicitly
+treated as known development evidence; a separately sealed final holdout cannot influence v7
+selection, calibration, or stopping decisions.
+
 ## AI use
 
 Generative AI was used only as a limited coding assistance tool during the development of this work, primarily for minor programming-related support and clarification. The major conceptual work, system design, implementation, analysis, calculations, technical decisions, and evaluation were carried out independently by the candidate. All design choices, assumptions, results, and conclusions were determined and verified by the candidate. The final work, including any code developed with limited AI assistance, was reviewed, modified, tested, and validated by the candidate before submission.

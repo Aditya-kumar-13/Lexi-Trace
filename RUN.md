@@ -85,6 +85,17 @@ For a disposable reviewer demonstration that creates its own temporary database:
 
 ## Run the evaluations
 
+Run the complete test, evaluation, calibration, soak, frontend-build, and submission gate with the
+active virtual environment's Python. The runner is cross-platform and writes development artifacts
+under `results/v7/development/current`, never into the frozen v6 result directories:
+
+```text
+python scripts/run_quality_gate.py
+```
+
+Use `python scripts/run_quality_gate.py --quick` for tests, formatting, lint, migrations, baseline
+integrity, and submission checks without the longer behavioral suites.
+
 Run the 28-case smoke suite against the complete hybrid product:
 
 ```powershell

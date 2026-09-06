@@ -49,6 +49,13 @@ REQUIRED_PATHS = [
     "scripts/reviewer_demo.py",
     "docs/brief-alignment.md",
     "docs/evaluation.md",
+    "docs/v7-definition-of-done.md",
+    "docs/v7-experimental-protocol.md",
+    "evaluation/v7_holdout_seal.json",
+    "results/baselines/v6/manifest.json",
+    "scripts/freeze_v6_baseline.py",
+    "scripts/holdout_guard.py",
+    "scripts/run_quality_gate.py",
 ]
 RUN_TOKENS = [
     "Primary review method",
@@ -193,6 +200,29 @@ def check_soak_artifact(checks: list[dict]) -> None:
     )
 
 
+def check_v7_protocol(checks: list[dict]) -> None:
+    baseline_path = ROOT / "results" / "baselines" / "v6" / "manifest.json"
+    seal_path = ROOT / "evaluation" / "v7_holdout_seal.json"
+    if not baseline_path.is_file() or not seal_path.is_file():
+        add(checks, "v7_protocol", False, "baseline manifest or holdout seal is missing")
+        return
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    changed = []
+    for relative, expected in baseline["files"].items():
+        path = ROOT / relative
+        actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else "missing"
+        if actual != expected:
+            changed.append(relative)
+    seal = json.loads(seal_path.read_text(encoding="utf-8"))
+    seal_valid = seal["status"] in {"awaiting_independent_custodian", "sealed"}
+    add(
+        checks,
+        "v7_protocol",
+        not changed and seal_valid,
+        f"changed_v6_artifacts={changed!r}, holdout_status={seal['status']!r}",
+    )
+
+
 def main() -> None:
     checks: list[dict] = []
     missing = [path for path in REQUIRED_PATHS if not (ROOT / path).exists()]
@@ -254,6 +284,7 @@ def main() -> None:
 
     check_calibration_artifact(checks)
     check_soak_artifact(checks)
+    check_v7_protocol(checks)
 
     secret_findings = scan_for_secrets()
     add(checks, "credential_scan", not secret_findings, "findings=" + repr(secret_findings))
