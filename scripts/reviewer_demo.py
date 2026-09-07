@@ -37,6 +37,10 @@ def main() -> None:
                     "negative_context": ["fruit shopping"],
                 },
             )
+            formatter_context = client.post(
+                "/api/v1/formatter-context",
+                json={"raw_asr_text": "Review the Kiwi service deployment."},
+            )
             positive = client.post(
                 "/api/v1/infer",
                 json={"formatted_text": "Review the Kiwi service deployment."},
@@ -77,6 +81,7 @@ def main() -> None:
             reset = client.post("/api/v1/reset", json={"user_id": "demo-user"})
             responses = [
                 memory,
+                formatter_context,
                 positive,
                 negative,
                 feedback,
@@ -94,6 +99,11 @@ def main() -> None:
                 "teach": {
                     "canonical_form": memory.json()["canonical_form"],
                     "state": memory.json()["state"],
+                },
+                "formatter_context": {
+                    "retrieved": formatter_context.json()["retrieved_count"],
+                    "prompt_fragment": formatter_context.json()["prompt_fragment"],
+                    "contract": formatter_context.json()["contract"],
                 },
                 "positive": {
                     "output": positive.json()["memory_aware_text"],

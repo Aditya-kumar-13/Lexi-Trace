@@ -8,10 +8,12 @@ submit a product-positioning statement or product-vision document for Golden Goo
 
 ## Product boundary
 
-LexiTrace begins after speech recognition and formatting. It learns personal word forms and decides
-whether a formatted span should be changed, suggested, or left alone. The local semantic encoder is
-used only to decide whether a word-level spelling memory fits the surrounding sentence. It does not
-create factual, episodic, preference, or general-purpose conversational memory.
+LexiTrace begins after speech recognition. Its formatter-context endpoint retrieves a bounded set of
+relevant personal spelling hints for the formatting prompt. After the formatter produces a draft,
+LexiTrace independently decides whether a span should be changed, suggested, or left alone. The
+local semantic encoder is used only to decide whether a word-level spelling memory fits the
+surrounding sentence. It does not create factual, episodic, preference, or general-purpose
+conversational memory.
 
 The following remain deliberate non-goals:
 
@@ -29,6 +31,7 @@ The following remain deliberate non-goals:
 | Accept learning observations | Explicit-teach and accepted-correction API flows |
 | Persist and inspect memory | SQLite schema, Alembic migrations, memory/evidence/history endpoints |
 | Accept ASR and formatted text | Inference API and browser journey |
+| Place relevant memory into formatting prompt | Bounded `/api/v1/formatter-context` contract |
 | Produce memory-aware output | Apply/suggest/abstain decision engine |
 | Explain intervention or restraint | Persisted candidate features, blockers, reason codes, and policy version |
 | Change or remove memory | Edit, suppress, delete, feedback, and reset flows |

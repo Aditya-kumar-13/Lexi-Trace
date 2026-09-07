@@ -77,6 +77,19 @@ http://localhost:8000/docs.
 5. Open the memory detail, evidence, and history views; reject or confirm an intervention.
 6. Reset the demo and confirm that memories, observations, and traces disappear.
 
+To inspect the integration contract used before formatting, post raw ASR text to the bounded
+formatter-context endpoint:
+
+```powershell
+Invoke-RestMethod -Method Post http://localhost:8000/api/v1/formatter-context `
+  -ContentType 'application/json' `
+  -Body '{"user_id":"demo-user","raw_asr_text":"Review the Kiwi service dashboard."}'
+```
+
+The response contains structured memories plus a ready-to-inject `prompt_fragment`. It explicitly
+marks retrieval as non-authoritative; the formatter should preserve uncertainty and pass its draft
+to `/api/v1/infer` for the final safety decision.
+
 For a disposable reviewer demonstration that creates its own temporary database:
 
 ```powershell
@@ -175,6 +188,7 @@ dataset version:
 - `results/soak`: sustained latency, trace uniqueness, failures, and database growth
 - `data/lexitrace.db`: persistent SQLite memory state
 - `GET /api/v1/memories`: current memory state
+- `POST /api/v1/formatter-context`: bounded pre-formatter memory hints and prompt fragment
 - `GET /api/v1/memories/{memory_id}/asr-evidence`: immutable provider-linked outcomes
 - `GET /api/v1/decisions/{trace_id}`: persisted decision explanation
 - `GET /api/v1/conflicts`: current surface and phonetic collision groups

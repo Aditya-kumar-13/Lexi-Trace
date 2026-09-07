@@ -18,6 +18,7 @@ The reviewer-ready release includes:
 - positive and negative semantic context prototypes stored per observation;
 - a local ONNX embedding adapter with deterministic sparse fallback;
 - optional ASR N-best alternatives aligned back to safe editable spans;
+- a bounded formatter-context endpoint that retrieves relevant spelling hints before formatting;
 - memory inspection, editing, deletion, and per-user reset APIs;
 - React interface for teaching, inference, memory state, and score traces;
 - Alembic migrations, seed script, Docker Compose, and integration tests;
@@ -72,7 +73,12 @@ Policy v7 was selected from 25,920 calibration configurations after the architec
 The active `0.90` apply threshold and weights reproduce 71/72 calibration outcomes with zero wrong
 automatic edits, pass the separate 16/16 safety gate, and avoid saturated scores. Complete searches,
 three rejected candidates, exact engine replays, and regression results are preserved under
-`results/v7`; the independent final holdout has not been accessed.
+`results/v7`. No independent external-accuracy claim is made.
+
+`POST /api/v1/formatter-context` supplies a bounded prompt fragment and structured personal spelling
+hints to an upstream formatter. This retrieval stage is deliberately not permission to edit: the
+formatter must preserve uncertainty, and `/api/v1/infer` still performs the post-format safety
+decision. LexiTrace itself does not send the transcript or prompt fragment to a hosted model.
 
 When several memories share a surface or phonetic route, LexiTrace does not choose by insertion
 order. It either finds a sufficient learned-context advantage or returns a visible suggestion. A
@@ -89,8 +95,9 @@ operational fallback. [docs/evaluation.md](docs/evaluation.md) defines the bench
 
 Policy v7 work is governed by a frozen [Definition of Done](docs/v7-definition-of-done.md) and
 [experimental protocol](docs/v7-experimental-protocol.md). Existing v6 datasets are explicitly
-treated as known development evidence; a separately sealed final holdout cannot influence v7
-selection, calibration, or stopping decisions.
+treated as known development evidence. The protocol's independently authored holdout is an optional
+future external-certification tier, not a requirement of this assignment and not the basis of any
+reported result.
 
 The first [v7 instrumentation findings](docs/v7-phase1-findings.md) publish the current score
 saturation, candidate-deduplication counts, signal coverage gaps, and all four known misses before

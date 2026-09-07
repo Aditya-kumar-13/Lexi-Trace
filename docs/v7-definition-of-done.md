@@ -2,6 +2,11 @@
 
 Status: frozen before implementation of any v7 scoring change.
 
+Assignment scope note: the independently authored final holdout below is an optional external-
+certification tier. The backend assignment requires complete, reproducible included evaluation but
+does not provide or require a private benchmark. V7 may be submitted without making an external-
+accuracy claim; the holdout rules remain binding if that separate claim is pursued later.
+
 Policy v7 is a simplification and validation release, not a feature expansion. Its purpose is to
 retain only the smallest set of signals that measurably improves safe personal-term correction.
 

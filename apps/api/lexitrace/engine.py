@@ -664,6 +664,101 @@ def generate_asr_alternative_spans(
     return deduplicated
 
 
+def build_formatter_context(
+    session: Session,
+    *,
+    user_id: str,
+    raw_asr_text: str,
+    max_memories: int = 12,
+) -> dict:
+    """Build bounded retrieval hints for an upstream transcript formatter.
+
+    Retrieval is deliberately not an edit decision. The formatter may use these hints while
+    producing its first draft; the normal inference route still decides whether a learned form is
+    safe to apply to that draft.
+    """
+    memories = session.scalars(
+        select(Memory).where(Memory.user_id == user_id, Memory.state != "suppressed")
+    ).all()
+    method_priority = {"exact": 4, "phonetic_fuzzy": 3, "phonetic": 2, "fuzzy": 1}
+    retrieved: dict[str, dict] = {}
+    for memory in memories:
+        for variant in memory.variants:
+            for _, _, matched_span, match_method in generate_candidate_spans(
+                raw_asr_text, variant
+            ):
+                if normalize(matched_span) == memory.canonical_normalized:
+                    continue
+                candidate = {
+                    "memory_id": memory.id,
+                    "canonical_form": memory.canonical_form,
+                    "observed_variant": variant.surface_form,
+                    "matched_span": matched_span,
+                    "match_method": match_method,
+                    "state": memory.state,
+                    "scope_mode": memory.scope_mode,
+                    "ambiguous": False,
+                    "positive_context_examples": list(
+                        dict.fromkeys(
+                            evidence.context_text
+                            for evidence in memory.context_evidence
+                            if evidence.polarity == "positive" and evidence.context_text
+                        )
+                    )[:3],
+                }
+                previous = retrieved.get(memory.id)
+                if previous is None or method_priority[match_method] > method_priority[
+                    previous["match_method"]
+                ]:
+                    retrieved[memory.id] = candidate
+
+    hints = sorted(
+        retrieved.values(),
+        key=lambda item: (
+            -method_priority[item["match_method"]],
+            item["canonical_form"].casefold(),
+            item["memory_id"],
+        ),
+    )
+    route_counts: dict[str, int] = defaultdict(int)
+    for hint in hints:
+        route_counts[normalize(hint["matched_span"])] += 1
+    for hint in hints:
+        hint["ambiguous"] = route_counts[normalize(hint["matched_span"])] > 1
+
+    truncated = len(hints) > max_memories
+    hints = hints[:max_memories]
+    lines = [
+        "Personal spelling hints (retrieval only; preserve the transcript when uncertain):"
+    ]
+    for hint in hints:
+        qualifier = "ambiguous; resolve from context" if hint["ambiguous"] else hint["scope_mode"]
+        lines.append(
+            f'- "{hint["matched_span"]}" may refer to canonical "{hint["canonical_form"]}" '
+            f'({qualifier}, {hint["match_method"]} match).'
+        )
+    if not hints:
+        lines.append("- No relevant personal spelling memory was retrieved.")
+    lines.append(
+        "These hints are not permission to invent facts or force a replacement; LexiTrace "
+        "performs a separate post-format safety decision."
+    )
+    return {
+        "user_id": user_id,
+        "raw_asr_text": raw_asr_text,
+        "prompt_fragment": "\n".join(lines),
+        "memories": hints,
+        "retrieved_count": len(hints),
+        "truncated": truncated,
+        "contract": {
+            "stage": "before_formatter",
+            "retrieval_is_edit_permission": False,
+            "post_format_safety_required": True,
+            "transcript_sent_to_hosted_model_by_lexitrace": False,
+        },
+    }
+
+
 @dataclass(slots=True)
 class TraceCandidate:
     memory_id: str

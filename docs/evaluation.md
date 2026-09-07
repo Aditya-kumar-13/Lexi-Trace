@@ -1,7 +1,7 @@
 # Evaluation design
 
-LexiTrace uses six behavioral suites, a local soak, and a cross-suite policy-release gate. None is
-presented as external or production accuracy.
+LexiTrace uses behavioral suites, a local soak, adversarial discovery, and a cross-suite
+policy-release gate. None is presented as external or production accuracy.
 
 ## Smoke suite
 
@@ -15,10 +15,9 @@ every change and compares no memory, a naive replacement dictionary, and LexiTra
 stable SHA-256 assignment creates a predeclared calibration split and held-out split; changing case
 order cannot move cases between them.
 
-Policy v2 increased the minimum contextual support threshold from 0.12 to 0.15 after the
-calibration split exposed two false interventions at 0.1323. No correct calibration intervention
-occupied that interval. The held-out split was not used to choose the threshold and remains fully
-reported.
+The robustness corpus predates v7. Its historical `calibration` and `heldout` labels remain in the
+file for reproducibility, but both partitions are known development evidence for v7 and are not
+described as untouched v7 evidence.
 
 The suite spans exact personal terms, unseen phonetic forms, word boundaries, contextual positives,
 contextual false friends, candidate and suppressed states, collisions, ASR alternatives, and
@@ -49,16 +48,25 @@ retains its expected state, actual state, posterior components, gate results, an
 
 ## Policy calibration and release gate
 
-`evaluation/calibrate_policy.py` searches apply thresholds using only the 109 predeclared
-calibration cases. It then evaluates the nominated threshold against the fixed 28-case smoke suite
-as a safety constraint. Held-out robustness rows are never read during selection. Input hashes, all
-searched thresholds, baseline results, the nominated candidate, safety violations, the retained
-policy, and rollback boundaries are committed in `results/calibration`.
+Policy v7 froze its structural choices before numeric calibration. Its 72-case calibration corpus
+is disjoint from the 16-case safety gate. `evaluation/calibrate_v7_policy.py` searches 25,920
+configurations using only calibration data, fixes one candidate, and only then opens the safety
+suite. Input hashes, every searched configuration, rejected candidates, engine replays, and the
+selected policy are committed under `results/v7/calibration`.
 
-The calibration split nominated `0.90` because it improved from 106/109 to 108/109 with no wrong
-intervention inside that split. The safety corpus exposed two wrong edits at that boundary, so the
-release gate rejected it and retained `0.93`. This visible negative result is intentional: a policy
-cannot buy recall by weakening the product's zero-wrong-intervention invariant.
+The selected v7 policy uses an apply threshold of `0.90`. It reproduced 71/72 calibration outcomes
+with zero wrong automatic edits, removed all observed score clamping, and passed the independent
+16/16 safety gate with zero wrong automatic edits. Frozen regression then produced 27/28 smoke and
+239/252 robustness exact outputs, again with zero wrong automatic edits. Misses remain visible as
+suggestions or abstentions. The older `results/calibration` directory preserves the historical v6
+search and its rejected `0.90` candidate; it is not the active policy.
+
+## Adversarial discovery
+
+The bounded first adversarial round contains 40 predeclared cases spanning semantic false friends,
+surface collisions, short tokens, multi-edit interactions, and context reversals. V7 produced 40/40
+exact outputs with no wrong automatic edit. These cases are labeled discovery evidence, not an
+external benchmark.
 
 ## Conflict journeys
 
@@ -86,6 +94,7 @@ Every evaluated case preserves:
 - allocated SQLite bytes, row counts, vector payload, and trace payload;
 - measured latency, local embedding calls, failures, hosted requests, and API cost.
 
-The score is a decision score, not a probability. The synthetic split is useful for regression and
-risk analysis, but it cannot substitute for recordings from real users or an independently authored
-external benchmark.
+The score is a decision score, not a probability. These synthetic corpora are useful for regression
+and risk analysis, but they cannot substitute for recordings from real users or an independently
+authored external benchmark. The optional sealed-holdout protocol defines how a future external
+claim would be made; no such claim is part of this assignment submission.

@@ -106,6 +106,53 @@ def test_contextual_memory_applies_in_positive_context_and_abstains_in_negative_
         assert "NEGATIVE_CONTEXT_EVIDENCE" in negative.json()["candidates"][0]["blockers"]
 
 
+def test_formatter_context_returns_bounded_retrieval_hints_without_authorizing_edits(
+    tmp_path: Path,
+) -> None:
+    with make_client(tmp_path) as client:
+        teach(client)
+        response = client.post(
+            "/api/v1/formatter-context",
+            json={"raw_asr_text": "Review the Kiwi service dashboard."},
+        )
+        assert response.status_code == 200
+        result = response.json()
+        assert result["retrieved_count"] == 1
+        assert result["memories"][0]["canonical_form"] == "Kivi"
+        assert result["memories"][0]["matched_span"] == "Kiwi"
+        assert result["contract"]["stage"] == "before_formatter"
+        assert result["contract"]["retrieval_is_edit_permission"] is False
+        assert "retrieval only" in result["prompt_fragment"]
+
+
+def test_formatter_context_exposes_ambiguous_memories_instead_of_choosing_one(
+    tmp_path: Path,
+) -> None:
+    with make_client(tmp_path) as client:
+        teach(
+            client,
+            canonical_form="Aaditya",
+            variants=["Aditya"],
+            positive_context=["finance approval"],
+        )
+        teach(
+            client,
+            canonical_form="Adithya",
+            variants=["Aditya"],
+            positive_context=["design review"],
+        )
+        result = client.post(
+            "/api/v1/formatter-context",
+            json={"raw_asr_text": "Ask Aditya to join."},
+        ).json()
+        assert result["retrieved_count"] == 2
+        assert all(item["ambiguous"] for item in result["memories"])
+        assert {item["canonical_form"] for item in result["memories"]} == {
+            "Aaditya",
+            "Adithya",
+        }
+
+
 def test_correction_observation_builds_context_profile_and_generalizes(
     tmp_path: Path,
 ) -> None:

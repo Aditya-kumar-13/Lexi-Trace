@@ -21,6 +21,7 @@ from .engine import (
     POLICY,
     apply_decision_feedback,
     apply_memory_state_override,
+    build_formatter_context,
     discover_memory_conflicts,
     infer,
     memory_to_dict,
@@ -47,6 +48,8 @@ from .schemas import (
     DecisionFeedbackRequest,
     DecisionFeedbackResponse,
     ExplicitTeachRequest,
+    FormatterContextRequest,
+    FormatterContextResponse,
     InferenceRequest,
     InferenceResponse,
     MemoryImportRequest,
@@ -245,6 +248,10 @@ def create_app(
             semantic_encoder=semantic_encoder,
         )
         return response
+
+    @app.post("/api/v1/formatter-context", response_model=FormatterContextResponse)
+    def formatter_context(payload: FormatterContextRequest, session: DatabaseSession) -> dict:
+        return build_formatter_context(session, **payload.model_dump())
 
     @app.get("/api/v1/memories", response_model=list[MemoryResponse])
     def list_memories(

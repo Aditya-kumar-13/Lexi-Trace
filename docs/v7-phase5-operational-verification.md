@@ -1,6 +1,6 @@
 # V7 phase 5 operational verification
 
-Status: complete except for the independently sealed final holdout.
+Status: complete for the backend assignment. Optional external certification remains unclaimed.
 
 The reviewer demo now exercises the complete visible contract in one local process with no network
 or API key: teach Kivi, apply it in service context, abstain in fruit context, record typed feedback,
@@ -21,5 +21,6 @@ verification produced:
   check;
 - the reviewer demo completed with zero HTTP errors.
 
-No final-holdout content was accessed. Its seal remains `awaiting_independent_custodian`, which is
-the only remaining external prerequisite for a final untouched-evidence claim.
+No final-holdout content was accessed. Its seal remains `awaiting_independent_custodian`; this is
+an optional future external-certification tier rather than an incomplete assignment requirement,
+and is relevant only if a final untouched external-evidence claim is pursued.

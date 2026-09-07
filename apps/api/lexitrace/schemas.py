@@ -80,6 +80,34 @@ class InferenceRequest(BaseModel):
     shadow_policy: ShadowPolicyRequest | None = None
 
 
+class FormatterContextRequest(BaseModel):
+    user_id: str = Field(default="demo-user", min_length=1, max_length=100)
+    raw_asr_text: str = Field(min_length=1, max_length=20_000)
+    max_memories: int = Field(default=12, ge=1, le=50)
+
+
+class FormatterMemoryHint(BaseModel):
+    memory_id: str
+    canonical_form: str
+    observed_variant: str
+    matched_span: str
+    match_method: str
+    state: str
+    scope_mode: str
+    ambiguous: bool
+    positive_context_examples: list[str]
+
+
+class FormatterContextResponse(BaseModel):
+    user_id: str
+    raw_asr_text: str
+    prompt_fragment: str
+    memories: list[FormatterMemoryHint]
+    retrieved_count: int
+    truncated: bool
+    contract: dict[str, str | bool]
+
+
 class MemoryUpdateRequest(BaseModel):
     state: Literal["candidate", "confirmed", "suppressed"] | None = None
     canonical_form: str | None = Field(default=None, min_length=1, max_length=250)
