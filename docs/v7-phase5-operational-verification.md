@@ -21,6 +21,10 @@ verification produced:
   check;
 - the reviewer demo completed with zero HTTP errors.
 
+The final-commit rehearsal also clones the repository into a new directory before running migration,
+seed, demo, and submission verification. `.gitattributes` pins hashed text artifacts to LF so their
+evidence hashes remain stable on Windows and Unix checkouts.
+
 No final-holdout content was accessed. Its seal remains `awaiting_independent_custodian`; this is
 an optional future external-certification tier rather than an incomplete assignment requirement,
 and is relevant only if a final untouched external-evidence claim is pursued.
