@@ -173,6 +173,19 @@ def add(checks: list[dict], name: str, passed: bool, detail: str) -> None:
     checks.append({"name": name, "passed": passed, "detail": detail})
 
 
+def hash_matches(path: Path, expected: str) -> bool:
+    """Compare text evidence independently of the checkout's newline convention."""
+    if not path.is_file():
+        return False
+    data = path.read_bytes()
+    candidates = {hashlib.sha256(data).hexdigest()}
+    if path.suffix.casefold() in TEXT_SUFFIXES:
+        lf = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        candidates.add(hashlib.sha256(lf).hexdigest())
+        candidates.add(hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest())
+    return expected in candidates
+
+
 def check_results(checks: list[dict], result_dir: str) -> None:
     summary_path = ROOT / result_dir / "summary.json"
     if not summary_path.exists():
@@ -181,17 +194,17 @@ def check_results(checks: list[dict], result_dir: str) -> None:
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     dataset_path = ROOT / summary["dataset"]
     expected_hash = summary["dataset_sha256"]
-    actual_hash = hashlib.sha256(dataset_path.read_bytes()).hexdigest()
+    dataset_hash_matches = hash_matches(dataset_path, expected_hash)
     count_key = "case_count" if "case_count" in summary else "journeys"
     source_count = sum(
         bool(line.strip()) for line in dataset_path.read_text(encoding="utf-8").splitlines()
     )
-    passed = actual_hash == expected_hash and source_count == summary[count_key]
+    passed = dataset_hash_matches and source_count == summary[count_key]
     add(
         checks,
         f"result:{result_dir}",
         passed,
-        f"hash_match={actual_hash == expected_hash}, {count_key}={source_count}",
+        f"hash_match={dataset_hash_matches}, {count_key}={source_count}",
     )
 
 
@@ -219,13 +232,11 @@ def check_calibration_artifact(checks: list[dict]) -> None:
         return
     artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
     input_hashes_match = all(
-        hashlib.sha256((ROOT / record["path"]).read_bytes()).hexdigest() == record["sha256"]
+        hash_matches(ROOT / record["path"], record["sha256"])
         for record in artifact["inputs"].values()
     )
     search = artifact_path.parent / artifact["search_results"]["path"]
-    search_hash_match = (
-        hashlib.sha256(search.read_bytes()).hexdigest() == artifact["search_results"]["sha256"]
-    )
+    search_hash_match = hash_matches(search, artifact["search_results"]["sha256"])
     policy = tomllib.loads((ROOT / "apps/api/lexitrace/policy.toml").read_text(encoding="utf-8"))
     selected = artifact["selected"]["config"]
     checks_pass = (
@@ -296,8 +307,7 @@ def check_v7_protocol(checks: list[dict]) -> None:
     changed = []
     for relative, expected in baseline["files"].items():
         path = ROOT / relative
-        actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else "missing"
-        if actual != expected:
+        if not hash_matches(path, expected):
             changed.append(relative)
     seal = json.loads(seal_path.read_text(encoding="utf-8"))
     seal_valid = seal["status"] in {"awaiting_independent_custodian", "sealed"}
@@ -318,10 +328,7 @@ def check_v7_structural_candidate(checks: list[dict]) -> None:
     changed = []
     for name, record in manifest["summaries"].items():
         artifact = path.parent / record["path"]
-        actual = (
-            hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
-        )
-        if actual != record["sha256"]:
+        if not hash_matches(artifact, record["sha256"]):
             changed.append(name)
     instrumentation = manifest["instrumentation"]
     required_instrumentation = {
@@ -356,10 +363,7 @@ def check_v7_regression(checks: list[dict]) -> None:
 
     for name, record in manifest["summaries"].items():
         artifact = path.parent / record["path"]
-        actual = (
-            hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else "missing"
-        )
-        if actual != record["sha256"]:
+        if not hash_matches(artifact, record["sha256"]):
             changed.append(name)
         content = record["content"]
         systems = content.get("systems", {})
