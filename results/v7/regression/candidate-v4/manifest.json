@@ -842,5 +842,5 @@
     }
   },
   "final_holdout_accessed": false,
-  "next_stage": "score_recalibration"
+  "next_stage": "release_candidate_complete"
 }

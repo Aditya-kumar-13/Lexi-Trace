@@ -684,9 +684,7 @@ def build_formatter_context(
     retrieved: dict[str, dict] = {}
     for memory in memories:
         for variant in memory.variants:
-            for _, _, matched_span, match_method in generate_candidate_spans(
-                raw_asr_text, variant
-            ):
+            for _, _, matched_span, match_method in generate_candidate_spans(raw_asr_text, variant):
                 if normalize(matched_span) == memory.canonical_normalized:
                     continue
                 candidate = {
@@ -707,9 +705,10 @@ def build_formatter_context(
                     )[:3],
                 }
                 previous = retrieved.get(memory.id)
-                if previous is None or method_priority[match_method] > method_priority[
-                    previous["match_method"]
-                ]:
+                if (
+                    previous is None
+                    or method_priority[match_method] > method_priority[previous["match_method"]]
+                ):
                     retrieved[memory.id] = candidate
 
     hints = sorted(
@@ -728,14 +727,12 @@ def build_formatter_context(
 
     truncated = len(hints) > max_memories
     hints = hints[:max_memories]
-    lines = [
-        "Personal spelling hints (retrieval only; preserve the transcript when uncertain):"
-    ]
+    lines = ["Personal spelling hints (retrieval only; preserve the transcript when uncertain):"]
     for hint in hints:
         qualifier = "ambiguous; resolve from context" if hint["ambiguous"] else hint["scope_mode"]
         lines.append(
             f'- "{hint["matched_span"]}" may refer to canonical "{hint["canonical_form"]}" '
-            f'({qualifier}, {hint["match_method"]} match).'
+            f"({qualifier}, {hint['match_method']} match)."
         )
     if not hints:
         lines.append("- No relevant personal spelling memory was retrieved.")

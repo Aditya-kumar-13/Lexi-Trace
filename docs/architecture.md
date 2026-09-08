@@ -2,9 +2,10 @@
 
 ## Product boundary
 
-LexiTrace starts after speech recognition. It accepts a formatted transcript, retrieves personal
-word memories, and decides whether to apply, suggest, or abstain from a spelling correction. It
-does not implement ASR and does not depend on Kivi infrastructure.
+LexiTrace starts after speech recognition. It can retrieve bounded personal spelling hints from raw
+ASR text for an upstream formatting prompt. It then accepts the formatted draft and independently
+decides whether to apply, suggest, or abstain from a spelling correction. It does not implement ASR
+and does not depend on Kivi infrastructure.
 
 ## Decision flow
 
@@ -71,11 +72,13 @@ mapped only so older databases can migrate; no product decision reads or mutates
 
 ## Calibrated policy and shadow execution
 
-Threshold search uses only the predeclared robustness calibration split. A second, independently
-frozen smoke corpus acts as a safety constraint rather than another optimization target. A policy
-candidate is promotable only when it does not increase wrong interventions or reduce exact matches
-on that safety corpus. The generated artifact records input hashes, the complete search space,
-baseline and candidate metrics, violations, and explicit rollback boundaries.
+V7 froze its structural choices using development evidence before numeric calibration. The policy
+search evaluates 25,920 configurations on a dedicated 72-case calibration corpus. It fixes one
+candidate before opening a separate 16-case safety gate; neither the older smoke nor robustness
+corpus selects v7 constants. A candidate is promotable only with zero wrong automatic edits on the
+safety gate. The generated artifact records input hashes, the complete search space, baseline and
+candidate metrics, rejected candidates, exact engine replays, and rollback boundaries. The older
+smoke and robustness corpora are reported as known regression evidence.
 
 An inference request may include a shadow threshold profile. LexiTrace scores candidates once, then
 resolves active and shadow winners independently. Only the active policy can modify the returned

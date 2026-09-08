@@ -29,8 +29,8 @@ Cases: **40**
 
 ## LexiTrace failures
 
-No failures in this smoke benchmark.
+No failures in this benchmark.
 
 ## Interpretation
 
-This is a fixed synthetic robustness suite with a predeclared calibration/held-out split. It exercises the complete hybrid product and keeps all failures visible; it is not an external or production-accuracy claim.
+This is a bounded adversarial discovery suite, not a held-out or production-accuracy claim. Its complete case-level results remain visible for regression and review.

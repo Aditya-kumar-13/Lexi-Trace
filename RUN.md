@@ -72,6 +72,8 @@ http://localhost:8000/docs.
    `Review the Kiwi service dashboard.`
 2. Run `Inspect the Kiwi platform deployment.` The output should use `Kivi` even though it shares
    no literal learned context words. Inspect the semantic and sparse evidence in the result.
+   The expandable ASR section accepts the corresponding raw ASR transcript separately from the
+   formatted draft.
 3. Run `Buy kiwi fruit from the shop.` The output should remain unchanged and expose its blocker.
 4. Teach `Aditya -> Aaditya` with global scope and try it without special context.
 5. Open the memory detail, evidence, and history views; reject or confirm an intervention.

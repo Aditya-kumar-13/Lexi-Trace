@@ -326,7 +326,7 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
     ]
     lines.extend(["", "## LexiTrace failures", ""])
     if not failures:
-        lines.append("No failures in this smoke benchmark.")
+        lines.append("No failures in this benchmark.")
     else:
         lines.extend(
             [
@@ -340,15 +340,24 @@ def render_report(summary: dict[str, Any], rows: list[dict[str, Any]]) -> str:
                 f"| {row['case_id']} | {row['category']} | {row['expected_output']} | "
                 f"{actual['output']} | {actual['action']} |"
             )
-    interpretation = (
-        "This is a fixed synthetic robustness suite with a predeclared calibration/held-out split. "
-        "It exercises the complete hybrid product and keeps all failures visible; it is not an "
-        "external or production-accuracy claim."
-        if set(summary["split_counts"]) != {"all"}
-        else "This is the north-star smoke suite, not a production-accuracy claim. Contextual "
-        "cases are initialized from observed correction sentences rather than source-code keyword "
-        "gates."
-    )
+    split_names = set(summary["split_counts"])
+    if split_names == {"adversarial_discovery"}:
+        interpretation = (
+            "This is a bounded adversarial discovery suite, not a held-out or production-accuracy "
+            "claim. Its complete case-level results remain visible for regression and review."
+        )
+    elif split_names == {"calibration", "heldout"}:
+        interpretation = (
+            "This is a fixed synthetic robustness suite with historical calibration/held-out "
+            "labels. Both partitions are known regression evidence for v7; all failures remain "
+            "visible, and no external or production-accuracy claim is made."
+        )
+    else:
+        interpretation = (
+            "This is the north-star smoke suite, not a production-accuracy claim. Contextual "
+            "cases are initialized from observed correction sentences rather than source-code "
+            "keyword gates."
+        )
     lines.extend(
         [
             "",

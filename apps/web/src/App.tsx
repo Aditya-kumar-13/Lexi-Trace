@@ -117,6 +117,7 @@ function App() {
   const [observedText, setObservedText] = useState("Message Aditya today.");
   const [acceptedText, setAcceptedText] = useState("Message Aaditya today.");
   const [observationMessage, setObservationMessage] = useState("");
+  const [rawAsr, setRawAsr] = useState("inspect the kiwi platform deployment");
   const [formatted, setFormatted] = useState("Inspect the Kiwi platform deployment.");
   const [asrAlternative, setAsrAlternative] = useState("");
   const [asrConfidence, setAsrConfidence] = useState("0.95");
@@ -195,6 +196,7 @@ function App() {
         await jsonRequest<Inference>("/api/v1/infer", {
           method: "POST",
           body: JSON.stringify({
+            raw_asr_text: rawAsr,
             formatted_text: formatted,
             asr: {
               provider: asrProvider,
@@ -377,6 +379,7 @@ function App() {
             <label>Formatted transcript<textarea value={formatted} onChange={(e) => setFormatted(e.target.value)} rows={5} /></label>
             <details>
               <summary>ASR source and optional N-best evidence</summary>
+              <label>Raw ASR transcript<textarea value={rawAsr} onChange={(e) => setRawAsr(e.target.value)} rows={3} /></label>
               <div className="two-column">
                 <label>Provider<input value={asrProvider} onChange={(e) => setAsrProvider(e.target.value)} /></label>
                 <label>Model<input value={asrModel} onChange={(e) => setAsrModel(e.target.value)} /></label>
